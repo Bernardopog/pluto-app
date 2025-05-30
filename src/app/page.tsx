@@ -1,7 +1,5 @@
+import { redirect } from "next/navigation";
+
 export default function Home() {
-  return (
-    <main>
-      <h1>Pluto</h1>
-    </main>
-  );
+  redirect("/dashboard");
 }

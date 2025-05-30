@@ -25,3 +25,13 @@
   --color-star-dust-900: #3d3d3d;
   --color-star-dust-950: #262626;
 }
+
+@layer components {
+  .page {
+    @apply min-h-dvh pl-12 pt-4 bg-chetwode-blue-100;
+  }
+
+  .main-title {
+    @apply font-bold text-2xl text-chetwode-blue-950;
+  }
+}
