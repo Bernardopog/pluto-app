@@ -15,7 +15,7 @@ export default function Navbar() {
   return (
     <>
       <button
-        className={`flex items-center justify-center absolute z-10 size-8 rounded-full text-2xl bg-chetwode-blue-800 text-star-dust-50 cursor-pointer duration-300 ease-in-out ${
+        className={`flex items-center justify-center absolute z-50 size-8 rounded-full text-2xl bg-chetwode-blue-800 text-star-dust-50 cursor-pointer duration-300 ease-in-out ${
           isSiderbarOpen ? "top-4 left-[calc(16rem-3rem)]" : "top-2 left-2"
         }`}
         aria-label={isSiderbarOpen ? "Fechar Menu" : "Abrir Menu"}
@@ -30,7 +30,7 @@ export default function Navbar() {
       </button>
       <Inert
         isVisible={isSiderbarOpen}
-        className={`absolute h-dvh duration-300 ease-in-out overflow-clip ${
+        className={`absolute z-40 h-dvh duration-300 ease-in-out overflow-clip ${
           isSiderbarOpen ? "w-full" : "w-0"
         }`}
       >
