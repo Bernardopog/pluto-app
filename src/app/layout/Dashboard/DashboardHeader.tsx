@@ -1,9 +1,15 @@
+"use client";
+
 import OverviewCard from "@/app/components/OverviewCard";
+import { useBudgetStore } from "@/app/stores/useBudgetStore";
+import { useFinanceStore } from "@/app/stores/useFinanceStore";
 import { MdAttachMoney, MdPlayArrow } from "react-icons/md";
 
 export default function DashboardHeader() {
-  const income = 2400;
-  const expenses = 800;
+  const { income } = useFinanceStore();
+  const { totalExpenses } = useBudgetStore();
+
+  const expenses = totalExpenses();
 
   const balancePerMonth = income - expenses;
 

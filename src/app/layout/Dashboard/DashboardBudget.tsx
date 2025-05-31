@@ -1,6 +1,9 @@
 "use client";
 
 import PieChartControl from "@/app/components/PieChartControl";
+import { useBudgetStore } from "@/app/stores/useBudgetStore";
+import { useFinanceStore } from "@/app/stores/useFinanceStore";
+import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useState } from "react";
 import { Doughnut } from "react-chartjs-2";
@@ -11,21 +14,19 @@ export type PieChartType = "full" | "half";
 
 export default function DashboardBudget() {
   const [typeOfChart, setTypeOfChart] = useState<PieChartType>("full");
+  const { income } = useFinanceStore();
+  const { budget } = useBudgetStore();
 
   const data = {
-    labels: ["Renda", "Comida", "Transporte", "Contas"],
+    labels: ["Renda", ...budget.map((item) => item.name)],
     datasets: [
       {
         label: "R$",
-        data: [3000, 200, 300, 500],
-        backgroundColor: [
-          "hsl(0, 50%, 50%)",
-          "hsl(200, 50%, 50%)",
-          "hsl(100, 50%, 50%)",
-          "hsl(50, 50%, 50%)",
-        ],
+        data: [income, ...budget.map((item) => item.value)],
+        backgroundColor: ["#a9a9a9", ...budget.map((item) => item.color)],
         borderWidth: 0,
         spacing: 2,
+        hoverOffset: 16,
         circumference: typeOfChart === "full" ? 360 : 180,
         rotation: typeOfChart === "full" ? 0 : -90,
       },
@@ -35,7 +36,7 @@ export default function DashboardBudget() {
   return (
     <article
       id="dashboard-budget"
-      className="h-full mt-2 p-2 border-b-2 border-transparent rounded-lg shadow-md duration-300 ease-in-out bg-star-dust-50 hover:shadow-lg hover:border-chetwode-blue-700 lg:mt-0"
+      className="h-full mt-2 p-2 border-b-2 border-transparent rounded-lg shadow-md duration-300 ease-in-out bg-star-dust-50 overflow-auto scrollbar-thin hover:shadow-lg hover:border-chetwode-blue-700 lg:h-[calc(100vh-11rem)] lg:mt-0"
     >
       <h3 className="sub-title">Orçamento</h3>
       <div className="hidden lg:block">
@@ -44,6 +45,20 @@ export default function DashboardBudget() {
           <Doughnut data={data} />
         </div>
       </div>
+      <ul className="flex flex-col mt-4 gap-2 font-medium text-chetwode-blue-950">
+        <li className="border-l-4 pl-2" style={{ borderColor: `#a9a9a9` }}>
+          Renda: {moneyFormatter(income)}
+        </li>
+        {budget.map((budgetItem) => (
+          <li
+            key={budgetItem.name}
+            className="border-l-4 pl-2"
+            style={{ borderColor: `${budgetItem.color}` }}
+          >
+            {budgetItem.name}: {moneyFormatter(budgetItem.value)}
+          </li>
+        ))}
+      </ul>
     </article>
   );
 }
