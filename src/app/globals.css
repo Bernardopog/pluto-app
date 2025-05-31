@@ -32,6 +32,12 @@
   --breakpoint-xl: 90rem; /* 1440px */
 }
 
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
+
 @layer components {
   .page {
     @apply min-h-dvh px-2 pt-4 bg-chetwode-blue-100;
