@@ -1,3 +1,4 @@
+import DashboardBudget from "@/app/layout/Dashboard/DashboardBudget";
 import DashboardHeader from "@/app/layout/Dashboard/DashboardHeader";
 import { Metadata } from "next";
 
@@ -10,8 +11,9 @@ export default function page() {
   return (
     <main className="page">
       <h2 className="main-title">Dashboard</h2>
-      <section className="">
+      <section className="dashboard-layout grid min-h-[calc(100vh-32px-24px)]">
         <DashboardHeader />
+        <DashboardBudget />
       </section>
     </main>
   );

@@ -46,4 +46,29 @@
   .main-title {
     @apply ml-10 font-bold text-2xl text-chetwode-blue-950;
   }
+.dashboard-layout {
+  grid-template-areas:
+    "overview"
+    "budget";
+  grid-template-columns: 1fr;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+#dashboard-overview {
+  grid-area: overview;
+}
+#dashboard-budget {
+  grid-area: budget;
+}
+
+@media (min-width: 64rem) {
+  .dashboard-layout {
+    grid-template-areas:
+      "overview overview"
+      ".        budget  "
+      ".        budget  ";
+    grid-template-columns: 0.75fr 0.25fr;
+    grid-template-rows: auto 0.5fr 0.5fr;
+    gap: 1rem;
+  }
 }
