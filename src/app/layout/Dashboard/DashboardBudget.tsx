@@ -3,6 +3,7 @@
 import PieChartControl from "@/app/components/PieChartControl";
 import { useBudgetStore } from "@/app/stores/useBudgetStore";
 import { useFinanceStore } from "@/app/stores/useFinanceStore";
+import MoreDetail from "@/app/ui/MoreDetail";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useState } from "react";
@@ -38,7 +39,10 @@ export default function DashboardBudget() {
       id="dashboard-budget"
       className="h-full mt-2 p-2 border-b-2 border-transparent rounded-lg shadow-md duration-300 ease-in-out bg-star-dust-50 overflow-auto scrollbar-thin hover:shadow-lg hover:border-chetwode-blue-700 lg:h-[calc(100vh-11rem)] lg:mt-0"
     >
-      <h3 className="sub-title">Orçamento</h3>
+      <header className="flex justify-between">
+        <h3 className="sub-title">Orçamento</h3>
+        <MoreDetail href="/budget" />
+      </header>
       <div className="hidden lg:block">
         <div className="relative w-full mt-2">
           <PieChartControl state={typeOfChart} setState={setTypeOfChart} />
