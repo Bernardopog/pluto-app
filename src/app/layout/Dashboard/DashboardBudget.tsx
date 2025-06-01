@@ -37,19 +37,19 @@ export default function DashboardBudget() {
   return (
     <article
       id="dashboard-budget"
-      className="h-full mt-2 p-2 border-b-2 border-transparent rounded-lg shadow-md duration-300 ease-in-out bg-star-dust-50 overflow-auto scrollbar-thin hover:shadow-lg hover:border-chetwode-blue-700 lg:h-[calc(100vh-11rem)] lg:mt-0"
+      className="max-h-full mt-2 p-2 border-b-2 border-transparent rounded-lg shadow-md duration-300 ease-in-out bg-star-dust-50 overflow-auto scrollbar-thin hover:shadow-lg hover:border-chetwode-blue-700 lg:h-[calc(100vh-11rem)] lg:mt-0"
     >
       <header className="flex justify-between">
         <h3 className="sub-title">Orçamento</h3>
         <MoreDetail href="/budget" />
       </header>
-      <div className="hidden lg:block">
-        <div className="relative w-full mt-2">
+      <div className="hidden md:flex md:justify-center md:w-full">
+        <section className="relative w-full max-w-[20rem] mt-2">
           <PieChartControl state={typeOfChart} setState={setTypeOfChart} />
           <Doughnut data={data} />
-        </div>
+        </section>
       </div>
-      <ul className="flex flex-col mt-4 gap-2 font-medium text-chetwode-blue-950">
+      <ul className="grid grid-cols-1 mt-4 gap-2 font-medium text-chetwode-blue-950 md:grid-cols-2 lg:flex lg:flex-col">
         <li className="border-l-4 pl-2" style={{ borderColor: `#a9a9a9` }}>
           Renda: {moneyFormatter(income)}
         </li>

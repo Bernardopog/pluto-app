@@ -67,14 +67,43 @@
   grid-area: budget;
 }
 
+@media (min-width: 35rem) {
+  .dashboard-layout {
+    grid-template-areas:
+      "overview overview"
+      ".        budget  "
+      ".        budget  ";
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto repeat(2, minmax(0, 1fr));
+    gap: 0 0.5rem;
+  }
+}
+
 @media (min-width: 64rem) {
+  .dashboard-layout {
+    grid-template-areas:
+      "overview overview overview"
+      ".        .        budget  "
+      ".        .        budget  ";
+    grid-template-columns: repeat(3, 0.35fr);
+    grid-template-rows: auto repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+}
+
+@media (min-width: 90rem) {
   .dashboard-layout {
     grid-template-areas:
       "overview overview"
       ".        budget  "
       ".        budget  ";
     grid-template-columns: 0.75fr 0.25fr;
-    grid-template-rows: auto 0.5fr 0.5fr;
+    grid-template-rows: auto repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
+}
+
+@plugin 'tailwind-scrollbar' {
+  nocompatible: true;
+  preferredstrategy: "pseudoelements";
 }
