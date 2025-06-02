@@ -55,6 +55,7 @@
 .dashboard-layout {
   grid-template-areas:
     "overview"
+    "vault"
     "budget";
   grid-template-columns: 1fr;
   grid-template-rows: auto minmax(0, 1fr);
@@ -66,13 +67,16 @@
 #dashboard-budget {
   grid-area: budget;
 }
+#dashboard-vault {
+  grid-area: vault;
+}
 
 @media (min-width: 35rem) {
   .dashboard-layout {
     grid-template-areas:
       "overview overview"
-      ".        budget  "
-      ".        budget  ";
+      "vault    budget  "
+      "vault    budget  ";
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto repeat(2, minmax(0, 1fr));
     gap: 0 0.5rem;
@@ -83,7 +87,7 @@
   .dashboard-layout {
     grid-template-areas:
       "overview overview overview"
-      ".        .        budget  "
+      "vault    vault    budget  "
       ".        .        budget  ";
     grid-template-columns: repeat(3, 0.35fr);
     grid-template-rows: auto repeat(2, minmax(0, 1fr));
@@ -94,11 +98,11 @@
 @media (min-width: 90rem) {
   .dashboard-layout {
     grid-template-areas:
-      "overview overview"
-      ".        budget  "
-      ".        budget  ";
-    grid-template-columns: 0.75fr 0.25fr;
-    grid-template-rows: auto repeat(2, minmax(0, 1fr));
+      "overview overview overview overview"
+      "vault    vault    .        budget  "
+      ".        .        .        budget  ";
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto 0.25fr 0.75fr;
     gap: 1rem;
   }
 }

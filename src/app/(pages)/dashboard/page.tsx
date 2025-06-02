@@ -1,5 +1,6 @@
 import DashboardBudget from "@/app/layout/Dashboard/DashboardBudget";
 import DashboardHeader from "@/app/layout/Dashboard/DashboardHeader";
+import DashboardVault from "@/app/layout/Dashboard/DashboardVault";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,6 +14,7 @@ export default function page() {
       <h2 className="main-title">Dashboard</h2>
       <section className="dashboard-layout grid min-h-[calc(100vh-32px-24px)]">
         <DashboardHeader />
+        <DashboardVault />
         <DashboardBudget />
       </section>
     </main>

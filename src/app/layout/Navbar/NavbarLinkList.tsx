@@ -2,6 +2,7 @@
 import { MdAttachMoney, MdDashboard } from "react-icons/md";
 import LinkListItem from "./LinkListItem";
 import { usePathname } from "next/navigation";
+import { BsPiggyBank } from "react-icons/bs";
 
 export default function NavbarLinkList() {
   const path = usePathname();
@@ -19,6 +20,12 @@ export default function NavbarLinkList() {
         label="Orçamento"
         isActive={path === "/budget"}
         icon={<MdAttachMoney />}
+      />
+      <LinkListItem
+        href="/vault"
+        label="Cofre"
+        isActive={path === "/vault"}
+        icon={<BsPiggyBank className="scale-x-[-1]" />}
       />
     </ul>
   );
