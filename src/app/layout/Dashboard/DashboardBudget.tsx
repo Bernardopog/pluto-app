@@ -18,12 +18,15 @@ export default function DashboardBudget() {
   const { income } = useFinanceStore();
   const { budget } = useBudgetStore();
 
+  const totalExpenses = budget.reduce((acc, item) => acc + item.value, 0);
+  const rest = income - totalExpenses;
+
   const data = {
-    labels: ["Renda", ...budget.map((item) => item.name)],
+    labels: ["Restante", ...budget.map((item) => item.name)],
     datasets: [
       {
         label: "R$",
-        data: [income, ...budget.map((item) => item.value)],
+        data: [rest, ...budget.map((item) => item.value)],
         backgroundColor: ["#a9a9a9", ...budget.map((item) => item.color)],
         borderWidth: 0,
         spacing: 2,
@@ -51,7 +54,7 @@ export default function DashboardBudget() {
       </div>
       <ul className="grid grid-cols-1 mt-4 gap-2 font-medium text-chetwode-blue-950 md:grid-cols-2 lg:flex lg:flex-col">
         <li className="border-l-4 pl-2" style={{ borderColor: `#a9a9a9` }}>
-          Renda: {moneyFormatter(income)}
+          Renda Restante: {moneyFormatter(rest)}
         </li>
         {budget.map((budgetItem) => (
           <li
