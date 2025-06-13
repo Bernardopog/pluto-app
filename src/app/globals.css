@@ -53,6 +53,10 @@
   .sub-title {
     @apply font-bold text-xl text-chetwode-blue-950;
   }
+
+  .dashboard-base-card {
+    @apply p-2 border-b-2 rounded-lg bg-star-dust-50 border-transparent shadow-md duration-300 ease-in-out hover:shadow-lg hover:border-chetwode-blue-700;
+  }
 }
 
 .dashboard-layout {
