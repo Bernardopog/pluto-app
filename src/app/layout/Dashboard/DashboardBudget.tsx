@@ -23,7 +23,7 @@ export default function DashboardBudget() {
   return (
     <article
       id="dashboard-budget"
-      className="max-h-full mt-2 p-2 border-b-2 border-transparent rounded-lg shadow-md duration-300 ease-in-out bg-star-dust-50 overflow-auto scrollbar-thin hover:shadow-lg hover:border-chetwode-blue-700 lg:h-[calc(100vh-11rem)] lg:mt-0"
+      className="max-h-full p-2 border-b-2 border-transparent rounded-lg shadow-md duration-300 ease-in-out bg-star-dust-50 overflow-auto scrollbar-thin hover:shadow-lg hover:border-chetwode-blue-700 lg:h-full lg:mt-0"
     >
       <header className="flex justify-between">
         <h3 className="sub-title">Orçamento</h3>
