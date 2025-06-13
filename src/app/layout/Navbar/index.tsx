@@ -34,7 +34,10 @@ export default function Navbar() {
           isSiderbarOpen ? "w-full" : "w-0"
         }`}
       >
-        <div className="size-full bg-black/25 backdrop-blur-xs">
+        <div
+          className="size-full bg-black/25 backdrop-blur-xs"
+          onClick={handleSidebar}
+        >
           <nav className="w-64 h-full py-4 bg-chetwode-blue-800 text-star-dust-50">
             <h1 className="ml-4 text-3xl font-bold">Pluto</h1>
             <NavbarLinkList />
