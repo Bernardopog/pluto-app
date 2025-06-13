@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./layout/Navbar";
+import Modal from "./layout/Modal";
 
 const dmSans = DM_Sans({
   weight: "variable",
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${dmSans.className} antialiased`}>
+        <Modal />
         <Navbar />
         {children}
       </body>
