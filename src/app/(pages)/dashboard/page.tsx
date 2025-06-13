@@ -1,5 +1,6 @@
 import DashboardBudget from "@/app/layout/Dashboard/DashboardBudget";
 import DashboardHeader from "@/app/layout/Dashboard/DashboardHeader";
+import DashboardTransaction from "@/app/layout/Dashboard/DashboardTransaction";
 import DashboardVault from "@/app/layout/Dashboard/DashboardVault";
 import { Metadata } from "next";
 
@@ -16,6 +17,7 @@ export default function page() {
         <DashboardHeader />
         <DashboardVault />
         <DashboardBudget />
+        <DashboardTransaction />
       </section>
     </main>
   );

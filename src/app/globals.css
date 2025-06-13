@@ -36,6 +36,9 @@
   button {
     cursor: pointer;
   }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.5;
+  }
 }
 
 @layer components {
@@ -56,9 +59,11 @@
   grid-template-areas:
     "overview"
     "vault"
-    "budget";
+    "budget"
+    "moves";
   grid-template-columns: 1fr;
   grid-template-rows: auto minmax(0, 1fr);
+  gap: 0.5rem;
 }
 
 #dashboard-overview {
@@ -70,16 +75,19 @@
 #dashboard-vault {
   grid-area: vault;
 }
+#dashboard-transaction {
+  grid-area: moves;
+}
 
 @media (min-width: 35rem) {
   .dashboard-layout {
     grid-template-areas:
       "overview overview"
       "vault    budget  "
-      "vault    budget  ";
+      "moves    .       ";
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto repeat(2, minmax(0, 1fr));
-    gap: 0 0.5rem;
+    gap: 0.5rem;
   }
 }
 
@@ -88,7 +96,7 @@
     grid-template-areas:
       "overview overview overview"
       "vault    vault    budget  "
-      ".        .        budget  ";
+      "moves        moves    budget  ";
     grid-template-columns: repeat(3, 0.35fr);
     grid-template-rows: auto repeat(2, minmax(0, 1fr));
     gap: 0.5rem;
@@ -100,9 +108,9 @@
     grid-template-areas:
       "overview overview overview overview"
       "vault    vault    .        budget  "
-      ".        .        .        budget  ";
+      ".        moves    moves    budget  ";
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto 0.25fr 0.75fr;
+    grid-template-rows: auto 0.25fr minmax(0, 0.75fr);
     gap: 1rem;
   }
 }
