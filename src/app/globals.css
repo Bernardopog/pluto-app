@@ -67,6 +67,7 @@
   grid-template-areas:
     "overview"
     "vault"
+    "goals"
     "budget"
     "moves";
   grid-template-columns: 1fr;
@@ -86,15 +87,18 @@
 #dashboard-transaction {
   grid-area: moves;
 }
+#dashboard-goals {
+  grid-area: goals;
+}
 
 @media (min-width: 35rem) {
   .dashboard-layout {
     grid-template-areas:
       "overview overview"
-      "vault    budget  "
-      "moves    .       ";
+      "vault    goals   "
+      "moves    budget  ";
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto 0.5fr 1fr;
     gap: 0.5rem;
   }
 }
@@ -103,10 +107,10 @@
   .dashboard-layout {
     grid-template-areas:
       "overview overview overview"
-      "vault    vault    budget  "
-      "moves        moves    budget  ";
+      "vault    vault    goals  "
+      "moves    moves    budget  ";
     grid-template-columns: repeat(3, 0.35fr);
-    grid-template-rows: auto repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto 0.5fr 1fr;
     gap: 0.5rem;
   }
 }
@@ -115,7 +119,7 @@
   .dashboard-layout {
     grid-template-areas:
       "overview overview overview overview"
-      "vault    vault    .        budget  "
+      "vault    vault    goals    budget  "
       ".        moves    moves    budget  ";
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto 0.25fr minmax(0, 0.75fr);

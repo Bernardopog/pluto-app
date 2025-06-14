@@ -7,13 +7,15 @@ interface IModalHeaderProps {
 export default function ModalHeader({ type }: IModalHeaderProps) {
   const formatType = (type: ModalType) => {
     switch (type) {
+      case "goals":
+        return "objetivos";
       default:
         return "indefinido";
     }
   };
 
   return (
-    <header className="w-full p-1 py-2 rounded-t-lg bg-chetwode-blue-700">
+    <header className="w-full p-2 rounded-t-lg bg-chetwode-blue-700">
       <h2 className="sub-title text-chetwode-blue-50">
         Modal de {formatType(type)}
       </h2>
