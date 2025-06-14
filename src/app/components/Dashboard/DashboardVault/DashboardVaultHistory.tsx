@@ -15,7 +15,7 @@ export default function DashboardVaultHistory() {
             key={item.id}
             className="flex items-center w-full px-2 rounded-lg border-l-2 bg-chetwode-blue-300 border-chetwode-blue-700"
           >
-            <p className="font-medium text-chetwode-blue-950 text-sm">
+            <p className="font-medium text-chetwode-blue-950 text-sm truncate">
               {item.name} - {moneyFormatter(item.value)}
             </p>
           </li>
