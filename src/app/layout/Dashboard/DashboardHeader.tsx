@@ -6,7 +6,7 @@ import { useFinanceStore } from "@/app/stores/useFinanceStore";
 import { MdAttachMoney, MdPlayArrow } from "react-icons/md";
 
 export default function DashboardHeader() {
-  const { income } = useFinanceStore();
+  const { income, balance } = useFinanceStore();
   const { totalExpenses } = useBudgetStore();
 
   const expenses = totalExpenses();
@@ -17,7 +17,11 @@ export default function DashboardHeader() {
     <header className="mt-2" id="dashboard-overview">
       <ul className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_1fr] lg:grid-cols-3 xl:grid-cols-4">
         <li className="sm:col-span-2 lg:col-span-3 xl:col-span-1">
-          <OverviewCard title="Saldo" money={40000} icon={<MdAttachMoney />} />
+          <OverviewCard
+            title="Saldo"
+            money={balance}
+            icon={<MdAttachMoney />}
+          />
         </li>
         <li className="sm:col-span-2 lg:col-span-1">
           <OverviewCard
