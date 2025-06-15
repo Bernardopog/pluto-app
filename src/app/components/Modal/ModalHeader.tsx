@@ -9,6 +9,8 @@ export default function ModalHeader({ type }: IModalHeaderProps) {
     switch (type) {
       case "goals":
         return "objetivos";
+      case "stats":
+        return "estatísticas";
       default:
         return "indefinido";
     }

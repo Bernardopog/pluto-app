@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type ModalType = null | "goals";
+export type ModalType = null | "goals" | "stats";
 
 interface IModalStore {
   isModalOpen: boolean;

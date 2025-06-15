@@ -3,10 +3,11 @@
 import { useModalStore } from "@/app/stores/useModalStore";
 
 export default function DashboardStatsHeader() {
-  const { toggleModal } = useModalStore();
+  const { toggleModal, selectModalType } = useModalStore();
 
   const handleModal = () => {
     toggleModal();
+    selectModalType("stats");
   };
 
   return (
