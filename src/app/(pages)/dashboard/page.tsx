@@ -1,6 +1,7 @@
 import DashboardBudget from "@/app/layout/Dashboard/DashboardBudget";
 import DashboardGoals from "@/app/layout/Dashboard/DashboardGoals";
 import DashboardHeader from "@/app/layout/Dashboard/DashboardHeader";
+import DashboardStats from "@/app/layout/Dashboard/DashboardStats";
 import DashboardTransaction from "@/app/layout/Dashboard/DashboardTransaction";
 import DashboardVault from "@/app/layout/Dashboard/DashboardVault";
 import { Metadata } from "next";
@@ -20,6 +21,7 @@ export default function page() {
         <DashboardGoals />
         <DashboardBudget />
         <DashboardTransaction />
+        <DashboardStats />
       </section>
     </main>
   );
