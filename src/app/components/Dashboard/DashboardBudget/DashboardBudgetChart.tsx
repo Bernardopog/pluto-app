@@ -25,12 +25,14 @@ export default function DashboardBudgetChart({
         data: [
           rest,
           ...budget.map((budget) => {
-            const expenses = transactions.reduce((acc, item) => {
-              if (item.categoryId === budget.id) {
-                return acc + item.value;
-              }
-              return acc;
-            }, 0);
+            const expenses = transactions
+              .filter((item) => item.value < 0)
+              .reduce((acc, item) => {
+                if (item.categoryId === budget.id) {
+                  return acc + item.value;
+                }
+                return acc;
+              }, 0);
             return Math.abs(expenses);
           }),
         ],
