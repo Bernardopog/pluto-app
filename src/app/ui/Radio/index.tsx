@@ -20,7 +20,7 @@ export default function Radio({
   };
 
   return (
-    <label className="flex items-center gap-x-2">
+    <label className="flex items-center gap-x-2 cursor-pointer">
       <input
         type="radio"
         name={name}
