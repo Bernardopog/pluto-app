@@ -26,7 +26,6 @@ export default function DashboardStatsItem({
             type="button"
             className="absolute top-1 right-1 p-0.5 rounded-full text-xl shadow-sm bg-chetwode-blue-800 text-chetwode-blue-50"
             onClick={() => {
-              console.log("remove?");
               removeStatFromList(index!);
             }}
           >
