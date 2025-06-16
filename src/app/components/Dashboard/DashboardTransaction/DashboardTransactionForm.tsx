@@ -1,11 +1,14 @@
 "use client";
-import { useTransactionStore } from "@/app/stores/useTransactionStore";
+import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
+import Select from "@/app/ui/Select";
 import { FormEvent, useState } from "react";
 import { MdAdd } from "react-icons/md";
 
 export default function DashboardTransactionForm() {
+  const { createTransation, budgetList } = useTransactionBudgetStore();
+
   const [hadAnError, setHadAnError] = useState<boolean>(false);
-  const { addTransaction } = useTransactionStore();
+  const [categoryValue, setCategoryValue] = useState<number | string>(0);
 
   const isStringValid = (name: string): boolean => {
     if (name.trim() === "") return false;
@@ -30,18 +33,31 @@ export default function DashboardTransactionForm() {
     const date = formDataObj.date as string;
 
     if (isStringValid(name) && isValueValid(value)) {
-      addTransaction({
-        id: `${Math.random() * 1000}`,
+      const data = {
+        id: Math.random() * 100000,
         name,
         value,
         date: date === "" ? new Date() : new Date(date),
-      });
+        categoryId: Number(categoryValue),
+      };
+
+      createTransation(data);
       form.reset();
       setHadAnError(false);
     } else {
       setHadAnError(true);
     }
   };
+
+  const selectList: {
+    id: number | string;
+    name: string;
+    value: number | string;
+  }[] = budgetList.map((budget) => ({
+    id: budget.id,
+    name: budget.name,
+    value: budget.id,
+  }));
 
   return (
     <div className="h-2/8">
@@ -70,6 +86,17 @@ export default function DashboardTransactionForm() {
             className="min-w-1/8 pl-1 py-1 rounded-tr-lg bg-chetwode-blue-300 outline-chetwode-blue-800 lg:rounded-r-lg"
           />
         </div>
+        <div>
+          <label htmlFor="category" className="text-chetwode-blue-950">
+            Categorias:
+          </label>
+          <Select
+            state={categoryValue}
+            setState={setCategoryValue}
+            list={selectList}
+          />
+        </div>
+
         <button
           type="submit"
           className="flex justify-center items-center mt-2 px-2 py-2 rounded-lg bg-chetwode-blue-300 text-chetwode-blue-950 lg:py-0"

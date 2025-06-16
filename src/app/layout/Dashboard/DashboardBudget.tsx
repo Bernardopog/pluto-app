@@ -4,8 +4,8 @@ import {
   DashboardBudgetChart,
   DashboardBudgetLegend,
 } from "@/app/components/Dashboard/DashboardBudget";
-import { useBudgetStore } from "@/app/stores/useBudgetStore";
 import { useFinanceStore } from "@/app/stores/useFinanceStore";
+import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import MoreDetail from "@/app/ui/MoreDetail";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
@@ -15,10 +15,12 @@ export type PieChartType = "full" | "half";
 
 export default function DashboardBudget() {
   const { income } = useFinanceStore();
-  const { budget } = useBudgetStore();
 
-  const totalExpenses = budget.reduce((acc, item) => acc + item.value, 0);
-  const rest = income - totalExpenses;
+  const { transactionList, budgetList, getTotalExpenses } =
+    useTransactionBudgetStore();
+
+  const totalExpenses = getTotalExpenses();
+  const rest = income + totalExpenses;
 
   return (
     <article
@@ -29,8 +31,12 @@ export default function DashboardBudget() {
         <h3 className="sub-title">Orçamento</h3>
         <MoreDetail href="/budget" />
       </header>
-      <DashboardBudgetChart budget={budget} rest={rest} />
-      <DashboardBudgetLegend budget={budget} rest={rest} />
+      <DashboardBudgetChart
+        budget={budgetList}
+        transactions={transactionList}
+        rest={rest}
+      />
+      <DashboardBudgetLegend budget={budgetList} rest={rest} />
     </article>
   );
 }

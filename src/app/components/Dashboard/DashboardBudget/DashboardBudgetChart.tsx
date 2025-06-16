@@ -2,13 +2,16 @@ import { Doughnut } from "react-chartjs-2";
 import PieChartControl from "../../PieChartControl";
 import { useState } from "react";
 import { PieChartType } from "@/app/layout/Dashboard/DashboardBudget";
+import { IBudget, ITransaction } from "@/app/stores/useTransactionBudgetStore";
 
 interface IDashboardBudgetChartProps {
-  budget: { name: string; value: number; color: string }[];
+  transactions: ITransaction[];
+  budget: IBudget[];
   rest: number;
 }
 
 export default function DashboardBudgetChart({
+  transactions,
   budget,
   rest,
 }: IDashboardBudgetChartProps) {
@@ -19,7 +22,18 @@ export default function DashboardBudgetChart({
     datasets: [
       {
         label: "R$",
-        data: [rest, ...budget.map((item) => item.value)],
+        data: [
+          rest,
+          ...budget.map((budget) => {
+            const expenses = transactions.reduce((acc, item) => {
+              if (item.categoryId === budget.id) {
+                return acc + item.value;
+              }
+              return acc;
+            }, 0);
+            return Math.abs(expenses);
+          }),
+        ],
         backgroundColor: ["#a9a9a9", ...budget.map((item) => item.color)],
         borderWidth: 0,
         spacing: 2,

@@ -1,10 +1,10 @@
 "use client";
 
-import { useTransactionStore } from "@/app/stores/useTransactionStore";
+import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 
 export default function DashboardTransactionList() {
-  const { transactionList } = useTransactionStore();
+  const { transactionList } = useTransactionBudgetStore();
 
   return (
     <ul className="flex flex-col gap-2 h-6/8 overflow-auto">

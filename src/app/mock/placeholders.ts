@@ -1,39 +1,51 @@
-import { IBudgetItem } from "../stores/useBudgetStore";
-import { ITransaction } from "../stores/useTransactionStore";
+import { ITransaction } from "../stores/useTransactionBudgetStore";
+import { IBudget } from "../stores/useTransactionBudgetStore";
 import { ISavedItem } from "../stores/useVaultStore";
 
 export const INCOMEPLACEHOLDER = 3200;
 
-export const BUDGETPLACEHOLDER: IBudgetItem[] = [
+export const BUDGETPLACEHOLDER: IBudget[] = [
   {
+    id: 1,
     name: "Transporte",
-    value: 80,
+    limit: 600,
     color: "#333333",
   },
   {
+    id: 2,
     name: "Comida",
-    value: 200,
+    limit: 600,
     color: "#6abf40",
   },
   {
+    id: 3,
     name: "Contas/Imposto",
-    value: 300,
+    limit: 600,
     color: "#4095bf",
   },
   {
+    id: 4,
     name: "Assinatura Streaming",
-    value: 120,
+    limit: 600,
     color: "#bf4040",
   },
   {
+    id: 5,
     name: "Assinatura Jogos",
-    value: 24,
+    limit: 600,
     color: "#bf7740",
   },
   {
+    id: 6,
     name: "Dívida",
-    value: 400,
+    limit: 600,
     color: "#4040bf",
+  },
+  {
+    id: 7,
+    name: "Outros",
+    limit: 600,
+    color: "#bf40bf",
   },
 ];
 
@@ -77,33 +89,38 @@ export const VAULTPLACEHOLDER: ISavedItem[] = [
 
 export const TRANSACTIONPLACEHOLDER: ITransaction[] = [
   {
-    id: "1",
+    id: 1,
     name: "Café na loja da rua",
     value: -10,
     date: new Date(2025, 3, 28),
+    categoryId: 2,
   },
   {
-    id: "2",
+    id: 2,
     name: "Presente recebido de amigo",
     value: 75,
     date: new Date(2025, 3, 29),
+    categoryId: 7,
   },
   {
-    id: "3",
+    id: 3,
     name: "Compra de Cosméticos",
     value: -80,
     date: new Date(2025, 3, 29),
+    categoryId: 7,
   },
   {
-    id: "4",
+    id: 4,
     name: "Presente para amigo",
     value: -25,
     date: new Date(2025, 3, 30),
+    categoryId: 7,
   },
   {
-    id: "5",
+    id: 5,
     name: "Padaria",
     value: -20,
     date: new Date(2025, 4, 1),
-  }
+    categoryId: 2,
+  },
 ];

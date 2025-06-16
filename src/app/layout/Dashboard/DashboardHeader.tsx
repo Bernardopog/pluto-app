@@ -1,17 +1,33 @@
 "use client";
 
 import OverviewCard from "@/app/components/OverviewCard";
-import { useBudgetStore } from "@/app/stores/useBudgetStore";
 import { useFinanceStore } from "@/app/stores/useFinanceStore";
-import { MdAttachMoney, MdPlayArrow } from "react-icons/md";
+import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
+import { useState } from "react";
+import {
+  MdAttachMoney,
+  MdOutlineRotateRight,
+  MdPlayArrow,
+} from "react-icons/md";
 
 export default function DashboardHeader() {
   const { income, balance } = useFinanceStore();
-  const { totalExpenses } = useBudgetStore();
+  const { budgetList, getTotalExpenses } = useTransactionBudgetStore();
 
-  const expenses = totalExpenses();
+  const [typeOfExpense, setTypeOfExpense] = useState<"current" | "estimate">(
+    "current"
+  );
 
-  const balancePerMonth = income - expenses;
+  const currentExpenses = Math.abs(getTotalExpenses());
+  const estimateExpenses = budgetList.reduce(
+    (acc, item) => acc + item.limit,
+    0
+  );
+  const balancePerMonth = income - currentExpenses;
+
+  const handleExpenseChange = () => {
+    setTypeOfExpense(typeOfExpense === "current" ? "estimate" : "current");
+  };
 
   return (
     <header className="mt-2" id="dashboard-overview">
@@ -37,12 +53,27 @@ export default function DashboardHeader() {
             icon={<MdPlayArrow className="rotate-270" />}
           />
         </li>
-        <li>
-          <OverviewCard
-            title="Despesa"
-            money={expenses}
-            icon={<MdPlayArrow className="rotate-90" />}
-          />
+        <li className="relative">
+          <button
+            type="button"
+            className="absolute bottom-0 right-0 z-10 p-0.5 rounded-lg bg-chetwode-blue-600 text-2xl text-chetwode-blue-50 duration-300 ease-in-out"
+            onClick={handleExpenseChange}
+          >
+            <MdOutlineRotateRight />
+          </button>
+          {typeOfExpense === "current" ? (
+            <OverviewCard
+              title="Despesa"
+              money={currentExpenses}
+              icon={<MdPlayArrow className="rotate-90" />}
+            />
+          ) : (
+            <OverviewCard
+              title="Estimativa de Despesa"
+              money={estimateExpenses}
+              icon={<MdPlayArrow className="rotate-90" />}
+            />
+          )}
         </li>
       </ul>
     </header>
