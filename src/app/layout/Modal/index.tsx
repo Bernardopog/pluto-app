@@ -27,7 +27,7 @@ export default function Modal() {
           role="dialog"
           aria-modal="true"
           onClick={(e: MouseEvent) => e.stopPropagation()}
-          className="dashboard-base-card min-w-72 w-full max-w-216 p-0 max-h-[calc(100vh-4rem)] overflow-auto"
+          className="base-card min-w-72 w-full max-w-216 p-0 max-h-[calc(100vh-4rem)] overflow-auto"
         >
           <ModalHeader type={selectedModal} />
           <div className="p-2">

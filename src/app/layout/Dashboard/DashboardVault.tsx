@@ -10,7 +10,7 @@ export default function DashboardVault() {
   return (
     <article
       id="dashboard-vault"
-      className="dashboard-base-card flex flex-col lg:grid lg:grid-cols-[1fr] lg:grid-rows-[auto_1fr]"
+      className="base-card flex flex-col lg:grid lg:grid-cols-[1fr] lg:grid-rows-[auto_1fr]"
     >
       <header className="flex justify-between">
         <h3 className="sub-title">Cofre</h3>

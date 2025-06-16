@@ -9,7 +9,7 @@ export default function DashboardTransaction() {
   return (
     <article
       id="dashboard-transaction"
-      className="dashboard-base-card flex flex-col gap-2"
+      className="base-card flex flex-col gap-2"
     >
       <header className="flex justify-between">
         <h2 className="sub-title">Transações</h2>
