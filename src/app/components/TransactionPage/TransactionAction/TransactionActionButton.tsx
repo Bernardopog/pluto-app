@@ -4,18 +4,21 @@ interface ITransactionActionButtonProps {
   action: () => void;
   icon: ReactNode;
   label: string;
+  disabled?: boolean;
 }
 
 export default function TransactionActionButton({
   action,
   icon,
   label,
+  disabled,
 }: ITransactionActionButtonProps) {
   return (
     <button
       type="button"
       onClick={action}
-      className="flex items-center p-1 pr-2 gap-x-2 rounded-full font-medium bg-chetwode-blue-200 text-chetwode-blue-950 ease-in-out duration-300 hover:brightness-95 active:brightness-75"
+      className="flex items-center p-1 pr-2 gap-x-2 rounded-full font-medium bg-chetwode-blue-200 text-chetwode-blue-950 ease-in-out duration-300 hover:brightness-95 active:brightness-75 disabled:grayscale-100 disabled:cursor-not-allowed disabled:bg-chetwode-blue-200"
+      disabled={disabled}
     >
       <span className="p-0.5 rounded-full text-2xl bg-chetwode-blue-800 text-chetwode-blue-50">
         {icon}

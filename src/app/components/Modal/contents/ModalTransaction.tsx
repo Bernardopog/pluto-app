@@ -1,75 +1,37 @@
 "use client";
 
-import { useModalStore } from "@/app/stores/useModalStore";
-import {
-  ITransaction,
-  useTransactionBudgetStore,
-} from "@/app/stores/useTransactionBudgetStore";
 import Divider from "@/app/ui/Divider";
 import Input from "@/app/ui/Input";
 import Radio from "@/app/ui/Radio";
-import { useState } from "react";
 import { MdAttachMoney, MdFilePresent } from "react-icons/md";
+import { useModalTransactionLogic } from "@/app/modules/transaction/useModalTransactionLogic";
 
-export default function ModalTransaction() {
-  const { createTransation, budgetList } = useTransactionBudgetStore();
-  const { toggleModal } = useModalStore();
+interface IModalTransactionProps {
+  type: "create" | "update";
+}
 
-  const [transactionName, setTransactionName] = useState<string>("");
-  const [transactionValue, setTransactionValue] = useState<string>("");
-  const [transactionDate, setTransactioDate] = useState<string>(
-    new Date().toISOString().split("T")[0]
-  );
-  const [transactionCategory, setTransactionCategory] = useState<number | null>(
-    null
-  );
-  const [transactionType, setTransactionType] = useState<"income" | "outcome">(
-    "outcome"
-  );
-  const [hasError, setHasError] = useState<boolean>(false);
-
-  const validator = () => {
-    if (transactionName === "" || transactionName.trim() === "") return false;
-    if (transactionValue === "" || Number.isNaN(Number(transactionValue)))
-      return false;
-
-    return true;
-  };
-
-  const handleSubmit = (ev: React.FormEvent) => {
-    ev.preventDefault();
-
-    let money = Number(transactionValue.replace(",", "."));
-    if (money < 0) money *= -1;
-    if (transactionType === "outcome") money *= -1;
-    else money *= 1;
-
-    if (
-      !validator() ||
-      transactionCategory === null ||
-      Number.isNaN(Number(transactionCategory))
-    ) {
-      setHasError(true);
-      return;
-    }
-
-    setHasError(false);
-
-    const data: ITransaction = {
-      id: Math.random() * 100000,
-      name: transactionName,
-      value: money,
-      date: new Date(transactionDate),
-      categoryId: Number(transactionCategory),
-    };
-    createTransation(data);
-    toggleModal();
-  };
+export default function ModalTransaction({ type }: IModalTransactionProps) {
+  const {
+    transactionName,
+    setTransactionName,
+    transactionValue,
+    setTransactionValue,
+    transactionDate,
+    setTransactionDate,
+    transactionCategory,
+    setTransactionCategory,
+    transactionType,
+    setTransactionType,
+    budgetList,
+    hasError,
+    handleSubmit,
+    handleCancel,
+  } = useModalTransactionLogic(type);
 
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
       <Input
-        label="Nome da transação"
+        label={`${type === "update" ? "Editar" : ""} Nome da transação`}
         id="name"
         inputType="decorated"
         icon={<MdFilePresent />}
@@ -80,7 +42,7 @@ export default function ModalTransaction() {
       <fieldset className="flex flex-col gap-y-2">
         <div className="flex-1">
           <Input
-            label="Valor da transação"
+            label={`${type === "update" ? "Editar" : ""} Valor da transação`}
             id="value"
             inputType="decorated"
             icon={<MdAttachMoney />}
@@ -127,7 +89,7 @@ export default function ModalTransaction() {
         className="mt-6 px-4 py-1.5 rounded-lg bg-chetwode-blue-200 text-chetwode-blue-950 duration-300 ease-in-out disabled:grayscale-75 disabled:opacity-40"
         max={new Date().toISOString().split("T")[0]}
         value={transactionDate}
-        onChange={(ev) => setTransactioDate(ev.target.value)}
+        onChange={(ev) => setTransactionDate(ev.target.value)}
       />
       <span className="mt-2 opacity-50">
         <Divider direction="horizontal" />
@@ -167,7 +129,7 @@ export default function ModalTransaction() {
         <button
           type="button"
           className="w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100"
-          onClick={() => toggleModal()}
+          onClick={handleCancel}
         >
           Cancelar
         </button>
@@ -175,7 +137,7 @@ export default function ModalTransaction() {
           type="submit"
           className="w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100"
         >
-          Criar Transação
+          {type === "create" ? "Criar" : "Editar"} Transação
         </button>
       </div>
     </form>

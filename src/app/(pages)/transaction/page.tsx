@@ -1,5 +1,5 @@
 import { TransactionAction } from "@/app/components/TransactionPage/TransactionAction";
-import TransactionTable from "@/app/components/TransactionPage/TransactionTable";
+import { TransactionTable } from "@/app/components/TransactionPage/TransactionTable";
 
 export default function TransactionPage() {
   return (

@@ -23,6 +23,10 @@ interface ITransactionBudgetStore {
   transactionList: ITransaction[];
   budgetList: IBudget[];
 
+  selectedTransaction: ITransaction | null;
+
+  selectTransaction: (id: number) => void;
+  unselectTransaction: () => void;
   createTransation: (transaction: ITransaction) => void;
   deleteTransaction: (id: number) => void;
   updateTransaction: (id: number, transaction: ITransaction) => void;
@@ -41,6 +45,14 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
   (set, get) => ({
     transactionList: [...TRANSACTIONPLACEHOLDER],
     budgetList: [...BUDGETPLACEHOLDER],
+    selectedTransaction: null,
+    selectTransaction: (id) =>
+      set((state) => ({
+        selectedTransaction: state.transactionList.find(
+          (item) => item.id === id
+        ),
+      })),
+    unselectTransaction: () => set({ selectedTransaction: null }),
     createTransation: (transaction) =>
       set((state) => ({
         transactionList: [...state.transactionList, transaction],

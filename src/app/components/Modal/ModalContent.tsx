@@ -4,6 +4,7 @@ import { useModalStore } from "@/app/stores/useModalStore";
 import ModalGoals from "./contents/ModalGoals";
 import ModalStats from "./contents/ModalStats";
 import ModalTransaction from "./contents/ModalTransaction";
+import ModalTransactionDelete from "./contents/ModalTransactionDelete";
 
 export default function ModalContent() {
   const { selectedModal } = useModalStore();
@@ -12,7 +13,13 @@ export default function ModalContent() {
     <>
       {selectedModal === "goals" && <ModalGoals />}
       {selectedModal === "stats" && <ModalStats />}
-      {selectedModal === "transactionCreate" && <ModalTransaction />}
+      {selectedModal === "transactionCreate" && (
+        <ModalTransaction type="create" />
+      )}
+      {selectedModal === "transactionUpdate" && (
+        <ModalTransaction type="update" />
+      )}
+      {selectedModal === "transactionDelete" && <ModalTransactionDelete />}
     </>
   );
 }
