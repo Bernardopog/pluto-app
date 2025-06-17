@@ -56,7 +56,7 @@ export default function TransactionAction() {
 
   return (
     <article id="transaction-action" className="base-card">
-      <h2 className="sub-title">Ações</h2>
+      <h2 className="subtitle">Ações</h2>
       <section className="flex flex-col mt-2 gap-2">
         <section className="flex flex-col gap-2">
           <h3 className="subsubtitle">Transações</h3>

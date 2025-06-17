@@ -28,7 +28,7 @@ export default function DashboardBudget() {
       className="base-card max-h-full overflow-auto scrollbar-thin hover:shadow-lg lg:h-full lg:mt-0"
     >
       <header className="flex justify-between">
-        <h3 className="sub-title">Orçamento</h3>
+        <h2 className="subtitle">Orçamento</h2>
         <MoreDetail href="/budget" />
       </header>
       <DashboardBudgetChart

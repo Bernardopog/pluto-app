@@ -13,7 +13,7 @@ export default function DashboardVault() {
       className="base-card flex flex-col lg:grid lg:grid-cols-[1fr] lg:grid-rows-[auto_1fr]"
     >
       <header className="flex justify-between">
-        <h3 className="sub-title">Cofre</h3>
+        <h2 className="subtitle">Cofre</h2>
         <MoreDetail href="/vault" />
       </header>
       <section className="flex flex-col mt-2 gap-2 lg:flex-row">

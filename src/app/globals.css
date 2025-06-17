@@ -50,7 +50,7 @@
     @apply ml-10 font-bold text-2xl text-chetwode-blue-950;
   }
 
-  .sub-title {
+  .subtitle {
     @apply font-bold text-xl text-chetwode-blue-950;
   }
 

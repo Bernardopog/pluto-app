@@ -12,7 +12,7 @@ export default function DashboardTransaction() {
       className="base-card flex flex-col gap-2"
     >
       <header className="flex justify-between">
-        <h2 className="sub-title">Transações</h2>
+        <h2 className="subtitle">Transações</h2>
         <MoreDetail href="/transaction" />
       </header>
       <DashboardTransactionForm />

@@ -12,7 +12,7 @@ export default function DashboardStatsHeader() {
 
   return (
     <header className="flex justify-between">
-      <h2 className="sub-title">Estatísticas</h2>
+      <h2 className="subtitle">Estatísticas</h2>
       <button
         className="text-chetwode-blue-950/50 duration-300 ease-in-out hover:text-chetwode-blue-950/75"
         onClick={handleModal}
