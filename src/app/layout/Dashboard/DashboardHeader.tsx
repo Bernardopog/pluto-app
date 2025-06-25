@@ -31,7 +31,7 @@ export default function DashboardHeader() {
 
   return (
     <header className="mt-2" id="dashboard-overview">
-      <ul className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_1fr] lg:grid-cols-3 xl:grid-cols-4">
+      <ul className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_1fr] lg:grid-cols-3 xl:grid-cols-4 xl:gap-4">
         <li className="sm:col-span-2 lg:col-span-3 xl:col-span-1">
           <OverviewCard
             title="Saldo"
