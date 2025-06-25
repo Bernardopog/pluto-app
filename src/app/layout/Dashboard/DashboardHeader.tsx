@@ -3,6 +3,7 @@
 import OverviewCard from "@/app/components/OverviewCard";
 import { useFinanceStore } from "@/app/stores/useFinanceStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
+import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useState } from "react";
 import {
   MdAttachMoney,
@@ -35,21 +36,24 @@ export default function DashboardHeader() {
         <li className="sm:col-span-2 lg:col-span-3 xl:col-span-1">
           <OverviewCard
             title="Saldo"
-            money={balance}
+            value={moneyFormatter(balance).replace("R$", "")}
+            valueType="currency"
             icon={<MdAttachMoney />}
           />
         </li>
         <li className="sm:col-span-2 lg:col-span-1">
           <OverviewCard
             title="Previsão do mês"
-            money={balancePerMonth}
+            value={moneyFormatter(balancePerMonth).replace("R$", "")}
+            valueType="currency"
             icon={<MdAttachMoney />}
           />
         </li>
         <li>
           <OverviewCard
             title="Renda"
-            money={income}
+            value={moneyFormatter(income).replace("R$", "")}
+            valueType="currency"
             icon={<MdPlayArrow className="rotate-270" />}
           />
         </li>
@@ -64,13 +68,15 @@ export default function DashboardHeader() {
           {typeOfExpense === "current" ? (
             <OverviewCard
               title="Despesa"
-              money={currentExpenses}
+              value={moneyFormatter(currentExpenses).replace("R$", "")}
+              valueType="currency"
               icon={<MdPlayArrow className="rotate-90" />}
             />
           ) : (
             <OverviewCard
               title="Estimativa de Despesa"
-              money={estimateExpenses}
+              value={moneyFormatter(estimateExpenses).replace("R$", "")}
+              valueType="currency"
               icon={<MdPlayArrow className="rotate-90" />}
             />
           )}

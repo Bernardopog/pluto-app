@@ -1,26 +1,32 @@
-import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { ReactNode } from "react";
 import { MdOutlineWarning } from "react-icons/md";
 
 interface IOverviewCardProps {
   title: string;
-  money: number;
+  value: number | string;
+  valueType: "currency" | "number";
   icon: ReactNode;
+  complement?: string;
 }
 
 export default function OverviewCard({
   title,
-  money,
+  value,
+  valueType,
   icon,
+  complement,
 }: IOverviewCardProps) {
-  const isNegative = money < 0;
+  let isNegative: boolean = false;
+  if (valueType === "currency") isNegative = (value as number) < 0;
 
   return (
     <article
-      className={`relative py-2 px-4 rounded-lg  shadow-md overflow-hidden duration-300 ease-in-out border-b-2 border-transparent hover:-translate-y-2 hover:shadow-lg hover:border-chetwode-blue-700 ${
-        isNegative ? "bg-red-400" : "bg-star-dust-50"
+      className={`relative h-full py-2 px-4 rounded-lg shadow-md overflow-hidden duration-300 ease-in-out border-b-2 border-transparent hover:-translate-y-2 hover:shadow-lg hover:border-chetwode-blue-700 ${
+        valueType === "currency" && isNegative
+          ? "bg-red-400"
+          : "bg-star-dust-50"
       }`}
-      aria-label={`${title}: R$ ${moneyFormatter(money).replace("R$", "")}`}
+      aria-label={`${title} = ${valueType === "currency" ? "R$" : ""}${value}`}
     >
       <h3 className="flex justify-between font-medium text-lg text-chetwode-blue-950/75">
         {title}
@@ -32,8 +38,10 @@ export default function OverviewCard({
         </span>
       )}
       <p className="mt-2 font-bold text-3xl text-chetwode-blue-950">
-        <span className="mr-1 text-xl text-chetwode-blue-700">R$</span>
-        {moneyFormatter(money).replace("R$", "")}
+        {valueType === "currency" && (
+          <span className="mr-1 text-xl text-chetwode-blue-700">R$</span>
+        )}
+        {value} <span className="text-sm">{complement}</span>
       </p>
     </article>
   );

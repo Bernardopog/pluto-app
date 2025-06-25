@@ -115,6 +115,9 @@
 #transaction-action {
   grid-area: action;
 }
+#transaction-overview {
+  grid-area: overview;
+}
 
 @media (min-width: 35rem) {
   .dashboard-layout {
