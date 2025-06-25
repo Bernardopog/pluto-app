@@ -13,7 +13,7 @@ export default function TransactionTable() {
       id="transaction-moves"
       className="base-card flex flex-col h-full p-0 overflow-hidden text-chetwode-blue-950"
     >
-      <header role="rowgroup">
+      <header role="rowgroup" className="hidden lg:block">
         <div
           role="row"
           className="grid w-full grid-cols-[0.3fr_2fr_0.5fr_0.5fr] font-bold px-1 py-2 bg-chetwode-blue-200"

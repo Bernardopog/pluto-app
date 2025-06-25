@@ -82,10 +82,10 @@
 
 .transaction-page {
   grid-template-areas:
-    "overview overview overview"
-    ".        .        action  "
-    "moves    moves    action  ";
-  grid-template-columns: repeat(2, 1fr) 0.5fr;
+    "overview"
+    "action  "
+    "moves   ";
+  grid-template-columns: 1fr;
   grid-template-rows: 0.25fr 0.25fr 1fr;
   gap: 0.5rem;
 }
@@ -131,6 +131,17 @@
   }
 }
 
+@media (min-width: 45rem) {
+  .transaction-page {
+    grid-template-areas:
+      "overview overview"
+      ".        action  "
+      "moves    moves   ";
+    grid-template-columns: 0.6fr minmax(0.4fr, 1fr);
+    grid-template-rows: 0.25fr 0.25fr 1fr;
+  }
+}
+
 @media (min-width: 64rem) {
   .dashboard-layout {
     grid-template-areas:
@@ -151,6 +162,15 @@
       "stats    moves    moves    budget  ";
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto 0.25fr minmax(0, 0.75fr);
+    gap: 1rem;
+  }
+  .transaction-page {
+    grid-template-areas:
+      "overview overview overview"
+      ".        .        action  "
+      "moves    moves    action  ";
+    grid-template-columns: repeat(2, 1fr) 0.5fr;
+    grid-template-rows: auto 0.25fr 1fr;
     gap: 1rem;
   }
 }
