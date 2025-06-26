@@ -19,7 +19,7 @@ export default function TransactionFilterButton({
     <div className="relative">
       <button
         type="button"
-        className={`min-w-32 p-1.5 rounded-lg duration-300 ease-in-out hover:brightness-95 active:brightness-75 ${
+        className={`w-full min-w-32 p-1.5 rounded-lg duration-300 ease-in-out hover:brightness-95 active:brightness-75 ${
           isActive
             ? "font-bold text-chetwode-blue-100 bg-chetwode-blue-800"
             : "text-chetwode-blue-950 bg-chetwode-blue-200"

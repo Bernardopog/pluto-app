@@ -5,7 +5,7 @@ import { TransactionTable } from "@/app/components/TransactionPage/TransactionTa
 
 export default function TransactionPage() {
   return (
-    <main className="page h-screen flex flex-col">
+    <main className="page flex flex-col">
       <h2 className="main-title">Transações</h2>
       <section className="transaction-page grid flex-1">
         <TransactionOverview />

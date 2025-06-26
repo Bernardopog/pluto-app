@@ -39,18 +39,21 @@ export default function TransactionFilter() {
   return (
     <form id="transaction-filter" className="base-card flex flex-col">
       <h2 className="subtitle">Filtros</h2>
-      <div className="flex justify-end">
+      <div className="lg:flex lg:justify-end">
         <button
-          className="p-1.5 rounded-lg duration-300 ease-in-out font-bold hover:brightness-95 active:brightness-75 bg-chetwode-blue-900 text-chetwode-blue-50"
+          className="w-full p-1.5 rounded-lg duration-300 ease-in-out font-bold hover:brightness-95 active:brightness-75 bg-chetwode-blue-900 text-chetwode-blue-50 lg:w-fit"
           type="reset"
           onClick={() => resetFullFilter()}
         >
           Limpar todos filtros
         </button>
       </div>
-      <div role="group" className="flex justify-between items-end flex-1">
-        <ul className="flex items-center w-2/3 gap-x-2">
-          <li>
+      <div
+        role="group"
+        className="flex flex-col flex-1 justify-between mt-2 xl:flex-row"
+      >
+        <ul className="grid grid-cols-1 w-full gap-2 sm:grid-cols-2 lg:grid-cols-4 xl:flex">
+          <li className="w-full lg:w-auto">
             <TransactionFilterButton
               label="Data"
               isActive={dateFilter !== "all"}
@@ -58,7 +61,7 @@ export default function TransactionFilter() {
               reset={() => resetFullDateFilter()}
             />
           </li>
-          <li>
+          <li className="w-full lg:w-auto">
             <TransactionFilterButton
               label="Valor"
               isActive={valueFilter !== "all"}
@@ -66,7 +69,7 @@ export default function TransactionFilter() {
               reset={() => resetFullValueFilter()}
             />
           </li>
-          <li>
+          <li className="w-full lg:w-auto">
             <TransactionFilterButton
               label="Categoria"
               isActive={categoryFilter !== null}
@@ -74,7 +77,7 @@ export default function TransactionFilter() {
               reset={() => resetFullCategoryFilter()}
             />
           </li>
-          <li>
+          <li className="w-full lg:w-auto">
             <TransactionFilterButton
               label="Tipo"
               isActive={transactionTypeFilter !== "all"}
@@ -83,7 +86,7 @@ export default function TransactionFilter() {
             />
           </li>
         </ul>
-        <div className="w-1/3">
+        <div className="w-full lg:w-1/3">
           <DebounceInput
             id="search"
             placeholder="Ex: Compra de um Notebook"
