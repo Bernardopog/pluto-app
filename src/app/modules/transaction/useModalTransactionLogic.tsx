@@ -57,7 +57,7 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
   const handleSubmit = (ev: React.FormEvent) => {
     ev.preventDefault();
 
-    let money = Number(transactionValue.replace(",", "."));
+    let money = Number(transactionValue);
     if (money < 0) money *= -1;
     if (transactionType === "outcome") money *= -1;
 
