@@ -1,5 +1,4 @@
-// modules/transactions/useModalTransactionLogic.ts
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import {
   ITransaction,
   useTransactionBudgetStore,
@@ -54,7 +53,7 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
     return true;
   };
 
-  const handleSubmit = (ev: React.FormEvent) => {
+  const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();
 
     let money = Number(transactionValue);

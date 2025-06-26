@@ -7,6 +7,7 @@ interface IModalHeaderProps {
 export default function ModalHeader({ type }: IModalHeaderProps) {
   let defType = type as string;
   if (type?.includes("transaction")) defType = "transaction";
+  else if (type?.includes("budget")) defType = "budget";
 
   const formatType = (type: string) => {
     switch (type) {
@@ -16,6 +17,8 @@ export default function ModalHeader({ type }: IModalHeaderProps) {
         return "estatísticas";
       case "transaction":
         return "transação";
+      case "budget":
+        return "orçamento";
       default:
         return "indefinido";
     }
@@ -23,7 +26,7 @@ export default function ModalHeader({ type }: IModalHeaderProps) {
 
   return (
     <header className="w-full p-2 rounded-t-lg bg-chetwode-blue-700">
-      <h2 className="sub-title text-chetwode-blue-50">
+      <h2 className="subtitle text-chetwode-blue-50">
         Modal de {formatType(defType)}
       </h2>
     </header>

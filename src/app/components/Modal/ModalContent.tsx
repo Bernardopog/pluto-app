@@ -5,6 +5,7 @@ import ModalGoals from "./contents/ModalGoals";
 import ModalStats from "./contents/ModalStats";
 import ModalTransaction from "./contents/ModalTransaction";
 import ModalTransactionDelete from "./contents/ModalTransactionDelete";
+import ModalBudget from "./contents/ModalBudget";
 
 export default function ModalContent() {
   const { selectedModal } = useModalStore();
@@ -20,6 +21,7 @@ export default function ModalContent() {
         <ModalTransaction type="update" />
       )}
       {selectedModal === "transactionDelete" && <ModalTransactionDelete />}
+      {selectedModal === "budgetCreate" && <ModalBudget />}
     </>
   );
 }

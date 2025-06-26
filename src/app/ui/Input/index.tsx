@@ -1,8 +1,8 @@
 import { ChangeEvent, Dispatch, ReactNode, SetStateAction } from "react";
 
 interface IInputProps {
-  state: string;
-  setState: Dispatch<SetStateAction<string>>;
+  state: string | number;
+  setState: Dispatch<SetStateAction<string>> | Dispatch<SetStateAction<number>>;
 
   label: string;
   placeholder?: string;
@@ -12,6 +12,9 @@ interface IInputProps {
   icon?: ReactNode;
   type: "text" | "number";
   required?: boolean;
+  step?: string;
+  maxLimit?: number;
+  minLimit?: number;
 }
 
 export default function Input(prop: IInputProps) {
@@ -32,9 +35,18 @@ function BasicInput({
   type,
   name,
   required,
+  step,
+  maxLimit,
+  minLimit,
 }: IInputProps) {
   const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
-    setState(ev.target.value);
+    if (type === "number") {
+      // @ts-expect-error: setState can be number or string
+      setState(Number(ev.target.value));
+    } else {
+      // @ts-expect-error: setState can be number or string
+      setState(ev.target.value);
+    }
   };
 
   return (
@@ -47,11 +59,13 @@ function BasicInput({
         placeholder={placeholder}
         name={name ?? id}
         id={id}
-        step={"0.01"}
+        step={step ?? "0.01"}
         className="p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600"
         value={state}
         onChange={handleInputChange}
         required={required}
+        min={minLimit}
+        max={maxLimit}
       />
     </div>
   );
@@ -67,9 +81,18 @@ function DecoratedInput({
   type,
   required,
   icon,
+  step,
+  maxLimit,
+  minLimit,
 }: IInputProps) {
   const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
-    setState(ev.target.value);
+    if (type === "number") {
+      // @ts-expect-error: setState can be number or string
+      setState(Number(ev.target.value));
+    } else {
+      // @ts-expect-error: setState can be number or string
+      setState(ev.target.value);
+    }
   };
 
   return (
@@ -83,11 +106,13 @@ function DecoratedInput({
           placeholder={placeholder}
           name={name ?? id}
           id={id}
-          step={"0.01"}
+          step={step ?? "0.01"}
           className="peer w-full p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600"
           value={state}
           onChange={handleInputChange}
           required={required}
+          min={minLimit}
+          max={maxLimit}
         />
         <span className="flex items-center justify-center absolute right-0 top-1/2 h-full w-10 border-2 border-l-0 rounded-r-lg -translate-y-1/2 text-3xl bg-chetwode-blue-300 text-chetwode-blue-950 border-transparent duration-300 ease-in-out peer-focus:border-chetwode-blue-600">
           {icon}

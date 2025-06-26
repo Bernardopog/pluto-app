@@ -38,7 +38,9 @@ interface ITransactionBudgetStore {
   getExpenses: (budgetId: number) => number;
   getBudgetLimit: (budgetId: number) => number;
   getBudgetRest: (budgetId: number) => number;
+
   getTotalExpenses: () => number;
+  getTotalBudgetLimit: () => number;
 }
 
 export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
@@ -94,5 +96,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       get()
         .transactionList.filter((t) => t.value < 0)
         .reduce((acc, t) => acc + t.value, 0),
+    getTotalBudgetLimit: () =>
+      get().budgetList.reduce((acc, b) => acc + b.limit, 0),
   })
 );

@@ -6,7 +6,8 @@ export type ModalType =
   | "stats"
   | "transactionCreate"
   | "transactionUpdate"
-  | "transactionDelete";
+  | "transactionDelete"
+  | "budgetCreate";
 
 interface IModalStore {
   isModalOpen: boolean;
