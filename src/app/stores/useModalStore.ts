@@ -1,5 +1,11 @@
 import { create } from "zustand";
 
+export type TransactionFilterType =
+  | "filterDate"
+  | "filterValue"
+  | "filterCategory"
+  | "filterType";
+
 export type ModalType =
   | null
   | "goals"
@@ -7,7 +13,8 @@ export type ModalType =
   | "transactionCreate"
   | "transactionUpdate"
   | "transactionDelete"
-  | "budgetCreate";
+  | "budgetCreate"
+  | TransactionFilterType;
 
 interface IModalStore {
   isModalOpen: boolean;

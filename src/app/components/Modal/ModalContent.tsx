@@ -22,6 +22,10 @@ export default function ModalContent() {
       )}
       {selectedModal === "transactionDelete" && <ModalTransactionDelete />}
       {selectedModal === "budgetCreate" && <ModalBudget />}
+      {selectedModal === "filterDate" && <p>Filtro por data</p>}
+      {selectedModal === "filterValue" && <p>Filtro por valor</p>}
+      {selectedModal === "filterCategory" && <p>Filtro por categoria</p>}
+      {selectedModal === "filterType" && <p>Filtro por tipo</p>}
     </>
   );
 }
