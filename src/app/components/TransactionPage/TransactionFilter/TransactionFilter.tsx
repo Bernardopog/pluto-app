@@ -2,22 +2,39 @@
 
 import { useDebouncedInput } from "@/app/hooks/useDebouncedInput";
 import DebounceInput from "@/app/ui/DebounceInput";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { MdSearch } from "react-icons/md";
 import {
   TransactionFilterType,
   useModalStore,
 } from "@/app/stores/useModalStore";
 import TransactionFilterButton from "./TransactionFilterButton";
+import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStore";
 
 export default function TransactionFilter() {
-  const { handleChangeDebounce } = useDebouncedInput();
+  const { value, handleChangeDebounce } = useDebouncedInput();
   const { toggleModal, selectModalType } = useModalStore();
+  const {
+    dateFilter,
+    valueFilter,
+    categoryFilter,
+    setSearchFilter,
+    transactionTypeFilter,
+    resetFullDateFilter,
+    resetFullValueFilter,
+    resetFullCategoryFilter,
+    resetFullTypeFilter,
+    resetFullFilter,
+  } = useTransactionFilterStore();
 
   const modalController = (modalType: TransactionFilterType) => {
     selectModalType(modalType);
     toggleModal();
   };
+
+  useEffect(() => {
+    setSearchFilter(value);
+  }, [value, setSearchFilter]);
 
   return (
     <form id="transaction-filter" className="base-card flex flex-col">
@@ -26,6 +43,7 @@ export default function TransactionFilter() {
         <button
           className="p-1.5 rounded-lg duration-300 ease-in-out font-bold hover:brightness-95 active:brightness-75 bg-chetwode-blue-900 text-chetwode-blue-50"
           type="reset"
+          onClick={() => resetFullFilter()}
         >
           Limpar todos filtros
         </button>
@@ -35,29 +53,33 @@ export default function TransactionFilter() {
           <li>
             <TransactionFilterButton
               label="Data"
-              isActive={true}
+              isActive={dateFilter !== "all"}
               action={() => modalController("filterDate")}
+              reset={() => resetFullDateFilter()}
             />
           </li>
           <li>
             <TransactionFilterButton
               label="Valor"
-              isActive={false}
+              isActive={valueFilter !== "all"}
               action={() => modalController("filterValue")}
+              reset={() => resetFullValueFilter()}
             />
           </li>
           <li>
             <TransactionFilterButton
               label="Categoria"
-              isActive={false}
+              isActive={categoryFilter !== null}
               action={() => modalController("filterCategory")}
+              reset={() => resetFullCategoryFilter()}
             />
           </li>
           <li>
             <TransactionFilterButton
               label="Tipo"
-              isActive={false}
+              isActive={transactionTypeFilter !== "all"}
               action={() => modalController("filterType")}
+              reset={() => resetFullTypeFilter()}
             />
           </li>
         </ul>
@@ -66,9 +88,9 @@ export default function TransactionFilter() {
             id="search"
             placeholder="Ex: Compra de um Notebook"
             icon={<MdSearch />}
-            action={(ev: ChangeEvent<HTMLInputElement>) =>
-              handleChangeDebounce(ev.target.value)
-            }
+            action={(ev: ChangeEvent<HTMLInputElement>) => {
+              handleChangeDebounce(ev.target.value);
+            }}
           />
         </div>
       </div>

@@ -6,12 +6,14 @@ interface ITransactionFilterButtonProps {
   label: string;
   isActive: boolean;
   action: () => void;
+  reset: () => void;
 }
 
 export default function TransactionFilterButton({
   label,
   isActive,
   action,
+  reset,
 }: ITransactionFilterButtonProps) {
   return (
     <div className="relative">
@@ -30,6 +32,7 @@ export default function TransactionFilterButton({
         <button
           type="button"
           className="absolute top-0 right-0 rounded-sm text-lg text-chetwode-blue-950 bg-chetwode-blue-100"
+          onClick={() => reset()}
         >
           <MdClose />
         </button>

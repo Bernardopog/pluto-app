@@ -6,6 +6,10 @@ import ModalStats from "./contents/ModalStats";
 import ModalTransaction from "./contents/ModalTransaction";
 import ModalTransactionDelete from "./contents/ModalTransactionDelete";
 import ModalBudget from "./contents/ModalBudget";
+import ModalDateFilter from "./contents/ModalDateFilter";
+import ModalTypeFilter from "./contents/ModalTypeFilter";
+import ModalValueFilter from "./contents/ModalValueFilter";
+import ModalCategoryFilter from "./contents/ModalCategoryFilter";
 
 export default function ModalContent() {
   const { selectedModal } = useModalStore();
@@ -22,10 +26,10 @@ export default function ModalContent() {
       )}
       {selectedModal === "transactionDelete" && <ModalTransactionDelete />}
       {selectedModal === "budgetCreate" && <ModalBudget />}
-      {selectedModal === "filterDate" && <p>Filtro por data</p>}
-      {selectedModal === "filterValue" && <p>Filtro por valor</p>}
-      {selectedModal === "filterCategory" && <p>Filtro por categoria</p>}
-      {selectedModal === "filterType" && <p>Filtro por tipo</p>}
+      {selectedModal === "filterDate" && <ModalDateFilter />}
+      {selectedModal === "filterValue" && <ModalValueFilter />}
+      {selectedModal === "filterCategory" && <ModalCategoryFilter />}
+      {selectedModal === "filterType" && <ModalTypeFilter />}
     </>
   );
 }
