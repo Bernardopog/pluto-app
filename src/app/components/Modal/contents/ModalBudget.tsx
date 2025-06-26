@@ -11,7 +11,7 @@ import {
   ModalBudgetColorPickerHsl,
   ModalBudgetColorPickerRgb,
 } from "./BudgetContent";
-import { useModalBudgetLogic } from "@/app/modules/budget/useModalBudgetLogic";
+import { useModalBudgetLogic } from "@/app/logic/budget/useModalBudgetLogic";
 
 export default function ModalBudget() {
   const { income } = useFinanceStore();

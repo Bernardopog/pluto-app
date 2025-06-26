@@ -4,7 +4,7 @@ import Divider from "@/app/ui/Divider";
 import Input from "@/app/ui/Input";
 import Radio from "@/app/ui/Radio";
 import { MdAttachMoney, MdFilePresent } from "react-icons/md";
-import { useModalTransactionLogic } from "@/app/modules/transaction/useModalTransactionLogic";
+import { useModalTransactionLogic } from "@/app/logic/transaction/useModalTransactionLogic";
 
 interface IModalTransactionProps {
   type: "create" | "update";
