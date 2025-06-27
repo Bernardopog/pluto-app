@@ -121,7 +121,7 @@ export default function ModalValueFilter() {
         <Radio
           id="exactly"
           name="value"
-          label="Valores negativos"
+          label="Valores iguais"
           state={typeValueFilter === "exactly"}
           setState={() => handleSelectValueType("exactly")}
         />
