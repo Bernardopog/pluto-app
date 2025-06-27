@@ -65,6 +65,14 @@
   .stat-result {
     @apply absolute top-1/2 left-1/2 text-center font-bold text-2xl text-chetwode-blue-900 -translate-1/2;
   }
+
+  .scrollbar-style {
+    @apply scrollbar-thin scrollbar-thumb-chetwode-blue-600 scrollbar-track-transparent;
+  }
+}
+
+.scrollbar-thinner::-webkit-scrollbar {
+  width: 6px;
 }
 
 .dashboard-layout {

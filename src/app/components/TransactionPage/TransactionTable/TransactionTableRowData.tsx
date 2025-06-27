@@ -31,7 +31,7 @@ export default function TransactionTableRowData({
       </div>
       <div
         role="cell"
-        className="col-span-4 p-1 border-2 rounded-lg border-chetwode-blue-950 ease-in-out duration-300 group-hover:border-chetwode-blue-600 sm:col-span-3 lg:col-span-1 lg:order-1 lg:rounded-sm"
+        className="col-span-4 p-1 border-2 rounded-lg border-chetwode-blue-950 truncate ease-in-out duration-300 group-hover:border-chetwode-blue-600 sm:col-span-3 lg:col-span-1 lg:order-1 lg:rounded-sm"
       >
         {transaction.name}
       </div>
