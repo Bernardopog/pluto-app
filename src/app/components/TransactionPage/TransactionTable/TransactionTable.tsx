@@ -115,7 +115,7 @@ export default function TransactionTable() {
 
       <section
         role="rowgroup"
-        className="flex flex-col flex-1 gap-1 p-1 bg-star-dust-50 overflow-y-auto scrollbar-thin scrollbar-thumb-chetwode-blue-600 scrollbar-track-chetwode-blue-100"
+        className="flex flex-col flex-1 min-h-0 gap-1 p-1 bg-star-dust-50 overflow-y-auto scrollbar-thin scrollbar-thumb-chetwode-blue-600 scrollbar-track-chetwode-blue-100"
       >
         {paginatedTransactions.length === 0 ? (
           <p className="text-center text-xl text-chetwode-blue-950/75 italic">

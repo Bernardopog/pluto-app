@@ -1,18 +1,10 @@
-import { TransactionAction } from "@/app/components/TransactionPage/TransactionAction";
-import { TransactionFilter } from "@/app/components/TransactionPage/TransactionFilter";
-import { TransactionOverview } from "@/app/components/TransactionPage/TransactionOverview";
-import { TransactionTable } from "@/app/components/TransactionPage/TransactionTable";
+import TransactionViewSwitcher from "./TransactionViewSwitcher";
 
 export default function TransactionPage() {
   return (
-    <main className="page flex flex-col">
+    <main className="page flex flex-col overflow-y-clip">
       <h2 className="main-title">Transações</h2>
-      <section className="transaction-page grid flex-1">
-        <TransactionOverview />
-        <TransactionFilter />
-        <TransactionAction />
-        <TransactionTable />
-      </section>
+      <TransactionViewSwitcher />
     </main>
   );
 }

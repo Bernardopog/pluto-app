@@ -88,6 +88,20 @@
   gap: 0.5rem;
 }
 
+.transaction-view-page-layout {
+  grid-template-areas:
+    "view-transaction"
+    "view-chart";
+  grid-template-columns: 1fr;
+}
+
+.transaction-view-page-layout--txn {
+  grid-template-rows: 100dvh 0px;
+}
+.transaction-view-page-layout--chart {
+  grid-template-rows: 0px 100dvh;
+}
+
 .transaction-page {
   grid-template-areas:
     "overview"
@@ -116,6 +130,13 @@
 }
 #dashboard-stats {
   grid-area: stats;
+}
+
+#transaction-view-page-txn {
+  grid-area: view-transaction;
+}
+#transaction-view-page-chart {
+  grid-area: view-chart;
 }
 
 #transaction-moves {

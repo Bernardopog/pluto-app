@@ -86,7 +86,7 @@ export default function TransactionFilter() {
             />
           </li>
         </ul>
-        <div className="w-full lg:w-1/3">
+        <div className="mt-2 w-full lg:w-1/3">
           <DebounceInput
             id="search"
             placeholder="Ex: Compra de um Notebook"
