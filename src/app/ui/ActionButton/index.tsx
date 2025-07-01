@@ -1,18 +1,18 @@
 import { ReactNode } from "react";
 
-interface ITransactionActionButtonProps {
+interface IActionButtonProps {
   action: () => void;
   icon: ReactNode;
   label: string;
   disabled?: boolean;
 }
 
-export default function TransactionActionButton({
+export default function ActionButton({
   action,
   icon,
   label,
   disabled,
-}: ITransactionActionButtonProps) {
+}: IActionButtonProps) {
   return (
     <button
       type="button"

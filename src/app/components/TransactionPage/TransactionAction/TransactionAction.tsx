@@ -4,9 +4,9 @@ import { useModalStore } from "@/app/stores/useModalStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { BsFiletypeCsv } from "react-icons/bs";
 import { MdAdd, MdAllInbox, MdDelete, MdEdit } from "react-icons/md";
-import TransactionActionButton from "./TransactionActionButton";
 import Divider from "@/app/ui/Divider";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
+import ActionButton from "@/app/ui/ActionButton";
 
 export default function TransactionAction() {
   const { toggleModal, selectModalType } = useModalStore();
@@ -63,7 +63,7 @@ export default function TransactionAction() {
       <section className="flex flex-col mt-2 gap-2">
         <section className="flex flex-col gap-2">
           <h3 className="subsubtitle">Transações</h3>
-          <TransactionActionButton
+          <ActionButton
             action={() => {
               handleModal("transactionCreate");
             }}
@@ -85,7 +85,7 @@ export default function TransactionAction() {
               Selecione uma Transação clicando nela
             </p>
           )}
-          <TransactionActionButton
+          <ActionButton
             action={() => {
               handleModal("transactionUpdate");
             }}
@@ -93,7 +93,7 @@ export default function TransactionAction() {
             label={"Editar Transação"}
             disabled={selectedTransaction === null}
           />
-          <TransactionActionButton
+          <ActionButton
             action={() => {
               handleModal("transactionDelete");
             }}
@@ -107,12 +107,12 @@ export default function TransactionAction() {
         </span>
         <section className="flex flex-col gap-2">
           <h3 className="subsubtitle">Extras</h3>
-          <TransactionActionButton
+          <ActionButton
             action={() => handleModal("budgetCreate")}
             icon={<MdAllInbox />}
             label={"Adicionar nova Categoria"}
           />
-          <TransactionActionButton
+          <ActionButton
             action={handleExport}
             icon={<BsFiletypeCsv />}
             label={"Exportar CSV"}
