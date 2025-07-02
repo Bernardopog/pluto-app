@@ -24,6 +24,7 @@ interface ITransactionBudgetStore {
   budgetList: IBudget[];
 
   selectedTransaction: ITransaction | null;
+  selectedBudget: IBudget | null;
 
   selectTransaction: (id: number) => void;
   unselectTransaction: () => void;
@@ -31,9 +32,12 @@ interface ITransactionBudgetStore {
   deleteTransaction: (id: number) => void;
   updateTransaction: (id: number, transaction: ITransaction) => void;
 
+  selectBudget: (id: number) => void;
+  unselectBudget: () => void;
   createBudgetCategory: (budget: IBudget) => void;
   updateBudgetCategory: (id: number, budget: IBudget) => void;
   deleteBudgetCategory: (id: number) => void;
+  transferBudgetCategory: (fromId: number, toId: number) => void;
 
   getExpenses: (budgetId: number) => number;
   getBudgetLimit: (budgetId: number) => number;
@@ -48,6 +52,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
     transactionList: [...TRANSACTIONPLACEHOLDER],
     budgetList: [...BUDGETPLACEHOLDER],
     selectedTransaction: null,
+    selectedBudget: null,
     selectTransaction: (id) =>
       set((state) => ({
         selectedTransaction: state.transactionList.find(
@@ -69,6 +74,9 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
           item.id === id ? transaction : item
         ),
       })),
+    selectBudget: (id) =>
+      set({ selectedBudget: get().budgetList.find((bdgt) => bdgt.id === id) }),
+    unselectBudget: () => set({ selectedBudget: null }),
     createBudgetCategory: (budget) =>
       set((state) => ({
         budgetList: [...state.budgetList, budget],
@@ -80,8 +88,16 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         ),
       })),
     deleteBudgetCategory: (id) =>
-      set((state) => ({
-        budgetList: state.budgetList.filter((item) => item.id !== id),
+      set(() => ({
+        budgetList: get().budgetList.filter((item) => item.id !== id),
+        transactionList: get().transactionList.filter((item) => item.id !== id),
+      })),
+    transferBudgetCategory: (fromId, toId) =>
+      set(() => ({
+        budgetList: get().budgetList.filter((item) => item.id !== fromId),
+        transactionList: get().transactionList.map((item) =>
+          item.id === fromId ? { ...item, categoryId: toId } : item
+        ),
       })),
     getExpenses: (budgetId) =>
       get()
