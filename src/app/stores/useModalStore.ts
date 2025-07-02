@@ -6,6 +6,12 @@ export type TransactionFilterType =
   | "filterCategory"
   | "filterType";
 
+export type BudgetModalType =
+  | "budgetCreate"
+  | "budgetUpdate"
+  | "budgetDelete"
+  | "budgetTransfer";
+
 export type ModalType =
   | null
   | "goals"
@@ -14,6 +20,7 @@ export type ModalType =
   | "transactionUpdate"
   | "transactionDelete"
   | "budgetCreate"
+  | BudgetModalType
   | TransactionFilterType;
 
 interface IModalStore {

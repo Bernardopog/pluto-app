@@ -13,7 +13,11 @@ import {
 } from "./BudgetContent";
 import { useModalBudgetLogic } from "@/app/logic/budget/useModalBudgetLogic";
 
-export default function ModalBudget() {
+interface IModalBudgetProps {
+  type: "create" | "update";
+}
+
+export default function ModalBudget({ type }: IModalBudgetProps) {
   const { income } = useFinanceStore();
   const { getTotalBudgetLimit } = useTransactionBudgetStore();
   const {
@@ -40,7 +44,7 @@ export default function ModalBudget() {
     hasError,
     handleSubmit,
     handleCancel,
-  } = useModalBudgetLogic();
+  } = useModalBudgetLogic(type);
 
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
@@ -146,7 +150,7 @@ export default function ModalBudget() {
           type="submit"
           className="w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100"
         >
-          Criar Orçamento
+          {type === "create" ? "Criar" : "Editar"} Orçamento
         </button>
       </div>
     </form>

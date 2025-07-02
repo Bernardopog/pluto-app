@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IBudget,
   useTransactionBudgetStore,
 } from "@/app/stores/useTransactionBudgetStore";
 import { useModalStore } from "@/app/stores/useModalStore";
 
-export const useModalBudgetLogic = () => {
+export const useModalBudgetLogic = (type: "create" | "update") => {
   const { toggleModal } = useModalStore();
-  const { createBudgetCategory } = useTransactionBudgetStore();
+  const {
+    createBudgetCategory,
+    updateBudgetCategory,
+    selectedBudget,
+    unselectBudget,
+  } = useTransactionBudgetStore();
 
   const [budgetName, setBudgetName] = useState<string>("");
   const [budgetLimit, setBudgetLimit] = useState<number>(100);
@@ -25,6 +30,43 @@ export const useModalBudgetLogic = () => {
   const [red, setRed] = useState<number>(0);
   const [green, setGreen] = useState<number>(0);
   const [blue, setBlue] = useState<number>(0);
+
+  useEffect(() => {
+    if (type === "update" && selectedBudget) {
+      setBudgetName(selectedBudget.name);
+      setBudgetLimit(selectedBudget.limit);
+      const checkColorType = () => {
+        if (selectedBudget.color.includes("#")) {
+          setHex(selectedBudget.color);
+          return "hex";
+        } else if (selectedBudget.color.includes("hsl")) {
+          const formattedHsl = selectedBudget.color
+            .replace("hsl(", "")
+            .replace(")", "")
+            .replaceAll(" ", "")
+            .replaceAll("%", "")
+            .split(",");
+          setHue(Number(formattedHsl[0]));
+          setSaturation(Number(formattedHsl[1]));
+          setLightness(Number(formattedHsl[2]));
+          return "hsl";
+        } else if (selectedBudget.color.includes("rgb")) {
+          const formattedRgb = selectedBudget.color
+            .replace("rgb(", "")
+            .replace(")", "")
+            .replaceAll(" ", "")
+            .split(",");
+          setRed(Number(formattedRgb[0]));
+          setGreen(Number(formattedRgb[1]));
+          setBlue(Number(formattedRgb[2]));
+          return "rgb";
+        }
+        return "hex";
+      };
+      const colorType = checkColorType();
+      setBudgetColorType(colorType);
+    }
+  }, [type, selectedBudget]);
 
   const handleReset = () => {
     setBudgetName("");
@@ -94,12 +136,17 @@ export const useModalBudgetLogic = () => {
       limit: Number(budgetLimit),
     };
 
-    createBudgetCategory(data);
+    if (type === "update" && selectedBudget) {
+      updateBudgetCategory(selectedBudget.id, data);
+      unselectBudget();
+    } else if (type === "create") createBudgetCategory(data);
     toggleModal();
   };
 
   const handleCancel = () => {
     toggleModal();
+    handleReset();
+    unselectBudget();
   };
 
   return {

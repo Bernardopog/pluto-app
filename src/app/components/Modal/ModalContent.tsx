@@ -25,7 +25,8 @@ export default function ModalContent() {
         <ModalTransaction type="update" />
       )}
       {selectedModal === "transactionDelete" && <ModalTransactionDelete />}
-      {selectedModal === "budgetCreate" && <ModalBudget />}
+      {selectedModal === "budgetCreate" && <ModalBudget type="create" />}
+      {selectedModal === "budgetUpdate" && <ModalBudget type="update" />}
       {selectedModal === "filterDate" && <ModalDateFilter />}
       {selectedModal === "filterValue" && <ModalValueFilter />}
       {selectedModal === "filterCategory" && <ModalCategoryFilter />}
