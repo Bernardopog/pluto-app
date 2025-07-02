@@ -58,6 +58,10 @@
     @apply font-bold text-lg text-chetwode-blue-950;
   }
 
+  .subsubsubtitle {
+    @apply font-bold text-base text-chetwode-blue-950;
+  }
+
   .base-card {
     @apply p-2 border-b-2 rounded-lg bg-star-dust-50 border-transparent shadow-md duration-300 ease-in-out hover:shadow-lg hover:border-chetwode-blue-700;
   }
@@ -113,6 +117,17 @@
   gap: 0.5rem;
 }
 
+.budget-page {
+  grid-template-areas:
+    "overview"
+    "action  "
+    "chart   "
+    "budgets ";
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.25fr minmax(240px, 0.5fr) minmax(50vh, 1fr) 100vh;
+  gap: 0.5rem;
+}
+
 #dashboard-overview {
   grid-area: overview;
 }
@@ -152,6 +167,19 @@
   grid-area: filter;
 }
 
+#budget-overview {
+  grid-area: overview;
+}
+#budget-action {
+  grid-area: action;
+}
+#budget-budgets {
+  grid-area: budgets;
+}
+#budget-chart {
+  grid-area: chart;
+}
+
 @media (min-width: 35rem) {
   .dashboard-layout {
     grid-template-areas:
@@ -185,6 +213,14 @@
     grid-template-columns: repeat(3, 0.35fr);
     grid-template-rows: auto 0.5fr 0.75fr 0.25fr;
   }
+  .budget-page {
+    grid-template-areas:
+      "overview overview"
+      "budgets  action  "
+      "chart    chart   ";
+    grid-template-columns: 1fr 0.75fr;
+    grid-template-rows: auto minmax(360px, 1fr) minmax(360px, 1fr);
+  }
 }
 
 @media (min-width: 90rem) {
@@ -204,6 +240,15 @@
       "moves    moves    action  ";
     grid-template-columns: repeat(2, 1fr) 0.5fr;
     grid-template-rows: auto 0.25fr 1fr;
+    gap: 1rem;
+  }
+  .budget-page {
+    grid-template-areas:
+      "overview overview"
+      "budgets  action  "
+      "budgets  chart   ";
+    grid-template-columns: 1fr 0.75fr;
+    grid-template-rows: auto auto 1fr;
     gap: 1rem;
   }
 }
