@@ -108,7 +108,7 @@ export default function ModalTransaction({ type }: IModalTransactionProps) {
             >
               <button
                 type="button"
-                className="p-2 rounded-lg"
+                className="w-full p-2 rounded-lg"
                 onClick={() => setTransactionCategory(category.id)}
               >
                 <p className="text-nowrap">{category.name}</p>

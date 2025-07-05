@@ -69,6 +69,11 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
       return;
     }
 
+    const [year, month, day] = transactionDate
+      .split("-")
+      .map((val) => Number(val));
+    const localDate = new Date(year, month - 1, day);
+
     const data: ITransaction = {
       id:
         type === "update"
@@ -76,7 +81,7 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
           : Math.random() * 100000,
       name: transactionName,
       value: money,
-      date: new Date(transactionDate),
+      date: localDate,
       categoryId: Number(transactionCategory),
     };
 

@@ -33,11 +33,14 @@ export default function DashboardTransactionForm() {
     const date = formDataObj.date as string;
 
     if (isStringValid(name) && isValueValid(value)) {
+      const [year, month, day] = date.split("-").map((val) => Number(val));
+      const localDate = new Date(year, month - 1, day);
+
       const data = {
         id: Math.random() * 100000,
         name,
         value,
-        date: date === "" ? new Date() : new Date(date),
+        date: date === "" ? new Date() : localDate,
         categoryId: Number(categoryValue),
       };
 
