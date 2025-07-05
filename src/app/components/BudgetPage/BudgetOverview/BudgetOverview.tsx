@@ -11,7 +11,7 @@ import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useState } from "react";
 
 export default function BudgetOverview() {
-  const { budgetList, getExpenses } = useTransactionBudgetStore();
+  const { budgetList, transactionList } = useTransactionBudgetStore();
 
   const [typeBalance, setTypeBalance] = useState<"expense" | "revenue">(
     "expense"
@@ -26,6 +26,26 @@ export default function BudgetOverview() {
   const handleChangeOfBalanceCard = () => {
     setTypeBalance(typeBalance === "expense" ? "revenue" : "expense");
   };
+
+  const budgetsWithExpenses = budgetList.map((bdgt) => {
+    const total = transactionList
+      .filter((txn) => txn.categoryId === bdgt.id && txn.value < 0)
+      .reduce((acc, txn) => acc + txn.value, 0);
+    return {
+      ...bdgt,
+      totalExpenses: Math.abs(total),
+    };
+  });
+
+  const budgetWithMostExpenses = budgetsWithExpenses.reduce(
+    (prevValue, current) =>
+      current.totalExpenses > prevValue.totalExpenses ? current : prevValue
+  );
+
+  const budgetWithLeastExpenses = budgetsWithExpenses.reduce(
+    (prevValue, current) =>
+      current.totalExpenses < prevValue.totalExpenses ? current : prevValue
+  );
 
   return (
     <header id="budget-overview" className="mt-2">
@@ -53,24 +73,9 @@ export default function BudgetOverview() {
               title="Maior Gasto - Orçamento"
               icon={<MdPlayArrow className="rotate-90" />}
               value={moneyFormatter(
-                Math.abs(
-                  getExpenses(
-                    budgetList.filter((bdgt) => {
-                      return (
-                        bdgt.limit ===
-                        Math.max(...budgetList.map((b) => b.limit))
-                      );
-                    })[0].id
-                  )
-                )
+                budgetWithMostExpenses.totalExpenses
               ).replace("R$", "")}
-              complement={
-                budgetList.filter((bdgt) => {
-                  return (
-                    bdgt.limit === Math.max(...budgetList.map((b) => b.limit))
-                  );
-                })[0].name
-              }
+              complement={budgetWithMostExpenses.name}
               valueType="currency"
             />
           ) : (
@@ -78,24 +83,9 @@ export default function BudgetOverview() {
               title="Menor Gasto - Orçamento"
               icon={<MdPlayArrow className="rotate-90" />}
               value={moneyFormatter(
-                Math.abs(
-                  getExpenses(
-                    budgetList.filter((bdgt) => {
-                      return (
-                        bdgt.limit ===
-                        Math.min(...budgetList.map((b) => b.limit))
-                      );
-                    })[0].id
-                  )
-                )
+                budgetWithLeastExpenses.totalExpenses
               ).replace("R$", "")}
-              complement={
-                budgetList.filter((bdgt) => {
-                  return (
-                    bdgt.limit === Math.min(...budgetList.map((b) => b.limit))
-                  );
-                })[0].name
-              }
+              complement={budgetWithLeastExpenses.name}
               valueType="currency"
             />
           )}
