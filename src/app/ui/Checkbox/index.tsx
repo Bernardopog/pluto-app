@@ -14,7 +14,7 @@ export default function Checkbox({ state, setState, label }: ICheckboxProps) {
   };
 
   return (
-    <label className="flex items-center gap-x-2">
+    <label className="flex items-center gap-x-2 cursor-pointer">
       <input
         type="checkbox"
         className="peer hidden"
