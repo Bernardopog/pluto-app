@@ -134,20 +134,21 @@ export default function BudgetChart() {
       </div>
       <div>
         <h3 className="subsubtitle">Remover do Gráfico:</h3>
-        <ul className="grid grid-cols-1 md:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-2 md:grid-cols-3">
           {budgetList.map((bdgt) => (
-            <Checkbox
-              key={bdgt.id}
-              label={bdgt.name}
-              state={excludedId.includes(bdgt.id) ? true : false}
-              setState={() => {
-                if (excludedId.includes(bdgt.id)) {
-                  removeFromExcluded(bdgt.id);
-                } else {
-                  addToExcluded(bdgt.id);
-                }
-              }}
-            />
+            <li key={bdgt.id} className="rounded-lg bg-chetwode-blue-200">
+              <Checkbox
+                label={bdgt.name}
+                state={excludedId.includes(bdgt.id) ? true : false}
+                setState={() => {
+                  if (excludedId.includes(bdgt.id)) {
+                    removeFromExcluded(bdgt.id);
+                  } else {
+                    addToExcluded(bdgt.id);
+                  }
+                }}
+              />
+            </li>
           ))}
         </ul>
       </div>
