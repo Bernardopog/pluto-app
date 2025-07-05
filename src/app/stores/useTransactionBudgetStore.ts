@@ -84,7 +84,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
     updateBudgetCategory: (id, budget) =>
       set((state) => ({
         budgetList: state.budgetList.map((item) =>
-          item.id === id ? budget : item
+          item.id === id ? { ...budget, id: id } : item
         ),
       })),
     deleteBudgetCategory: (id) =>
