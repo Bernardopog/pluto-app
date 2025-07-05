@@ -89,14 +89,16 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       })),
     deleteBudgetCategory: (id) =>
       set(() => ({
-        budgetList: get().budgetList.filter((item) => item.id !== id),
-        transactionList: get().transactionList.filter((item) => item.id !== id),
+        budgetList: get().budgetList.filter((bdgt) => bdgt.id !== id),
+        transactionList: get().transactionList.filter(
+          (txn) => txn.categoryId !== id
+        ),
       })),
     transferBudgetCategory: (fromId, toId) =>
       set(() => ({
-        budgetList: get().budgetList.filter((item) => item.id !== fromId),
-        transactionList: get().transactionList.map((item) =>
-          item.id === fromId ? { ...item, categoryId: toId } : item
+        budgetList: get().budgetList.filter((bdgt) => bdgt.id !== fromId),
+        transactionList: get().transactionList.map((txn) =>
+          txn.categoryId === fromId ? { ...txn, categoryId: toId } : txn
         ),
       })),
     getExpenses: (budgetId) =>
