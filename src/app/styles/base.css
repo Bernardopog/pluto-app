@@ -1,0 +1,8 @@
+@layer base {
+  button {
+    cursor: pointer;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.5;
+  }
+}

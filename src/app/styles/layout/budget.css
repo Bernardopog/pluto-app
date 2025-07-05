@@ -1,0 +1,46 @@
+.budget-page {
+  grid-template-areas:
+    "overview"
+    "action  "
+    "chart   "
+    "budgets ";
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.25fr minmax(240px, 0.5fr) minmax(50vh, 1fr) 100vh;
+  gap: 0.5rem;
+}
+
+#budget-overview {
+  grid-area: overview;
+}
+#budget-action {
+  grid-area: action;
+}
+#budget-budgets {
+  grid-area: budgets;
+}
+#budget-chart {
+  grid-area: chart;
+}
+
+@media (min-width: 64rem) {
+  .budget-page {
+    grid-template-areas:
+      "overview overview"
+      "budgets  action  "
+      "chart    chart   ";
+    grid-template-columns: 1fr 0.75fr;
+    grid-template-rows: auto minmax(360px, 1fr) minmax(360px, 1fr);
+  }
+}
+
+@media (min-width: 90rem) {
+  .budget-page {
+    grid-template-areas:
+      "overview overview"
+      "budgets  action  "
+      "budgets  chart   ";
+    grid-template-columns: 1fr 0.75fr;
+    grid-template-rows: auto auto 1fr;
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,33 @@
+@layer components {
+  .page {
+    @apply min-h-dvh p-2 pt-4 pb-4 lg:pb-2 bg-chetwode-blue-100;
+  }
+
+  .main-title {
+    @apply ml-10 font-bold text-2xl text-chetwode-blue-950;
+  }
+
+  .subtitle {
+    @apply font-bold text-xl text-chetwode-blue-950;
+  }
+
+  .subsubtitle {
+    @apply font-bold text-lg text-chetwode-blue-950;
+  }
+
+  .subsubsubtitle {
+    @apply font-bold text-base text-chetwode-blue-950;
+  }
+
+  .base-card {
+    @apply p-2 border-b-2 rounded-lg bg-star-dust-50 border-transparent shadow-md duration-300 ease-in-out hover:shadow-lg hover:border-chetwode-blue-700;
+  }
+
+  .stat-result {
+    @apply absolute top-1/2 left-1/2 text-center font-bold text-2xl text-chetwode-blue-900 -translate-1/2;
+  }
+
+  .scrollbar-style {
+    @apply scrollbar-thin scrollbar-thumb-chetwode-blue-600 scrollbar-track-transparent;
+  }
+}
