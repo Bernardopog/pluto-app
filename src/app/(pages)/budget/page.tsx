@@ -1,5 +1,6 @@
 import { BudgetAction } from "@/app/components/BudgetPage/BudgetAction";
 import { BudgetChart } from "@/app/components/BudgetPage/BudgetChart";
+import { BudgetList } from "@/app/components/BudgetPage/BudgetList";
 import { BudgetOverview } from "@/app/components/BudgetPage/BudgetOverview";
 
 export default function page() {
@@ -10,6 +11,7 @@ export default function page() {
         <BudgetOverview />
         <BudgetAction />
         <BudgetChart />
+        <BudgetList />
       </section>
     </main>
   );

@@ -10,6 +10,7 @@ import {
 } from "@/app/stores/useModalStore";
 import TransactionFilterButton from "./TransactionFilterButton";
 import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStore";
+import { useSearchParams } from "next/navigation";
 
 export default function TransactionFilter() {
   const { value, handleChangeDebounce } = useDebouncedInput();
@@ -25,6 +26,7 @@ export default function TransactionFilter() {
     resetFullCategoryFilter,
     resetFullTypeFilter,
     resetFullFilter,
+    setCategoryFilter,
   } = useTransactionFilterStore();
 
   const modalController = (modalType: TransactionFilterType) => {
@@ -32,9 +34,14 @@ export default function TransactionFilter() {
     toggleModal();
   };
 
+  const searchParams = useSearchParams();
+
   useEffect(() => {
     setSearchFilter(value);
-  }, [value, setSearchFilter]);
+    if (searchParams.has("category")) {
+      setCategoryFilter(Number(searchParams.get("category")));
+    }
+  }, [value, setSearchFilter, searchParams, setCategoryFilter]);
 
   return (
     <form id="transaction-filter" className="base-card flex flex-col">
