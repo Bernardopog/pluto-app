@@ -7,6 +7,7 @@ import {
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useState } from "react";
 import DashboardBudgetLegendController from "./DashboardBudgetLegendController";
+import { MdWarning } from "react-icons/md";
 
 export type LegendType = "expenses-limit" | "rest";
 
@@ -43,13 +44,23 @@ export default function DashboardBudgetLegend({
             {typeOfLegend === "expenses-limit" ? (
               <span>
                 {moneyFormatter(Math.abs(getExpenses(budgetItem.id)))}
-                <span className="text-chetwode-blue-950/60">
+                <span className="inline-flex gap-2 text-chetwode-blue-950/60">
                   {" "}
                   /{moneyFormatter(budgetItem.limit)}
+                  {Math.abs(getExpenses(budgetItem.id)) > budgetItem.limit && (
+                    <MdWarning className="text-xl" />
+                  )}
                 </span>
               </span>
             ) : (
-              <span>{moneyFormatter(getBudgetRest(budgetItem.id))}</span>
+              <span className="inline-flex gap-2">
+                {moneyFormatter(getBudgetRest(budgetItem.id))}{" "}
+                <span className="text-chetwode-blue-950/60">
+                  {getBudgetRest(budgetItem.id) < 0 && (
+                    <MdWarning className="text-xl" />
+                  )}
+                </span>
+              </span>
             )}
           </li>
         ))}
