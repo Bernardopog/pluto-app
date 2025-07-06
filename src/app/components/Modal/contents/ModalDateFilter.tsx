@@ -46,7 +46,14 @@ export default function ModalDateFilter() {
     setDateFilter(typeDateFilter);
 
     setFirstDate(new Date(firstDateInput));
-    if (secondDateInput) setSecondDate(new Date(secondDateInput));
+    if (secondDateInput) {
+      const [year, month, day] = secondDateInput
+        .split("-")
+        .map((val) => Number(val));
+      const localDate = new Date(year, month - 1, day);
+
+      setSecondDate(new Date(localDate));
+    }
 
     toggleModal();
   };
