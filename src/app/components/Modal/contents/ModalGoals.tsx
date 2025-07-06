@@ -23,10 +23,13 @@ export default function ModalGoals() {
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();
+    console.log(goalPrice, typeof goalPrice);
 
     const data: IGoal = {
       name: goalName,
-      price: Number(goalPrice.replace(",", ".")),
+      price: Number.isNaN(Number(goalPrice))
+        ? Number(goalPrice.replace(",", "."))
+        : Number(goalPrice),
       deadline: wantDeadline ? deadline : null,
       progress: baseProgress,
     };
