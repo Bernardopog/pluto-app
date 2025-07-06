@@ -19,7 +19,7 @@ export default function TransactionViewSwitcher() {
     >
       <Inert
         isVisible={view === "table"}
-        className="min-h-0 h-full max-h-[calc(100vh-32px-24px)] overflow-clip"
+        className="min-h-0 h-full max-h-[calc(100vh-32px-24px)] overflow-y-auto"
       >
         <TransactionTablePage />
       </Inert>
