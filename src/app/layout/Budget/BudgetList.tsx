@@ -1,7 +1,7 @@
 "use client";
 
+import { BudgetListItem } from "@/app/components/BudgetPage/BudgetList";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
-import BudgetListItem from "./BudgetListItem";
 
 export default function BudgetList() {
   const { budgetList, getBudgetLimit, getExpenses } =

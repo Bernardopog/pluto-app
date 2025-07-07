@@ -5,7 +5,7 @@ import {
   MdOutlineRotateRight,
   MdPlayArrow,
 } from "react-icons/md";
-import OverviewCard from "../../OverviewCard";
+import OverviewCard from "../../components/OverviewCard";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useState } from "react";
