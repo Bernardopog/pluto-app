@@ -27,15 +27,20 @@ export default function BudgetOverview() {
     setTypeBalance(typeBalance === "expense" ? "revenue" : "expense");
   };
 
-  const budgetsWithExpenses = budgetList.map((bdgt) => {
-    const total = transactionList
-      .filter((txn) => txn.categoryId === bdgt.id && txn.value < 0)
-      .reduce((acc, txn) => acc + txn.value, 0);
-    return {
-      ...bdgt,
-      totalExpenses: Math.abs(total),
-    };
-  });
+  const bdgtLength = budgetList.length;
+
+  const budgetsWithExpenses =
+    bdgtLength > 0
+      ? budgetList.map((bdgt) => {
+          const total = transactionList
+            .filter((txn) => txn.categoryId === bdgt.id && txn.value < 0)
+            .reduce((acc, txn) => acc + txn.value, 0);
+          return {
+            ...bdgt,
+            totalExpenses: Math.abs(total),
+          };
+        })
+      : [{ id: 0, name: "Vazio", limit: 0, color: "#000", totalExpenses: 0 }];
 
   const budgetWithMostExpenses = budgetsWithExpenses.reduce(
     (prevValue, current) =>
@@ -47,6 +52,11 @@ export default function BudgetOverview() {
       current.totalExpenses < prevValue.totalExpenses ? current : prevValue
   );
 
+  const finalBudgetList =
+    bdgtLength > 0
+      ? budgetList
+      : [{ id: 0, name: "Vazio", limit: 0, color: "#000", totalExpenses: 0 }];
+
   return (
     <header id="budget-overview" className="mt-2">
       <ul className="grid grid-cols-1 gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-4">
@@ -55,7 +65,7 @@ export default function BudgetOverview() {
             title="Dinheiro Alocado para Orçamento"
             icon={<MdAttachMoney />}
             value={moneyFormatter(
-              budgetList.reduce((acc, item) => acc + item.limit, 0)
+              finalBudgetList.reduce((acc, item) => acc + item.limit, 0)
             ).replace("R$", "")}
             valueType="currency"
           />
@@ -103,9 +113,10 @@ export default function BudgetOverview() {
               title="Maior Alocamento de Orçamento"
               icon={<MdAttachMoney />}
               value={
-                budgetList.filter((bdgt) => {
+                finalBudgetList.filter((bdgt) => {
                   return (
-                    bdgt.limit === Math.max(...budgetList.map((b) => b.limit))
+                    bdgt.limit ===
+                    Math.max(...finalBudgetList.map((b) => b.limit))
                   );
                 })[0].name
               }
@@ -116,9 +127,10 @@ export default function BudgetOverview() {
               title="Menor Alocamento de Orçamento"
               icon={<MdAttachMoney />}
               value={
-                budgetList.filter((bdgt) => {
+                finalBudgetList.filter((bdgt) => {
                   return (
-                    bdgt.limit === Math.min(...budgetList.map((b) => b.limit))
+                    bdgt.limit ===
+                    Math.min(...finalBudgetList.map((b) => b.limit))
                   );
                 })[0].name
               }
