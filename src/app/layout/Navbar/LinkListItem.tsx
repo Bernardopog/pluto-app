@@ -16,20 +16,13 @@ export default function LinkListItem({
 }: ILinkListItemProps) {
   return (
     <li
-      className={`flex items-center relative z-0 p-2 rounded-r-lg ${
+      className={`flex items-center relative z-0 rounded-r-lg duration-300 ease-in-out ${
         isActive
-          ? "text-star-dust-950 font-bold"
-          : "bg-transparent border-transparent font-medium"
+          ? "border-l-4 font-bold border-chetwode-blue-500 bg-star-dust-100 text-star-dust-950 hover:bg-chetwode-blue-300"
+          : "bg-transparent border-transparent font-medium hover:bg-chetwode-blue-900"
       }`}
     >
-      <div
-        className={`absolute left-0 -z-10 h-full rounded-r-lg duration-300 ease-in-out ${
-          isActive
-            ? "w-full border-l-4 border-chetwode-blue-500 bg-star-dust-100"
-            : "bg-transparent w-0 border-0"
-        }`}
-      ></div>
-      <Link href={href} className="flex size-full gap-x-2">
+      <Link href={href} className="flex size-full p-2 gap-x-2">
         <span className="text-2xl">{icon}</span>
         {label}
       </Link>
