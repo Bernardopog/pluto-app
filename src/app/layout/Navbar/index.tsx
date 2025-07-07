@@ -38,9 +38,12 @@ export default function Navbar() {
           className="size-full bg-black/25 backdrop-blur-xs"
           onClick={handleSidebar}
         >
-          <nav className="w-64 h-full py-4 bg-chetwode-blue-800 text-star-dust-50">
+          <nav
+            className="w-64 h-full py-4 bg-chetwode-blue-800 text-star-dust-50"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h1 className="ml-4 text-3xl font-bold">Pluto</h1>
-            <NavbarLinkList />
+            <NavbarLinkList handleSidebar={handleSidebar} />
           </nav>
         </div>
       </Inert>

@@ -8,7 +8,11 @@ import LinkListItem from "./LinkListItem";
 import { usePathname } from "next/navigation";
 import { BsPiggyBank } from "react-icons/bs";
 
-export default function NavbarLinkList() {
+export default function NavbarLinkList({
+  handleSidebar,
+}: {
+  handleSidebar: () => void;
+}) {
   const path = usePathname();
 
   return (
@@ -18,24 +22,28 @@ export default function NavbarLinkList() {
         label="Dashboard"
         isActive={path === "/dashboard"}
         icon={<MdDashboard />}
+        handleSidebar={handleSidebar}
       />
       <LinkListItem
         href="/budget"
         label="Orçamento"
         isActive={path === "/budget"}
         icon={<MdAttachMoney />}
+        handleSidebar={handleSidebar}
       />
       <LinkListItem
         href="/vault"
         label="Cofre"
         isActive={path === "/vault"}
         icon={<BsPiggyBank className="scale-x-[-1]" />}
+        handleSidebar={handleSidebar}
       />
       <LinkListItem
         href="/transaction"
         label="Transações"
         isActive={path === "/transaction"}
         icon={<MdOutlineTableChart />}
+        handleSidebar={handleSidebar}
       />
     </ul>
   );

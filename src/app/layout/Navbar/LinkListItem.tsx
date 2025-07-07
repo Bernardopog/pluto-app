@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -6,6 +7,7 @@ interface ILinkListItemProps {
   label: string;
   isActive: boolean;
   icon: ReactNode;
+  handleSidebar: () => void;
 }
 
 export default function LinkListItem({
@@ -13,6 +15,7 @@ export default function LinkListItem({
   label,
   isActive,
   icon,
+  handleSidebar,
 }: ILinkListItemProps) {
   return (
     <li
@@ -22,7 +25,11 @@ export default function LinkListItem({
           : "bg-transparent border-transparent font-medium hover:bg-chetwode-blue-900"
       }`}
     >
-      <Link href={href} className="flex size-full p-2 gap-x-2">
+      <Link
+        href={href}
+        className="flex size-full p-2 gap-x-2"
+        onClick={handleSidebar}
+      >
         <span className="text-2xl">{icon}</span>
         {label}
       </Link>
