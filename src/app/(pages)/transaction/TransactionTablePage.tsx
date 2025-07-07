@@ -1,7 +1,7 @@
-import { TransactionAction } from "@/app/components/TransactionPage/TransactionAction";
-import { TransactionFilter } from "@/app/components/TransactionPage/TransactionFilter";
-import { TransactionOverview } from "@/app/components/TransactionPage/TransactionOverview";
-import { TransactionTable } from "@/app/components/TransactionPage/TransactionTable";
+import TransactionAction from "@/app/layout/Transaction/TransactionAction";
+import TransactionFilter from "@/app/layout/Transaction/TransactionFilter";
+import TransactionOverview from "@/app/layout/Transaction/TransactionOverview";
+import TransactionTable from "@/app/layout/Transaction/TransactionTable";
 
 export default function TransactionTablePage() {
   return (

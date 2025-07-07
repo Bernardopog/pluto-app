@@ -1,7 +1,8 @@
 "use client";
 
+import { TransactionTableRowData } from "@/app/components/TransactionPage/TransactionTable";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
-import TransactionTableRowData from "./TransactionTableRowData";
+
 import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStore";
 import { useEffect, useState } from "react";
 

@@ -1,1 +1,1 @@
-export { default as TransactionFilter } from "./TransactionFilter";
+export { default as TransactionFilterButton } from "./TransactionFilterButton";

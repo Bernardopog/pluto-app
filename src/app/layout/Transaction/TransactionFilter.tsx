@@ -8,9 +8,10 @@ import {
   TransactionFilterType,
   useModalStore,
 } from "@/app/stores/useModalStore";
-import TransactionFilterButton from "./TransactionFilterButton";
+
 import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStore";
 import { useSearchParams } from "next/navigation";
+import { TransactionFilterButton } from "@/app/components/TransactionPage/TransactionFilter";
 
 export default function TransactionFilter() {
   const { value, handleChangeDebounce } = useDebouncedInput();
