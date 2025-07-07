@@ -23,7 +23,6 @@ export default function ModalGoals() {
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();
-    console.log(goalPrice, typeof goalPrice);
 
     const data: IGoal = {
       name: goalName,
