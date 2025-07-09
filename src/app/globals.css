@@ -10,6 +10,9 @@
 @import "./styles/layout/budget.css";
 @import "./styles/layout/vault.css";
 
+/* Animation */
+@import "./styles/animation.css";
+
 .scrollbar-thinner::-webkit-scrollbar {
   width: 6px;
 }

@@ -1,0 +1,13 @@
+@theme {
+  --animate-move-in: move-in 1s ease-out forwards;
+  @keyframes move-in {
+    from {
+      transform: translate(0, -100vh);
+      opacity: 0;
+    }
+    to {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+}

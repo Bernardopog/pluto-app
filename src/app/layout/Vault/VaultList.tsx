@@ -18,8 +18,8 @@ export default function VaultList() {
     >
       <h2 className="subtitle">Cofres</h2>
       <ul className="grid grid-cols-1 flex-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
-        {vaultListWithItems.map((vault) => (
-          <VaultListItem vault={vault} key={vault.id} />
+        {vaultListWithItems.map((vault, idx) => (
+          <VaultListItem vault={vault} key={vault.id} index={idx} />
         ))}
         {vaultListWithItems.length < 4 && <VaultListBtn />}
       </ul>
