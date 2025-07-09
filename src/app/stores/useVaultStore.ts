@@ -1,28 +1,82 @@
 import { create } from "zustand";
-import { VAULTPLACEHOLDER } from "../mock/placeholders";
+import { VAULTITEMPLACEHOLDER, VAULTPLACEHOLDER } from "../mock/placeholders";
+import { iconNameType } from "../data/iconMap";
 
-export interface ISavedItem {
+export interface IVaultItem {
   id: string;
   name: string;
   value: number;
+  vaultId: number;
+}
+
+export interface IVault {
+  id: number;
+  name: string;
+  targetPrice: number;
+  icon: iconNameType;
 }
 
 interface IVaultState {
-  savedHistory: ISavedItem[];
-  addSavedItem: (item: ISavedItem) => void;
-  removeSavedItem: (id: string) => void;
-  getTotalMoneySaved: () => number;
+  vaultList: IVault[];
+  createVault: (vault: IVault) => void;
+  deleteVault: (id: number) => void;
+  updateVault: (id: number, vault: IVault) => void;
+
+  selectedVault: IVault | null;
+  selectVault: (id: number) => void;
+  unselectVault: () => void;
+
+  vaultItemList: IVaultItem[];
+  addVaultItem: (item: IVaultItem) => void;
+  removeVaultItem: (id: string) => void;
+  editVaultItem: (id: string, updatedItem: IVaultItem) => void;
+
+  getTotalMoneySavedFromVault: (vaultId: number) => number;
 }
 
 export const useVaultStore = create<IVaultState>((set, get) => ({
-  savedHistory: [...VAULTPLACEHOLDER],
+  vaultList: [...VAULTPLACEHOLDER],
 
-  addSavedItem: (item) =>
-    set((state) => ({ savedHistory: [...state.savedHistory, item] })),
-  removeSavedItem: (id) =>
+  createVault: (vault) =>
     set((state) => ({
-      savedHistory: state.savedHistory.filter((item) => item.id !== id),
+      vaultList:
+        get().vaultList.length < 4
+          ? [...state.vaultList, vault]
+          : state.vaultList,
     })),
-  getTotalMoneySaved: () =>
-    get().savedHistory.reduce((acc, item) => acc + item.value, 0),
+  deleteVault: (id) =>
+    set((state) => ({
+      vaultList: state.vaultList.filter((item) => item.id !== id),
+    })),
+  updateVault: (id, vault) =>
+    set((state) => ({
+      vaultList: state.vaultList.map((item) => (item.id === id ? vault : item)),
+    })),
+
+  selectedVault: null,
+  selectVault: (id) =>
+    set((state) => ({
+      selectedVault: state.vaultList.find((item) => item.id === id),
+    })),
+  unselectVault: () => set({ selectedVault: null }),
+
+  vaultItemList: [...VAULTITEMPLACEHOLDER],
+
+  addVaultItem: (item) =>
+    set((state) => ({ vaultItemList: [...state.vaultItemList, item] })),
+  removeVaultItem: (id) =>
+    set((state) => ({
+      vaultItemList: state.vaultItemList.filter((item) => item.id !== id),
+    })),
+  editVaultItem: (id, updatedItem) =>
+    set((state) => ({
+      vaultItemList: state.vaultItemList.map((item) =>
+        item.id === id ? updatedItem : item
+      ),
+    })),
+
+  getTotalMoneySavedFromVault: (vaultId) =>
+    get()
+      .vaultItemList.filter((item) => item.vaultId === vaultId)
+      .reduce((acc, item) => acc + item.value, 0),
 }));

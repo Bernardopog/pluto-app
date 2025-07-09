@@ -8,6 +8,7 @@
 @import "./styles/layout/dashboard.css";
 @import "./styles/layout/transaction.css";
 @import "./styles/layout/budget.css";
+@import "./styles/layout/vault.css";
 
 .scrollbar-thinner::-webkit-scrollbar {
   width: 6px;

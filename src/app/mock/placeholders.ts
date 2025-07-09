@@ -1,6 +1,6 @@
 import { ITransaction } from "../stores/useTransactionBudgetStore";
 import { IBudget } from "../stores/useTransactionBudgetStore";
-import { ISavedItem } from "../stores/useVaultStore";
+import { IVaultItem, IVault } from "../stores/useVaultStore";
 
 export const INCOMEPLACEHOLDER = 3200;
 
@@ -49,41 +49,69 @@ export const BUDGETPLACEHOLDER: IBudget[] = [
   },
 ];
 
-export const VAULTPLACEHOLDER: ISavedItem[] = [
+export const VAULTPLACEHOLDER: IVault[] = [
+  {
+    id: 1,
+    name: "Viagem",
+    targetPrice: 1000,
+    icon: "plane",
+  },
+  {
+    id: 2,
+    name: "Passear",
+    targetPrice: 200,
+    icon: "car",
+  },
+  {
+    id: 3,
+    name: "Economia",
+    targetPrice: 500,
+    icon: "piggy",
+  },
+];
+
+export const VAULTITEMPLACEHOLDER: IVaultItem[] = [
   {
     id: "1",
     name: "Desconto",
     value: 25,
+    vaultId: 2,
   },
   {
     id: "2",
     name: "A pé",
     value: 80,
+    vaultId: 1,
   },
   {
     id: "3",
     name: "Presente",
     value: 100,
+    vaultId: 1,
   },
   {
     id: "4",
     name: "Encontrado",
     value: 5,
+    vaultId: 3,
   },
   {
     id: "5",
     name: "Reciclagem",
     value: 10,
+    vaultId: 1,
   },
   {
     id: "6",
     name: "Renda fixa",
     value: 50,
+    vaultId: 2,
   },
   {
     id: "7",
     name: "Presente",
     value: 75,
+    vaultId: 2,
   },
 ];
 

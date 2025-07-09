@@ -1,0 +1,46 @@
+.vault-page {
+  grid-template-areas:
+    "overview"
+    "action  "
+    "vaults  "
+    "chart  ";
+  grid-template-columns: 1fr;
+  grid-template-rows: auto minmax(360px, 1fr) 100vh auto;
+  gap: 0.5rem;
+}
+
+#vault-overview {
+  grid-area: overview;
+}
+#vault-action {
+  grid-area: action;
+}
+#vault-chart {
+  grid-area: chart;
+}
+#vault-vaults {
+  grid-area: vaults;
+}
+
+@media (min-width: 64rem) {
+  .vault-page {
+    grid-template-areas:
+      "overview overview"
+      "action   chart  "
+      "vaults   vaults  ";
+    grid-template-columns: 1fr 0.75fr;
+    grid-template-rows: auto minmax(100px, 0.5fr) minmax(560px, 1fr);
+  }
+}
+
+@media (min-width: 90rem) {
+  .vault-page {
+    grid-template-areas:
+      "overview overview"
+      "vaults  action  "
+      "vaults  chart   ";
+    grid-template-columns: 0.75fr 0.25fr;
+    grid-template-rows: auto 0.4fr 0.6fr;
+    gap: 1rem;
+  }
+}
