@@ -5,6 +5,7 @@ export interface IGoal {
   price: number;
   deadline: string | null;
   progress: "balance" | "vault";
+  assignedVault: number | null;
 }
 
 interface IGoalsStore {

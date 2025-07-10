@@ -8,10 +8,12 @@ import Checkbox from "@/app/ui/Checkbox";
 import Input from "@/app/ui/Input";
 import Radio from "@/app/ui/Radio";
 import Divider from "@/app/ui/Divider";
+import { useVaultStore } from "@/app/stores/useVaultStore";
 
 export default function ModalGoals() {
   const { createGoal } = useGoalsStore();
   const { toggleModal } = useModalStore();
+  const { vaultList } = useVaultStore();
 
   const [goalName, setGoalName] = useState<string>("");
   const [goalPrice, setGoalPrice] = useState<string>("");
@@ -20,22 +22,36 @@ export default function ModalGoals() {
   const [baseProgress, setBaseProgress] = useState<"balance" | "vault">(
     "balance"
   );
+  const [selectedVaultId, setSelectedVaultId] = useState<number | null>(null);
+  const [hasError, setHasError] = useState<boolean>(false);
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();
 
-    const data: IGoal = {
+    let data: IGoal = {
       name: goalName,
       price: Number.isNaN(Number(goalPrice))
         ? Number(goalPrice.replace(",", "."))
         : Number(goalPrice),
       deadline: wantDeadline ? deadline : null,
       progress: baseProgress,
+      assignedVault: null,
     };
+
+    if (baseProgress === "vault" && !selectedVaultId) {
+      setHasError(true);
+      return;
+    }
+    if (baseProgress === "balance") data = { ...data, assignedVault: null };
+    if (baseProgress === "vault")
+      data = { ...data, assignedVault: selectedVaultId };
 
     if (data.name && data.price) {
       createGoal(data);
       toggleModal();
+      setHasError(false);
+    } else {
+      setHasError(true);
     }
   };
 
@@ -121,6 +137,39 @@ export default function ModalGoals() {
           />
         </div>
       </div>
+      {baseProgress === "vault" && (
+        <div>
+          <h3 className="subsubtitle">
+            Selecione o Cofre
+            <span className="font-normal text-chetwode-blue-600 inline">*</span>
+          </h3>
+
+          <ul className="grid grid-cols-2 md:grid-cols-4 mt-2 gap-2">
+            {vaultList.map((vault) => (
+              <li key={vault.id}>
+                <button
+                  type="button"
+                  className={`w-full p-2 border-2 rounded-lg font-medium text-chetwode-blue-950 duration-300 ease-in-out ${
+                    selectedVaultId === vault.id
+                      ? "bg-chetwode-blue-300 hover:bg-chetwode-blue-400 border-chetwode-blue-600"
+                      : "bg-chetwode-blue-200 hover:bg-chetwode-blue-300 border-transparent"
+                  }`}
+                  onClick={() => setSelectedVaultId(vault.id)}
+                >
+                  {vault.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {hasError && (
+        <p className="text-red-600">
+          Parece que tem algum erro no formulário, certifique-se de escolher um
+          objetivo, um valor e caso tenha marcado poupança escolha o cofre que
+          você quer usar como base de progresso.
+        </p>
+      )}
       <div className="flex self-end gap-x-2">
         <button
           type="button"

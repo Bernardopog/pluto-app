@@ -9,10 +9,13 @@ import DashboardGoalsPercentageDisplay from "./DashboardGoalsPercentageDisplay";
 
 export default function DashboardGoalsSelectedGoal() {
   const { goal } = useGoalsStore();
-  const { getTotalMoneySaved } = useVaultStore();
+  const { getTotalMoneySavedFromVault } = useVaultStore();
   const { balance } = useFinanceStore();
 
-  const money = goal?.progress === "vault" ? getTotalMoneySaved() : balance;
+  const money =
+    goal?.progress === "vault"
+      ? getTotalMoneySavedFromVault(goal.assignedVault!)
+      : balance;
 
   return (
     <>
