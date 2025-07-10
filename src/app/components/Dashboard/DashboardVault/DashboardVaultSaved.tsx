@@ -35,7 +35,7 @@ export default function DashboardVaultSaved() {
       <Inert isVisible={isVaultMenuOpen}>
         <ul
           className={`flex flex-col absolute left-0 z-10 size-full p-2 gap-2 rounded-lg bg-chetwode-blue-200 overflow-y-auto scrollbar-style scrollbar-thinner duration-300 ease-in-out ${
-            isVaultMenuOpen ? "top-0" : "-top-32"
+            isVaultMenuOpen ? "top-0" : "-top-64"
           }`}
         >
           {vaultList.map((vault) => (
