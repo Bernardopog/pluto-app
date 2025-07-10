@@ -5,7 +5,7 @@ import { FormEvent, useState } from "react";
 import { MdAdd } from "react-icons/md";
 
 export default function DashboardVaultAdd() {
-  const { addSavedItem } = useVaultStore();
+  const { addVaultItem, selectedDashboardVault } = useVaultStore();
 
   const [hadAnError, setHadAnError] = useState<boolean>(false);
 
@@ -32,7 +32,13 @@ export default function DashboardVaultAdd() {
     const value = Number(formDataObj.value);
 
     if (isEventValid(name) && isValueValid(value)) {
-      addSavedItem({ id: `${Math.random() * 1000}`, name, value });
+      if (selectedDashboardVault === null) return;
+      addVaultItem({
+        id: `${Math.random() * 1000}`,
+        name,
+        value,
+        vaultId: selectedDashboardVault,
+      });
       form.reset();
       setHadAnError(false);
     } else {

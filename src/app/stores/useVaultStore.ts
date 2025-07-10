@@ -31,6 +31,9 @@ interface IVaultState {
   removeVaultItem: (id: string) => void;
   editVaultItem: (id: string, updatedItem: IVaultItem) => void;
 
+  selectedDashboardVault: number | null;
+  selectDashboardVault: (id: number) => void;
+
   getTotalMoneySavedFromVault: (vaultId: number) => number;
 }
 
@@ -74,6 +77,9 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
         item.id === id ? updatedItem : item
       ),
     })),
+
+  selectedDashboardVault: null,
+  selectDashboardVault: (id) => set({ selectedDashboardVault: id }),
 
   getTotalMoneySavedFromVault: (vaultId) =>
     get()
