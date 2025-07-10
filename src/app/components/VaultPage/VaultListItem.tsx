@@ -23,7 +23,7 @@ export default function VaultListItem({
     >
       <article className="flex flex-col items-center h-full p-1 gap-1">
         <VaultListItemHeader vault={vault} />
-        <ul className="flex flex-col flex-1 w-full min-h-124 max-h-124 p-2 gap-1 rounded-lg bg-chetwode-blue-100 overflow-y-auto scrollbar-style scrollbar-thinner">
+        <ul className="flex flex-col flex-1 w-full min-h-120 max-h-120 p-2 gap-1 rounded-lg bg-chetwode-blue-100 overflow-y-auto scrollbar-style scrollbar-thinner">
           {vault.items.map((item) => (
             <VaultListItemSaved key={item.id} item={item} />
           ))}
