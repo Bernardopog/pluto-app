@@ -18,7 +18,7 @@ export default function VaultListItem({
 }) {
   return (
     <li
-      className="size-full rounded-lg shadow-md animate-move-in"
+      className="size-full rounded-lg shadow-md opacity-0 animate-move-in"
       style={{ animationDelay: `${index * 25}ms` }}
     >
       <article className="flex flex-col items-center h-full p-1 gap-1">
