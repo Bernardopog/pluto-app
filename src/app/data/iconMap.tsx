@@ -8,7 +8,7 @@ import {
 import { MdAirplanemodeActive } from "react-icons/md";
 
 interface IIcon {
-  name: string;
+  name: iconNameType;
   icon: IconType;
   hasOutline?: boolean;
   outlineIcon?: IconType;
@@ -22,19 +22,21 @@ type IIconMap = {
 
 export const iconsMap: IIconMap = {
   plane: {
-    name: "Avião",
+    name: "plane",
     icon: MdAirplanemodeActive,
   },
   piggy: {
-    name: "Porco",
+    name: "piggy",
     icon: BsPiggyBankFill,
     hasOutline: true,
     outlineIcon: BsPiggyBank,
   },
   car: {
-    name: "Carro",
+    name: "car",
     icon: BsCarFrontFill,
     hasOutline: true,
     outlineIcon: BsCarFront,
   },
 };
+
+export const iconsArray = Object.values(iconsMap);

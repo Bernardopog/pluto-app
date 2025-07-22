@@ -1,3 +1,4 @@
+import VaultAction from "@/app/layout/Vault/VaultAction";
 import VaultList from "@/app/layout/Vault/VaultList";
 import VaultOverview from "@/app/layout/Vault/VaultOverview";
 import { Metadata } from "next";
@@ -12,7 +13,7 @@ export default function page() {
       <h2 className="main-title">Cofre</h2>
       <section className="vault-page grid min-h-[calc(100vh-32px-24px)]">
         <VaultOverview />
-
+        <VaultAction />
         <VaultList />
       </section>
     </main>

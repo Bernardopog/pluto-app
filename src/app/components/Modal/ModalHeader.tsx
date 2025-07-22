@@ -8,6 +8,7 @@ export default function ModalHeader({ type }: IModalHeaderProps) {
   let defType = type as string;
   if (type?.includes("transaction")) defType = "transaction";
   else if (type?.includes("budget")) defType = "budget";
+  else if (type?.includes("vault")) defType = "vault";
   else if (type?.includes("filter")) defType = "filter";
 
   const formatType = (type: string) => {
@@ -20,6 +21,8 @@ export default function ModalHeader({ type }: IModalHeaderProps) {
         return "transação";
       case "budget":
         return "orçamento";
+      case "vault":
+        return "cofre";
       case "filter":
         return "filtro";
       default:

@@ -50,10 +50,12 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
   deleteVault: (id) =>
     set((state) => ({
       vaultList: state.vaultList.filter((item) => item.id !== id),
+      selectedVault: null,
     })),
   updateVault: (id, vault) =>
     set((state) => ({
       vaultList: state.vaultList.map((item) => (item.id === id ? vault : item)),
+      selectedVault: null,
     })),
 
   selectedVault: null,

@@ -12,6 +12,8 @@ export type BudgetModalType =
   | "budgetDelete"
   | "budgetTransfer";
 
+export type VaultModalType = "vaultCreate" | "vaultUpdate" | "vaultDelete";
+
 export type ModalType =
   | null
   | "goals"
@@ -21,7 +23,8 @@ export type ModalType =
   | "transactionDelete"
   | "budgetCreate"
   | BudgetModalType
-  | TransactionFilterType;
+  | TransactionFilterType
+  | VaultModalType;
 
 interface IModalStore {
   isModalOpen: boolean;
