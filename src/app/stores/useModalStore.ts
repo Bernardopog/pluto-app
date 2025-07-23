@@ -12,7 +12,11 @@ export type BudgetModalType =
   | "budgetDelete"
   | "budgetTransfer";
 
-export type VaultModalType = "vaultCreate" | "vaultUpdate" | "vaultDelete";
+export type VaultModalType =
+  | "vaultCreate"
+  | "vaultUpdate"
+  | "vaultDelete"
+  | "vaultAddItem";
 
 export type ModalType =
   | null
