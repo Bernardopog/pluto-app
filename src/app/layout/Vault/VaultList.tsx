@@ -4,7 +4,7 @@ import { VaultListBtn, VaultListItem } from "@/app/components/VaultPage";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 
 export default function VaultList() {
-  const { vaultList, vaultItemList } = useVaultStore();
+  const { vaultList, vaultItemList, selectedVault } = useVaultStore();
 
   const vaultListWithItems = vaultList.map((vault) => ({
     ...vault,
@@ -19,7 +19,12 @@ export default function VaultList() {
       <h2 className="subtitle">Cofres</h2>
       <ul className="grid grid-cols-1 flex-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {vaultListWithItems.map((vault, idx) => (
-          <VaultListItem vault={vault} key={vault.id} index={idx} />
+          <VaultListItem
+            vault={vault}
+            key={vault.id}
+            index={idx}
+            selectedVaultId={selectedVault?.id}
+          />
         ))}
         {vaultListWithItems.length < 4 && <VaultListBtn />}
       </ul>

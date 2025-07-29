@@ -5,6 +5,12 @@ import {
 } from "./";
 import { IVault, IVaultItem } from "@/app/stores/useVaultStore";
 
+interface IVaultListItemProps {
+  vault: IVaultComplete;
+  index: number;
+  selectedVaultId?: number;
+}
+
 interface IVaultComplete extends IVault {
   items: IVaultItem[];
 }
@@ -12,13 +18,13 @@ interface IVaultComplete extends IVault {
 export default function VaultListItem({
   vault,
   index,
-}: {
-  vault: IVaultComplete;
-  index: number;
-}) {
+  selectedVaultId,
+}: IVaultListItemProps) {
   return (
     <li
-      className="size-full rounded-lg shadow-md opacity-0 animate-move-in"
+      className={`size-full rounded-lg shadow-md opacity-0 animate-move-in ${
+        selectedVaultId === vault.id && "outline-2 outline-chetwode-blue-600"
+      }`}
       style={{ animationDelay: `${index * 25}ms` }}
     >
       <article className="flex flex-col items-center h-full p-1 gap-1">
