@@ -14,7 +14,8 @@ import ModalBudgetDelete from "./contents/ModalBudgetDelete";
 import ModalBudgetTransfer from "./contents/ModalBudgetTransfer";
 import ModalVaultDelete from "./contents/ModalVaultDelete";
 import ModalVault from "./contents/ModalVault";
-import ModalVaultAddItem from "./contents/ModalVaultAddItem";
+import ModalVaultDeleteItem from "./contents/ModalVaultDeleteItem";
+import ModalVaultItem from "./contents/ModalVaultItem";
 
 export default function ModalContent() {
   const { selectedModal } = useModalStore();
@@ -37,7 +38,9 @@ export default function ModalContent() {
       {selectedModal === "vaultCreate" && <ModalVault type="create" />}
       {selectedModal === "vaultUpdate" && <ModalVault type="update" />}
       {selectedModal === "vaultDelete" && <ModalVaultDelete />}
-      {selectedModal === "vaultAddItem" && <ModalVaultAddItem />}
+      {selectedModal === "vaultAddItem" && <ModalVaultItem type="create" />}
+      {selectedModal === "vaultUpdateItem" && <ModalVaultItem type="update" />}
+      {selectedModal === "vaultDeleteItem" && <ModalVaultDeleteItem />}
       {selectedModal === "filterDate" && <ModalDateFilter />}
       {selectedModal === "filterValue" && <ModalValueFilter />}
       {selectedModal === "filterCategory" && <ModalCategoryFilter />}

@@ -3,7 +3,11 @@ import {
   VaultActionToItem,
   VaultActionToVault,
 } from "@/app/components/VaultPage/VaultAction";
-import { useModalStore, VaultModalType } from "@/app/stores/useModalStore";
+import {
+  useModalStore,
+  VaultItemModalType,
+  VaultModalType,
+} from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import Divider from "@/app/ui/Divider";
 
@@ -11,7 +15,7 @@ export default function VaultAction() {
   const { vaultList } = useVaultStore();
   const { toggleModal, selectModalType } = useModalStore();
 
-  const handleModal = (typeOfModal: VaultModalType) => {
+  const handleModal = (typeOfModal: VaultModalType | VaultItemModalType) => {
     toggleModal();
     selectModalType(typeOfModal);
   };

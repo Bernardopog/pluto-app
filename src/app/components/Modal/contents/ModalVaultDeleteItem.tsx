@@ -1,16 +1,14 @@
-"use cleint";
-
+"use client";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 
-export default function ModalVaultDelete() {
-  const { deleteVault, selectedVault, getTotalMoneySavedFromVault } =
-    useVaultStore();
+export default function ModalVaultDeleteItem() {
+  const { vaultList, removeVaultItem, selectedVaultItem } = useVaultStore();
   const { toggleModal } = useModalStore();
 
-  const handleDelete = (id: number) => {
-    deleteVault(id);
+  const handleDelete = (id: string) => {
+    removeVaultItem(id);
     toggleModal();
   };
 
@@ -21,16 +19,17 @@ export default function ModalVaultDelete() {
   return (
     <div className="flex flex-col">
       <p className="text-2xl text-center text-chetwode-blue-950">
-        Você tem certeza que quer deletar esse Cofre e suas poupanças?
+        Você tem certeza que quer deletar esse Item do Cofre{" "}
+        {
+          vaultList.find((vault) => selectedVaultItem?.vaultId == vault.id)
+            ?.name
+        }
+        ?
       </p>
-      {selectedVault && (
+      {selectedVaultItem && (
         <div className="flex flex-col p-2 rounded-lg text-2xl text-center text-chetwode-blue-950 bg-chetwode-blue-200">
-          <span>Nome: {selectedVault.name}</span>
-          <span>Limite: {moneyFormatter(selectedVault.targetPrice)}</span>
-          <span>
-            Poupado:{" "}
-            {moneyFormatter(getTotalMoneySavedFromVault(selectedVault.id))}
-          </span>
+          <span>Nome: {selectedVaultItem.name}</span>
+          <span>Valor: {moneyFormatter(selectedVaultItem.value)}</span>
         </div>
       )}
       <p className="text-2xl text-center text-red-900">
@@ -47,9 +46,9 @@ export default function ModalVaultDelete() {
         <button
           type="submit"
           className="w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-red-200 text-red-950 border-red-600 duration-300 ease-in-out hover:bg-red-300 active:bg-red-500 active:text-red-100"
-          onClick={() => handleDelete(selectedVault!.id)}
+          onClick={() => handleDelete(selectedVaultItem!.id)}
         >
-          Deletar Cofre
+          Deletar Item
         </button>
       </div>
     </div>

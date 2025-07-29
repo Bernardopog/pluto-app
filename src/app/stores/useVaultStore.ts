@@ -31,6 +31,10 @@ interface IVaultState {
   removeVaultItem: (id: string) => void;
   editVaultItem: (id: string, updatedItem: IVaultItem) => void;
 
+  selectedVaultItem: IVaultItem | null;
+  selectVaultItem: (id: string) => void;
+  unselectVaultItem: () => void;
+
   selectedDashboardVault: number | null;
   selectDashboardVault: (id: number) => void;
 
@@ -79,6 +83,13 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
         item.id === id ? updatedItem : item
       ),
     })),
+
+  selectedVaultItem: null,
+  selectVaultItem: (id) =>
+    set((state) => ({
+      selectedVaultItem: state.vaultItemList.find((item) => item.id === id),
+    })),
+  unselectVaultItem: () => set({ selectedVaultItem: null }),
 
   selectedDashboardVault: null,
   selectDashboardVault: (id) => set({ selectedDashboardVault: id }),

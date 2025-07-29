@@ -1,10 +1,11 @@
 "use client";
-import { VaultModalType } from "@/app/stores/useModalStore";
+import { VaultItemModalType } from "@/app/stores/useModalStore";
+import { useVaultStore } from "@/app/stores/useVaultStore";
 import ActionButton from "@/app/ui/ActionButton";
-import { MdAdd } from "react-icons/md";
+import { MdAdd, MdDelete, MdEdit } from "react-icons/md";
 
 interface IVaultActionToItemProps {
-  handleModal: (typeOfModal: VaultModalType) => void;
+  handleModal: (typeOfModal: VaultItemModalType) => void;
   vaultListLength: number;
 }
 
@@ -12,6 +13,8 @@ export default function VaultActionToItem({
   handleModal,
   vaultListLength,
 }: IVaultActionToItemProps) {
+  const { selectedVaultItem } = useVaultStore();
+
   return (
     <div className="flex flex-col gap-2">
       <h2 className="subtitle">Itens</h2>
@@ -23,6 +26,32 @@ export default function VaultActionToItem({
         label={"Adicionar Item"}
         disabled={vaultListLength <= 0}
       />
+      {selectedVaultItem ? (
+        <div className="flex my-1 gap-1">
+          <ActionButton
+            action={() => {
+              handleModal("vaultUpdateItem");
+            }}
+            icon={<MdEdit />}
+            label={"Editar Item"}
+            disabled={vaultListLength <= 0 || !selectedVaultItem}
+            className="flex-1"
+          />
+          <ActionButton
+            action={() => {
+              handleModal("vaultDeleteItem");
+            }}
+            icon={<MdDelete />}
+            label={"Deletar Item"}
+            disabled={vaultListLength <= 0 || !selectedVaultItem}
+            className="flex-1"
+          />
+        </div>
+      ) : (
+        <p className="mt-2 italic text-chetwode-blue-950/75">
+          Selecione um Item clicando nele
+        </p>
+      )}
     </div>
   );
 }
