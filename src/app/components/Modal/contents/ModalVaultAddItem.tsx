@@ -2,16 +2,18 @@ import { iconsMap } from "@/app/data/iconMap";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { IVaultItem, useVaultStore } from "@/app/stores/useVaultStore";
 import Input from "@/app/ui/Input";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { MdAttachMoney, MdFilePresent } from "react-icons/md";
 
 export default function ModalVaultAddItem() {
-  const { vaultList, addVaultItem } = useVaultStore();
+  const { vaultList, addVaultItem, selectedVault } = useVaultStore();
   const { toggleModal } = useModalStore();
 
   const [vaultItemName, setVaultItemName] = useState<string>("");
   const [vaultItemValue, setVaultItemValue] = useState<string>("");
-  const [vaultAssignedId, setVaultAssignedId] = useState<number | null>(null);
+  const [vaultAssignedId, setVaultAssignedId] = useState<number | null>(
+    selectedVault?.id ?? null
+  );
 
   const [hasError, setHasError] = useState<boolean>(false);
   const validator = (): boolean => {
@@ -57,6 +59,10 @@ export default function ModalVaultAddItem() {
     setHasError(false);
     toggleModal();
   };
+
+  useEffect(() => {
+    if (selectedVault) setVaultAssignedId(selectedVault.id);
+  }, [selectedVault]);
 
   return (
     <form className="flex flex-col" onSubmit={handleSubmit}>
