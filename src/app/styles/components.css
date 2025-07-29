@@ -30,4 +30,8 @@
   .scrollbar-style {
     @apply scrollbar-thin scrollbar-thumb-chetwode-blue-600 scrollbar-track-transparent;
   }
+
+  .base-btn {
+    @apply p-1 rounded-lg text-xl bg-chetwode-blue-600 text-chetwode-blue-50 duration-300 ease-in-out hover:bg-chetwode-blue-800 active:bg-chetwode-blue-900;
+  }
 }

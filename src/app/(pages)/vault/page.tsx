@@ -1,4 +1,5 @@
 import VaultAction from "@/app/layout/Vault/VaultAction";
+import VaultChart from "@/app/layout/Vault/VaultChart";
 import VaultList from "@/app/layout/Vault/VaultList";
 import VaultOverview from "@/app/layout/Vault/VaultOverview";
 import { Metadata } from "next";
@@ -15,6 +16,7 @@ export default function page() {
         <VaultOverview />
         <VaultAction />
         <VaultList />
+        <VaultChart />
       </section>
     </main>
   );
