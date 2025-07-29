@@ -2,7 +2,7 @@ import {
   VaultListItemHeader,
   VaultListItemProgress,
   VaultListItemSaved,
-} from "./";
+} from ".";
 import { IVault, IVaultItem } from "@/app/stores/useVaultStore";
 
 interface IVaultListItemProps {

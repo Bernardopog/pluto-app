@@ -1,6 +1,9 @@
 "use client";
 
-import { VaultListBtn, VaultListItem } from "@/app/components/VaultPage";
+import {
+  VaultListBtn,
+  VaultListItem,
+} from "@/app/components/VaultPage/VaultList";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 
 export default function VaultList() {

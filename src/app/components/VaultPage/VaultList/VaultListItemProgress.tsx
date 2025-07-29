@@ -1,4 +1,4 @@
-import { VaultIconProgress } from "./";
+import { VaultIconProgress } from ".";
 import { IVault, IVaultItem } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { iconsMap } from "@/app/data/iconMap";
