@@ -41,7 +41,7 @@ export default function VaultAction() {
             handleModal("vaultUpdate");
           }}
           icon={<MdEdit />}
-          label={"Editar Transação"}
+          label={"Editar Cofre"}
           disabled={selectedVault === null}
         />
         <ActionButton
@@ -49,7 +49,7 @@ export default function VaultAction() {
             handleModal("vaultDelete");
           }}
           icon={<MdDelete />}
-          label={"Deletar Transação"}
+          label={"Deletar Cofre"}
           disabled={selectedVault === null}
         />
       </div>
