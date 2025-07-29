@@ -19,7 +19,7 @@ export default function ModalVaultDelete() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col">
       <p className="text-2xl text-center text-chetwode-blue-950">
         Você tem certeza que quer deletar esse Cofre e suas poupanças?
       </p>
