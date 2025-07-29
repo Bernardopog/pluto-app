@@ -2,7 +2,7 @@
 
 import { useDebouncedInput } from "@/app/hooks/useDebouncedInput";
 import DebounceInput from "@/app/ui/DebounceInput";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent } from "react";
 import { MdSearch } from "react-icons/md";
 import {
   TransactionFilterType,
@@ -10,8 +10,9 @@ import {
 } from "@/app/stores/useModalStore";
 
 import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStore";
-import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { TransactionFilterButton } from "@/app/components/TransactionPage/TransactionFilter";
+import TransactionSearchParams from "./TransactionSearchParams";
 
 export default function TransactionFilter() {
   const { value, handleChangeDebounce } = useDebouncedInput();
@@ -35,17 +36,15 @@ export default function TransactionFilter() {
     toggleModal();
   };
 
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    setSearchFilter(value);
-    if (searchParams.has("category")) {
-      setCategoryFilter(Number(searchParams.get("category")));
-    }
-  }, [value, setSearchFilter, searchParams, setCategoryFilter]);
-
   return (
     <form id="transaction-filter" className="base-card flex flex-col">
+      <Suspense fallback={null}>
+        <TransactionSearchParams
+          value={value}
+          setSearchFilter={setSearchFilter}
+          setCategoryFilter={setCategoryFilter}
+        />
+      </Suspense>
       <h2 className="subtitle">Filtros</h2>
       <div className="lg:flex lg:justify-end">
         <button
