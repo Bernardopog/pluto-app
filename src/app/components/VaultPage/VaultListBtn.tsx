@@ -1,17 +1,12 @@
-import { IVault, useVaultStore } from "@/app/stores/useVaultStore";
+import { useModalStore } from "@/app/stores/useModalStore";
 import { MdAdd } from "react-icons/md";
 
 export default function VaultListBtn() {
-  const { createVault } = useVaultStore();
+  const { toggleModal, selectModalType } = useModalStore();
 
   const handleVaultCreateion = () => {
-    const data: IVault = {
-      icon: "piggy",
-      name: "Cofre",
-      targetPrice: 0,
-      id: Math.random() * 10000,
-    };
-    createVault(data);
+    toggleModal();
+    selectModalType("vaultCreate");
   };
 
   return (
