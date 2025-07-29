@@ -2,7 +2,7 @@
 
 import { IVault, useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
-import { MdAdd } from "react-icons/md";
+import { FiTarget } from "react-icons/fi";
 
 export default function VaultListItemHeader({ vault }: { vault: IVault }) {
   const { selectVault } = useVaultStore();
@@ -24,7 +24,7 @@ export default function VaultListItemHeader({ vault }: { vault: IVault }) {
         title="Selecionar Item"
         onClick={handleVaultSelection}
       >
-        <MdAdd />
+        <FiTarget />
       </button>
     </header>
   );
