@@ -91,9 +91,7 @@ export default function ModalTransaction({ type }: IModalTransactionProps) {
         value={transactionDate}
         onChange={(ev) => setTransactionDate(ev.target.value)}
       />
-      <span className="mt-2 opacity-50">
-        <Divider direction="horizontal" />
-      </span>
+      <Divider direction="horizontal" className="mt-2" />
       <h3 className="subsubtitle">Categorias</h3>
       <ul className="flex flex-wrap gap-2">
         {budgetList.length > 0 &&
@@ -116,9 +114,7 @@ export default function ModalTransaction({ type }: IModalTransactionProps) {
             </li>
           ))}
       </ul>
-      <span className="mt-2 opacity-50">
-        <Divider direction="horizontal" />
-      </span>
+      <Divider direction="horizontal" className="mt-2" />
       {hasError && (
         <p className="text-red-600">
           Parece que tem algum erro no formulário, certifique-se de escolher uma

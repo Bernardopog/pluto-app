@@ -102,9 +102,7 @@ export default function TransactionAction() {
             disabled={selectedTransaction === null}
           />
         </section>
-        <span className="opacity-50">
-          <Divider direction="horizontal" />
-        </span>
+        <Divider direction="horizontal" />
         <section className="flex flex-col gap-2">
           <h3 className="subsubtitle">Extras</h3>
           <ActionButton

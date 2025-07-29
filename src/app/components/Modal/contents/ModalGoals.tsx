@@ -79,9 +79,7 @@ export default function ModalGoals() {
         placeholder="Ex: 2.700,00"
         required={true}
       />
-      <span className="mt-2 opacity-50">
-        <Divider direction="horizontal" />
-      </span>
+      <Divider direction="horizontal" className="mt-2" />
       <h3 className="subsubtitle">Prazo</h3>
       <div className="flex justify-between mt-1">
         <Checkbox
@@ -98,9 +96,7 @@ export default function ModalGoals() {
           onChange={(ev) => setDeadline(ev.target.value)}
         />
       </div>
-      <span className="mt-2 opacity-50">
-        <Divider direction="horizontal" />
-      </span>
+      <Divider direction="horizontal" className="mt-2" />
       <div>
         <h3 className="subsubtitle inline">Base de Progresso</h3>{" "}
         <span className="text-chetwode-blue-600 inline">*</span>

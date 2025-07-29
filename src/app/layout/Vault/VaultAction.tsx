@@ -22,9 +22,7 @@ export default function VaultAction() {
         handleModal={handleModal}
         vaultListLength={vaultList.length}
       />
-      <div className="opacity-50">
-        <Divider direction="horizontal" />
-      </div>
+      <Divider direction="horizontal" />
       <VaultActionToItem
         handleModal={handleModal}
         vaultListLength={vaultList.length}

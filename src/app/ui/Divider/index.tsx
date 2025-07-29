@@ -1,13 +1,14 @@
 interface IDividerProps {
   direction: "horizontal" | "vertical";
+  className?: string;
 }
 
-export default function Divider({ direction }: IDividerProps) {
+export default function Divider({ direction, className }: IDividerProps) {
   return (
     <div
       className={`${
         direction === "horizontal" ? "h-0.5 w-full" : "h-full w-0.5"
-      } rounded-full bg-chetwode-blue-950/50`}
+      } ${className} rounded-full bg-chetwode-blue-950/10`}
     />
   );
 }
