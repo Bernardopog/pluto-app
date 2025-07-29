@@ -1,6 +1,7 @@
 "use client";
 
-import { IVault, useVaultStore } from "@/app/stores/useVaultStore";
+import { IVault } from "@/interfaces/IVault";
+import { useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { FiTarget } from "react-icons/fi";
 

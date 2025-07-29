@@ -3,21 +3,8 @@ import {
   BUDGETPLACEHOLDER,
   TRANSACTIONPLACEHOLDER,
 } from "../mock/placeholders";
-
-export interface IBudget {
-  id: number;
-  name: string;
-  color: string;
-  limit: number;
-}
-
-export interface ITransaction {
-  id: number;
-  name: string;
-  value: number;
-  date: Date;
-  categoryId: number;
-}
+import { ITransaction } from "@/interfaces/ITransaction";
+import { IBudget } from "@/interfaces/IBudget";
 
 interface ITransactionBudgetStore {
   transactionList: ITransaction[];

@@ -2,7 +2,8 @@ import { Doughnut } from "react-chartjs-2";
 import PieChartControl from "../../PieChartControl";
 import { useState } from "react";
 import { PieChartType } from "@/app/layout/Dashboard/DashboardBudget";
-import { IBudget, ITransaction } from "@/app/stores/useTransactionBudgetStore";
+import { ITransaction } from "@/interfaces/ITransaction";
+import { IBudget } from "@/interfaces/IBudget";
 
 interface IDashboardBudgetChartProps {
   transactions: ITransaction[];

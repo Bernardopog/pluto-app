@@ -1,8 +1,8 @@
-import { IBudget } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import Link from "next/link";
 import { MdWarning } from "react-icons/md";
 import { BudgetListItemTxnHistory, BudgetListItemActions } from "./";
+import { IBudget } from "@/interfaces/IBudget";
 
 interface IBudgetListItemProps extends IBudget {
   budgetLimit: number;

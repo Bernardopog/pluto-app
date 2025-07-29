@@ -1,20 +1,6 @@
 import { create } from "zustand";
 import { VAULTITEMPLACEHOLDER, VAULTPLACEHOLDER } from "../mock/placeholders";
-import { iconNameType } from "../data/iconMap";
-
-export interface IVaultItem {
-  id: string;
-  name: string;
-  value: number;
-  vaultId: number;
-}
-
-export interface IVault {
-  id: number;
-  name: string;
-  targetPrice: number;
-  icon: iconNameType;
-}
+import { IVault, IVaultItem } from "@/interfaces/IVault";
 
 interface IVaultState {
   vaultList: IVault[];

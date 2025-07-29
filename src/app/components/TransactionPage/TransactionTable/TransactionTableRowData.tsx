@@ -1,8 +1,6 @@
 "use client";
-import {
-  ITransaction,
-  useTransactionBudgetStore,
-} from "@/app/stores/useTransactionBudgetStore";
+import { ITransaction } from "@/interfaces/ITransaction";
+import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 
 interface ITransactionTableRowDataProps {

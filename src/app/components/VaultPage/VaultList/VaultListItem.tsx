@@ -1,9 +1,9 @@
+import { IVault, IVaultItem } from "@/interfaces/IVault";
 import {
   VaultListItemHeader,
   VaultListItemProgress,
   VaultListItemSaved,
 } from ".";
-import { IVault, IVaultItem } from "@/app/stores/useVaultStore";
 
 interface IVaultListItemProps {
   vault: IVaultComplete;

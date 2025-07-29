@@ -1,8 +1,8 @@
 import { VaultIconProgress } from ".";
-import { IVault, IVaultItem } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { iconsMap } from "@/app/data/iconMap";
 import { getPercentage } from "@/app/utils/getPercentage";
+import { IVault, IVaultItem } from "@/interfaces/IVault";
 
 interface IVaultComplete extends IVault {
   items: IVaultItem[];

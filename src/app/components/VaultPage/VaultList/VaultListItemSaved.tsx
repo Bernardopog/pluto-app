@@ -1,5 +1,6 @@
 "use client";
-import { IVaultItem, useVaultStore } from "@/app/stores/useVaultStore";
+import { IVaultItem } from "@/interfaces/IVault";
+import { useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 
 export default function VaultListItemSaved({ item }: { item: IVaultItem }) {

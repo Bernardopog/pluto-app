@@ -1,9 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
-import {
-  ITransaction,
-  useTransactionBudgetStore,
-} from "@/app/stores/useTransactionBudgetStore";
+import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useModalStore } from "@/app/stores/useModalStore";
+import { ITransaction } from "@/interfaces/ITransaction";
 
 export const useModalTransactionLogic = (type: "create" | "update") => {
   const {

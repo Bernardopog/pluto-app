@@ -1,13 +1,11 @@
 "use client";
 
-import {
-  IBudget,
-  useTransactionBudgetStore,
-} from "@/app/stores/useTransactionBudgetStore";
+import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useState } from "react";
 import DashboardBudgetLegendController from "./DashboardBudgetLegendController";
 import { MdWarning } from "react-icons/md";
+import { IBudget } from "@/interfaces/IBudget";
 
 export type LegendType = "expenses-limit" | "rest";
 

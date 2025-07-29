@@ -1,13 +1,11 @@
 "use client";
 
-import {
-  ITransaction,
-  useTransactionBudgetStore,
-} from "@/app/stores/useTransactionBudgetStore";
+import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import Inert from "../../Inert";
+import { ITransaction } from "@/interfaces/ITransaction";
 
 export default function BudgetListItemTxnHistory({ id }: { id: number }) {
   const [isShownTransactionHistory, setIsShownTransactionHistory] =
@@ -20,7 +18,7 @@ export default function BudgetListItemTxnHistory({ id }: { id: number }) {
     .toReversed()
     .slice(0, 6);
 
-  if (txns.length === 0) txns = Array(6).fill(null)
+  if (txns.length === 0) txns = Array(6).fill(null);
 
   for (let i = 0; i < txns.length; i++) {
     if (txns.length < 6) {

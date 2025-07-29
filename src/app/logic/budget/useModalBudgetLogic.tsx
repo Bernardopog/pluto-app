@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import {
-  IBudget,
-  useTransactionBudgetStore,
-} from "@/app/stores/useTransactionBudgetStore";
+import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useModalStore } from "@/app/stores/useModalStore";
+import { IBudget } from "@/interfaces/IBudget";
 
 export const useModalBudgetLogic = (type: "create" | "update") => {
   const { toggleModal } = useModalStore();

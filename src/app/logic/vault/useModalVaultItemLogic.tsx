@@ -1,5 +1,6 @@
+import { IVaultItem } from "@/interfaces/IVault";
 import { useModalStore } from "@/app/stores/useModalStore";
-import { IVaultItem, useVaultStore } from "@/app/stores/useVaultStore";
+import { useVaultStore } from "@/app/stores/useVaultStore";
 import { FormEvent, useEffect, useState } from "react";
 
 export const useModalVaultItemLogic = (type: "create" | "update") => {

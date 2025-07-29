@@ -1,6 +1,6 @@
-import { ITransaction } from "../stores/useTransactionBudgetStore";
-import { IBudget } from "../stores/useTransactionBudgetStore";
-import { IVaultItem, IVault } from "../stores/useVaultStore";
+import { IBudget } from "@/interfaces/IBudget";
+import { ITransaction } from "@/interfaces/ITransaction";
+import { IVault, IVaultItem } from "@/interfaces/IVault";
 
 export const INCOMEPLACEHOLDER = 3200;
 
