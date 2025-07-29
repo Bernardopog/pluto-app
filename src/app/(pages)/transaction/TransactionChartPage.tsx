@@ -145,7 +145,7 @@ export default function TransactionChartPage() {
           ]}
           state={chartType}
           setState={setChartType as Dispatch<SetStateAction<string | number>>}
-          classList="left-0"
+          className="z-30"
         />
       </div>
       <div className="relative mx-auto w-9/10 min-h-1/2">

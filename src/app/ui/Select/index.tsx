@@ -6,6 +6,7 @@ import { MdArrowDropDown } from "react-icons/md";
 interface ISelectProps {
   state: number | string;
   setState: Dispatch<SetStateAction<number | string>>;
+  className?: string;
 
   list: {
     id: number | string;
@@ -14,7 +15,12 @@ interface ISelectProps {
   }[];
 }
 
-export default function Select({ state, setState, list }: ISelectProps) {
+export default function Select({
+  state,
+  setState,
+  list,
+  className,
+}: ISelectProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedValue, setSelectedValue] = useState<number | string>(0);
 
@@ -30,7 +36,7 @@ export default function Select({ state, setState, list }: ISelectProps) {
     <div
       className={`relative w-64 p-1 rounded-lg text-chetwode-blue-950 duration-300 ease-in-out cursor-pointer ${
         isOpen ? "bg-chetwode-blue-200" : "bg-chetwode-blue-300"
-      }`}
+      } ${className}`}
       onClick={handleOpen}
       role="combobox"
       aria-expanded={isOpen}
