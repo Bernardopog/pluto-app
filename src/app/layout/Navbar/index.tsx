@@ -4,6 +4,7 @@ import NavbarLinkList from "./NavbarLinkList";
 import { useState } from "react";
 import { MdMenu } from "react-icons/md";
 import { GoSidebarCollapse } from "react-icons/go";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [isSiderbarOpen, setIsSiderbarOpen] = useState<boolean>(false);
@@ -11,6 +12,10 @@ export default function Navbar() {
   const handleSidebar = () => {
     setIsSiderbarOpen(!isSiderbarOpen);
   };
+
+  const url = usePathname();
+
+  const publicRoutes = ["/login", "/register"];
 
   return (
     <>
@@ -43,7 +48,10 @@ export default function Navbar() {
             onClick={(e) => e.stopPropagation()}
           >
             <h1 className="ml-4 text-3xl font-bold">Pluto</h1>
-            <NavbarLinkList handleSidebar={handleSidebar} />
+            <NavbarLinkList
+              type={publicRoutes.includes(url) ? "public" : "private"}
+              handleSidebar={handleSidebar}
+            />
           </nav>
         </div>
       </Inert>
