@@ -17,7 +17,7 @@ datasource db {
 model User {
   id   Int @id @default(autoincrement())
   name String
-  email String
+  email String @unique
   password String
 
   transactions Transaction[]
@@ -32,9 +32,9 @@ model Transaction {
   date          DateTime
   
   userId        Int
-  user          User @relation(fields: [userId], references: [id])
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
   categoryId    Int
-  category      Budget @relation(fields: [categoryId], references: [id])
+  category      Budget @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 model Budget {
   id            Int @id @default(autoincrement())
@@ -44,7 +44,7 @@ model Budget {
   transactions  Transaction[]
 
   userId        Int
-  user          User @relation(fields: [userId], references: [id])
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 model Vault {
   id            Int @id @default(autoincrement())
@@ -54,13 +54,13 @@ model Vault {
   items         VaultItem[]
 
   userId        Int
-  user          User @relation(fields: [userId], references: [id])
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 model VaultItem {
   id            Int @id @default(autoincrement())
   name          String
   value         Int
-  
+
   vaultId       Int
-  vault         Vault @relation(fields: [vaultId], references: [id])
+  vault         Vault @relation(fields: [vaultId], references: [id], onDelete: Cascade)
 }
