@@ -1,3 +1,3 @@
 export interface IContext {
-  params: { [key: string]: string };
+  params: Promise<{ id: string }>;
 }
