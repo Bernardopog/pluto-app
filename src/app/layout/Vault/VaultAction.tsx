@@ -21,7 +21,10 @@ export default function VaultAction() {
   };
 
   return (
-    <section id="vault-action" className="base-card flex flex-col gap-4">
+    <section
+      id="vault-action"
+      className="base-card flex flex-col gap-4 overflow-y-auto scrollbar-style scrollbar-thinner"
+    >
       <VaultActionToVault
         handleModal={handleModal}
         vaultListLength={vaultList.length}

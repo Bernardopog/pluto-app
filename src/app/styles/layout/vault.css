@@ -40,7 +40,7 @@
       "vaults  action  "
       "vaults  chart   ";
     grid-template-columns: 0.775fr 0.25fr;
-    grid-template-rows: auto 1fr 1fr;
+    grid-template-rows: auto minmax(120px, 0.75fr) 1fr;
     gap: 1rem;
   }
 }
