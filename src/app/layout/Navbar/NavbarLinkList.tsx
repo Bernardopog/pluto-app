@@ -9,6 +9,8 @@ import {
 import LinkListItem from "./LinkListItem";
 import { usePathname } from "next/navigation";
 import { BsPiggyBank } from "react-icons/bs";
+import Divider from "@/app/ui/Divider";
+import { FaDoorOpen } from "react-icons/fa";
 
 export default function NavbarLinkList({
   handleSidebar,
@@ -49,6 +51,14 @@ export default function NavbarLinkList({
             label="Transações"
             isActive={path === "/transaction"}
             icon={<MdOutlineTableChart />}
+            handleSidebar={handleSidebar}
+          />
+          <Divider direction="horizontal" className="my-2" />
+          <LinkListItem
+            href="/logout"
+            label="Sair"
+            isActive={false}
+            icon={<FaDoorOpen />}
             handleSidebar={handleSidebar}
           />
         </>

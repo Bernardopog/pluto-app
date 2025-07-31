@@ -16,23 +16,26 @@ export default function Navbar() {
   const url = usePathname();
 
   const publicRoutes = ["/login", "/register"];
+  const blockedRoutes = ["/logout"];
 
   return (
     <>
-      <button
-        className={`flex items-center justify-center absolute z-50 size-8 rounded-full text-2xl bg-chetwode-blue-800 text-star-dust-50 cursor-pointer duration-300 ease-in-out ${
-          isSiderbarOpen ? "top-4 left-[calc(16rem-3rem)]" : "top-2 left-2"
-        }`}
-        aria-label={isSiderbarOpen ? "Fechar Menu" : "Abrir Menu"}
-        title={isSiderbarOpen ? "Fechar Menu" : "Abrir Menu"}
-        onClick={handleSidebar}
-      >
-        {isSiderbarOpen ? (
-          <GoSidebarCollapse className="rotate-180" />
-        ) : (
-          <MdMenu />
-        )}
-      </button>
+      {blockedRoutes.includes(url) ? null : (
+        <button
+          className={`flex items-center justify-center absolute z-50 size-8 rounded-full text-2xl bg-chetwode-blue-800 text-star-dust-50 cursor-pointer duration-300 ease-in-out ${
+            isSiderbarOpen ? "top-4 left-[calc(16rem-3rem)]" : "top-2 left-2"
+          }`}
+          aria-label={isSiderbarOpen ? "Fechar Menu" : "Abrir Menu"}
+          title={isSiderbarOpen ? "Fechar Menu" : "Abrir Menu"}
+          onClick={handleSidebar}
+        >
+          {isSiderbarOpen ? (
+            <GoSidebarCollapse className="rotate-180" />
+          ) : (
+            <MdMenu />
+          )}
+        </button>
+      )}
       <Inert
         isVisible={isSiderbarOpen}
         className={`absolute z-40 h-dvh duration-300 ease-in-out overflow-clip ${
