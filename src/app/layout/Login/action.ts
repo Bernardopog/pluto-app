@@ -1,6 +1,8 @@
 "use server";
 
 import { prisma } from "@/lib/db";
+import { cookies } from "next/headers";
+import { signJWT } from "@/lib/jwt";
 import * as bcrypt from "bcrypt";
 
 type RegisterState = {
@@ -37,9 +39,20 @@ export async function loginUser(
     if (match === false) {
       return { success: false, message: "Erro ao logar" };
     } else {
+      const token = signJWT({
+        userId: user.id.toString(),
+      });
+
+      (await cookies()).set("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 60 * 60 * 24,
+        path: "/",
+        sameSite: "lax",
+      });
       return { success: true, message: "Usuário logado com sucesso!" };
     }
   } catch {
-    return { success: false, message: "Erro ao logar" };
+    return { success: false, message: "Erro ao logar XXX" };
   }
 }
