@@ -8,25 +8,32 @@ import { IResult } from "@/interfaces/IResult";
 import { PrismaClientKnownRequestError } from "@/generated/prisma/runtime/library";
 
 interface ITransactionRepository {
-  getAll: () => Promise<ITransaction[]>;
-  create: (data: ITransactionCreateDTO) => Promise<ITransaction>;
+  getAll: (userId: number) => Promise<ITransaction[]>;
+  create: (
+    data: ITransactionCreateDTO,
+    userId: number
+  ) => Promise<ITransaction>;
   update: (
     id: number,
-    data: ITransactionUpdateDTO
+    data: ITransactionUpdateDTO,
+    userId: number
   ) => Promise<IResult<ITransaction>>;
-  delete: (id: number) => Promise<IResult<null>>;
+  delete: (id: number, userId: number) => Promise<IResult<null>>;
 }
 
 export const transactionRepository: ITransactionRepository = {
-  getAll: async () => {
-    return await prisma.transaction.findMany();
+  getAll: async (userId) => {
+    return await prisma.transaction.findMany({ where: { userId } });
   },
-  create: async (data) => {
-    return await prisma.transaction.create({ data });
+  create: async (data, userId) => {
+    return await prisma.transaction.create({ data: { ...data, userId } });
   },
-  update: async (id, data) => {
+  update: async (id, data, userId) => {
     try {
-      const res = await prisma.transaction.update({ where: { id }, data });
+      const res = await prisma.transaction.update({
+        where: { id, userId },
+        data,
+      });
       return { success: true, status: 200, data: res };
     } catch (err) {
       if (
@@ -39,9 +46,9 @@ export const transactionRepository: ITransactionRepository = {
       }
     }
   },
-  delete: async (id) => {
+  delete: async (id, userId) => {
     try {
-      await prisma.transaction.delete({ where: { id } });
+      await prisma.transaction.delete({ where: { id, userId } });
       return { success: true, status: 200, data: null };
     } catch (err) {
       if (

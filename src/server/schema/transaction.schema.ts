@@ -6,5 +6,4 @@ export const transactionSchema = z.object({
   date: z.transform((dateStr) => new Date(`${dateStr}T00:00:00.000Z`)),
 
   categoryId: z.number(),
-  userId: z.number(),
 });

@@ -3,8 +3,6 @@ export interface ITransactionCreateDTO {
   value: number;
   date: Date;
   categoryId: number;
-
-  userId: number;
 }
 
 export interface ITransactionUpdateDTO {
