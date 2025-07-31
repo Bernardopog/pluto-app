@@ -53,6 +53,6 @@ export async function loginUser(
       return { success: true, message: "Usuário logado com sucesso!" };
     }
   } catch {
-    return { success: false, message: "Erro ao logar XXX" };
+    return { success: false, message: "Erro ao logar" };
   }
 }
