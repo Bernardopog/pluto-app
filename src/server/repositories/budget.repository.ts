@@ -5,23 +5,32 @@ import { IResult } from "@/interfaces/IResult";
 import { PrismaClientKnownRequestError } from "@/generated/prisma/runtime/library";
 
 interface IBudgetRepository {
-  getAll: () => Promise<IBudget[]>;
-  create: (data: IBudgetCreateDTO) => Promise<IBudget>;
-  update: (id: number, data: IBudgetUpdateDTO) => Promise<IResult<IBudget>>;
-  delete: (id: number) => Promise<IResult<null>>;
-  moveTxn: (fromId: number, toId: number) => Promise<IResult<null>>;
+  getAll: (userId: number) => Promise<IBudget[]>;
+  create: (data: IBudgetCreateDTO, userId: number) => Promise<IBudget>;
+  update: (
+    id: number,
+    data: IBudgetUpdateDTO,
+    userId: number
+  ) => Promise<IResult<IBudget>>;
+  delete: (id: number, userId: number) => Promise<IResult<null>>;
+  moveTxn: (
+    fromId: number,
+    toId: number,
+    userId: number
+  ) => Promise<IResult<null>>;
 }
 
 export const budgetRepository: IBudgetRepository = {
-  getAll: async () => {
-    return await prisma.budget.findMany();
+  getAll: async (userId) => {
+    const res = await prisma.budget.findMany({ where: { userId } });
+    return res;
   },
-  create: async (data) => {
-    return await prisma.budget.create({ data });
+  create: async (data, userId) => {
+    return await prisma.budget.create({ data: { ...data, userId } });
   },
-  update: async (id, data) => {
+  update: async (id, data, userId) => {
     try {
-      const res = await prisma.budget.update({ where: { id }, data });
+      const res = await prisma.budget.update({ where: { id, userId }, data });
       return { success: true, status: 200, data: res };
     } catch (err) {
       if (
@@ -33,9 +42,11 @@ export const budgetRepository: IBudgetRepository = {
       return { success: false, status: 400, error: "Unknown error" };
     }
   },
-  delete: async (id) => {
+  delete: async (id, userId) => {
     try {
-      await prisma.transaction.deleteMany({ where: { categoryId: id } });
+      await prisma.transaction.deleteMany({
+        where: { categoryId: id, userId },
+      });
       await prisma.budget.delete({ where: { id } });
       return { success: true, status: 200, data: null };
     } catch (err) {
@@ -48,13 +59,13 @@ export const budgetRepository: IBudgetRepository = {
       return { success: false, status: 400 };
     }
   },
-  moveTxn: async (fromId, toId) => {
+  moveTxn: async (fromId, toId, userId) => {
     try {
       await prisma.transaction.updateMany({
-        where: { categoryId: fromId },
+        where: { categoryId: fromId, userId },
         data: { categoryId: toId },
       });
-      await prisma.budget.delete({ where: { id: fromId } });
+      await prisma.budget.delete({ where: { id: fromId, userId } });
       return { success: true, status: 200, data: null };
     } catch (err) {
       if (

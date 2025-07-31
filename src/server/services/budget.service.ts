@@ -7,35 +7,49 @@ import { IBudget } from "@/interfaces/IBudget";
 import { idValidator } from "../utils/idValidator";
 
 interface IBudgetService {
-  getAll: () => Promise<IBudget[]>;
-  create: (data: IBudgetCreateDTO) => Promise<IMessage<IBudget | null>>;
+  getAll: (userId: number) => Promise<IMessage<IBudget[]>>;
+  create: (
+    data: IBudgetCreateDTO,
+    userId: number
+  ) => Promise<IMessage<IBudget | null>>;
   update: (
     id: number,
-    data: IBudgetUpdateDTO
+    data: IBudgetUpdateDTO,
+    userId: number
   ) => Promise<IMessage<IBudgetUpdateDTO | null>>;
-  delete: (id: number) => Promise<IMessage<null>>;
-  moveTxn: (fromId: number, toId: number) => Promise<IMessage<null>>;
+  delete: (id: number, userId: number) => Promise<IMessage<null>>;
+  moveTxn: (
+    fromId: number,
+    toId: number,
+    userId: number
+  ) => Promise<IMessage<null>>;
 }
 
 const budgetValidate = (data: IBudgetCreateDTO | IBudgetUpdateDTO) =>
   budgetSchema.safeParse(data);
 
 export const budgetService: IBudgetService = {
-  getAll: async () => {
-    return await budgetRepository.getAll();
-  },
-  create: async (data) => {
-    const { success } = budgetValidate(data);
+  getAll: async (userId) => {
+    const res = await budgetRepository.getAll(userId);
+    const message = createMessage("Orçamentos obtidos com sucesso", 200, res);
 
+    return message;
+  },
+  create: async (data, userId) => {
+    const { success } = budgetValidate(data);
     if (!success) {
       return createMessage<null>("Erro ao criar orçamento", 400, null);
     }
 
-    const res = await budgetRepository.create(data);
+    const res = await budgetRepository.create(data, userId);
 
     return createMessage("Orçamento criado com sucesso", 201, res);
   },
-  update: async (id, data): Promise<IMessage<IBudgetUpdateDTO | null>> => {
+  update: async (
+    id,
+    data,
+    userId
+  ): Promise<IMessage<IBudgetUpdateDTO | null>> => {
     if (!idValidator(id)) {
       return createMessage("Erro ao atualizar orçamento", 400, null);
     }
@@ -46,7 +60,7 @@ export const budgetService: IBudgetService = {
       return createMessage("Erro ao atualizar orçamento", 400, null);
     }
 
-    const res = await budgetRepository.update(id, data);
+    const res = await budgetRepository.update(id, data, userId);
     if (!res.success) {
       if (res.status === 404) {
         return createMessage("Orçamento nao encontrado", res.status, null);
@@ -60,11 +74,11 @@ export const budgetService: IBudgetService = {
       res.data
     );
   },
-  delete: async (id) => {
+  delete: async (id, userId) => {
     if (id <= 0) {
       return createMessage("Erro ao excluir orçamento", 400, null);
     }
-    const res = await budgetRepository.delete(id);
+    const res = await budgetRepository.delete(id, userId);
 
     if (res.success === false) {
       if (res.status === 404) {
@@ -75,8 +89,8 @@ export const budgetService: IBudgetService = {
 
     return createMessage("Orçamento excluido com sucesso", res.status, null);
   },
-  moveTxn: async (fromId, toId) => {
-    const res = await budgetRepository.moveTxn(fromId, toId);
+  moveTxn: async (fromId, toId, userId) => {
+    const res = await budgetRepository.moveTxn(fromId, toId, userId);
 
     if (!res.success) {
       if (res.status === 404) {
