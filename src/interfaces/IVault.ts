@@ -1,4 +1,4 @@
-import { iconNameType } from "../app/data/iconMap";
+import { iconNameType } from "@/types/IconNameType";
 
 export interface IVaultItem {
   id: string;

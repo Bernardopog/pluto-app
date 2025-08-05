@@ -1,4 +1,4 @@
-import { iconNameType } from "@/app/data/iconMap";
+import { iconNameType } from "@/types/IconNameType";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { FormEvent, useEffect, useState } from "react";
