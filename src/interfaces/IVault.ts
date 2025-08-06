@@ -1,7 +1,7 @@
 import { iconNameType } from "@/types/IconNameType";
 
 export interface IVaultItem {
-  id: string;
+  id: number;
   name: string;
   value: number;
   vaultId: number;

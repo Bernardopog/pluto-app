@@ -72,43 +72,43 @@ export const VAULTPLACEHOLDER: IVault[] = [
 
 export const VAULTITEMPLACEHOLDER: IVaultItem[] = [
   {
-    id: "1",
+    id: 1,
     name: "Desconto",
     value: 25,
     vaultId: 2,
   },
   {
-    id: "2",
+    id: 2,
     name: "A pé",
     value: 80,
     vaultId: 1,
   },
   {
-    id: "3",
+    id: 3,
     name: "Presente",
     value: 100,
     vaultId: 1,
   },
   {
-    id: "4",
+    id: 4,
     name: "Encontrado",
     value: 5,
     vaultId: 3,
   },
   {
-    id: "5",
+    id: 5,
     name: "Reciclagem",
     value: 10,
     vaultId: 1,
   },
   {
-    id: "6",
+    id: 6,
     name: "Renda fixa",
     value: 50,
     vaultId: 2,
   },
   {
-    id: "7",
+    id: 7,
     name: "Presente",
     value: 75,
     vaultId: 2,

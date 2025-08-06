@@ -36,7 +36,7 @@ export const useModalVaultItemLogic = (type: "create" | "update") => {
       setHasError(false);
       if (type === "create") {
         const data = {
-          id: (Math.random() * 100000).toString(),
+          id: Math.random() * 100000,
           name: vaultItemName,
           value: Number(vaultItemValue),
           vaultId: vaultAssignedId,

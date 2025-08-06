@@ -14,11 +14,11 @@ interface IVaultState {
 
   vaultItemList: IVaultItem[];
   addVaultItem: (item: IVaultItem) => void;
-  removeVaultItem: (id: string) => void;
-  editVaultItem: (id: string, updatedItem: IVaultItem) => void;
+  removeVaultItem: (id: number) => void;
+  editVaultItem: (id: number, updatedItem: IVaultItem) => void;
 
   selectedVaultItem: IVaultItem | null;
-  selectVaultItem: (id: string) => void;
+  selectVaultItem: (id: number) => void;
   unselectVaultItem: () => void;
 
   selectedDashboardVault: number | null;
