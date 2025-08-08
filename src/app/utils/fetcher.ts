@@ -1,0 +1,84 @@
+import { IMessage } from "@/interfaces/IMessage";
+
+export function fetcher<U>(url: string) {
+  const responseHandler = async <T>(res: Response): Promise<IMessage<T>> => {
+    const { message, status, data } = await res.json();
+    return { message, status, data };
+  };
+
+  return {
+    get: async (): Promise<IMessage<U>> => {
+      try {
+        const res = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        return responseHandler<U>(res);
+      } catch {
+        return { message: "Requisição errada", status: 400 };
+      }
+    },
+    post: async <T>(body: T) => {
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(body),
+        });
+        return responseHandler<U>(res);
+      } catch {
+        return { message: "Requisição errada", status: 400 };
+      }
+    },
+    put: async <T>(id: number, body: T) => {
+      try {
+        const res = await fetch(`${url}/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(body),
+        });
+        return responseHandler<U>(res);
+      } catch {
+        return { message: "Requisição errada", status: 400 };
+      }
+    },
+    delete: async (id: number) => {
+      try {
+        const res = await fetch(`${url}/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        return responseHandler<U>(res);
+      } catch {
+        return { message: "Requisição errada", status: 400 };
+      }
+    },
+    moveTxn: async (id: number, body: { toId: number }) => {
+      try {
+        const res = await fetch(`${url}/${id}/move-txn`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(body),
+        });
+        return responseHandler<U>(res);
+      } catch {
+        return { message: "Requisição errada", status: 400 };
+      }
+    },
+  };
+}
