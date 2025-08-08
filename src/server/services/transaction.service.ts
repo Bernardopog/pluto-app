@@ -21,6 +21,8 @@ interface ITransanctionService {
     userId: number
   ) => Promise<IMessage<ITransaction | null>>;
   delete: (id: number, userId: number) => Promise<IMessage<null>>;
+  deleteMany: (ids: number[], userId: number) => Promise<IMessage<null>>;
+  deleteAll: (userId: number) => Promise<IMessage<null>>;
 }
 
 const txnValidate = (data: ITransactionCreateDTO | ITransactionUpdateDTO) =>
@@ -81,5 +83,29 @@ export const transactionService: ITransanctionService = {
     }
 
     return createMessage("Transação excluida com sucesso", res.status, null);
+  },
+  deleteMany: async (ids, userId) => {
+    const res = await transactionRepository.deleteMany(ids, userId);
+
+    if (!res.success) {
+      if (res.status === 404) {
+        return createMessage("Transações nao encontradas", res.status, null);
+      } else
+        return createMessage("Erro ao deletar transações", res.status, null);
+    }
+
+    return createMessage("Transações excluidas com sucesso", res.status, null);
+  },
+  deleteAll: async (userId) => {
+    const res = await transactionRepository.deleteAll(userId);
+
+    if (!res.success) {
+      if (res.status === 404) {
+        return createMessage("Transações nao encontradas", res.status, null);
+      } else
+        return createMessage("Erro ao deletar transações", res.status, null);
+    }
+
+    return createMessage("Transações excluidas com sucesso", res.status, null);
   },
 };

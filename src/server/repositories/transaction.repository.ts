@@ -19,6 +19,8 @@ interface ITransactionRepository {
     userId: number
   ) => Promise<IResult<ITransaction>>;
   delete: (id: number, userId: number) => Promise<IResult<null>>;
+  deleteMany: (ids: number[], userId: number) => Promise<IResult<null>>;
+  deleteAll: (userId: number) => Promise<IResult<null>>;
 }
 
 export const transactionRepository: ITransactionRepository = {
@@ -59,6 +61,31 @@ export const transactionRepository: ITransactionRepository = {
       } else {
         return { success: false, status: 400, error: "Unknown error" };
       }
+    }
+  },
+  deleteMany: async (ids, userId) => {
+    try {
+      await prisma.transaction.deleteMany({
+        where: { id: { in: ids }, userId },
+      });
+      return { success: true, status: 200, data: null };
+    } catch (err) {
+      if (
+        err instanceof PrismaClientKnownRequestError &&
+        err.code === "P2025"
+      ) {
+        return { success: false, status: 404, error: "Transaction not found" };
+      } else {
+        return { success: false, status: 400, error: "Unknown error" };
+      }
+    }
+  },
+  deleteAll: async (userId) => {
+    try {
+      await prisma.transaction.deleteMany({ where: { userId } });
+      return { success: true, status: 200, data: null };
+    } catch {
+      return { success: false, status: 400, error: "Unknown error" };
     }
   },
 };
