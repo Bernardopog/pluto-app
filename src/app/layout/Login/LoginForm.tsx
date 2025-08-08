@@ -1,13 +1,15 @@
 "use client";
 
 import ServerInput from "@/app/ui/ServerInput";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { MdCheckBox, MdEmail, MdLock, MdWarning } from "react-icons/md";
 import { loginUser } from "./action";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/app/stores/useAuthStore";
 
 export default function LoginForm() {
-  const initialState: { success: boolean; message: string } = {
+  const { setUserId } = useAuthStore();
+  const initialState: { success: boolean; message: string; token?: number } = {
     success: false,
     message: "",
   };
@@ -15,9 +17,16 @@ export default function LoginForm() {
   const [state, formAction] = useActionState(loginUser, initialState);
 
   const router = useRouter();
-  if (state.success === true) {
-    setTimeout(() => router.push("/dashboard"), 1000);
-  }
+
+  useEffect(() => {
+    if (!state) return;
+    if (state.success === true) {
+      setUserId(state.token!);
+      const timeout = setTimeout(() => router.push("/dashboard"), 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [state, setUserId, router]);
 
   return (
     <form

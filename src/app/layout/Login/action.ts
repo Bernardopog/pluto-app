@@ -8,6 +8,7 @@ import * as bcrypt from "bcrypt";
 type RegisterState = {
   success: boolean;
   message: string;
+  token?: number;
 };
 
 export async function loginUser(
@@ -50,7 +51,11 @@ export async function loginUser(
         path: "/",
         sameSite: "lax",
       });
-      return { success: true, message: "Usuário logado com sucesso!" };
+      return {
+        success: true,
+        message: "Usuário logado com sucesso!",
+        token: user.id,
+      };
     }
   } catch {
     return { success: false, message: "Erro ao logar" };
