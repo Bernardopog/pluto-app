@@ -24,6 +24,9 @@ export default function ModalTransactionDelete() {
     unselectTransaction();
   };
 
+  if (!selectedTransaction) return null;
+  const date = new Date(selectedTransaction.date).toLocaleDateString("pt-BR");
+
   return (
     <div className="flex flex-col">
       <p className="text-2xl text-center text-chetwode-blue-950">
@@ -35,9 +38,7 @@ export default function ModalTransactionDelete() {
           <span>
             Valor: {moneyFormatter(Math.abs(selectedTransaction.value))}
           </span>
-          <span>
-            Data: {selectedTransaction.date.toLocaleDateString("pt-BR")}
-          </span>
+          <span>Data: {date}</span>
           <span>
             Categoria:{" "}
             {

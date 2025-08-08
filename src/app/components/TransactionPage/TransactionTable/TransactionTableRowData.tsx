@@ -14,6 +14,8 @@ export default function TransactionTableRowData({
 }: ITransactionTableRowDataProps) {
   const { budgetList, selectTransaction } = useTransactionBudgetStore();
 
+  const date = new Date(transaction.date);
+
   return (
     <div
       role="row"
@@ -25,7 +27,9 @@ export default function TransactionTableRowData({
         role="cell"
         className="order-1 col-span-2 p-1 border-2 rounded-l-lg rounded-r-sm text-center border-chetwode-blue-950 ease-in-out duration-300 group-hover:border-chetwode-blue-600 sm:col-span-1"
       >
-        {transaction.date.toLocaleDateString("pt-BR")}
+        {date.getUTCDate().toString().padStart(2, "0")}/
+        {(date.getUTCMonth() + 1).toString().padStart(2, "0")}/
+        {date.getUTCFullYear()}
       </div>
       <div
         role="cell"

@@ -1,7 +1,10 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useModalStore } from "@/app/stores/useModalStore";
-import { ITransaction } from "@/interfaces/ITransaction";
+import {
+  ITransactionCreateDTO,
+  ITransactionUpdateDTO,
+} from "@/server/dto/transition.dto";
 
 export const useModalTransactionLogic = (type: "create" | "update") => {
   const {
@@ -72,11 +75,7 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
       .map((val) => Number(val));
     const localDate = new Date(year, month - 1, day);
 
-    const data: ITransaction = {
-      id:
-        type === "update"
-          ? selectedTransaction?.id ?? Math.random() * 100000
-          : Math.random() * 100000,
+    const data: ITransactionCreateDTO | ITransactionUpdateDTO = {
       name: transactionName,
       value: money,
       date: localDate,
@@ -87,7 +86,7 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
       createTransation(data);
       handleReset();
     } else {
-      updateTransaction(data.id, data);
+      updateTransaction(selectedTransaction!.id, data);
     }
 
     toggleModal();

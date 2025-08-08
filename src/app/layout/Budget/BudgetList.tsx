@@ -2,10 +2,15 @@
 
 import { BudgetListItem } from "@/app/components/BudgetPage/BudgetList";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
+import { useEffect } from "react";
 
 export default function BudgetList() {
-  const { budgetList, getBudgetLimit, getExpenses } =
+  const { budgetList, getBudgetLimit, getExpenses, loadTxnAndBudgets } =
     useTransactionBudgetStore();
+
+  useEffect(() => {
+    loadTxnAndBudgets();
+  }, [loadTxnAndBudgets]);
 
   return (
     <section

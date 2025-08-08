@@ -7,7 +7,7 @@ import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStor
 import { useEffect, useState } from "react";
 
 export default function TransactionTable() {
-  const { transactionList } = useTransactionBudgetStore();
+  const { transactionList, loadTxnAndBudgets } = useTransactionBudgetStore();
   const {
     firstDate,
     secondDate,
@@ -21,6 +21,8 @@ export default function TransactionTable() {
   } = useTransactionFilterStore();
 
   useEffect(() => {
+    loadTxnAndBudgets();
+
     setCurrentPage(1);
   }, [
     firstDate,
@@ -32,6 +34,7 @@ export default function TransactionTable() {
     categoryFilter,
     transactionTypeFilter,
     searchFilter,
+    loadTxnAndBudgets,
   ]);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -39,14 +42,16 @@ export default function TransactionTable() {
   const filteredTransactions = transactionList
     .toReversed()
     .filter((txn) => {
+      const date = new Date(txn.date);
+
       if (dateFilter === "all") return true;
       if (dateFilter === "between")
-        return txn.date >= firstDate && txn.date <= secondDate!;
-      if (dateFilter === "before") return txn.date < firstDate;
-      if (dateFilter === "after") return txn.date > firstDate;
+        return date >= firstDate && date <= secondDate!;
+      if (dateFilter === "before") return date < firstDate;
+      if (dateFilter === "after") return date > firstDate;
       if (dateFilter === "exactly")
         return (
-          txn.date.toISOString().split("T")[0] ===
+          date.toISOString().split("T")[0] ===
           firstDate.toISOString().split("T")[0]
         );
     })

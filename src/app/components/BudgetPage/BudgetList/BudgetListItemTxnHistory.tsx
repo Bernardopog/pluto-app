@@ -56,7 +56,7 @@ export default function BudgetListItemTxnHistory({ id }: { id: number }) {
               if (!txn)
                 return (
                   <li
-                    key={idx}
+                    key={`txn-empty-${idx}`}
                     className="flex justify-between p-1 border-b-2 rounded-lg bg-star-dust-200 text-star-dust-950 border-star-dust-600/75"
                   >
                     <p className="text-sm">Vazio</p>
@@ -67,7 +67,7 @@ export default function BudgetListItemTxnHistory({ id }: { id: number }) {
 
               return (
                 <li
-                  key={txn.id}
+                  key={`txn-${txn.id}`}
                   className={`flex justify-between p-1 border-b-2 rounded-lg ${
                     value < 0
                       ? "bg-red-200 text-red-950 border-red-600/75"

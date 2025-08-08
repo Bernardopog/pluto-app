@@ -1,9 +1,10 @@
 import { Doughnut } from "react-chartjs-2";
 import PieChartControl from "../../PieChartControl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PieChartType } from "@/app/layout/Dashboard/DashboardBudget";
 import { ITransaction } from "@/interfaces/ITransaction";
 import { IBudget } from "@/interfaces/IBudget";
+import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 
 interface IDashboardBudgetChartProps {
   transactions: ITransaction[];
@@ -16,7 +17,12 @@ export default function DashboardBudgetChart({
   budget,
   rest,
 }: IDashboardBudgetChartProps) {
+  const { getBudgets } = useTransactionBudgetStore();
   const [typeOfChart, setTypeOfChart] = useState<PieChartType>("full");
+
+  useEffect(() => {
+    getBudgets();
+  }, [getBudgets]);
 
   const data = {
     labels: ["Restante", ...budget.map((item) => item.name)],

@@ -52,7 +52,9 @@ export default function TransactionChartPage() {
       .map((date) =>
         transactionList
           .filter((txn) => txn.value < 0)
-          .filter((txn) => txn.date.toISOString().split("T")[0] === date)
+          .filter(
+            (txn) => new Date(txn.date).toISOString().split("T")[0] === date
+          )
           .reduce((acc, txn) => acc + txn.value, 0)
       )
       .map((value) => Math.abs(value));
@@ -61,7 +63,9 @@ export default function TransactionChartPage() {
       .map((date) =>
         transactionList
           .filter((txn) => txn.value > 0)
-          .filter((txn) => txn.date.toISOString().split("T")[0] === date)
+          .filter(
+            (txn) => new Date(txn.date).toISOString().split("T")[0] === date
+          )
           .reduce((acc, txn) => acc + txn.value, 0)
       )
       .map((value) => value);

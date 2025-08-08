@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useModalStore } from "@/app/stores/useModalStore";
-import { IBudget } from "@/interfaces/IBudget";
+import { IBudgetCreateDTO, IBudgetUpdateDTO } from "@/server/dto/budget.dto";
 
 export const useModalBudgetLogic = (type: "create" | "update") => {
   const { toggleModal } = useModalStore();
@@ -122,8 +122,7 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
       handleReset();
     }
 
-    const data: IBudget = {
-      id: Math.random() * 100000,
+    const data: IBudgetCreateDTO | IBudgetUpdateDTO = {
       name: budgetName,
       color:
         budgetColorType === "hex"
