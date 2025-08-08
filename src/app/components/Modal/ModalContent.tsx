@@ -19,6 +19,7 @@ import ModalVaultItem from "./contents/ModalVaultItem";
 
 export default function ModalContent() {
   const { selectedModal } = useModalStore();
+  console.log("Selected", selectedModal);
 
   return (
     <>
@@ -30,7 +31,15 @@ export default function ModalContent() {
       {selectedModal === "transactionUpdate" && (
         <ModalTransaction type="update" />
       )}
-      {selectedModal === "transactionDelete" && <ModalTransactionDelete />}
+      {selectedModal === "transactionDelete" && (
+        <ModalTransactionDelete type="individual" />
+      )}
+      {selectedModal === "transactionDeleteGroup" && (
+        <ModalTransactionDelete type="group" />
+      )}
+      {selectedModal === "transactionDeleteAll" && (
+        <ModalTransactionDelete type="all" />
+      )}
       {selectedModal === "budgetCreate" && <ModalBudget type="create" />}
       {selectedModal === "budgetUpdate" && <ModalBudget type="update" />}
       {selectedModal === "budgetDelete" && <ModalBudgetDelete />}

@@ -17,8 +17,15 @@ interface ITransactionBudgetStore {
   transactionList: ITransaction[];
   budgetList: IBudget[];
 
+  transactionListToDelete: number[];
+  addToDelete: (id: number) => void;
+  removeFromDelete: (id: number) => void;
+
   selectedTransaction: ITransaction | null;
   selectedBudget: IBudget | null;
+
+  isDeletingManyTxn: boolean;
+  setIsDeletingManyTxn: (value: boolean) => void;
 
   // Global
   loadTxnAndBudgets: () => void;
@@ -30,6 +37,8 @@ interface ITransactionBudgetStore {
   createTransation: (transaction: ITransactionCreateDTO) => void;
   updateTransaction: (id: number, transaction: ITransactionUpdateDTO) => void;
   deleteTransaction: (id: number) => void;
+  deleteManyTransactions: () => void;
+  deleteAllTransactions: () => void;
 
   selectBudget: (id: number) => void;
   unselectBudget: () => void;
@@ -58,8 +67,27 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
   (set, get) => ({
     transactionList: [],
     budgetList: [],
+    transactionListToDelete: [],
     selectedTransaction: null,
     selectedBudget: null,
+
+    isDeletingManyTxn: false,
+    setIsDeletingManyTxn: (value) => {
+      if (value) {
+        set({ isDeletingManyTxn: value });
+      } else set({ isDeletingManyTxn: false, transactionListToDelete: [] });
+    },
+
+    addToDelete: (id) =>
+      set((state) => ({
+        transactionListToDelete: [...state.transactionListToDelete, id],
+      })),
+    removeFromDelete: (id) =>
+      set((state) => ({
+        transactionListToDelete: state.transactionListToDelete.filter(
+          (item) => item !== id
+        ),
+      })),
 
     loadTxnAndBudgets: () => {
       get().getTransactions();
@@ -102,6 +130,22 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       set((state) => ({
         transactionList: state.transactionList.filter((txn) => txn.id !== id),
       }));
+    },
+    deleteManyTransactions: async () => {
+      if (get().transactionListToDelete.length === 0) return;
+      const ids = get().transactionListToDelete;
+      const res = await transactionFetcher.deleteManyTxn(ids);
+      if (res.status >= 400) showError(res);
+      set((state) => ({
+        transactionList: state.transactionList.filter(
+          (txn) => !ids.includes(txn.id)
+        ),
+      }));
+    },
+    deleteAllTransactions: async () => {
+      const res = await transactionFetcher.deleteAllTxn();
+      if (res.status >= 400) showError(res);
+      set({ transactionList: [] });
     },
     selectBudget: (id) =>
       set({ selectedBudget: get().budgetList.find((bdgt) => bdgt.id === id) }),

@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from "react";
 interface ICheckboxProps {
   state: boolean;
   setState: Dispatch<SetStateAction<boolean>>;
-  label: string;
+  label?: string;
 }
 
 export default function Checkbox({ state, setState, label }: ICheckboxProps) {

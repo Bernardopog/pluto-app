@@ -4,10 +4,18 @@ import { TransactionTableRowData } from "@/app/components/TransactionPage/Transa
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 
 import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStore";
+import Checkbox from "@/app/ui/Checkbox";
 import { useEffect, useState } from "react";
 
 export default function TransactionTable() {
-  const { transactionList, loadTxnAndBudgets } = useTransactionBudgetStore();
+  const {
+    transactionList,
+    loadTxnAndBudgets,
+    isDeletingManyTxn,
+    addToDelete,
+    removeFromDelete,
+    transactionListToDelete,
+  } = useTransactionBudgetStore();
   const {
     firstDate,
     secondDate,
@@ -92,6 +100,11 @@ export default function TransactionTable() {
     endIndex
   );
 
+  const handleDeleteMany = (id: number) => {
+    if (transactionListToDelete.includes(id)) removeFromDelete(id);
+    else addToDelete(id);
+  };
+
   return (
     <section
       role="table"
@@ -129,11 +142,20 @@ export default function TransactionTable() {
           </p>
         ) : (
           paginatedTransactions.map((transaction, index) => (
-            <TransactionTableRowData
-              key={transaction.id}
-              transaction={transaction}
-              index={index}
-            />
+            <div key={transaction.id} className="flex justify-between">
+              <TransactionTableRowData
+                transaction={transaction}
+                index={index}
+              />
+              {isDeletingManyTxn && (
+                <div className="flex items-center justify-end flex-[0.5] max-w-8">
+                  <Checkbox
+                    setState={() => handleDeleteMany(transaction.id)}
+                    state={transactionListToDelete.includes(transaction.id)}
+                  />
+                </div>
+              )}
+            </div>
           ))
         )}
       </section>

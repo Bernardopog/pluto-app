@@ -6,6 +6,16 @@ export type TransactionFilterType =
   | "filterCategory"
   | "filterType";
 
+export type TransactionModalType =
+  | "transactionCreate"
+  | "transactionUpdate"
+  | TransactionDeleteType;
+
+type TransactionDeleteType =
+  | "transactionDeleteGroup"
+  | "transactionDeleteAll"
+  | "transactionDelete";
+
 export type BudgetModalType =
   | "budgetCreate"
   | "budgetUpdate"
@@ -23,10 +33,8 @@ export type ModalType =
   | null
   | "goals"
   | "stats"
-  | "transactionCreate"
-  | "transactionUpdate"
-  | "transactionDelete"
   | "budgetCreate"
+  | TransactionModalType
   | BudgetModalType
   | TransactionFilterType
   | VaultModalType

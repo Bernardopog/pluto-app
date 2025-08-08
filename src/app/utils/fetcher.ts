@@ -80,5 +80,34 @@ export function fetcher<U>(url: string) {
         return { message: "Requisição errada", status: 400 };
       }
     },
+    deleteManyTxn: async (ids: number[]) => {
+      try {
+        const res = await fetch(`${url}/delete-many`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(ids),
+        });
+        return responseHandler<U>(res);
+      } catch {
+        return { message: "Requisição errada", status: 400 };
+      }
+    },
+    deleteAllTxn: async () => {
+      try {
+        const res = await fetch(`${url}/delete-all`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        return responseHandler<U>(res);
+      } catch {
+        return { message: "Requisição errada", status: 400 };
+      }
+    },
   };
 }

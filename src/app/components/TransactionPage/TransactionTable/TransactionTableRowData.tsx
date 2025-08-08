@@ -20,7 +20,7 @@ export default function TransactionTableRowData({
     <div
       role="row"
       key={index}
-      className="group grid grid-cols-4 p-1 gap-1 rounded-lg bg-chetwode-blue-200 cursor-pointer even:bg-chetwode-blue-300 hover:brightness-105 sm:grid-cols-3 lg:grid-cols-[0.35fr_2fr_0.5fr_0.5fr] lg:p-0"
+      className="group grid grid-cols-4 flex-1 p-1 gap-1 rounded-lg bg-chetwode-blue-200 cursor-pointer even:bg-chetwode-blue-300 hover:brightness-105 sm:grid-cols-3 lg:grid-cols-[0.35fr_2fr_0.5fr_0.5fr] lg:p-0"
       onClick={() => selectTransaction(transaction.id)}
     >
       <div

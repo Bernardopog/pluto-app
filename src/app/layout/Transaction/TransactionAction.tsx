@@ -1,25 +1,37 @@
 "use client";
 
-import { useModalStore } from "@/app/stores/useModalStore";
+import {
+  TransactionModalType,
+  useModalStore,
+} from "@/app/stores/useModalStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { BsFiletypeCsv } from "react-icons/bs";
-import { MdAdd, MdAllInbox, MdDelete, MdEdit } from "react-icons/md";
+import {
+  MdAdd,
+  MdAllInbox,
+  MdCancel,
+  MdDelete,
+  MdDeleteForever,
+  MdDeleteOutline,
+  MdDeleteSweep,
+  MdEdit,
+} from "react-icons/md";
 import Divider from "@/app/ui/Divider";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import ActionButton from "@/app/ui/ActionButton";
 
 export default function TransactionAction() {
   const { toggleModal, selectModalType } = useModalStore();
-  const { transactionList, budgetList, selectedTransaction } =
-    useTransactionBudgetStore();
+  const {
+    transactionList,
+    transactionListToDelete,
+    budgetList,
+    selectedTransaction,
+    isDeletingManyTxn,
+    setIsDeletingManyTxn,
+  } = useTransactionBudgetStore();
 
-  const handleModal = (
-    typeOfModal:
-      | "transactionCreate"
-      | "transactionUpdate"
-      | "transactionDelete"
-      | "budgetCreate"
-  ) => {
+  const handleModal = (typeOfModal: TransactionModalType | "budgetCreate") => {
     toggleModal();
     selectModalType(typeOfModal);
   };
@@ -100,6 +112,37 @@ export default function TransactionAction() {
             icon={<MdDelete />}
             label={"Deletar Transação"}
             disabled={selectedTransaction === null}
+          />
+          <Divider direction="horizontal" />
+          {isDeletingManyTxn ? (
+            <>
+              <ActionButton
+                action={() => handleModal("transactionDeleteGroup")}
+                icon={<MdDeleteForever />}
+                label={`Deletar Todas (${transactionListToDelete.length})`}
+                disabled={transactionListToDelete.length <= 0}
+              />
+              <ActionButton
+                action={() => setIsDeletingManyTxn(false)}
+                icon={<MdCancel />}
+                label={"Cancelar Deleção"}
+                disabled={false}
+              />
+            </>
+          ) : (
+            <ActionButton
+              action={() => setIsDeletingManyTxn(true)}
+              icon={<MdDeleteSweep />}
+              label={"Deletar Várias Transações"}
+              disabled={false}
+            />
+          )}
+          <Divider direction="horizontal" />
+          <ActionButton
+            action={() => handleModal("transactionDeleteAll")}
+            icon={<MdDeleteOutline />}
+            label={"Deletar Todas Transações"}
+            disabled={isDeletingManyTxn}
           />
         </section>
         <Divider direction="horizontal" />
