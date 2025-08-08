@@ -23,6 +23,7 @@ model User {
   transactions Transaction[]
   budgets      Budget[]
   vaults       Vault[]
+  vaultItems   VaultItem[]
 }
 
 model Transaction {
@@ -50,11 +51,16 @@ model Vault {
   id            Int @id @default(autoincrement())
   name          String
   targetPrice   Int
-  icon          String
+  icon          VaultIcons
   items         VaultItem[]
 
   userId        Int
   user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+enum VaultIcons {
+  plane
+  piggy
+  car
 }
 model VaultItem {
   id            Int @id @default(autoincrement())
@@ -63,4 +69,7 @@ model VaultItem {
 
   vaultId       Int
   vault         Vault @relation(fields: [vaultId], references: [id], onDelete: Cascade)
+
+  userId        Int
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
