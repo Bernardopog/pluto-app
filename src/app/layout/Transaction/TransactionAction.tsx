@@ -69,7 +69,7 @@ export default function TransactionAction() {
   return (
     <article
       id="transaction-action"
-      className="base-card min-h-64 overflow-y-auto md:min-h-32"
+      className="base-card min-h-64 overflow-y-auto scrollbar-style scrollbar-thinner md:min-h-32"
     >
       <h2 className="subtitle">Ações</h2>
       <section className="flex flex-col mt-2 gap-2">
@@ -103,7 +103,7 @@ export default function TransactionAction() {
             }}
             icon={<MdEdit />}
             label={"Editar Transação"}
-            disabled={selectedTransaction === null}
+            disabled={selectedTransaction === null || isDeletingManyTxn}
           />
           <ActionButton
             action={() => {
@@ -111,7 +111,7 @@ export default function TransactionAction() {
             }}
             icon={<MdDelete />}
             label={"Deletar Transação"}
-            disabled={selectedTransaction === null}
+            disabled={selectedTransaction === null || isDeletingManyTxn}
           />
           <Divider direction="horizontal" />
           {isDeletingManyTxn ? (

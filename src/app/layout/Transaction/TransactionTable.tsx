@@ -89,7 +89,7 @@ export default function TransactionTable() {
       return false;
     });
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 9;
   const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -110,9 +110,12 @@ export default function TransactionTable() {
       role="table"
       aria-label="Tabela de transações"
       id="transaction-moves"
-      className="base-card flex flex-col h-full p-0 overflow-hidden text-chetwode-blue-950"
+      className="base-card flex flex-col h-full p-0 overflow-hidden"
     >
-      <header role="rowgroup" className="hidden lg:block">
+      <header
+        role="rowgroup"
+        className="hidden lg:block text-chetwode-blue-950"
+      >
         <div
           role="row"
           className="grid w-full grid-cols-[0.3fr_2fr_0.5fr_0.5fr] font-bold px-1 py-2 bg-chetwode-blue-200"
@@ -134,7 +137,7 @@ export default function TransactionTable() {
 
       <section
         role="rowgroup"
-        className="flex flex-col flex-1 min-h-0 gap-1 p-1 bg-star-dust-50 overflow-y-auto scrollbar-thin scrollbar-thumb-chetwode-blue-600 scrollbar-track-chetwode-blue-100"
+        className="flex flex-col flex-1 min-h-0 gap-3 p-1 bg-star-dust-50 overflow-y-auto scrollbar-thin scrollbar-thumb-chetwode-blue-600 scrollbar-track-chetwode-blue-100"
       >
         {paginatedTransactions.length === 0 ? (
           <p className="text-center text-xl text-chetwode-blue-950/75 italic">
@@ -142,10 +145,20 @@ export default function TransactionTable() {
           </p>
         ) : (
           paginatedTransactions.map((transaction, index) => (
-            <div key={transaction.id} className="flex justify-between">
+            <div
+              key={transaction.id}
+              className={`flex justify-between rounded-lg shadow-md ${
+                transactionListToDelete.includes(transaction.id)
+                  ? "bg-chetwode-blue-700 text-chetwode-blue-100"
+                  : "bg-chetwode-blue-200 even:bg-chetwode-blue-300 text-chetwode-blue-950"
+              }`}
+            >
               <TransactionTableRowData
                 transaction={transaction}
                 index={index}
+                selectedToDeleted={transactionListToDelete.includes(
+                  transaction.id
+                )}
               />
               {isDeletingManyTxn && (
                 <div className="flex items-center justify-end flex-[0.5] max-w-8">
@@ -159,7 +172,7 @@ export default function TransactionTable() {
           ))
         )}
       </section>
-      <footer className="flex items-center justify-center px-1 py-2 gap-x-2  bg-chetwode-blue-200">
+      <footer className="flex items-center justify-center px-1 py-2 gap-x-2  bg-chetwode-blue-200 text-chetwode-blue-950">
         {[...Array(totalPages)].map((_, idx) => {
           return (
             <button

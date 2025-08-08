@@ -81,12 +81,14 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
     addToDelete: (id) =>
       set((state) => ({
         transactionListToDelete: [...state.transactionListToDelete, id],
+        selectedTransaction: null,
       })),
     removeFromDelete: (id) =>
       set((state) => ({
         transactionListToDelete: state.transactionListToDelete.filter(
           (item) => item !== id
         ),
+        selectedTransaction: null,
       })),
 
     loadTxnAndBudgets: () => {
@@ -94,12 +96,14 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       get().getBudgets();
     },
 
-    selectTransaction: (id) =>
+    selectTransaction: (id) => {
+      if (get().isDeletingManyTxn) return;
       set((state) => ({
         selectedTransaction: state.transactionList.find(
           (item) => item.id === id
         ),
-      })),
+      }));
+    },
     unselectTransaction: () => set({ selectedTransaction: null }),
     getTransactions: async () => {
       set({
@@ -125,6 +129,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       }));
     },
     deleteTransaction: async (id) => {
+      if (get().isDeletingManyTxn) return;
       const res = await transactionFetcher.delete(id);
       if (res.status >= 400) showError(res);
       set((state) => ({
@@ -143,6 +148,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       }));
     },
     deleteAllTransactions: async () => {
+      if (get().isDeletingManyTxn) return;
       const res = await transactionFetcher.deleteAllTxn();
       if (res.status >= 400) showError(res);
       set({ transactionList: [] });
