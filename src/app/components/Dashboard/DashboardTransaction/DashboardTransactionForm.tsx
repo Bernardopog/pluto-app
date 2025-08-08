@@ -1,5 +1,6 @@
 "use client";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
+import Radio from "@/app/ui/Radio";
 import Select from "@/app/ui/Select";
 import { FormEvent, useState } from "react";
 import { MdAdd } from "react-icons/md";
@@ -9,7 +10,9 @@ export default function DashboardTransactionForm() {
 
   const [hadAnError, setHadAnError] = useState<boolean>(false);
   const [categoryValue, setCategoryValue] = useState<number | string>(0);
-
+  const [transactionType, setTransactionType] = useState<"income" | "outcome">(
+    "outcome"
+  );
   const isStringValid = (name: string): boolean => {
     if (name.trim() === "") return false;
     return true;
@@ -32,14 +35,17 @@ export default function DashboardTransactionForm() {
     const value = Number(formDataObj.value);
     const date = formDataObj.date as string;
 
+    let money = value;
+    if (money < 0) money *= -1;
+    if (transactionType === "outcome") money *= -1;
+
     if (isStringValid(name) && isValueValid(value)) {
       const [year, month, day] = date.split("-").map((val) => Number(val));
       const localDate = new Date(year, month - 1, day);
 
       const data = {
-        id: Math.random() * 100000,
         name,
-        value,
+        value: money,
         date: date === "" ? new Date() : localDate,
         categoryId: Number(categoryValue),
       };
@@ -68,7 +74,7 @@ export default function DashboardTransactionForm() {
         onSubmit={handleSubmit}
         className="grid grid-cols-[1fr] grid-rows-[auto_auto] gap-2"
       >
-        <div className="grid grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] text-chetwode-blue-950 lg:grid-cols-[0.7fr_2fr_0.7fr] lg:grid-rows-[1fr]">
+        <fieldset className="grid grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] text-chetwode-blue-950 lg:grid-cols-[0.7fr_2fr_0.7fr] lg:grid-rows-[1fr]">
           <input
             type="date"
             name="date"
@@ -88,16 +94,46 @@ export default function DashboardTransactionForm() {
             placeholder="R$ 0,00"
             className="min-w-1/8 pl-1 py-1 rounded-tr-lg bg-chetwode-blue-300 outline-chetwode-blue-800 lg:rounded-r-lg"
           />
-        </div>
-        <div>
-          <label htmlFor="category" className="text-chetwode-blue-950">
-            Categorias:
-          </label>
-          <Select
-            state={categoryValue}
-            setState={setCategoryValue}
-            list={selectList}
-          />
+        </fieldset>
+        <div className="flex flex-col gap-y-2 justify-between lg:flex-row">
+          <div className="order-1 lg:order-0">
+            <label htmlFor="category" className="text-chetwode-blue-950">
+              Categorias:
+            </label>
+            <Select
+              state={categoryValue}
+              setState={setCategoryValue}
+              list={selectList}
+            />
+          </div>
+          <div className="flex items-center gap-x-2">
+            <div
+              className={`size-fit rounded-full px-1 pr-2 bg-chetwode-blue-200 ${
+                transactionType === "outcome" && "bg-chetwode-blue-400"
+              }`}
+            >
+              <Radio
+                id="outcome"
+                name="type"
+                state={transactionType === "outcome"}
+                setState={() => setTransactionType("outcome")}
+                label="Despesa"
+              />
+            </div>
+            <div
+              className={`size-fit rounded-full px-1 pr-2 bg-chetwode-blue-200 ${
+                transactionType === "income" && "bg-chetwode-blue-400"
+              }`}
+            >
+              <Radio
+                id="income"
+                name="type"
+                state={transactionType === "income"}
+                setState={() => setTransactionType("income")}
+                label="Receita"
+              />
+            </div>
+          </div>
         </div>
 
         <button
