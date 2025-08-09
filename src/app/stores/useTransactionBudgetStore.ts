@@ -121,7 +121,6 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
     updateTransaction: async (id, transaction) => {
       const res = await transactionFetcher.put(id, transaction);
       if (res.status >= 400) showError(res);
-      console.log(res.data);
       set((state) => ({
         transactionList: state.transactionList.map((item) =>
           item.id === id ? (res.data as ITransaction) : item

@@ -19,7 +19,6 @@ import ModalVaultItem from "./contents/ModalVaultItem";
 
 export default function ModalContent() {
   const { selectedModal } = useModalStore();
-  console.log("Selected", selectedModal);
 
   return (
     <>

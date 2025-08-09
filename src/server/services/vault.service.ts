@@ -57,9 +57,6 @@ export const vaultService: IVaultService = {
 
     transformedData.icon = iconAsEnum;
 
-    console.log("===>", transformedData);
-    console.log("===>", userId);
-
     const res = await vaultRepository.create(transformedData, userId);
 
     return createMessage("Cofre criado com sucesso", 201, res);

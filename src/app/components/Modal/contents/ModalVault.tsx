@@ -18,8 +18,6 @@ export default function ModalVault({ type }: { type: "create" | "update" }) {
     handleCancel,
   } = useModalVaultLogic(type);
 
-  console.log(iconsArray);
-
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
       <Input
