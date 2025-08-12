@@ -61,7 +61,7 @@
       "vault    vault    goals    budget  "
       "stats    moves    moves    budget  ";
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto 0.25fr minmax(0, 0.75fr);
+    grid-template-rows: auto 0.25fr minmax(0, min(75vh, 600px));
     gap: 1rem;
   }
 }
