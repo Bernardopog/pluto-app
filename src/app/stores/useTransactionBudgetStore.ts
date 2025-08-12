@@ -15,7 +15,10 @@ const showError = <U>(res: IMessage<U>) => {
 
 interface ITransactionBudgetStore {
   transactionList: ITransaction[];
+  isTransactionListLoading: boolean;
+
   budgetList: IBudget[];
+  isBudgetListLoading: boolean;
 
   transactionListToDelete: number[];
   addToDelete: (id: number) => void;
@@ -66,7 +69,9 @@ const transactionFetcher = fetcher<ITransaction[] | ITransaction>(
 export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
   (set, get) => ({
     transactionList: [],
+    isTransactionListLoading: true,
     budgetList: [],
+    isBudgetListLoading: true,
     transactionListToDelete: [],
     selectedTransaction: null,
     selectedBudget: null,
@@ -109,6 +114,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       set({
         transactionList: (await transactionFetcher.get())
           .data as ITransaction[],
+        isTransactionListLoading: false,
       });
     },
     createTransation: async (transaction) => {
@@ -158,6 +164,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
     getBudgets: async () => {
       set({
         budgetList: (await budgetFetcher.get()).data as IBudget[],
+        isBudgetListLoading: false,
       });
     },
     createBudgetCategory: async (budget) => {
