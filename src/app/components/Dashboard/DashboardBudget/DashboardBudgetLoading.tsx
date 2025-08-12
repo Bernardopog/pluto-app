@@ -9,6 +9,7 @@ const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 function DashboardBudgetLoading() {
   const options: ApexOptions = {
     chart: {
+      type: "donut",
       toolbar: {
         show: false,
       },
@@ -30,6 +31,8 @@ function DashboardBudgetLoading() {
           labels: {
             show: false,
           },
+          size: "60%",
+          background: "transparent",
         },
       },
     },
@@ -96,7 +99,7 @@ function DashboardBudgetLoading() {
         <Chart
           options={options}
           series={series}
-          type="pie"
+          type="donut"
           height={"100%"}
           width={"100%"}
         />
