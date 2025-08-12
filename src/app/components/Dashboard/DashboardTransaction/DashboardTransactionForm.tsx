@@ -1,12 +1,15 @@
 "use client";
+import { useDashboardControllersStore } from "@/app/stores/useDashboardControllersStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import Radio from "@/app/ui/Radio";
 import Select from "@/app/ui/Select";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { MdAdd } from "react-icons/md";
+import Inert from "@/app/components/Inert";
 
 export default function DashboardTransactionForm() {
   const { createTransation, budgetList } = useTransactionBudgetStore();
+  const { isTransactionFormOpen } = useDashboardControllersStore();
 
   const [hadAnError, setHadAnError] = useState<boolean>(false);
   const [categoryValue, setCategoryValue] = useState<number | string>(0);
@@ -68,83 +71,108 @@ export default function DashboardTransactionForm() {
     value: budget.id,
   }));
 
-  return (
-    <div className="h-2/8">
-      <form
-        onSubmit={handleSubmit}
-        className="grid grid-cols-[1fr] grid-rows-[auto_auto] gap-2"
-      >
-        <fieldset className="grid grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] text-chetwode-blue-950 lg:grid-cols-[0.7fr_2fr_0.7fr] lg:grid-rows-[1fr]">
-          <input
-            type="date"
-            name="date"
-            max={new Date().toISOString().split("T")[0]}
-            className="min-w-1/8 pl-2 py-1 rounded-tl-lg bg-chetwode-blue-300 outline-chetwode-blue-800 lg:rounded-l-lg"
-          />
-          <input
-            type="text"
-            name="name"
-            placeholder="Descrição"
-            className="order-1 col-span-2 px-1 py-1 rounded-b-lg bg-chetwode-blue-200 outline-chetwode-blue-800 lg:order-0 lg:col-span-1 lg:rounded-none"
-          />
-          <input
-            type="number"
-            step={"0.01"}
-            name="value"
-            placeholder="R$ 0,00"
-            className="min-w-1/8 pl-1 py-1 rounded-tr-lg bg-chetwode-blue-300 outline-chetwode-blue-800 lg:rounded-r-lg"
-          />
-        </fieldset>
-        <div className="flex flex-col gap-y-2 justify-between lg:flex-row">
-          <div className="order-1 lg:order-0">
-            <label htmlFor="category" className="text-chetwode-blue-950">
-              Categorias:
-            </label>
-            <Select
-              state={categoryValue}
-              setState={setCategoryValue}
-              list={selectList}
-            />
-          </div>
-          <div className="flex items-center gap-x-2">
-            <div
-              className={`size-fit rounded-full px-1 pr-2 bg-chetwode-blue-200 ${
-                transactionType === "outcome" && "bg-chetwode-blue-400"
-              }`}
-            >
-              <Radio
-                id="outcome"
-                name="type"
-                state={transactionType === "outcome"}
-                setState={() => setTransactionType("outcome")}
-                label="Despesa"
-              />
-            </div>
-            <div
-              className={`size-fit rounded-full px-1 pr-2 bg-chetwode-blue-200 ${
-                transactionType === "income" && "bg-chetwode-blue-400"
-              }`}
-            >
-              <Radio
-                id="income"
-                name="type"
-                state={transactionType === "income"}
-                setState={() => setTransactionType("income")}
-                label="Receita"
-              />
-            </div>
-          </div>
-        </div>
+  const [formController, setFormController] = useState<boolean>(false);
 
-        <button
-          type="submit"
-          className="flex justify-center items-center mt-2 px-2 py-2 rounded-lg bg-chetwode-blue-300 text-chetwode-blue-950 lg:py-0"
+  useEffect(() => {
+    if (isTransactionFormOpen) {
+      const timeout = setTimeout(() => {
+        setFormController(true);
+      }, 300);
+
+      return () => clearTimeout(timeout);
+    }
+    setFormController(false);
+  }, [isTransactionFormOpen]);
+
+  return (
+    <div>
+      <Inert
+        isVisible={isTransactionFormOpen}
+        className={`duration-300 ease-in-out max-h-fit ${
+          isTransactionFormOpen
+            ? `h-full ${
+                formController ? "overflow-visible" : "overflow-hidden"
+              }`
+            : "h-0 overflow-hidden"
+        }`}
+      >
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-[1fr] grid-rows-[auto_auto] gap-2"
         >
-          <MdAdd />
-          Adicionar
-        </button>
-      </form>
-      {hadAnError && (
+          <fieldset className="grid grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] text-chetwode-blue-950 lg:grid-cols-[0.7fr_2fr_0.7fr] lg:grid-rows-[1fr]">
+            <input
+              type="date"
+              name="date"
+              max={new Date().toISOString().split("T")[0]}
+              className="min-w-1/8 pl-2 py-1 rounded-tl-lg bg-chetwode-blue-300 outline-chetwode-blue-800 lg:rounded-l-lg"
+            />
+            <input
+              type="text"
+              name="name"
+              placeholder="Descrição"
+              className="order-1 col-span-2 px-1 py-1 rounded-b-lg bg-chetwode-blue-200 outline-chetwode-blue-800 lg:order-0 lg:col-span-1 lg:rounded-none"
+            />
+            <input
+              type="number"
+              step={"0.01"}
+              name="value"
+              placeholder="R$ 0,00"
+              className="min-w-1/8 pl-1 py-1 rounded-tr-lg bg-chetwode-blue-300 outline-chetwode-blue-800 lg:rounded-r-lg"
+            />
+          </fieldset>
+          <div className="flex flex-col gap-y-2 justify-between lg:flex-row">
+            <div className="order-1 lg:order-0">
+              <label htmlFor="category" className="text-chetwode-blue-950">
+                Categorias:
+              </label>
+              <Select
+                state={categoryValue}
+                setState={setCategoryValue}
+                list={selectList}
+              />
+            </div>
+            <div className="flex items-center gap-x-2">
+              <div
+                className={`size-fit rounded-full px-1 pr-2 bg-chetwode-blue-200 ${
+                  transactionType === "outcome" && "bg-chetwode-blue-400"
+                }`}
+              >
+                <Radio
+                  id="outcome"
+                  name="type"
+                  state={transactionType === "outcome"}
+                  setState={() => setTransactionType("outcome")}
+                  label="Despesa"
+                />
+              </div>
+              <div
+                className={`size-fit rounded-full px-1 pr-2 bg-chetwode-blue-200 ${
+                  transactionType === "income" && "bg-chetwode-blue-400"
+                }`}
+              >
+                <Radio
+                  id="income"
+                  name="type"
+                  state={transactionType === "income"}
+                  setState={() => setTransactionType("income")}
+                  label="Receita"
+                />
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="flex justify-center items-center mt-2 px-2 py-2 rounded-lg bg-chetwode-blue-300 text-chetwode-blue-950 lg:py-0"
+          >
+            <MdAdd />
+            Adicionar
+          </button>
+        </form>
+      </Inert>
+
+      {hadAnError && isTransactionFormOpen && (
         <p className="font-medium text-center text-sm text-red-400">
           Preencha os campos corretamente
         </p>

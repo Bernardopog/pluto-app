@@ -1,6 +1,7 @@
 import {
   DashboardTransactionForm,
   DashboardTransactionList,
+  DashboardTransactionTitle,
 } from "@/app/components/Dashboard/DashboardTransaction";
 import Divider from "@/app/ui/Divider";
 import MoreDetail from "@/app/ui/MoreDetail";
@@ -12,7 +13,7 @@ export default function DashboardTransaction() {
       className="base-card flex flex-col gap-2"
     >
       <header className="flex justify-between">
-        <h2 className="subtitle">Transações</h2>
+        <DashboardTransactionTitle />
         <MoreDetail href="/transaction" />
       </header>
       <DashboardTransactionForm />
