@@ -2,7 +2,7 @@
 
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { FormEvent, useState } from "react";
-import { MdAdd } from "react-icons/md";
+import { MdAddCircle } from "react-icons/md";
 
 export default function DashboardVaultAdd() {
   const { addVaultItem, selectedDashboardVault } = useVaultStore();
@@ -34,7 +34,7 @@ export default function DashboardVaultAdd() {
     if (isEventValid(name) && isValueValid(value)) {
       if (selectedDashboardVault === null) return;
       addVaultItem({
-        id: `${Math.random() * 1000}`,
+        id: Math.random() * 1000, //! Temp
         name,
         value,
         vaultId: selectedDashboardVault,
@@ -53,10 +53,10 @@ export default function DashboardVaultAdd() {
     >
       <button
         type="submit"
-        className="flex items-center justify-center w-full p-2 border rounded-lg bg-chetwode-blue-200 border-chetwode-blue-700 text-chetwode-blue-950 hover:bg-chetwode-blue-400 active:hover:bg-chetwode-blue-500 lg:py-0"
+        className="flex flex-1 items-center justify-center w-full p-2 border rounded-lg duration-300 ease-in-out bg-chetwode-blue-200 border-chetwode-blue-950 text-chetwode-blue-950 hover:bg-chetwode-blue-300 active:hover:bg-chetwode-blue-400 lg:py-0"
       >
         <span>
-          <MdAdd />
+          <MdAddCircle className="text-2xl" />
         </span>
         Adicionar
       </button>
@@ -65,14 +65,14 @@ export default function DashboardVaultAdd() {
         name="name"
         id="name"
         placeholder="O que você fez?"
-        className="w-full p-2 border rounded-lg border-chetwode-blue-700 text-chetwode-blue-950 outline-chetwode-blue-800 lg:py-0"
+        className="flex-1 w-full p-2 border rounded-lg border-chetwode-blue-950 text-chetwode-blue-950 outline-chetwode-blue-800 lg:py-0"
       />
       <input
         type="text"
         name="value"
         id="value"
         placeholder="R$"
-        className="w-full p-2 border rounded-lg border-chetwode-blue-700 text-chetwode-blue-950 outline-chetwode-blue-800 lg:py-0"
+        className="flex-1 w-full p-2 border rounded-lg border-chetwode-blue-950 text-chetwode-blue-950 outline-chetwode-blue-800 lg:py-0"
       />
       {hadAnError && (
         <p className="font-medium text-center text-sm text-red-400">

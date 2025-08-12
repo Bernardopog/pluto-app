@@ -1,9 +1,4 @@
-import {
-  DashboardVaultAdd,
-  DashboardVaultHistory,
-  DashboardVaultSaved,
-} from "@/app/components/Dashboard/DashboardVault";
-import Divider from "@/app/ui/Divider";
+import { DashboardVaultSection } from "@/app/components/Dashboard/DashboardVault";
 import MoreDetail from "@/app/ui/MoreDetail";
 
 export default function DashboardVault() {
@@ -16,13 +11,7 @@ export default function DashboardVault() {
         <h2 className="subtitle">Cofre</h2>
         <MoreDetail href="/vault" />
       </header>
-      <section className="flex flex-col mt-2 gap-2 lg:flex-row">
-        <DashboardVaultSaved />
-        <Divider direction="vertical" />
-        <DashboardVaultHistory />
-        <Divider direction="vertical" />
-        <DashboardVaultAdd />
-      </section>
+      <DashboardVaultSection />
     </article>
   );
 }

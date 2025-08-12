@@ -26,10 +26,17 @@ export default function DashboardVaultSaved() {
   return (
     <div className="flex items-center justify-center relative w-full min-h-24 p-2 rounded-lg bg-chetwode-blue-200 overflow-clip lg:w-1/4 lg:min-h-auto">
       <button
-        className="absolute top-2 left-2 p-1 rounded-lg bg-chetwode-blue-300"
+        className={`absolute top-2 left-2 z-10 p-1 rounded-lg border duration-300 ease-in-out shadow-md ${
+          selectedDashboardVault
+            ? "border-transparent text-chetwode-blue-50 bg-chetwode-blue-700 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-900"
+            : "border-chetwode-blue-950 text-chetwode-blue-950 bg-chetwode-blue-200 hover:bg-chetwode-blue-300 active:bg-chetwode-blue-400"
+        }`}
         onClick={handleVaultMenu}
+        type="button"
+        aria-label="Menu de cofres"
+        title="Menu de cofres"
       >
-        <BsPiggyBank className="text-4xl text-chetwode-blue-600 scale-x-[-1]" />
+        <BsPiggyBank className="text-4xl scale-x-[-1]" />
       </button>
 
       <Inert isVisible={isVaultMenuOpen}>
@@ -69,6 +76,14 @@ export default function DashboardVaultSaved() {
         </p>
       ) : (
         <p className="italic text-chetwode-blue-950/75">Selecione um cofre</p>
+      )}
+      {selectedDashboardVault && (
+        <span className="absolute top-0 left-0 w-full font-medium text-center text-sm bg-chetwode-blue-950 text-chetwode-blue-300">
+          {selectedDashboardVault
+            ? vaultList.find((vault) => vault.id === selectedDashboardVault)
+                ?.name
+            : ""}
+        </span>
       )}
       <span className="absolute bottom-0 left-0 w-full rounded-b-lg font-medium text-center bg-chetwode-blue-300 text-chetwode-blue-950">
         Total poupado
