@@ -29,7 +29,7 @@ export default function DashboardTransactionList() {
           return (
             <li
               key={transaction.id}
-              className="grid grid-cols-[0.5fr_0.5fr] grid-rows-[1fr_1fr] rounded-lg bg-chetwode-blue-200 lg:grid-cols-[0.5fr_2fr_0.5fr] lg:grid-rows-none"
+              className="grid grid-cols-[0.5fr_0.5fr] grid-rows-[1fr_1fr] rounded-lg bg-chetwode-blue-200 shadow-md lg:grid-cols-[0.5fr_2fr_0.5fr] lg:grid-rows-none"
             >
               <span className="inline-flex items-center justify-center py-2 px-1 rounded-tl-lg font-medium text-center text-chetwode-blue-950 bg-chetwode-blue-300 lg:rounded-l-lg">
                 {date
