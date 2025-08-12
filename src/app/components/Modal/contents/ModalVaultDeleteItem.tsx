@@ -7,7 +7,7 @@ export default function ModalVaultDeleteItem() {
   const { vaultList, removeVaultItem, selectedVaultItem } = useVaultStore();
   const { toggleModal } = useModalStore();
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: number) => {
     removeVaultItem(id);
     toggleModal();
   };
