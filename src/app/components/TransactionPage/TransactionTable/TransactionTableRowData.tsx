@@ -14,7 +14,7 @@ export default function TransactionTableRowData({
   index,
   selectedToDeleted,
 }: ITransactionTableRowDataProps) {
-  const { budgetList, selectTransaction } = useTransactionBudgetStore();
+  const { budgetList, transactionSelection } = useTransactionBudgetStore();
 
   const date = new Date(transaction.date);
 
@@ -23,7 +23,7 @@ export default function TransactionTableRowData({
       role="row"
       key={index}
       className="group grid grid-cols-4 flex-1 p-1 gap-1 rounded-lg cursor-pointer hover:brightness-105 sm:grid-cols-3 lg:grid-cols-[0.35fr_2fr_0.5fr_0.5fr] lg:p-0"
-      onClick={() => selectTransaction(transaction.id)}
+      onClick={() => transactionSelection.select(transaction.id)}
     >
       <div
         role="cell"

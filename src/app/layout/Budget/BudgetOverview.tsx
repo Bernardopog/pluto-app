@@ -11,7 +11,8 @@ import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useState } from "react";
 
 export default function BudgetOverview() {
-  const { budgetList, transactionList } = useTransactionBudgetStore();
+  const { budgetList, transactionData } = useTransactionBudgetStore();
+  const transactionList = transactionData.list;
 
   const [typeBalance, setTypeBalance] = useState<"expense" | "revenue">(
     "expense"

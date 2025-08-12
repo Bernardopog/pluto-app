@@ -9,39 +9,38 @@ type DeleteType = "individual" | "group" | "all";
 export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
   const { toggleModal } = useModalStore();
   const {
-    deleteTransaction,
-    deleteAllTransactions,
-    deleteManyTransactions,
-    unselectTransaction,
-    selectedTransaction,
+    transactionMethods,
+    transactionData,
+    transactionDeletion,
+    transactionSelection,
     budgetList,
-    transactionListToDelete,
-    transactionList,
-    setIsDeletingManyTxn,
   } = useTransactionBudgetStore();
+  const transactionList = transactionData.list;
 
   const handleDelete = () => {
     if (type === "all") {
-      deleteAllTransactions();
+      transactionMethods.deleteAll();
     } else if (type === "group") {
-      deleteManyTransactions();
-      setIsDeletingManyTxn(false);
-    } else if (type === "individual" && selectedTransaction) {
-      deleteTransaction(selectedTransaction.id);
+      transactionMethods.deleteMany();
+      transactionDeletion.setIsDeleting(false);
+    } else if (type === "individual" && transactionSelection.selected) {
+      transactionMethods.delete(transactionSelection.selected.id);
     }
 
     toggleModal();
-    unselectTransaction();
+    transactionSelection.unselect();
   };
 
   const handleCancel = () => {
     toggleModal();
-    unselectTransaction();
+    transactionSelection.unselect();
   };
 
   let date = "";
-  if (selectedTransaction)
-    date = new Date(selectedTransaction.date).toLocaleDateString("pt-BR");
+  if (transactionSelection.selected)
+    date = new Date(transactionSelection.selected.date).toLocaleDateString(
+      "pt-BR"
+    );
 
   return (
     <div className="flex flex-col">
@@ -54,18 +53,20 @@ export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
           : "todas as Transações"}{" "}
         ?
       </p>
-      {selectedTransaction && type === "individual" && (
+      {transactionSelection.selected && type === "individual" && (
         <div className="flex flex-col p-2 rounded-lg text-2xl text-center text-chetwode-blue-950 bg-chetwode-blue-200">
-          <span>Nome: {selectedTransaction.name}</span>
+          <span>Nome: {transactionSelection.selected.name}</span>
           <span>
-            Valor: {moneyFormatter(Math.abs(selectedTransaction.value))}
+            Valor:{" "}
+            {moneyFormatter(Math.abs(transactionSelection.selected.value))}
           </span>
           <span>Data: {date}</span>
           <span>
             Categoria:{" "}
             {
               budgetList.find(
-                (budget) => budget.id === selectedTransaction.categoryId
+                (budget) =>
+                  budget.id === transactionSelection.selected?.categoryId
               )?.name
             }
           </span>
@@ -73,7 +74,7 @@ export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
       )}
       {type === "group" && (
         <ul className="flex flex-col min-h-0 max-h-64 py-4 px-2 rounded-lg gap-4 bg-chetwode-blue-100">
-          {transactionListToDelete.map((txnId) =>
+          {transactionDeletion.list.map((txnId) =>
             transactionList.map(
               (transaction) =>
                 transaction.id === txnId && (

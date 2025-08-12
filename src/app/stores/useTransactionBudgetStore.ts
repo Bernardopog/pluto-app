@@ -13,35 +13,48 @@ const showError = <U>(res: IMessage<U>) => {
   console.error(res.message, res.data);
 };
 
+interface ITransactionDataState {
+  list: ITransaction[];
+  loading: boolean;
+  fetched: boolean;
+}
+
+interface ITransactionMethodsState {
+  fetch: () => void;
+  create: (transaction: ITransactionCreateDTO) => void;
+  update: (id: number, transaction: ITransactionUpdateDTO) => void;
+  delete: (id: number) => void;
+  deleteMany: () => void;
+  deleteAll: () => void;
+}
+
+interface ITransactionDeletionState {
+  list: number[];
+  isDeleting: boolean;
+  add: (id: number) => void;
+  remove: (id: number) => void;
+  setIsDeleting: (value: boolean) => void;
+}
+
+interface ITransactionSelectionState {
+  selected: ITransaction | null;
+  select: (id: number) => void;
+  unselect: () => void;
+}
+
 interface ITransactionBudgetStore {
-  transactionList: ITransaction[];
-  isTransactionListLoading: boolean;
+  // Transaction
+  transactionData: ITransactionDataState;
+  transactionMethods: ITransactionMethodsState;
+  transactionDeletion: ITransactionDeletionState;
+  transactionSelection: ITransactionSelectionState;
 
   budgetList: IBudget[];
   isBudgetListLoading: boolean;
-
-  transactionListToDelete: number[];
-  addToDelete: (id: number) => void;
-  removeFromDelete: (id: number) => void;
-
-  selectedTransaction: ITransaction | null;
   selectedBudget: IBudget | null;
-
-  isDeletingManyTxn: boolean;
-  setIsDeletingManyTxn: (value: boolean) => void;
 
   // Global
   loadTxnAndBudgets: () => void;
-
-  // CRUD - Transaction
-  selectTransaction: (id: number) => void;
-  unselectTransaction: () => void;
-  getTransactions: () => void;
-  createTransation: (transaction: ITransactionCreateDTO) => void;
-  updateTransaction: (id: number, transaction: ITransactionUpdateDTO) => void;
-  deleteTransaction: (id: number) => void;
-  deleteManyTransactions: () => void;
-  deleteAllTransactions: () => void;
 
   selectBudget: (id: number) => void;
   unselectBudget: () => void;
@@ -68,95 +81,150 @@ const transactionFetcher = fetcher<ITransaction[] | ITransaction>(
 
 export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
   (set, get) => ({
-    transactionList: [],
-    isTransactionListLoading: true,
+    // Transaction
+    // Data
+    transactionData: { list: [], loading: true, fetched: false },
+
+    // Methods
+    transactionMethods: {
+      fetch: async () => {
+        const res = await transactionFetcher.get();
+        if (res.status >= 400) showError(res);
+        set((state) => ({
+          transactionData: {
+            ...state.transactionData,
+            list: res.data as ITransaction[],
+            loading: false,
+            fetched: true,
+          },
+        }));
+      },
+      create: async (transaction) => {
+        const res = await transactionFetcher.post(transaction);
+        if (res.status >= 400) showError(res);
+        set((state) => ({
+          transactionData: {
+            ...state.transactionData,
+            list: [...state.transactionData.list, res.data as ITransaction],
+          },
+        }));
+      },
+      update: async (id, transaction) => {
+        const res = await transactionFetcher.put(id, transaction);
+        if (res.status >= 400) showError(res);
+        set((state) => ({
+          transactionData: {
+            ...state.transactionData,
+            list: state.transactionData.list.map((item) =>
+              item.id === id ? (res.data as ITransaction) : item
+            ),
+          },
+        }));
+      },
+      delete: async (id) => {
+        const res = await transactionFetcher.delete(id);
+        if (res.status >= 400) showError(res);
+        set((state) => ({
+          transactionData: {
+            ...state.transactionData,
+            list: state.transactionData.list.filter((txn) => txn.id !== id),
+          },
+        }));
+      },
+      deleteMany: async () => {
+        if (get().transactionDeletion.list.length === 0) return;
+        const ids = get().transactionDeletion.list;
+        const res = await transactionFetcher.deleteManyTxn(ids);
+        if (res.status >= 400) showError(res);
+        set((state) => ({
+          transactionData: {
+            ...state.transactionData,
+            list: state.transactionData.list.filter(
+              (txn) => !ids.includes(txn.id)
+            ),
+          },
+        }));
+      },
+      deleteAll: async () => {
+        const res = await transactionFetcher.deleteManyTxn([]);
+        if (res.status >= 400) showError(res);
+        set((state) => ({
+          transactionData: {
+            ...state.transactionData,
+            list: [],
+          },
+        }));
+      },
+    },
+
+    transactionSelection: {
+      selected: null,
+      select: (id) =>
+        set({
+          transactionSelection: {
+            ...get().transactionSelection,
+            selected:
+              get().transactionData.list.find((txn) => txn.id === id) || null,
+          },
+        }),
+      unselect: () =>
+        set({
+          transactionSelection: {
+            ...get().transactionSelection,
+            selected: null,
+          },
+        }),
+    },
+
+    transactionDeletion: {
+      list: [],
+      isDeleting: false,
+      add(id) {
+        if (get().transactionDeletion.list.includes(id)) return;
+        set((state) => ({
+          transactionDeletion: {
+            ...state.transactionDeletion,
+            list: [...state.transactionDeletion.list, id],
+          },
+          selectedTransaction: null,
+        }));
+      },
+      remove(id) {
+        set((state) => ({
+          transactionDeletion: {
+            ...state.transactionDeletion,
+            list: state.transactionDeletion.list.filter((item) => item !== id),
+          },
+          selectedTransaction: null,
+        }));
+      },
+      setIsDeleting(value) {
+        if (value) {
+          set({
+            transactionDeletion: {
+              ...get().transactionDeletion,
+              isDeleting: value,
+            },
+          });
+        } else
+          set({
+            transactionDeletion: {
+              ...get().transactionDeletion,
+              isDeleting: false,
+              list: [],
+            },
+          });
+      },
+    },
+
     budgetList: [],
     isBudgetListLoading: true,
-    transactionListToDelete: [],
     selectedTransaction: null,
     selectedBudget: null,
 
-    isDeletingManyTxn: false,
-    setIsDeletingManyTxn: (value) => {
-      if (value) {
-        set({ isDeletingManyTxn: value });
-      } else set({ isDeletingManyTxn: false, transactionListToDelete: [] });
-    },
-
-    addToDelete: (id) =>
-      set((state) => ({
-        transactionListToDelete: [...state.transactionListToDelete, id],
-        selectedTransaction: null,
-      })),
-    removeFromDelete: (id) =>
-      set((state) => ({
-        transactionListToDelete: state.transactionListToDelete.filter(
-          (item) => item !== id
-        ),
-        selectedTransaction: null,
-      })),
-
     loadTxnAndBudgets: () => {
-      get().getTransactions();
+      get().transactionMethods.fetch();
       get().getBudgets();
-    },
-
-    selectTransaction: (id) => {
-      if (get().isDeletingManyTxn) return;
-      set((state) => ({
-        selectedTransaction: state.transactionList.find(
-          (item) => item.id === id
-        ),
-      }));
-    },
-    unselectTransaction: () => set({ selectedTransaction: null }),
-    getTransactions: async () => {
-      set({
-        transactionList: (await transactionFetcher.get())
-          .data as ITransaction[],
-        isTransactionListLoading: false,
-      });
-    },
-    createTransation: async (transaction) => {
-      const res = await transactionFetcher.post(transaction);
-      if (res.status >= 400) showError(res);
-      set((state) => ({
-        transactionList: [...state.transactionList, res.data as ITransaction],
-      }));
-    },
-    updateTransaction: async (id, transaction) => {
-      const res = await transactionFetcher.put(id, transaction);
-      if (res.status >= 400) showError(res);
-      set((state) => ({
-        transactionList: state.transactionList.map((item) =>
-          item.id === id ? (res.data as ITransaction) : item
-        ),
-      }));
-    },
-    deleteTransaction: async (id) => {
-      if (get().isDeletingManyTxn) return;
-      const res = await transactionFetcher.delete(id);
-      if (res.status >= 400) showError(res);
-      set((state) => ({
-        transactionList: state.transactionList.filter((txn) => txn.id !== id),
-      }));
-    },
-    deleteManyTransactions: async () => {
-      if (get().transactionListToDelete.length === 0) return;
-      const ids = get().transactionListToDelete;
-      const res = await transactionFetcher.deleteManyTxn(ids);
-      if (res.status >= 400) showError(res);
-      set((state) => ({
-        transactionList: state.transactionList.filter(
-          (txn) => !ids.includes(txn.id)
-        ),
-      }));
-    },
-    deleteAllTransactions: async () => {
-      if (get().isDeletingManyTxn) return;
-      const res = await transactionFetcher.deleteAllTxn();
-      if (res.status >= 400) showError(res);
-      set({ transactionList: [] });
     },
     selectBudget: (id) =>
       set({ selectedBudget: get().budgetList.find((bdgt) => bdgt.id === id) }),
@@ -186,26 +254,32 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
     deleteBudgetCategory: async (id) => {
       const res = await budgetFetcher.delete(id);
       if (res.status >= 400) showError(res);
-      set(() => ({
-        budgetList: get().budgetList.filter((bdgt) => bdgt.id !== id),
-        transactionList: get().transactionList.filter(
-          (txn) => txn.categoryId !== id
-        ),
+      set((state) => ({
+        budgetList: state.budgetList.filter((bdgt) => bdgt.id !== id),
+        transactionData: {
+          ...state.transactionData,
+          list: state.transactionData.list.filter(
+            (txn) => txn.categoryId !== id
+          ),
+        },
       }));
     },
     transferBudgetCategory: async (fromId, toId) => {
       const res = await budgetFetcher.moveTxn(fromId, { toId });
       if (res.status >= 400) showError(res);
-      set(() => ({
-        budgetList: get().budgetList.filter((bdgt) => bdgt.id !== fromId),
-        transactionList: get().transactionList.map((txn) =>
-          txn.categoryId === fromId ? { ...txn, categoryId: toId } : txn
-        ),
+      set((state) => ({
+        budgetList: state.budgetList.filter((bdgt) => bdgt.id !== fromId),
+        transactionList: {
+          ...state.transactionData,
+          list: state.transactionData.list.map((txn) =>
+            txn.categoryId === fromId ? { ...txn, categoryId: toId } : txn
+          ),
+        },
       }));
     },
     getExpenses: (budgetId) =>
       get()
-        .transactionList.filter((t) => t.categoryId === budgetId)
+        .transactionData.list.filter((t) => t.categoryId === budgetId)
         .filter((t) => t.value < 0)
         .reduce((acc, t) => acc + t.value, 0),
     getBudgetLimit: (budgetId) =>
@@ -214,7 +288,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       get().getBudgetLimit(budgetId) + get().getExpenses(budgetId),
     getTotalExpenses: () =>
       get()
-        .transactionList.filter((t) => t.value < 0)
+        .transactionData.list.filter((t) => t.value < 0)
         .reduce((acc, t) => acc + t.value, 0),
     getTotalBudgetLimit: () =>
       get().budgetList.reduce((acc, b) => acc + b.limit, 0),

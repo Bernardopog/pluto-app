@@ -7,17 +7,18 @@ import { useEffect } from "react";
 import { DashboardTransactionLoading } from "./";
 
 export default function DashboardTransactionList() {
-  const { transactionList, getTransactions, isTransactionListLoading } =
-    useTransactionBudgetStore();
+  const { transactionData, transactionMethods } = useTransactionBudgetStore();
+  const transactionList = transactionData.list;
+
   const { transactionFilter } = useDashboardControllersStore();
 
   useEffect(() => {
-    getTransactions();
-  }, [getTransactions]);
+    transactionMethods.fetch();
+  }, [transactionMethods]);
 
   return (
     <>
-      {isTransactionListLoading ? (
+      {transactionData.loading ? (
         <div className="flex flex-col items-center justify-center w-full h-full">
           <DashboardTransactionLoading />
         </div>

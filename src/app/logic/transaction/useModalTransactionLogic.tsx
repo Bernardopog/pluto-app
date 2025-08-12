@@ -7,13 +7,8 @@ import {
 } from "@/server/dto/transition.dto";
 
 export const useModalTransactionLogic = (type: "create" | "update") => {
-  const {
-    createTransation,
-    updateTransaction,
-    budgetList,
-    selectedTransaction,
-    unselectTransaction,
-  } = useTransactionBudgetStore();
+  const { transactionMethods, budgetList, transactionSelection } =
+    useTransactionBudgetStore();
   const { toggleModal } = useModalStore();
 
   const [transactionName, setTransactionName] = useState("");
@@ -30,15 +25,15 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    if (type === "update" && selectedTransaction) {
-      setTransactionName(selectedTransaction.name);
-      setTransactionValue(selectedTransaction.value.toString());
-      setTransactionCategory(selectedTransaction.categoryId);
+    if (type === "update" && transactionSelection.selected) {
+      setTransactionName(transactionSelection.selected.name);
+      setTransactionValue(transactionSelection.selected.value.toString());
+      setTransactionCategory(transactionSelection.selected.categoryId);
       setTransactionDate(
-        new Date(selectedTransaction.date).toISOString().split("T")[0]
+        new Date(transactionSelection.selected.date).toISOString().split("T")[0]
       );
     }
-  }, [type, selectedTransaction]);
+  }, [type, transactionSelection.selected]);
 
   const handleReset = () => {
     setTransactionName("");
@@ -83,19 +78,19 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
     };
 
     if (type === "create") {
-      createTransation(data);
+      transactionMethods.create(data);
       handleReset();
     } else {
-      updateTransaction(selectedTransaction!.id, data);
+      transactionMethods.update(transactionSelection.selected!.id, data);
     }
 
     toggleModal();
-    unselectTransaction();
+    transactionSelection.unselect();
   };
 
   const handleCancel = () => {
     toggleModal();
-    unselectTransaction();
+    transactionSelection.unselect();
   };
 
   return {

@@ -11,7 +11,8 @@ export default function BudgetListItemTxnHistory({ id }: { id: number }) {
   const [isShownTransactionHistory, setIsShownTransactionHistory] =
     useState<boolean>(false);
 
-  const { transactionList } = useTransactionBudgetStore();
+  const { transactionData } = useTransactionBudgetStore();
+  const transactionList = transactionData.list;
 
   let txns: (ITransaction | null)[] = transactionList
     .filter((txn) => txn.categoryId === id)

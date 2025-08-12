@@ -23,13 +23,13 @@ import ActionButton from "@/app/ui/ActionButton";
 export default function TransactionAction() {
   const { toggleModal, selectModalType } = useModalStore();
   const {
-    transactionList,
-    transactionListToDelete,
+    transactionData,
+    transactionDeletion,
+    transactionSelection,
     budgetList,
-    selectedTransaction,
-    isDeletingManyTxn,
-    setIsDeletingManyTxn,
   } = useTransactionBudgetStore();
+
+  const transactionList = transactionData.list;
 
   const handleModal = (typeOfModal: TransactionModalType | "budgetCreate") => {
     toggleModal();
@@ -82,14 +82,14 @@ export default function TransactionAction() {
             icon={<MdAdd />}
             label={"Adicionar nova Transação"}
           />
-          {selectedTransaction ? (
+          {transactionSelection.selected ? (
             <div className="flex flex-col my-1 gap-1">
               <p className="mt-2 text-chetwode-blue-950">
                 Transação Selecionada:{" "}
               </p>
               <span className="px-1 rounded-lg font-medium text-chetwode-blue-700 bg-chetwode-blue-200">
-                {selectedTransaction.name} -{" "}
-                {moneyFormatter(Math.abs(selectedTransaction.value))}
+                {transactionSelection.selected.name} -{" "}
+                {moneyFormatter(Math.abs(transactionSelection.selected.value))}
               </span>
             </div>
           ) : (
@@ -103,7 +103,10 @@ export default function TransactionAction() {
             }}
             icon={<MdEdit />}
             label={"Editar Transação"}
-            disabled={selectedTransaction === null || isDeletingManyTxn}
+            disabled={
+              transactionSelection.selected === null ||
+              transactionDeletion.isDeleting
+            }
           />
           <ActionButton
             action={() => {
@@ -111,19 +114,22 @@ export default function TransactionAction() {
             }}
             icon={<MdDelete />}
             label={"Deletar Transação"}
-            disabled={selectedTransaction === null || isDeletingManyTxn}
+            disabled={
+              transactionSelection.selected === null ||
+              transactionDeletion.isDeleting
+            }
           />
           <Divider direction="horizontal" />
-          {isDeletingManyTxn ? (
+          {transactionDeletion.isDeleting ? (
             <>
               <ActionButton
                 action={() => handleModal("transactionDeleteGroup")}
                 icon={<MdDeleteForever />}
-                label={`Deletar Todas (${transactionListToDelete.length})`}
-                disabled={transactionListToDelete.length <= 0}
+                label={`Deletar Todas (${transactionDeletion.list.length})`}
+                disabled={transactionDeletion.list.length <= 0}
               />
               <ActionButton
-                action={() => setIsDeletingManyTxn(false)}
+                action={() => transactionDeletion.setIsDeleting(false)}
                 icon={<MdCancel />}
                 label={"Cancelar Deleção"}
                 disabled={false}
@@ -131,7 +137,7 @@ export default function TransactionAction() {
             </>
           ) : (
             <ActionButton
-              action={() => setIsDeletingManyTxn(true)}
+              action={() => transactionDeletion.setIsDeleting(true)}
               icon={<MdDeleteSweep />}
               label={"Deletar Várias Transações"}
               disabled={false}
@@ -142,7 +148,7 @@ export default function TransactionAction() {
             action={() => handleModal("transactionDeleteAll")}
             icon={<MdDeleteOutline />}
             label={"Deletar Todas Transações"}
-            disabled={isDeletingManyTxn}
+            disabled={transactionDeletion.isDeleting}
           />
         </section>
         <Divider direction="horizontal" />

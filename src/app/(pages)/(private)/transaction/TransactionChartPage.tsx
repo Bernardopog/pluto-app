@@ -31,7 +31,8 @@ export default function TransactionChartPage() {
     "all"
   );
 
-  const { transactionList } = useTransactionBudgetStore();
+  const { transactionData } = useTransactionBudgetStore();
+  const transactionList = transactionData.list;
 
   const getLastDays = (lastDays: number) => {
     const days = [];

@@ -8,14 +8,10 @@ import Checkbox from "@/app/ui/Checkbox";
 import { useEffect, useState } from "react";
 
 export default function TransactionTable() {
-  const {
-    transactionList,
-    loadTxnAndBudgets,
-    isDeletingManyTxn,
-    addToDelete,
-    removeFromDelete,
-    transactionListToDelete,
-  } = useTransactionBudgetStore();
+  const { transactionData, loadTxnAndBudgets, transactionDeletion } =
+    useTransactionBudgetStore();
+  const transactionList = transactionData.list;
+
   const {
     firstDate,
     secondDate,
@@ -101,8 +97,8 @@ export default function TransactionTable() {
   );
 
   const handleDeleteMany = (id: number) => {
-    if (transactionListToDelete.includes(id)) removeFromDelete(id);
-    else addToDelete(id);
+    if (transactionDeletion.list.includes(id)) transactionDeletion.remove(id);
+    else transactionDeletion.add(id);
   };
 
   return (
@@ -148,7 +144,7 @@ export default function TransactionTable() {
             <div
               key={transaction.id}
               className={`flex justify-between rounded-lg shadow-md ${
-                transactionListToDelete.includes(transaction.id)
+                transactionDeletion.list.includes(transaction.id)
                   ? "bg-chetwode-blue-700 text-chetwode-blue-100"
                   : "bg-chetwode-blue-200 even:bg-chetwode-blue-300 text-chetwode-blue-950"
               }`}
@@ -156,15 +152,15 @@ export default function TransactionTable() {
               <TransactionTableRowData
                 transaction={transaction}
                 index={index}
-                selectedToDeleted={transactionListToDelete.includes(
+                selectedToDeleted={transactionDeletion.list.includes(
                   transaction.id
                 )}
               />
-              {isDeletingManyTxn && (
+              {transactionDeletion.isDeleting && (
                 <div className="flex items-center justify-end flex-[0.5] max-w-8">
                   <Checkbox
                     setState={() => handleDeleteMany(transaction.id)}
-                    state={transactionListToDelete.includes(transaction.id)}
+                    state={transactionDeletion.list.includes(transaction.id)}
                   />
                 </div>
               )}

@@ -8,7 +8,7 @@ import { MdAdd } from "react-icons/md";
 import Inert from "@/app/components/Inert";
 
 export default function DashboardTransactionForm() {
-  const { createTransation, budgetList } = useTransactionBudgetStore();
+  const { transactionMethods, budgetList } = useTransactionBudgetStore();
   const { isTransactionFormOpen } = useDashboardControllersStore();
 
   const [hadAnError, setHadAnError] = useState<boolean>(false);
@@ -53,7 +53,7 @@ export default function DashboardTransactionForm() {
         categoryId: Number(categoryValue),
       };
 
-      createTransation(data);
+      transactionMethods.create(data);
       form.reset();
       setHadAnError(false);
     } else {
