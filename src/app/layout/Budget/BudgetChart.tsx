@@ -16,7 +16,8 @@ import Checkbox from "@/app/ui/Checkbox";
 ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 
 export default function BudgetChart() {
-  const { budgetList, getExpenses } = useTransactionBudgetStore();
+  const { budgetData, getExpenses } = useTransactionBudgetStore();
+  const budgetList = budgetData.list;
 
   const [showLegend, setShowLegend] = useState<boolean>(true);
 

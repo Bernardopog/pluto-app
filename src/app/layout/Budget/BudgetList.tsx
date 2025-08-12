@@ -5,8 +5,9 @@ import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStor
 import { useEffect } from "react";
 
 export default function BudgetList() {
-  const { budgetList, getBudgetLimit, getExpenses, loadTxnAndBudgets } =
+  const { budgetData, getBudgetLimit, getExpenses, loadTxnAndBudgets } =
     useTransactionBudgetStore();
+  const budgetList = budgetData.list;
 
   useEffect(() => {
     loadTxnAndBudgets();

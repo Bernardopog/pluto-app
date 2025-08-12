@@ -8,8 +8,9 @@ import { useState } from "react";
 
 export default function ModalBudgetTransfer() {
   const { toggleModal } = useModalStore();
-  const { transferBudgetCategory, selectedBudget, unselectBudget, budgetList } =
+  const { budgetData, budgetMethods, budgetSelection } =
     useTransactionBudgetStore();
+  const budgetList = budgetData.list;
   const { categoryFilter, setCategoryFilter } = useTransactionFilterStore();
 
   const [toId, setToId] = useState<number | null>(null);
@@ -20,9 +21,9 @@ export default function ModalBudgetTransfer() {
       setHasError(true);
       return;
     }
-    transferBudgetCategory(fromId, toId);
+    budgetMethods.transfer(fromId, toId);
     toggleModal();
-    unselectBudget();
+    budgetSelection.unselect();
     setHasError(false);
     setCategoryFilter(categoryFilter === fromId ? toId : categoryFilter);
   };
@@ -36,10 +37,12 @@ export default function ModalBudgetTransfer() {
       <p className="text-2xl text-center text-chetwode-blue-950">
         Você tem certeza que quer deletar essa Categoria de Orçamento ?
       </p>
-      {selectedBudget && (
+      {budgetSelection.selected && (
         <div className="flex flex-col p-2 rounded-lg text-2xl text-center text-chetwode-blue-950 bg-chetwode-blue-200">
-          <span>Nome: {selectedBudget.name}</span>
-          <span>Limite: {moneyFormatter(Math.abs(selectedBudget.limit))}</span>
+          <span>Nome: {budgetSelection.selected.name}</span>
+          <span>
+            Limite: {moneyFormatter(Math.abs(budgetSelection.selected.limit))}
+          </span>
         </div>
       )}
       <p className="text-2xl text-center text-red-900">
@@ -48,13 +51,16 @@ export default function ModalBudgetTransfer() {
       <section className="rounded-lg mt-2 p-2 bg-chetwode-blue-100">
         <h3 className="subsubtitle">
           Para qual Orçamento as transações de{" "}
-          {budgetList.find((bdgt) => bdgt.id === selectedBudget?.id)?.name}{" "}
+          {
+            budgetList.find((bdgt) => bdgt.id === budgetSelection.selected?.id)
+              ?.name
+          }{" "}
           devem ir?
         </h3>
         <ul className="flex flex-wrap mt-2 gap-2">
           {budgetList.length > 0 &&
             budgetList
-              .filter((bdgt) => bdgt.id !== selectedBudget?.id)
+              .filter((bdgt) => bdgt.id !== budgetSelection.selected?.id)
               .map((bdgt) => (
                 <li
                   key={bdgt.id}
@@ -93,7 +99,7 @@ export default function ModalBudgetTransfer() {
         <button
           type="submit"
           className="w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-red-200 text-red-950 border-red-600 duration-300 ease-in-out hover:bg-red-300 active:bg-red-500 active:text-red-100"
-          onClick={() => handleTransfer(selectedBudget!.id, toId!)}
+          onClick={() => handleTransfer(budgetSelection.selected!.id, toId!)}
         >
           Deletar Transação
         </button>

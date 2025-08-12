@@ -18,19 +18,19 @@ export default function DashboardBudgetChart({
   budget,
   rest,
 }: IDashboardBudgetChartProps) {
-  const { getBudgets, isBudgetListLoading } = useTransactionBudgetStore();
+  const { budgetMethods, budgetData } = useTransactionBudgetStore();
 
   const [chartType, setChartType] = useState<"pie" | "bar">("pie");
   const [pieChartType, setPieChartType] = useState<PieChartType>("full");
   const [showRest, setShowRest] = useState<boolean>(false);
 
   useEffect(() => {
-    getBudgets();
-  }, [getBudgets]);
+    budgetMethods.fetch();
+  }, [budgetMethods]);
 
   return (
     <>
-      {isBudgetListLoading ? (
+      {budgetData.loading ? (
         <div className="w-full h-full flex items-center justify-center">
           <DashboardBudgetLoading />
         </div>

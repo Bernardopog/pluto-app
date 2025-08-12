@@ -14,7 +14,8 @@ export default function TransactionTableRowData({
   index,
   selectedToDeleted,
 }: ITransactionTableRowDataProps) {
-  const { budgetList, transactionSelection } = useTransactionBudgetStore();
+  const { budgetData, transactionSelection } = useTransactionBudgetStore();
+  const budgetList = budgetData.list;
 
   const date = new Date(transaction.date);
 

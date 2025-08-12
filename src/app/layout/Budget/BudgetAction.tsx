@@ -12,7 +12,7 @@ import {
 } from "react-icons/md";
 
 export default function BudgetAction() {
-  const { selectedBudget } = useTransactionBudgetStore();
+  const { budgetSelection } = useTransactionBudgetStore();
 
   const { toggleModal, selectModalType } = useModalStore();
 
@@ -33,11 +33,11 @@ export default function BudgetAction() {
           icon={<MdAdd />}
           label="Adicionar Orçamento"
         />
-        {selectedBudget ? (
+        {budgetSelection.selected ? (
           <div className="flex flex-col my-1 gap-1">
             <p className="text-chetwode-blue-950">Transação Selecionada: </p>
             <span className="px-1 rounded-lg font-medium text-chetwode-blue-700 bg-chetwode-blue-200">
-              {selectedBudget.name}
+              {budgetSelection.selected.name}
             </span>
           </div>
         ) : (
@@ -49,7 +49,7 @@ export default function BudgetAction() {
           action={() => handleModal("budgetUpdate")}
           icon={<MdEdit />}
           label="Editar Orçamento"
-          disabled={selectedBudget === null}
+          disabled={budgetSelection.selected === null}
         />
         <div className="flex flex-col gap-2 lg:flex-wrap">
           <ActionButton
@@ -57,7 +57,7 @@ export default function BudgetAction() {
             icon={<MdDeleteForever />}
             label="Deletar Orçamento"
             className="flex-[0.8] relative"
-            disabled={selectedBudget === null}
+            disabled={budgetSelection.selected === null}
           >
             <div
               role="tooltip"
@@ -74,7 +74,7 @@ export default function BudgetAction() {
             icon={<MdDelete />}
             label="Deletar e mover de Orçamento"
             className="flex-1 relative"
-            disabled={selectedBudget === null}
+            disabled={budgetSelection.selected === null}
           >
             <div
               role="tooltip"

@@ -7,8 +7,9 @@ import {
 } from "@/server/dto/transition.dto";
 
 export const useModalTransactionLogic = (type: "create" | "update") => {
-  const { transactionMethods, budgetList, transactionSelection } =
+  const { transactionMethods, budgetData, transactionSelection } =
     useTransactionBudgetStore();
+  const budgetList = budgetData.list;
   const { toggleModal } = useModalStore();
 
   const [transactionName, setTransactionName] = useState("");

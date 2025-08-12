@@ -13,12 +13,6 @@ const showError = <U>(res: IMessage<U>) => {
   console.error(res.message, res.data);
 };
 
-interface ITransactionDataState {
-  list: ITransaction[];
-  loading: boolean;
-  fetched: boolean;
-}
-
 interface ITransactionMethodsState {
   fetch: () => void;
   create: (transaction: ITransactionCreateDTO) => void;
@@ -36,35 +30,40 @@ interface ITransactionDeletionState {
   setIsDeleting: (value: boolean) => void;
 }
 
-interface ITransactionSelectionState {
-  selected: ITransaction | null;
+interface IBudgetMethodsState {
+  fetch: () => void;
+  create: (budget: IBudgetCreateDTO) => void;
+  update: (id: number, budget: IBudgetUpdateDTO) => void;
+  delete: (id: number) => void;
+  transfer: (fromId: number, toId: number) => void;
+}
+
+interface IDataState<T> {
+  list: T[];
+  loading: boolean;
+  fetched: boolean;
+}
+
+interface ISelectionState<T> {
+  selected: T | null;
   select: (id: number) => void;
   unselect: () => void;
 }
 
 interface ITransactionBudgetStore {
   // Transaction
-  transactionData: ITransactionDataState;
+  transactionData: IDataState<ITransaction>;
   transactionMethods: ITransactionMethodsState;
   transactionDeletion: ITransactionDeletionState;
-  transactionSelection: ITransactionSelectionState;
+  transactionSelection: ISelectionState<ITransaction>;
 
-  budgetList: IBudget[];
-  isBudgetListLoading: boolean;
-  selectedBudget: IBudget | null;
+  // Budget
+  budgetData: IDataState<IBudget>;
+  budgetMethods: IBudgetMethodsState;
+  budgetSelection: ISelectionState<IBudget>;
 
   // Global
   loadTxnAndBudgets: () => void;
-
-  selectBudget: (id: number) => void;
-  unselectBudget: () => void;
-
-  // CRUD - Budget
-  getBudgets: () => void;
-  createBudgetCategory: (budget: IBudgetCreateDTO) => void;
-  updateBudgetCategory: (id: number, budget: IBudgetUpdateDTO) => void;
-  deleteBudgetCategory: (id: number) => void;
-  transferBudgetCategory: (fromId: number, toId: number) => void;
 
   getExpenses: (budgetId: number) => number;
   getBudgetLimit: (budgetId: number) => number;
@@ -157,6 +156,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       },
     },
 
+    // Selection
     transactionSelection: {
       selected: null,
       select: (id) =>
@@ -176,6 +176,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         }),
     },
 
+    // Deletion
     transactionDeletion: {
       list: [],
       isDeleting: false,
@@ -217,73 +218,107 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       },
     },
 
-    budgetList: [],
-    isBudgetListLoading: true,
-    selectedTransaction: null,
-    selectedBudget: null,
+    // Budget
+    // Data
+    budgetData: { list: [], loading: true, fetched: false },
+
+    // Methods
+    budgetMethods: {
+      fetch: async () => {
+        const res = await budgetFetcher.get();
+        if (res.status >= 400) showError(res);
+        set((state) => ({
+          budgetData: {
+            ...state.budgetData,
+            list: res.data as IBudget[],
+            loading: false,
+            fetched: true,
+          },
+        }));
+      },
+      create: async (budget) => {
+        const res = await budgetFetcher.post(budget);
+        if (res.status >= 400) showError(res);
+        set((state) => ({
+          budgetData: {
+            ...state.budgetData,
+            list: [...state.budgetData.list, res.data as IBudget],
+          },
+        }));
+      },
+      update: async (id, budget) => {
+        const res = await budgetFetcher.put(id, budget);
+        if (res.status >= 400) showError(res);
+        set((state) => ({
+          budgetData: {
+            ...state.budgetData,
+            list: state.budgetData.list.map((item) =>
+              item.id === id ? (res.data as IBudget) : item
+            ),
+          },
+        }));
+      },
+      delete: async (id) => {
+        const res = await budgetFetcher.delete(id);
+        if (res.status >= 400) showError(res);
+        set((state) => ({
+          budgetData: {
+            ...state.budgetData,
+            list: state.budgetData.list.filter((bdgt) => bdgt.id !== id),
+          },
+        }));
+      },
+      transfer: async (fromId, toId) => {
+        const res = await budgetFetcher.moveTxn(fromId, { toId });
+        if (res.status >= 400) showError(res);
+        set((state) => ({
+          budgetData: {
+            ...state.budgetData,
+            list: state.budgetData.list.filter((bdgt) => bdgt.id !== fromId),
+          },
+          transactionData: {
+            ...state.transactionData,
+            list: state.transactionData.list.map((txn) =>
+              txn.categoryId === fromId ? { ...txn, categoryId: toId } : txn
+            ),
+          },
+        }));
+      },
+    },
+
+    budgetSelection: {
+      selected: null,
+      select(id) {
+        set({
+          budgetSelection: {
+            ...get().budgetSelection,
+            selected:
+              get().budgetData.list.find((bdgt) => bdgt.id === id) || null,
+          },
+        });
+      },
+      unselect() {
+        set({
+          budgetSelection: {
+            ...get().budgetSelection,
+            selected: null,
+          },
+        });
+      },
+    },
 
     loadTxnAndBudgets: () => {
       get().transactionMethods.fetch();
-      get().getBudgets();
+      get().budgetMethods.fetch();
     },
-    selectBudget: (id) =>
-      set({ selectedBudget: get().budgetList.find((bdgt) => bdgt.id === id) }),
-    unselectBudget: () => set({ selectedBudget: null }),
-    getBudgets: async () => {
-      set({
-        budgetList: (await budgetFetcher.get()).data as IBudget[],
-        isBudgetListLoading: false,
-      });
-    },
-    createBudgetCategory: async (budget) => {
-      const res = await budgetFetcher.post(budget);
-      if (res.status >= 400) showError(res);
-      set((state) => ({
-        budgetList: [...state.budgetList, res.data as IBudget],
-      }));
-    },
-    updateBudgetCategory: async (id, budget) => {
-      const res = await budgetFetcher.put(id, budget);
-      if (res.status >= 400) showError(res);
-      set((state) => ({
-        budgetList: state.budgetList.map((bdgt) =>
-          bdgt.id === id ? (res.data as IBudget) : bdgt
-        ),
-      }));
-    },
-    deleteBudgetCategory: async (id) => {
-      const res = await budgetFetcher.delete(id);
-      if (res.status >= 400) showError(res);
-      set((state) => ({
-        budgetList: state.budgetList.filter((bdgt) => bdgt.id !== id),
-        transactionData: {
-          ...state.transactionData,
-          list: state.transactionData.list.filter(
-            (txn) => txn.categoryId !== id
-          ),
-        },
-      }));
-    },
-    transferBudgetCategory: async (fromId, toId) => {
-      const res = await budgetFetcher.moveTxn(fromId, { toId });
-      if (res.status >= 400) showError(res);
-      set((state) => ({
-        budgetList: state.budgetList.filter((bdgt) => bdgt.id !== fromId),
-        transactionList: {
-          ...state.transactionData,
-          list: state.transactionData.list.map((txn) =>
-            txn.categoryId === fromId ? { ...txn, categoryId: toId } : txn
-          ),
-        },
-      }));
-    },
+
     getExpenses: (budgetId) =>
       get()
         .transactionData.list.filter((t) => t.categoryId === budgetId)
         .filter((t) => t.value < 0)
         .reduce((acc, t) => acc + t.value, 0),
     getBudgetLimit: (budgetId) =>
-      get().budgetList.find((b) => b.id === budgetId)?.limit || 0,
+      get().budgetData.list.find((b) => b.id === budgetId)?.limit || 0,
     getBudgetRest: (budgetId) =>
       get().getBudgetLimit(budgetId) + get().getExpenses(budgetId),
     getTotalExpenses: () =>
@@ -291,6 +326,6 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         .transactionData.list.filter((t) => t.value < 0)
         .reduce((acc, t) => acc + t.value, 0),
     getTotalBudgetLimit: () =>
-      get().budgetList.reduce((acc, b) => acc + b.limit, 0),
+      get().budgetData.list.reduce((acc, b) => acc + b.limit, 0),
   })
 );

@@ -7,7 +7,8 @@ import { FormEvent, useState } from "react";
 
 export default function ModalCategoryFilter() {
   const { categoryFilter, setCategoryFilter } = useTransactionFilterStore();
-  const { budgetList } = useTransactionBudgetStore();
+  const { budgetData } = useTransactionBudgetStore();
+  const budgetList = budgetData.list;
   const { toggleModal } = useModalStore();
 
   const [selectedCategory, setSelectedCategory] = useState<number | null>(

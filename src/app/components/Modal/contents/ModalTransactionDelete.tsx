@@ -13,8 +13,9 @@ export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
     transactionData,
     transactionDeletion,
     transactionSelection,
-    budgetList,
+    budgetData,
   } = useTransactionBudgetStore();
+  const budgetList = budgetData.list;
   const transactionList = transactionData.list;
 
   const handleDelete = () => {

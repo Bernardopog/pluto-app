@@ -5,12 +5,7 @@ import { IBudgetCreateDTO, IBudgetUpdateDTO } from "@/server/dto/budget.dto";
 
 export const useModalBudgetLogic = (type: "create" | "update") => {
   const { toggleModal } = useModalStore();
-  const {
-    createBudgetCategory,
-    updateBudgetCategory,
-    selectedBudget,
-    unselectBudget,
-  } = useTransactionBudgetStore();
+  const { budgetMethods, budgetSelection } = useTransactionBudgetStore();
 
   const [budgetName, setBudgetName] = useState<string>("");
   const [budgetLimit, setBudgetLimit] = useState<number>(100);
@@ -30,15 +25,21 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
   const [blue, setBlue] = useState<number>(0);
 
   useEffect(() => {
-    if (type === "update" && selectedBudget) {
-      setBudgetName(selectedBudget.name);
-      setBudgetLimit(selectedBudget.limit);
+    if (type === "update" && budgetSelection.selected) {
+      setBudgetName(budgetSelection.selected.name);
+      setBudgetLimit(budgetSelection.selected.limit);
       const checkColorType = () => {
-        if (selectedBudget.color.includes("#")) {
-          setHex(selectedBudget.color);
+        if (
+          budgetSelection.selected &&
+          budgetSelection.selected.color.includes("#")
+        ) {
+          setHex(budgetSelection.selected.color);
           return "hex";
-        } else if (selectedBudget.color.includes("hsl")) {
-          const formattedHsl = selectedBudget.color
+        } else if (
+          budgetSelection.selected &&
+          budgetSelection.selected.color.includes("hsl")
+        ) {
+          const formattedHsl = budgetSelection.selected.color
             .replace("hsl(", "")
             .replace(")", "")
             .replaceAll(" ", "")
@@ -48,8 +49,11 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
           setSaturation(Number(formattedHsl[1]));
           setLightness(Number(formattedHsl[2]));
           return "hsl";
-        } else if (selectedBudget.color.includes("rgb")) {
-          const formattedRgb = selectedBudget.color
+        } else if (
+          budgetSelection.selected &&
+          budgetSelection.selected.color.includes("rgb")
+        ) {
+          const formattedRgb = budgetSelection.selected.color
             .replace("rgb(", "")
             .replace(")", "")
             .replaceAll(" ", "")
@@ -64,7 +68,7 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
       const colorType = checkColorType();
       setBudgetColorType(colorType);
     }
-  }, [type, selectedBudget]);
+  }, [type, budgetSelection.selected]);
 
   const handleReset = () => {
     setBudgetName("");
@@ -133,17 +137,17 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
       limit: Number(budgetLimit),
     };
 
-    if (type === "update" && selectedBudget) {
-      updateBudgetCategory(selectedBudget.id, data);
-      unselectBudget();
-    } else if (type === "create") createBudgetCategory(data);
+    if (type === "update" && budgetSelection.selected) {
+      budgetMethods.update(budgetSelection.selected.id, data);
+      budgetSelection.unselect();
+    } else if (type === "create") budgetMethods.create(data);
     toggleModal();
   };
 
   const handleCancel = () => {
     toggleModal();
     handleReset();
-    unselectBudget();
+    budgetSelection.unselect();
   };
 
   return {

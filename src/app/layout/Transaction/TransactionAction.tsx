@@ -26,8 +26,9 @@ export default function TransactionAction() {
     transactionData,
     transactionDeletion,
     transactionSelection,
-    budgetList,
+    budgetData,
   } = useTransactionBudgetStore();
+  const budgetList = budgetData.list;
 
   const transactionList = transactionData.list;
 

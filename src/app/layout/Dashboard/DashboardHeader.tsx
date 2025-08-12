@@ -13,7 +13,8 @@ import {
 
 export default function DashboardHeader() {
   const { income, balance } = useFinanceStore();
-  const { budgetList, getTotalExpenses } = useTransactionBudgetStore();
+  const { budgetData, getTotalExpenses } = useTransactionBudgetStore();
+  const budgetList = budgetData.list;
 
   const [typeOfExpense, setTypeOfExpense] = useState<"current" | "estimate">(
     "current"

@@ -7,14 +7,13 @@ import { moneyFormatter } from "@/app/utils/moneyFormatter";
 
 export default function ModalBudgetDelete() {
   const { toggleModal } = useModalStore();
-  const { deleteBudgetCategory, selectedBudget, unselectBudget } =
-    useTransactionBudgetStore();
+  const { budgetMethods, budgetSelection } = useTransactionBudgetStore();
   const { categoryFilter, setCategoryFilter } = useTransactionFilterStore();
 
   const handleDelete = (id: number) => {
-    deleteBudgetCategory(id);
+    budgetMethods.delete(id);
     toggleModal();
-    unselectBudget();
+    budgetSelection.unselect();
     setCategoryFilter(categoryFilter === id ? null : categoryFilter);
   };
 
@@ -27,10 +26,12 @@ export default function ModalBudgetDelete() {
       <p className="text-2xl text-center text-chetwode-blue-950">
         Você tem certeza que quer deletar essa Categoria de Orçamento ?
       </p>
-      {selectedBudget && (
+      {budgetSelection.selected && (
         <div className="flex flex-col p-2 rounded-lg text-2xl text-center text-chetwode-blue-950 bg-chetwode-blue-200">
-          <span>Nome: {selectedBudget.name}</span>
-          <span>Limite: {moneyFormatter(Math.abs(selectedBudget.limit))}</span>
+          <span>Nome: {budgetSelection.selected.name}</span>
+          <span>
+            Limite: {moneyFormatter(Math.abs(budgetSelection.selected.limit))}
+          </span>
         </div>
       )}
       <p className="text-2xl text-center text-red-900">
@@ -47,7 +48,7 @@ export default function ModalBudgetDelete() {
         <button
           type="submit"
           className="w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-red-200 text-red-950 border-red-600 duration-300 ease-in-out hover:bg-red-300 active:bg-red-500 active:text-red-100"
-          onClick={() => handleDelete(selectedBudget!.id)}
+          onClick={() => handleDelete(budgetSelection.selected!.id)}
         >
           Deletar Transação
         </button>

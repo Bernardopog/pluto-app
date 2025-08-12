@@ -16,8 +16,9 @@ export type PieChartType = "full" | "half";
 export default function DashboardBudget() {
   const { income } = useFinanceStore();
 
-  const { transactionData, budgetList, getTotalExpenses } =
+  const { transactionData, budgetData, getTotalExpenses } =
     useTransactionBudgetStore();
+  const budgetList = budgetData.list;
 
   const transactionList = transactionData.list;
 
