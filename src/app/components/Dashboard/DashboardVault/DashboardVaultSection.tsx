@@ -2,7 +2,7 @@
 import Divider from "@/app/ui/Divider";
 import {
   DashboardVaultSaved,
-  DashboardVaultAdd,
+  DashboardVaultForm,
   DashboardVaultHistory,
 } from "./";
 import { useVaultStore } from "@/app/stores/useVaultStore";
@@ -18,7 +18,7 @@ export default function DashboardVaultSection() {
         <>
           <DashboardVaultHistory />
           <Divider direction="vertical" />
-          <DashboardVaultAdd />
+          <DashboardVaultForm />
         </>
       ) : (
         <p className="text-lg italic text-chetwode-blue-950/50">
