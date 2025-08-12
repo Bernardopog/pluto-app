@@ -16,6 +16,7 @@ import ModalVaultDelete from "./contents/ModalVaultDelete";
 import ModalVault from "./contents/ModalVault";
 import ModalVaultDeleteItem from "./contents/ModalVaultDeleteItem";
 import ModalVaultItem from "./contents/ModalVaultItem";
+import ModalTransactionSimpleFilter from "./contents/ModalTransactionSimpleFilter";
 
 export default function ModalContent() {
   const { selectedModal } = useModalStore();
@@ -24,6 +25,9 @@ export default function ModalContent() {
     <>
       {selectedModal === "goals" && <ModalGoals />}
       {selectedModal === "stats" && <ModalStats />}
+      {selectedModal === "transactionSimpleFilter" && (
+        <ModalTransactionSimpleFilter />
+      )}
       {selectedModal === "transactionCreate" && (
         <ModalTransaction type="create" />
       )}

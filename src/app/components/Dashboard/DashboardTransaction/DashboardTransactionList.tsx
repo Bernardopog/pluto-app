@@ -1,11 +1,13 @@
 "use client";
 
+import { useDashboardControllersStore } from "@/app/stores/useDashboardControllersStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useEffect } from "react";
 
 export default function DashboardTransactionList() {
   const { transactionList, getTransactions } = useTransactionBudgetStore();
+  const { transactionFilter } = useDashboardControllersStore();
 
   useEffect(() => {
     getTransactions();
@@ -14,6 +16,12 @@ export default function DashboardTransactionList() {
   return (
     <ul className="flex flex-col flex-1 gap-2 overflow-auto scrollbar-style scrollbar-thinner">
       {transactionList
+        .filter((transaction) => {
+          if (transactionFilter === "all") return true;
+          else if (transactionFilter === "expense")
+            return transaction.value < 0;
+          else if (transactionFilter === "income") return transaction.value > 0;
+        })
         .toReversed()
         .slice(0, 12)
         .map((transaction) => {
