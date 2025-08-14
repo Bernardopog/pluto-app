@@ -1,25 +1,28 @@
 "use client";
 
-import { PolarArea } from "react-chartjs-2";
-
-import {
-  Chart as ChartJS,
-  RadialLinearScale,
-  ArcElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
 import { useState } from "react";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import Checkbox from "@/app/ui/Checkbox";
+import {
+  BudgetChartAssigned,
+  BudgetChartSpend,
+} from "@/app/components/BudgetPage/BudgetChart";
+import { ApexOptions } from "apexcharts";
+import { IBudget } from "@/interfaces/IBudget";
+import Radio from "@/app/ui/Radio";
 
-ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
+export interface IBudgetChartProps {
+  options: ApexOptions;
+  budgetList: IBudget[];
+  isOverlay: boolean;
+}
 
 export default function BudgetChart() {
-  const getExpenses = useTransactionBudgetStore((s) => s.getExpenses);
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
 
-  const [showLegend, setShowLegend] = useState<boolean>(true);
+  const [chartToShow, setChartToShow] = useState<
+    "assigned" | "overlay" | "spend"
+  >("assigned");
 
   const [excludedId, setExcludedId] = useState<number[]>([]);
 
@@ -34,31 +37,24 @@ export default function BudgetChart() {
     setExcludedId(excludedId.filter((item) => item !== id));
   };
 
-  const dataAssignedBudget = {
-    labels: [...budgetListFiltered.map((bdgt) => bdgt.name)],
-    datasets: [
-      {
-        label: "Limite",
-        data: [...budgetListFiltered.map((bdgt) => bdgt.limit)],
-        backgroundColor: [...budgetListFiltered.map((bdgt) => bdgt.color)],
+  const options: ApexOptions = {
+    chart: {
+      type: "polarArea",
+      toolbar: {
+        show: false,
       },
-    ],
-  };
-  const dataSpendChart = {
-    labels: [
-      ...budgetList
-        .filter((bdgt) => !excludedId.includes(bdgt.id))
-        .map((bdgt) => bdgt.name),
-    ],
-    datasets: [
-      {
-        label: "Gasto",
-        data: [
-          ...budgetListFiltered.map((bdgt) => Math.abs(getExpenses(bdgt.id))),
-        ],
-        backgroundColor: [...budgetListFiltered.map((bdgt) => bdgt.color)],
+      zoom: {
+        enabled: false,
       },
-    ],
+    },
+    labels: budgetListFiltered.map((bdgt) => bdgt.name),
+    colors: budgetListFiltered.map((bdgt) => bdgt.color),
+    legend: {
+      show: false,
+    },
+    grid: {
+      show: false,
+    },
   };
 
   return (
@@ -67,71 +63,44 @@ export default function BudgetChart() {
       className="base-card flex flex-col min-w-0 overflow-x-auto scrollbar-style scrollbar-thinner"
     >
       <h2 className="subtitle">Gráfico</h2>
-      <header className="flex justify-center">
-        <button
-          className="p-1 border rounded-lg text-chetwode-blue-900 bg-chetwode-blue-300 duration-300 ease-in-out"
-          onClick={() => setShowLegend(!showLegend)}
-        >
-          Mesclar Gráficos
-        </button>
+      <header className="flex justify-evenly">
+        <Radio
+          state={chartToShow === "assigned"}
+          setState={() => setChartToShow("assigned")}
+          name="chartType"
+          id="chartType"
+          label="Limite"
+        />
+        <Radio
+          state={chartToShow === "overlay"}
+          setState={() => setChartToShow("overlay")}
+          name="chartType"
+          id="chartType"
+          label="Sobreposição"
+        />
+        <Radio
+          state={chartToShow === "spend"}
+          setState={() => setChartToShow("spend")}
+          name="chartType"
+          id="chartType"
+          label="Gasto"
+        />
       </header>
-      <div className="flex flex-1 relative min-h-9/10">
-        <div
-          className={`flex-1 duration-700 ease-in-out ${
-            showLegend
-              ? "relative left-0 opacity-100"
-              : "absolute left-1/2 -translate-x-1/2 top-0 opacity-50"
-          }`}
-        >
-          <PolarArea
-            data={dataAssignedBudget}
-            options={{
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: {
-                  display: false,
-                },
-              },
-              scales: {
-                r: {
-                  max: Math.max(
-                    ...budgetList.map((bdgt) => bdgt.limit),
-                    ...budgetList.map((bdgt) => Math.abs(getExpenses(bdgt.id)))
-                  ),
-                },
-              },
-            }}
+      <div className="flex justify-center items-center flex-1 relative min-h-9/10">
+        {chartToShow !== "spend" && (
+          <BudgetChartAssigned
+            budgetList={budgetListFiltered}
+            options={options}
+            isOverlay={chartToShow === "overlay"}
           />
-        </div>
-        <div
-          className={`flex-1 duration-700 ease-in-out ${
-            showLegend
-              ? "relative right-0 opacity-100"
-              : "absolute right-1/2 translate-x-1/2 top-0 opacity-50"
-          }`}
-        >
-          <PolarArea
-            data={dataSpendChart}
-            options={{
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: {
-                  display: false,
-                },
-              },
-              scales: {
-                r: {
-                  max: Math.max(
-                    ...budgetList.map((bdgt) => bdgt.limit),
-                    ...budgetList.map((bdgt) => Math.abs(getExpenses(bdgt.id)))
-                  ),
-                },
-              },
-            }}
+        )}
+        {chartToShow !== "assigned" && (
+          <BudgetChartSpend
+            budgetList={budgetListFiltered}
+            options={options}
+            isOverlay={chartToShow === "overlay"}
           />
-        </div>
+        )}
       </div>
       <div>
         <h3 className="subsubtitle">Remover do Gráfico:</h3>
