@@ -2,15 +2,13 @@
 
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useState } from "react";
-import Input from "@/app/ui/Input";
-import { MdCalendarToday } from "react-icons/md";
 import dynamic from "next/dynamic";
 
 import { ApexOptions } from "apexcharts";
-import Radio from "@/app/ui/Radio";
+import TransactionChartController from "@/app/components/TransactionPage/TransactionChartController";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-type ChartType =
+export type TransactionChartType =
   | "all"
   | "income"
   | "expense"
@@ -20,7 +18,7 @@ type ChartType =
 
 export default function TransactionChartPage() {
   const [passedDays, setPassedDays] = useState<number>(7);
-  const [chartType, setChartType] = useState<ChartType>("all");
+  const [chartType, setChartType] = useState<TransactionChartType>("all");
 
   const transactionList = useTransactionBudgetStore(
     (s) => s.transactionData.list
@@ -214,67 +212,9 @@ export default function TransactionChartPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-104px)]">
-      <div className="self-end flex flex-col min-w-72 w-1/5 gap-2">
-        <Input
-          type="number"
-          inputType="decorated"
-          icon={<MdCalendarToday />}
-          label="Dias"
-          name="days"
-          id="days"
-          state={passedDays}
-          setState={setPassedDays}
-          minLimit={4}
-          maxLimit={24}
-          step="1"
-        />
-      </div>
-      <section className="self-end flex flex-col w-[95%] mt-2 gap-2 bg-chetwode-blue-200 p-2 rounded-lg">
-        <h2 className="subtitle">Controlador</h2>
-        <div className="flex gap-4">
-          <div className="flex flex-col p-2 rounded-lg bg-chetwode-blue-300">
-            <h3 className="subsubtitle">Geral:</h3>
-            <Radio
-              state={chartType === "all"}
-              setState={() => setChartType("all")}
-              name="chartType"
-              id="chartType"
-              label="Todos"
-            />
-            <Radio
-              state={chartType === "income"}
-              setState={() => setChartType("income")}
-              name="chartType"
-              id="chartType"
-              label="Receita"
-            />
-            <Radio
-              state={chartType === "expense"}
-              setState={() => setChartType("expense")}
-              name="chartType"
-              id="chartType"
-              label="Gasto"
-            />
-          </div>
-          <div className="flex flex-col p-2 rounded-lg bg-chetwode-blue-300">
-            <h3 className="subsubtitle">Orçamento:</h3>
-            <Radio
-              state={chartType === "budget-income"}
-              setState={() => setChartType("budget-income")}
-              name="chartType"
-              id="chartType"
-              label="Receita + Orçamento"
-            />
-            <Radio
-              state={chartType === "budget-expense"}
-              setState={() => setChartType("budget-expense")}
-              name="chartType"
-              id="chartType"
-              label="Gasto + Orçamento"
-            />
-          </div>
-        </div>
-      </section>
+      <TransactionChartController
+        {...{ chartType, setChartType, passedDays, setPassedDays }}
+      />
       <div className="relative mx-auto w-9/10 h-full">
         <Chart
           height={"100%"}
