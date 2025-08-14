@@ -6,9 +6,15 @@ import { getPercentage } from "@/app/utils/getPercentage";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { FiTarget } from "react-icons/fi";
 import { MdCalendarMonth, MdPlayArrow } from "react-icons/md";
+import { useShallow } from "zustand/shallow";
 
 export default function VaultOverview() {
-  const { vaultItemList, vaultList } = useVaultStore();
+  const { vaultItemList, vaultList } = useVaultStore(
+    useShallow((s) => ({
+      vaultItemList: s.vaultItemList,
+      vaultList: s.vaultList,
+    }))
+  );
 
   const vaultListWithItems = vaultList.map((vault) => ({
     ...vault,

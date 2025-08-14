@@ -5,12 +5,19 @@ import {
   ITransactionCreateDTO,
   ITransactionUpdateDTO,
 } from "@/server/dto/transition.dto";
+import { useShallow } from "zustand/shallow";
 
 export const useModalTransactionLogic = (type: "create" | "update") => {
-  const { transactionMethods, budgetData, transactionSelection } =
-    useTransactionBudgetStore();
-  const budgetList = budgetData.list;
-  const { toggleModal } = useModalStore();
+  const transactionMethods = useTransactionBudgetStore(
+    (s) => s.transactionMethods
+  );
+  const { budgetList, transactionSelection } = useTransactionBudgetStore(
+    useShallow((s) => ({
+      budgetList: s.budgetData.list,
+      transactionSelection: s.transactionSelection,
+    }))
+  );
+  const toggleModal = useModalStore((s) => s.toggleModal);
 
   const [transactionName, setTransactionName] = useState("");
   const [transactionValue, setTransactionValue] = useState("");

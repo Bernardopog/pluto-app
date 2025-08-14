@@ -10,9 +10,13 @@ import { FormEvent, useState } from "react";
 import { MdDragHandle, MdPlayArrow } from "react-icons/md";
 
 export default function ModalTypeFilter() {
-  const { transactionTypeFilter, setTransactionTypeFilter } =
-    useTransactionFilterStore();
-  const { toggleModal } = useModalStore();
+  const setTransactionTypeFilter = useTransactionFilterStore(
+    (s) => s.setTransactionTypeFilter
+  );
+  const transactionTypeFilter = useTransactionFilterStore(
+    (s) => s.transactionTypeFilter
+  );
+  const toggleModal = useModalStore((s) => s.toggleModal);
 
   const [selectedType, setSelectedType] = useState<TransactionType>(
     transactionTypeFilter

@@ -13,23 +13,45 @@ import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStor
 import { Suspense } from "react";
 import { TransactionFilterButton } from "@/app/components/TransactionPage/TransactionFilter";
 import TransactionSearchParams from "./TransactionSearchParams";
+import { useShallow } from "zustand/shallow";
 
 export default function TransactionFilter() {
   const { value, handleChangeDebounce } = useDebouncedInput();
-  const { toggleModal, selectModalType } = useModalStore();
+  const { toggleModal, selectModalType } = useModalStore(
+    useShallow((s) => ({
+      toggleModal: s.toggleModal,
+      selectModalType: s.selectModalType,
+    }))
+  );
+
   const {
-    dateFilter,
-    valueFilter,
-    categoryFilter,
     setSearchFilter,
-    transactionTypeFilter,
     resetFullDateFilter,
     resetFullValueFilter,
     resetFullCategoryFilter,
     resetFullTypeFilter,
     resetFullFilter,
     setCategoryFilter,
-  } = useTransactionFilterStore();
+  } = useTransactionFilterStore(
+    useShallow((s) => ({
+      setSearchFilter: s.setSearchFilter,
+      resetFullDateFilter: s.resetFullDateFilter,
+      resetFullValueFilter: s.resetFullValueFilter,
+      resetFullCategoryFilter: s.resetFullCategoryFilter,
+      resetFullTypeFilter: s.resetFullTypeFilter,
+      resetFullFilter: s.resetFullFilter,
+      setCategoryFilter: s.setCategoryFilter,
+    }))
+  );
+  const { dateFilter, valueFilter, categoryFilter, transactionTypeFilter } =
+    useTransactionFilterStore(
+      useShallow((s) => ({
+        dateFilter: s.dateFilter,
+        valueFilter: s.valueFilter,
+        categoryFilter: s.categoryFilter,
+        transactionTypeFilter: s.transactionTypeFilter,
+      }))
+    );
 
   const modalController = (modalType: TransactionFilterType) => {
     selectModalType(modalType);

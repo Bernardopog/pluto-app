@@ -6,8 +6,9 @@ import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { MdAttachMoney, MdList, MdPlayArrow } from "react-icons/md";
 
 export default function TransactionOverview() {
-  const { transactionData } = useTransactionBudgetStore();
-  const transactionList = transactionData.list;
+  const transactionList = useTransactionBudgetStore(
+    (s) => s.transactionData.list
+  );
 
   return (
     <header id="transaction-overview" className="mt-2">

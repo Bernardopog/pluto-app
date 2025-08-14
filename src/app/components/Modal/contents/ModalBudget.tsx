@@ -18,8 +18,10 @@ interface IModalBudgetProps {
 }
 
 export default function ModalBudget({ type }: IModalBudgetProps) {
-  const { income } = useFinanceStore();
-  const { getTotalBudgetLimit } = useTransactionBudgetStore();
+  const income = useFinanceStore((s) => s.income);
+  const getTotalBudgetLimit = useTransactionBudgetStore(
+    (s) => s.getTotalBudgetLimit
+  );
   const {
     budgetName,
     setBudgetName,

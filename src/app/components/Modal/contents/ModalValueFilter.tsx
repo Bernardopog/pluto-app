@@ -7,11 +7,19 @@ import {
 } from "@/app/stores/useTransactionFilterStore";
 import Radio from "@/app/ui/Radio";
 import { FormEvent, useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 export default function ModalValueFilter() {
-  const { valueFilter, setValueFilter, setFirstValue, setSecondValue } =
-    useTransactionFilterStore();
-  const { toggleModal } = useModalStore();
+  const valueFilter = useTransactionFilterStore((s) => s.valueFilter);
+  const { setValueFilter, setFirstValue, setSecondValue } =
+    useTransactionFilterStore(
+      useShallow((s) => ({
+        setValueFilter: s.setValueFilter,
+        setFirstValue: s.setFirstValue,
+        setSecondValue: s.setSecondValue,
+      }))
+    );
+  const toggleModal = useModalStore((s) => s.toggleModal);
 
   const [typeValueFilter, setTypeValueFilter] =
     useState<ValueType>(valueFilter);

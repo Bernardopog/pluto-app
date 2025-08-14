@@ -6,10 +6,16 @@ import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStor
 import { FormEvent, useState } from "react";
 
 export default function ModalCategoryFilter() {
-  const { categoryFilter, setCategoryFilter } = useTransactionFilterStore();
-  const { budgetData } = useTransactionBudgetStore();
+  const setCategoryFilter = useTransactionFilterStore(
+    (s) => s.setCategoryFilter
+  );
+  const categoryFilter = useTransactionFilterStore((s) => s.categoryFilter);
+
+  const budgetData = useTransactionBudgetStore((s) => s.budgetData);
+
+  const toggleModal = useModalStore((s) => s.toggleModal);
+
   const budgetList = budgetData.list;
-  const { toggleModal } = useModalStore();
 
   const [selectedCategory, setSelectedCategory] = useState<number | null>(
     categoryFilter

@@ -4,10 +4,22 @@ import Inert from "@/app/components/Inert";
 import { ModalContent, ModalHeader } from "@/app/components/Modal";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { MouseEvent } from "react";
+import { useShallow } from "zustand/shallow";
 
 export default function Modal() {
-  const { toggleModal, isModalOpen, selectModalType, selectedModal } =
-    useModalStore();
+  const { isModalOpen, selectedModal } = useModalStore(
+    useShallow((s) => ({
+      isModalOpen: s.isModalOpen,
+      selectedModal: s.selectedModal,
+    }))
+  );
+  const { toggleModal, selectModalType } = useModalStore(
+    useShallow((s) => ({
+      toggleModal: s.toggleModal,
+      selectModalType: s.selectModalType,
+    }))
+  );
+
   const handleModal = () => {
     toggleModal();
     if (!isModalOpen) return;

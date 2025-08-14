@@ -8,7 +8,7 @@ import {
 import { useVaultStore } from "@/app/stores/useVaultStore";
 
 export default function DashboardVaultSection() {
-  const { selectedDashboardVault } = useVaultStore();
+  const selectedDashboardVault = useVaultStore((s) => s.selectedDashboardVault);
 
   return (
     <section className="flex flex-col mt-2 gap-2 lg:flex-row">

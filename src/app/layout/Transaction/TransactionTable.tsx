@@ -6,11 +6,18 @@ import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStor
 import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStore";
 import Checkbox from "@/app/ui/Checkbox";
 import { useEffect, useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 export default function TransactionTable() {
-  const { transactionData, loadTxnAndBudgets, transactionDeletion } =
-    useTransactionBudgetStore();
-  const transactionList = transactionData.list;
+  const loadTxnAndBudgets = useTransactionBudgetStore(
+    (s) => s.loadTxnAndBudgets
+  );
+  const { transactionList, transactionDeletion } = useTransactionBudgetStore(
+    useShallow((s) => ({
+      transactionList: s.transactionData.list,
+      transactionDeletion: s.transactionDeletion,
+    }))
+  );
 
   const {
     firstDate,
@@ -22,7 +29,19 @@ export default function TransactionTable() {
     categoryFilter,
     transactionTypeFilter,
     searchFilter,
-  } = useTransactionFilterStore();
+  } = useTransactionFilterStore(
+    useShallow((s) => ({
+      firstDate: s.firstDate,
+      secondDate: s.secondDate,
+      dateFilter: s.dateFilter,
+      firstValue: s.firstValue,
+      secondValue: s.secondValue,
+      valueFilter: s.valueFilter,
+      categoryFilter: s.categoryFilter,
+      transactionTypeFilter: s.transactionTypeFilter,
+      searchFilter: s.searchFilter,
+    }))
+  );
 
   useEffect(() => {
     loadTxnAndBudgets();

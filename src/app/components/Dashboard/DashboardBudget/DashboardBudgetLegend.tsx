@@ -6,6 +6,7 @@ import { useState } from "react";
 import DashboardBudgetLegendController from "./DashboardBudgetLegendController";
 import { MdWarning } from "react-icons/md";
 import { IBudget } from "@/interfaces/IBudget";
+import { useShallow } from "zustand/shallow";
 
 export type LegendType = "expenses-limit" | "rest";
 
@@ -18,7 +19,12 @@ export default function DashboardBudgetLegend({
   budget,
   rest,
 }: IDashboardBudgetLegendProps) {
-  const { getExpenses, getBudgetRest } = useTransactionBudgetStore();
+  const { getExpenses, getBudgetRest } = useTransactionBudgetStore(
+    useShallow((s) => ({
+      getExpenses: s.getExpenses,
+      getBudgetRest: s.getBudgetRest,
+    }))
+  );
   const [typeOfLegend, setTypeOfLegend] =
     useState<LegendType>("expenses-limit");
 

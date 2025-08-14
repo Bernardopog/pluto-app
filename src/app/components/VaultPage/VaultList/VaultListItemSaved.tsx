@@ -2,10 +2,16 @@
 import { IVaultItem } from "@/interfaces/IVault";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
+import { useShallow } from "zustand/shallow";
 
 export default function VaultListItemSaved({ item }: { item: IVaultItem }) {
-  const { selectVaultItem, unselectVaultItem, selectedVaultItem } =
-    useVaultStore();
+  const { selectVaultItem, unselectVaultItem } = useVaultStore(
+    useShallow((s) => ({
+      selectVaultItem: s.selectVaultItem,
+      unselectVaultItem: s.unselectVaultItem,
+    }))
+  );
+  const selectedVaultItem = useVaultStore((s) => s.selectedVaultItem);
 
   const handleItemSelect = () => {
     if (selectedVaultItem?.id === item.id) unselectVaultItem();

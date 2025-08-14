@@ -10,10 +10,16 @@ import {
 } from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import Divider from "@/app/ui/Divider";
+import { useShallow } from "zustand/shallow";
 
 export default function VaultAction() {
-  const { vaultList } = useVaultStore();
-  const { toggleModal, selectModalType } = useModalStore();
+  const vaultList = useVaultStore((s) => s.vaultList);
+  const { toggleModal, selectModalType } = useModalStore(
+    useShallow((s) => ({
+      toggleModal: s.toggleModal,
+      selectModalType: s.selectModalType,
+    }))
+  );
 
   const handleModal = (typeOfModal: VaultModalType | VaultItemModalType) => {
     toggleModal();

@@ -5,7 +5,8 @@ import { FormEvent, useState } from "react";
 import { MdAddCircle } from "react-icons/md";
 
 export default function DashboardVaultForm() {
-  const { addVaultItem, selectedDashboardVault } = useVaultStore();
+  const selectedDashboardVault = useVaultStore((s) => s.selectedDashboardVault);
+  const addVaultItem = useVaultStore((s) => s.addVaultItem);
 
   const [hadAnError, setHadAnError] = useState<boolean>(false);
 

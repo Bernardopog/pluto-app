@@ -7,8 +7,10 @@ import { FormEvent, useState } from "react";
 import { MdDragHandle, MdPlayArrow } from "react-icons/md";
 
 export default function ModalTransactionSimpleFilter() {
-  const { toggleModal } = useModalStore();
-  const { setTransactionFilter } = useDashboardControllersStore();
+  const toggleModal = useModalStore((s) => s.toggleModal);
+  const setTransactionFilter = useDashboardControllersStore(
+    (s) => s.setTransactionFilter
+  );
 
   const [selectedType, setSelectedType] = useState<
     "all" | "expense" | "income"

@@ -2,10 +2,17 @@ import { iconNameType } from "@/types/IconNameType";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { FormEvent, useEffect, useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 export const useModalVaultLogic = (type: "create" | "update") => {
-  const { createVault, updateVault, selectedVault } = useVaultStore();
-  const { toggleModal } = useModalStore();
+  const { createVault, updateVault } = useVaultStore(
+    useShallow((s) => ({
+      createVault: s.createVault,
+      updateVault: s.updateVault,
+    }))
+  );
+  const selectedVault = useVaultStore((s) => s.selectedVault);
+  const toggleModal = useModalStore((s) => s.toggleModal);
 
   const [vaultName, setVaultName] = useState<string>("");
   const [vaultLimit, setVaultLimit] = useState<string>("");

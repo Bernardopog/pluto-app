@@ -18,15 +18,16 @@ export default function DashboardBudgetChart({
   budget,
   rest,
 }: IDashboardBudgetChartProps) {
-  const { budgetMethods, budgetData } = useTransactionBudgetStore();
+  const budgetData = useTransactionBudgetStore((s) => s.budgetData);
+  const fetch = useTransactionBudgetStore((s) => s.budgetMethods.fetch);
 
   const [chartType, setChartType] = useState<"pie" | "bar">("pie");
   const [pieChartType, setPieChartType] = useState<PieChartType>("full");
   const [showRest, setShowRest] = useState<boolean>(false);
 
   useEffect(() => {
-    budgetMethods.fetch();
-  }, [budgetMethods]);
+    fetch();
+  }, [fetch]);
 
   return (
     <>

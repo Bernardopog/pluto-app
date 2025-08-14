@@ -6,18 +6,26 @@ import {
 } from "@/app/stores/useTransactionFilterStore";
 import Radio from "@/app/ui/Radio";
 import { FormEvent, useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 export default function ModalDateFilter() {
-  const {
-    firstDate,
-    secondDate,
-    setFirstDate,
-    setSecondDate,
-    resetDates,
-    dateFilter,
-    setDateFilter,
-  } = useTransactionFilterStore();
-  const { toggleModal } = useModalStore();
+  const { firstDate, secondDate, dateFilter } = useTransactionFilterStore(
+    useShallow((s) => ({
+      firstDate: s.firstDate,
+      secondDate: s.secondDate,
+      dateFilter: s.dateFilter,
+    }))
+  );
+  const { setFirstDate, setSecondDate, resetDates, setDateFilter } =
+    useTransactionFilterStore(
+      useShallow((s) => ({
+        setFirstDate: s.setFirstDate,
+        setSecondDate: s.setSecondDate,
+        resetDates: s.resetDates,
+        setDateFilter: s.setDateFilter,
+      }))
+    );
+  const toggleModal = useModalStore((s) => s.toggleModal);
 
   const [firstDateInput, setFirstDateInput] = useState<string>(
     firstDate.toISOString().split("T")[0]

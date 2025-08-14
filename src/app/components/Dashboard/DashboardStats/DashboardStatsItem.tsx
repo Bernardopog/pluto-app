@@ -15,7 +15,7 @@ export default function DashboardStatsItem({
   isNull,
   index,
 }: IDashboardStatsItemProps) {
-  const { removeStatFromList } = useStatsStore();
+  const removeStatFromList = useStatsStore((s) => s.removeStatFromList);
 
   return (
     <>

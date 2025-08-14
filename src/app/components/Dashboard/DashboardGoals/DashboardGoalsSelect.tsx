@@ -1,9 +1,15 @@
 "use client";
 
 import { useModalStore } from "@/app/stores/useModalStore";
+import { useShallow } from "zustand/shallow";
 
 export default function DashboardGoalsSelect() {
-  const { toggleModal, selectModalType } = useModalStore();
+  const { toggleModal, selectModalType } = useModalStore(
+    useShallow((s) => ({
+      toggleModal: s.toggleModal,
+      selectModalType: s.selectModalType,
+    }))
+  );
 
   const handleModal = () => {
     toggleModal();

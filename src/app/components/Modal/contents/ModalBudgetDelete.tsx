@@ -6,9 +6,15 @@ import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStor
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 
 export default function ModalBudgetDelete() {
-  const { toggleModal } = useModalStore();
-  const { budgetMethods, budgetSelection } = useTransactionBudgetStore();
-  const { categoryFilter, setCategoryFilter } = useTransactionFilterStore();
+  const toggleModal = useModalStore((s) => s.toggleModal);
+
+  const budgetMethods = useTransactionBudgetStore((s) => s.budgetMethods);
+  const budgetSelection = useTransactionBudgetStore((s) => s.budgetSelection);
+
+  const setCategoryFilter = useTransactionFilterStore(
+    (s) => s.setCategoryFilter
+  );
+  const categoryFilter = useTransactionFilterStore((s) => s.categoryFilter);
 
   const handleDelete = (id: number) => {
     budgetMethods.delete(id);

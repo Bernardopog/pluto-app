@@ -11,9 +11,9 @@ import Divider from "@/app/ui/Divider";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 
 export default function ModalGoals() {
-  const { createGoal } = useGoalsStore();
-  const { toggleModal } = useModalStore();
-  const { vaultList } = useVaultStore();
+  const createGoal = useGoalsStore((s) => s.createGoal);
+  const toggleModal = useModalStore((s) => s.toggleModal);
+  const vaultList = useVaultStore((s) => s.vaultList);
 
   const [goalName, setGoalName] = useState<string>("");
   const [goalPrice, setGoalPrice] = useState<string>("");

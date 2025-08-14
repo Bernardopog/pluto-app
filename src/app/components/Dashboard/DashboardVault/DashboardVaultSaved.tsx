@@ -5,14 +5,22 @@ import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useState } from "react";
 import { BsPiggyBank } from "react-icons/bs";
 import Inert from "../../Inert";
+import { useShallow } from "zustand/shallow";
 
 export default function DashboardVaultSaved() {
-  const {
-    vaultList,
-    selectedDashboardVault,
-    selectDashboardVault,
-    getTotalMoneySavedFromVault,
-  } = useVaultStore();
+  const { vaultList, selectedDashboardVault } = useVaultStore(
+    useShallow((s) => ({
+      vaultList: s.vaultList,
+      selectedDashboardVault: s.selectedDashboardVault,
+    }))
+  );
+
+  const { selectDashboardVault, getTotalMoneySavedFromVault } = useVaultStore(
+    useShallow((s) => ({
+      selectDashboardVault: s.selectDashboardVault,
+      getTotalMoneySavedFromVault: s.getTotalMoneySavedFromVault,
+    }))
+  );
 
   const [isVaultMenuOpen, setIsVaultMenuOpen] = useState<boolean>(false);
 

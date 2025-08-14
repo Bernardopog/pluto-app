@@ -1,8 +1,14 @@
 import { useModalStore } from "@/app/stores/useModalStore";
 import { MdAdd } from "react-icons/md";
+import { useShallow } from "zustand/shallow";
 
 export default function VaultListBtn() {
-  const { toggleModal, selectModalType } = useModalStore();
+  const { toggleModal, selectModalType } = useModalStore(
+    useShallow((s) => ({
+      toggleModal: s.toggleModal,
+      selectModalType: s.selectModalType,
+    }))
+  );
 
   const handleVaultCreateion = () => {
     toggleModal();

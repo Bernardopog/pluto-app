@@ -3,11 +3,18 @@
 import { BudgetListItem } from "@/app/components/BudgetPage/BudgetList";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useEffect } from "react";
+import { useShallow } from "zustand/shallow";
 
 export default function BudgetList() {
-  const { budgetData, getBudgetLimit, getExpenses, loadTxnAndBudgets } =
-    useTransactionBudgetStore();
-  const budgetList = budgetData.list;
+  const { getBudgetLimit, getExpenses, loadTxnAndBudgets } =
+    useTransactionBudgetStore(
+      useShallow((s) => ({
+        getBudgetLimit: s.getBudgetLimit,
+        getExpenses: s.getExpenses,
+        loadTxnAndBudgets: s.loadTxnAndBudgets,
+      }))
+    );
+  const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
 
   useEffect(() => {
     loadTxnAndBudgets();

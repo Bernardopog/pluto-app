@@ -19,18 +19,28 @@ import {
 import Divider from "@/app/ui/Divider";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import ActionButton from "@/app/ui/ActionButton";
+import { useShallow } from "zustand/shallow";
 
 export default function TransactionAction() {
-  const { toggleModal, selectModalType } = useModalStore();
+  const { toggleModal, selectModalType } = useModalStore(
+    useShallow((s) => ({
+      toggleModal: s.toggleModal,
+      selectModalType: s.selectModalType,
+    }))
+  );
   const {
-    transactionData,
+    transactionList,
     transactionDeletion,
     transactionSelection,
-    budgetData,
-  } = useTransactionBudgetStore();
-  const budgetList = budgetData.list;
-
-  const transactionList = transactionData.list;
+    budgetList,
+  } = useTransactionBudgetStore(
+    useShallow((s) => ({
+      transactionList: s.transactionData.list,
+      transactionDeletion: s.transactionDeletion,
+      transactionSelection: s.transactionSelection,
+      budgetList: s.budgetData.list,
+    }))
+  );
 
   const handleModal = (typeOfModal: TransactionModalType | "budgetCreate") => {
     toggleModal();

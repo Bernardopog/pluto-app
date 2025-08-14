@@ -2,11 +2,26 @@
 import { useDashboardControllersStore } from "@/app/stores/useDashboardControllersStore";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { MdFilterAlt, MdTextSnippet } from "react-icons/md";
+import { useShallow } from "zustand/shallow";
 
 export default function DashboardTransactionTitle() {
-  const { isTransactionFormOpen, toggleTransactionForm, transactionFilter } =
-    useDashboardControllersStore();
-  const { toggleModal, selectModalType } = useModalStore();
+  const { isTransactionFormOpen, transactionFilter } =
+    useDashboardControllersStore(
+      useShallow((s) => ({
+        isTransactionFormOpen: s.isTransactionFormOpen,
+        transactionFilter: s.transactionFilter,
+      }))
+    );
+
+  const toggleTransactionForm = useDashboardControllersStore(
+    (s) => s.toggleTransactionForm
+  );
+  const { toggleModal, selectModalType } = useModalStore(
+    useShallow((s) => ({
+      toggleModal: s.toggleModal,
+      selectModalType: s.selectModalType,
+    }))
+  );
 
   const handleModal = () => {
     toggleModal();

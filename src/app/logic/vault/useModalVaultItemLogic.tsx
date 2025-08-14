@@ -2,16 +2,23 @@ import { IVaultItem } from "@/interfaces/IVault";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { FormEvent, useEffect, useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 export const useModalVaultItemLogic = (type: "create" | "update") => {
-  const {
-    vaultList,
-    addVaultItem,
-    editVaultItem,
-    selectedVault,
-    selectedVaultItem,
-  } = useVaultStore();
-  const { toggleModal } = useModalStore();
+  const { addVaultItem, editVaultItem } = useVaultStore(
+    useShallow((s) => ({
+      addVaultItem: s.addVaultItem,
+      editVaultItem: s.editVaultItem,
+    }))
+  );
+  const { vaultList, selectedVault, selectedVaultItem } = useVaultStore(
+    useShallow((s) => ({
+      vaultList: s.vaultList,
+      selectedVault: s.selectedVault,
+      selectedVaultItem: s.selectedVaultItem,
+    }))
+  );
+  const toggleModal = useModalStore((s) => s.toggleModal);
 
   const [vaultItemName, setVaultItemName] = useState<string>("");
   const [vaultItemValue, setVaultItemValue] = useState<number>(0);

@@ -10,11 +10,17 @@ import {
   MdEdit,
   MdQuestionMark,
 } from "react-icons/md";
+import { useShallow } from "zustand/shallow";
 
 export default function BudgetAction() {
-  const { budgetSelection } = useTransactionBudgetStore();
+  const budgetSelection = useTransactionBudgetStore((s) => s.budgetSelection);
 
-  const { toggleModal, selectModalType } = useModalStore();
+  const { toggleModal, selectModalType } = useModalStore(
+    useShallow((s) => ({
+      toggleModal: s.toggleModal,
+      selectModalType: s.selectModalType,
+    }))
+  );
 
   const handleModal = (typeOfModal: BudgetModalType) => {
     toggleModal();

@@ -4,8 +4,9 @@ import { useModalStore } from "@/app/stores/useModalStore";
 import { IBudgetCreateDTO, IBudgetUpdateDTO } from "@/server/dto/budget.dto";
 
 export const useModalBudgetLogic = (type: "create" | "update") => {
-  const { toggleModal } = useModalStore();
-  const { budgetMethods, budgetSelection } = useTransactionBudgetStore();
+  const toggleModal = useModalStore((s) => s.toggleModal);
+  const budgetMethods = useTransactionBudgetStore((s) => s.budgetMethods);
+  const budgetSelection = useTransactionBudgetStore((s) => s.budgetSelection);
 
   const [budgetName, setBudgetName] = useState<string>("");
   const [budgetLimit, setBudgetLimit] = useState<number>(100);

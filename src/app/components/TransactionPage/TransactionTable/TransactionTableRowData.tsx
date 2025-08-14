@@ -2,6 +2,7 @@
 import { ITransaction } from "@/interfaces/ITransaction";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
+import { useShallow } from "zustand/shallow";
 
 interface ITransactionTableRowDataProps {
   transaction: ITransaction;
@@ -14,8 +15,12 @@ export default function TransactionTableRowData({
   index,
   selectedToDeleted,
 }: ITransactionTableRowDataProps) {
-  const { budgetData, transactionSelection } = useTransactionBudgetStore();
-  const budgetList = budgetData.list;
+  const { budgetList, transactionSelection } = useTransactionBudgetStore(
+    useShallow((s) => ({
+      budgetList: s.budgetData.list,
+      transactionSelection: s.transactionSelection,
+    }))
+  );
 
   const date = new Date(transaction.date);
 

@@ -10,11 +10,17 @@ import {
   MdOutlineRotateRight,
   MdPlayArrow,
 } from "react-icons/md";
+import { useShallow } from "zustand/shallow";
 
 export default function DashboardHeader() {
-  const { income, balance } = useFinanceStore();
-  const { budgetData, getTotalExpenses } = useTransactionBudgetStore();
-  const budgetList = budgetData.list;
+  const { income, balance } = useFinanceStore(
+    useShallow((s) => ({
+      income: s.income,
+      balance: s.balance,
+    }))
+  );
+  const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
+  const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
 
   const [typeOfExpense, setTypeOfExpense] = useState<"current" | "estimate">(
     "current"

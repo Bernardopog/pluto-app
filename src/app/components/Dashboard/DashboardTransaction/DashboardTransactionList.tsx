@@ -7,14 +7,17 @@ import { useEffect } from "react";
 import { DashboardTransactionLoading } from "./";
 
 export default function DashboardTransactionList() {
-  const { transactionData, transactionMethods } = useTransactionBudgetStore();
+  const fetch = useTransactionBudgetStore((s) => s.transactionMethods.fetch);
+  const transactionData = useTransactionBudgetStore((s) => s.transactionData);
   const transactionList = transactionData.list;
 
-  const { transactionFilter } = useDashboardControllersStore();
+  const transactionFilter = useDashboardControllersStore(
+    (s) => s.transactionFilter
+  );
 
   useEffect(() => {
-    transactionMethods.fetch();
-  }, [transactionMethods]);
+    fetch();
+  }, [fetch]);
 
   return (
     <>

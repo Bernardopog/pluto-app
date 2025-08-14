@@ -15,7 +15,10 @@ interface IVaultChartGraphProps {
 export default function VaultChartGraph({
   typeOfChart,
 }: IVaultChartGraphProps) {
-  const { vaultList, getTotalMoneySavedFromVault } = useVaultStore();
+  const vaultList = useVaultStore((s) => s.vaultList);
+  const getTotalMoneySavedFromVault = useVaultStore(
+    (s) => s.getTotalMoneySavedFromVault
+  );
 
   const BackgroundColorMap: Record<number, string> = {
     1: "#df4444",

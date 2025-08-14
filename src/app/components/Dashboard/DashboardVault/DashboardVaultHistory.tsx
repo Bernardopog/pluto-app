@@ -2,9 +2,15 @@
 
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
+import { useShallow } from "zustand/shallow";
 
 export default function DashboardVaultHistory() {
-  const { vaultItemList, selectedDashboardVault } = useVaultStore();
+  const { vaultItemList, selectedDashboardVault } = useVaultStore(
+    useShallow((s) => ({
+      vaultItemList: s.vaultItemList,
+      selectedDashboardVault: s.selectedDashboardVault,
+    }))
+  );
 
   return (
     <ul className="grid grid-cols-2 grid-rows-3 w-full gap-2 lg:w-2/4">

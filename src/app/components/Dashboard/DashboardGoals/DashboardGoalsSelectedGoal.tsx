@@ -8,9 +8,11 @@ import DashboardGoalsProgressBar from "./DashboardGoalsProgressBar";
 import DashboardGoalsPercentageDisplay from "./DashboardGoalsPercentageDisplay";
 
 export default function DashboardGoalsSelectedGoal() {
-  const { goal } = useGoalsStore();
-  const { getTotalMoneySavedFromVault } = useVaultStore();
-  const { balance } = useFinanceStore();
+  const goal = useGoalsStore((s) => s.goal);
+  const getTotalMoneySavedFromVault = useVaultStore(
+    (s) => s.getTotalMoneySavedFromVault
+  );
+  const balance = useFinanceStore((s) => s.balance);
 
   const money =
     goal?.progress === "vault"

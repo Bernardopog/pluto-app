@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/stores/useAuthStore";
 
 export default function LoginForm() {
-  const { setUserId } = useAuthStore();
+  const setUserId = useAuthStore((s) => s.setUserId);
+
   const initialState: { success: boolean; message: string; token?: number } = {
     success: false,
     message: "",

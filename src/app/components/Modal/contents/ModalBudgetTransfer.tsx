@@ -5,13 +5,22 @@ import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStor
 import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 export default function ModalBudgetTransfer() {
-  const { toggleModal } = useModalStore();
-  const { budgetData, budgetMethods, budgetSelection } =
-    useTransactionBudgetStore();
-  const budgetList = budgetData.list;
-  const { categoryFilter, setCategoryFilter } = useTransactionFilterStore();
+  const toggleModal = useModalStore((s) => s.toggleModal);
+  const budgetMethods = useTransactionBudgetStore((s) => s.budgetMethods);
+  const { budgetList, budgetSelection } = useTransactionBudgetStore(
+    useShallow((s) => ({
+      budgetList: s.budgetData.list,
+      budgetSelection: s.budgetSelection,
+    }))
+  );
+
+  const setCategoryFilter = useTransactionFilterStore(
+    (s) => s.setCategoryFilter
+  );
+  const categoryFilter = useTransactionFilterStore((s) => s.categoryFilter);
 
   const [toId, setToId] = useState<number | null>(null);
   const [hasError, setHasError] = useState<boolean>(false);

@@ -5,9 +5,16 @@ import {
   VaultListItem,
 } from "@/app/components/VaultPage/VaultList";
 import { useVaultStore } from "@/app/stores/useVaultStore";
+import { useShallow } from "zustand/shallow";
 
 export default function VaultList() {
-  const { vaultList, vaultItemList, selectedVault } = useVaultStore();
+  const { vaultList, vaultItemList, selectedVault } = useVaultStore(
+    useShallow((s) => ({
+      vaultList: s.vaultList,
+      vaultItemList: s.vaultItemList,
+      selectedVault: s.selectedVault,
+    }))
+  );
 
   const vaultListWithItems = vaultList.map((vault) => ({
     ...vault,

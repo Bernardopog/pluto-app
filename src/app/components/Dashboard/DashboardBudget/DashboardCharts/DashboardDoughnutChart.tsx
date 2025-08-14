@@ -25,7 +25,7 @@ export default function DoughnutChart({
   showRest,
   angle,
 }: IDoughnutChartProps) {
-  const { getTotalExpenses } = useTransactionBudgetStore();
+  const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
 
   const series = [
     ...budget.map((budget) => {

@@ -9,11 +9,15 @@ import OverviewCard from "../../components/OverviewCard";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 export default function BudgetOverview() {
-  const { budgetData, transactionData } = useTransactionBudgetStore();
-  const transactionList = transactionData.list;
-  const budgetList = budgetData.list;
+  const { budgetList, transactionList } = useTransactionBudgetStore(
+    useShallow((s) => ({
+      budgetList: s.budgetData.list,
+      transactionList: s.transactionData.list,
+    }))
+  );
 
   const [typeBalance, setTypeBalance] = useState<"expense" | "revenue">(
     "expense"

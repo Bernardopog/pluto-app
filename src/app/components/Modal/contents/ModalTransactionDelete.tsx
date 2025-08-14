@@ -3,20 +3,30 @@
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
+import { useShallow } from "zustand/shallow";
 
 type DeleteType = "individual" | "group" | "all";
 
 export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
-  const { toggleModal } = useModalStore();
+  const toggleModal = useModalStore((s) => s.toggleModal);
+
+  const transactionMethods = useTransactionBudgetStore(
+    (s) => s.transactionMethods
+  );
+
   const {
-    transactionMethods,
-    transactionData,
+    transactionList,
     transactionDeletion,
     transactionSelection,
-    budgetData,
-  } = useTransactionBudgetStore();
-  const budgetList = budgetData.list;
-  const transactionList = transactionData.list;
+    budgetList,
+  } = useTransactionBudgetStore(
+    useShallow((s) => ({
+      transactionList: s.transactionData.list,
+      transactionDeletion: s.transactionDeletion,
+      transactionSelection: s.transactionSelection,
+      budgetList: s.budgetData.list,
+    }))
+  );
 
   const handleDelete = () => {
     if (type === "all") {

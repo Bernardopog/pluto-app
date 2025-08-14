@@ -19,7 +19,7 @@ import ModalVaultItem from "./contents/ModalVaultItem";
 import ModalTransactionSimpleFilter from "./contents/ModalTransactionSimpleFilter";
 
 export default function ModalContent() {
-  const { selectedModal } = useModalStore();
+  const selectedModal = useModalStore((s) => s.selectedModal);
 
   return (
     <>

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export default function LogoutPage() {
   const router = useRouter();
-  const { clearUserId } = useAuthStore();
+  const clearUserId = useAuthStore((s) => s.clearUserId);
 
   useEffect(() => {
     const localStorage = window.localStorage;

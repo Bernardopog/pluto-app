@@ -3,11 +3,17 @@
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
+import { useShallow } from "zustand/shallow";
 
 export default function ModalVaultDelete() {
-  const { deleteVault, selectedVault, getTotalMoneySavedFromVault } =
-    useVaultStore();
-  const { toggleModal } = useModalStore();
+  const { deleteVault, getTotalMoneySavedFromVault } = useVaultStore(
+    useShallow((s) => ({
+      deleteVault: s.deleteVault,
+      getTotalMoneySavedFromVault: s.getTotalMoneySavedFromVault,
+    }))
+  );
+  const selectedVault = useVaultStore((s) => s.selectedVault);
+  const toggleModal = useModalStore((s) => s.toggleModal);
 
   const handleDelete = (id: number) => {
     deleteVault(id);

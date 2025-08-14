@@ -4,7 +4,7 @@ import { statsComponentMap, StatType } from "@/app/data/statsComponentMap";
 import { useStatsStore } from "@/app/stores/useStatsStore";
 
 export default function ModalStats() {
-  const { addStatToList } = useStatsStore();
+  const addStatToList = useStatsStore((s) => s.addStatToList);
 
   return (
     <>

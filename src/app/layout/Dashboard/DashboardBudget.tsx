@@ -8,19 +8,22 @@ import { useFinanceStore } from "@/app/stores/useFinanceStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import MoreDetail from "@/app/ui/MoreDetail";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { useShallow } from "zustand/shallow";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export type PieChartType = "full" | "half";
 
 export default function DashboardBudget() {
-  const { income } = useFinanceStore();
+  const income = useFinanceStore((s) => s.income);
 
-  const { transactionData, budgetData, getTotalExpenses } =
-    useTransactionBudgetStore();
-  const budgetList = budgetData.list;
-
-  const transactionList = transactionData.list;
+  const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
+  const { budgetList, transactionList } = useTransactionBudgetStore(
+    useShallow((s) => ({
+      budgetList: s.budgetData.list,
+      transactionList: s.transactionData.list,
+    }))
+  );
 
   const totalExpenses = getTotalExpenses();
   const rest = income + totalExpenses;
