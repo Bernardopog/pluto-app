@@ -21,7 +21,7 @@ export default function DashboardVaultSection() {
           <DashboardVaultForm />
         </>
       ) : (
-        <p className="text-lg italic text-chetwode-blue-950/50">
+        <p className="text-lg italic text-chetwode-blue-950/75">
           Nenhum cofre selecionado ainda...
         </p>
       )}

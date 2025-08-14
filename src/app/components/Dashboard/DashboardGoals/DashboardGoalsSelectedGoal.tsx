@@ -35,7 +35,9 @@ export default function DashboardGoalsSelectedGoal() {
           <DashboardGoalsProgressBar money={money} totalPrice={goal.price} />
         </div>
       ) : (
-        <p className="text-chetwode-blue-950/75">Nenhuma meta definida...</p>
+        <p className="italic text-chetwode-blue-950/75">
+          Nenhuma meta definida...
+        </p>
       )}
     </>
   );

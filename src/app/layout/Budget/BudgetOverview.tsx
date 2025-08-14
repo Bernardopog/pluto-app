@@ -81,6 +81,8 @@ export default function BudgetOverview() {
             type="button"
             className="absolute bottom-0 right-0 z-10 p-0.5 rounded-lg bg-chetwode-blue-600 text-2xl text-chetwode-blue-50 duration-300 ease-in-out"
             onClick={handleChangeOfBalanceCard}
+            aria-label="Mudar o tipo de balanço"
+            title="Mudar o tipo de balanço"
           >
             <MdOutlineRotateRight />
           </button>
@@ -111,6 +113,8 @@ export default function BudgetOverview() {
             type="button"
             className="absolute bottom-0 right-0 z-10 p-0.5 rounded-lg bg-chetwode-blue-600 text-2xl text-chetwode-blue-50 duration-300 ease-in-out"
             onClick={handleChangeOfAllocatedCard}
+            aria-label="Mudar o tipo de alocamento"
+            title="Mudar o tipo de alocamento"
           >
             <MdOutlineRotateRight />
           </button>

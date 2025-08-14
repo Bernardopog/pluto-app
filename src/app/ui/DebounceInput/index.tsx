@@ -32,7 +32,7 @@ export default function DebounceInput({
           placeholder={placeholder}
           name={name ?? id}
           id={id}
-          className="peer w-full p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600"
+          className="peer w-full p-1 pr-10 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600"
           onChange={(ev: ChangeEvent<HTMLInputElement>) => action(ev)}
         />
         <span className="flex items-center justify-center absolute right-0 top-1/2 h-full w-10 border-2 border-l-0 rounded-r-lg -translate-y-1/2 text-3xl bg-chetwode-blue-300 text-chetwode-blue-950 border-transparent duration-300 ease-in-out peer-focus:border-chetwode-blue-600">

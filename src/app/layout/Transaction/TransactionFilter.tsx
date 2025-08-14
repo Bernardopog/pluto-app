@@ -3,7 +3,13 @@
 import { useDebouncedInput } from "@/app/hooks/useDebouncedInput";
 import DebounceInput from "@/app/ui/DebounceInput";
 import { ChangeEvent } from "react";
-import { MdSearch } from "react-icons/md";
+import {
+  MdAttachMoney,
+  MdBarChart,
+  MdCalendarMonth,
+  MdInbox,
+  MdSearch,
+} from "react-icons/md";
 import {
   TransactionFilterType,
   useModalStore,
@@ -14,6 +20,7 @@ import { Suspense } from "react";
 import { TransactionFilterButton } from "@/app/components/TransactionPage/TransactionFilter";
 import TransactionSearchParams from "./TransactionSearchParams";
 import { useShallow } from "zustand/shallow";
+import { FaBroom } from "react-icons/fa";
 
 export default function TransactionFilter() {
   const { value, handleChangeDebounce } = useDebouncedInput();
@@ -70,10 +77,11 @@ export default function TransactionFilter() {
       <h2 className="subtitle">Filtros</h2>
       <div className="lg:flex lg:justify-end">
         <button
-          className="w-full p-1.5 rounded-lg duration-300 ease-in-out font-bold hover:brightness-95 active:brightness-75 bg-chetwode-blue-900 text-chetwode-blue-50 lg:w-fit"
+          className="flex items-center w-full p-1.5 rounded-lg gap-x-2 duration-300 ease-in-out font-bold hover:brightness-95 active:brightness-75 bg-chetwode-blue-900 text-chetwode-blue-50 lg:w-fit"
           type="reset"
           onClick={() => resetFullFilter()}
         >
+          <FaBroom className="text-xl" />
           Limpar todos filtros
         </button>
       </div>
@@ -81,13 +89,14 @@ export default function TransactionFilter() {
         role="group"
         className="flex flex-col flex-1 justify-between mt-2 xl:flex-row"
       >
-        <ul className="grid grid-cols-1 w-full gap-2 sm:grid-cols-2 lg:grid-cols-4 xl:flex">
+        <ul className="grid grid-cols-1 w-full gap-2 sm:grid-cols-2 lg:grid-cols-4 xl:flex items-center">
           <li className="w-full lg:w-auto">
             <TransactionFilterButton
               label="Data"
               isActive={dateFilter !== "all"}
               action={() => modalController("filterDate")}
               reset={() => resetFullDateFilter()}
+              icon={<MdCalendarMonth />}
             />
           </li>
           <li className="w-full lg:w-auto">
@@ -96,6 +105,7 @@ export default function TransactionFilter() {
               isActive={valueFilter !== "all"}
               action={() => modalController("filterValue")}
               reset={() => resetFullValueFilter()}
+              icon={<MdAttachMoney />}
             />
           </li>
           <li className="w-full lg:w-auto">
@@ -104,6 +114,7 @@ export default function TransactionFilter() {
               isActive={categoryFilter !== null}
               action={() => modalController("filterCategory")}
               reset={() => resetFullCategoryFilter()}
+              icon={<MdInbox />}
             />
           </li>
           <li className="w-full lg:w-auto">
@@ -112,6 +123,7 @@ export default function TransactionFilter() {
               isActive={transactionTypeFilter !== "all"}
               action={() => modalController("filterType")}
               reset={() => resetFullTypeFilter()}
+              icon={<MdBarChart />}
             />
           </li>
         </ul>

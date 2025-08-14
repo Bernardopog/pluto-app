@@ -3,6 +3,7 @@ import { ITransaction } from "@/interfaces/ITransaction";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useShallow } from "zustand/shallow";
+import { MdPlayArrow } from "react-icons/md";
 
 interface ITransactionTableRowDataProps {
   transaction: ITransaction;
@@ -28,7 +29,12 @@ export default function TransactionTableRowData({
     <div
       role="row"
       key={index}
-      className="group grid grid-cols-4 flex-1 p-1 gap-1 rounded-lg cursor-pointer hover:brightness-105 sm:grid-cols-3 lg:grid-cols-[0.35fr_2fr_0.5fr_0.5fr] lg:p-0"
+      className={`group grid grid-cols-4 flex-1 p-1 gap-1 rounded-lg cursor-pointer hover:brightness-105 sm:grid-cols-3 lg:grid-cols-[0.35fr_2fr_0.5fr_0.5fr] lg:p-0 ${
+        transactionSelection.selected?.id === transaction.id &&
+        !selectedToDeleted
+          ? "outline-2 outline-offset-2 outline-chetwode-blue-600"
+          : ""
+      }`}
       onClick={() => transactionSelection.select(transaction.id)}
     >
       <div
@@ -47,21 +53,26 @@ export default function TransactionTableRowData({
       </div>
       <div
         role="cell"
-        className={`order-3 col-span-4 p-2 border-2 rounded-lg border-chetwode-blue-950/25 font-medium ease-in-out duration-300 group-hover:border-chetwode-blue-600 sm:col-span-1 sm:order-2 lg:rounded-sm ${
+        className={`inline-flex items-center justify-between order-3 col-span-4 p-2 border-2 rounded-lg border-chetwode-blue-950/25 font-medium ease-in-out duration-300 group-hover:border-chetwode-blue-600 sm:col-span-1 sm:order-2 lg:rounded-sm ${
           transaction.value < 0
             ? `${
                 selectedToDeleted
-                  ? "bg-red-800/75 text-red-100"
-                  : "bg-red-200 text-red-700"
+                  ? "bg-red-100/75 text-red-900"
+                  : "bg-red-100 text-red-900"
               }`
             : `${
                 selectedToDeleted
-                  ? "bg-green-800/75 text-green-100"
-                  : "bg-green-200 text-green-700"
+                  ? "bg-green-100/75 text-green-900"
+                  : "bg-green-100 text-green-900"
               }`
         }`}
       >
         {moneyFormatter(transaction.value)}
+        {transaction.value < 0 ? (
+          <MdPlayArrow className="rotate-90" />
+        ) : (
+          <MdPlayArrow className="rotate-270" />
+        )}
       </div>
       <div
         role="cell"

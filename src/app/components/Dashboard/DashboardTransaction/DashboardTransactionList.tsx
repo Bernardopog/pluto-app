@@ -57,8 +57,8 @@ export default function DashboardTransactionList() {
                   <span
                     className={`pl-1 inline-flex items-center justify-center py-2 rounded-tr-lg font-bold lg:rounded-none lg:rounded-r-lg ${
                       transaction.value > 0
-                        ? "text-green-600 bg-green-200"
-                        : "text-red-600 bg-red-200"
+                        ? "text-green-900 bg-green-200"
+                        : "text-red-900 bg-red-200"
                     }`}
                   >
                     {moneyFormatter(Math.abs(transaction.value))}

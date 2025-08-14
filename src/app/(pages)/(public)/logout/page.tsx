@@ -24,7 +24,7 @@ export default function LogoutPage() {
 
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-2px)] bg-chetwode-blue-100">
-      <span className="text-3xl italic text-chetwode-blue-950/50">
+      <span className="text-3xl italic text-chetwode-blue-950/75">
         Saindo...
       </span>
     </div>
