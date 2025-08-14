@@ -145,7 +145,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         }));
       },
       deleteAll: async () => {
-        const res = await transactionFetcher.deleteManyTxn([]);
+        const res = await transactionFetcher.deleteAllTxn();
         if (res.status >= 400) showError(res);
         set((state) => ({
           transactionData: {
