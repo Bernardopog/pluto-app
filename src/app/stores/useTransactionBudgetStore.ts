@@ -7,15 +7,19 @@ import {
   ITransactionCreateDTO,
   ITransactionUpdateDTO,
 } from "@/server/dto/transition.dto";
+import { IDataState } from "../interfaces/IDataState";
+import { ISelectionState } from "../interfaces/ISelectionState";
+import { IMethodsState } from "../interfaces/IMethodsState";
 import { showError } from "../helpers/showError";
 
-interface ITransactionMethodsState {
-  fetch: () => void;
-  create: (transaction: ITransactionCreateDTO) => void;
-  update: (id: number, transaction: ITransactionUpdateDTO) => void;
-  delete: (id: number) => void;
+interface ITransactionMethodsState
+  extends IMethodsState<ITransactionCreateDTO, ITransactionUpdateDTO> {
   deleteMany: () => void;
   deleteAll: () => void;
+}
+interface IBudgetMethodsState
+  extends IMethodsState<IBudgetCreateDTO, IBudgetUpdateDTO> {
+  transfer: (fromId: number, toId: number) => void;
 }
 
 interface ITransactionDeletionState {
@@ -24,26 +28,6 @@ interface ITransactionDeletionState {
   add: (id: number) => void;
   remove: (id: number) => void;
   setIsDeleting: (value: boolean) => void;
-}
-
-interface IBudgetMethodsState {
-  fetch: () => void;
-  create: (budget: IBudgetCreateDTO) => void;
-  update: (id: number, budget: IBudgetUpdateDTO) => void;
-  delete: (id: number) => void;
-  transfer: (fromId: number, toId: number) => void;
-}
-
-interface IDataState<T> {
-  list: T[];
-  loading: boolean;
-  fetched: boolean;
-}
-
-interface ISelectionState<T> {
-  selected: T | null;
-  select: (id: number) => void;
-  unselect: () => void;
 }
 
 interface ITransactionBudgetStore {
