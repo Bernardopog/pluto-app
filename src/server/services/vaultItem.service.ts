@@ -6,6 +6,7 @@ import { idValidator } from "../utils/idValidator";
 import { vaultItemRepository } from "../repositories/vaultItem.repository";
 import { IMessage } from "@/interfaces/IMessage";
 interface IVaultItemService {
+  getAll(userId: number): Promise<IMessage<IVaultItem[]>>;
   create(
     data: IVaultItemCreateDTO,
     userId: number
@@ -22,6 +23,10 @@ const vaultItemValidate = (data: IVaultItemCreateDTO | IVaultItemUpdateDTO) =>
   vaultItemSchema.safeParse(data);
 
 export const vaultItemService: IVaultItemService = {
+  getAll: async (userId) => {
+    const res = await vaultItemRepository.getAll(userId);
+    return createMessage("Items encontrados com sucesso", 200, res);
+  },
   create: async (data, userId) => {
     const { success, data: transformedData } = vaultItemValidate(data);
 

@@ -6,6 +6,7 @@ import { IVaultItem } from "@/interfaces/IVault";
 import { IResult } from "@/interfaces/IResult";
 
 interface IVaultItemRepository {
+  getAll(userId: number): Promise<IVaultItem[]>;
   create(data: IVaultItemCreateDTO, userId: number): Promise<IVaultItem>;
   update(
     id: number,
@@ -16,6 +17,9 @@ interface IVaultItemRepository {
 }
 
 export const vaultItemRepository: IVaultItemRepository = {
+  getAll: async (userId) => {
+    return prisma.vaultItem.findMany({ where: { userId } });
+  },
   create: async (data, userId) => {
     return prisma.vaultItem.create({ data: { ...data, userId } });
   },
