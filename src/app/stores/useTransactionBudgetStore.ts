@@ -7,11 +7,7 @@ import {
   ITransactionCreateDTO,
   ITransactionUpdateDTO,
 } from "@/server/dto/transition.dto";
-import { IMessage } from "@/interfaces/IMessage";
-
-const showError = <U>(res: IMessage<U>) => {
-  console.error(res.message, res.data);
-};
+import { showError } from "../helpers/showError";
 
 interface ITransactionMethodsState {
   fetch: () => void;
