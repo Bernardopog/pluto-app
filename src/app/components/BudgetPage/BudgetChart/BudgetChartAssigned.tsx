@@ -33,7 +33,7 @@ function BudgetChartAssigned({
                   transformOrigin: "center",
                   rotate: `287.5deg`,
                 }}
-                className="absolute top-1/2 left-1/2 -translate-1/2 min-w-16 w-fit p-1 border rounded-lg text-center text-xs font-bold text-white border-white"
+                className="absolute top-1/2 left-1/2 -translate-1/2 min-w-16 w-fit p-1 border rounded-lg text-center text-xs font-bold text-white border-white duration-300 ease-in-out"
               >
                 {percentage}%
               </div>
