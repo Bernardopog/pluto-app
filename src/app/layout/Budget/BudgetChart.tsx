@@ -55,6 +55,9 @@ export default function BudgetChart() {
     grid: {
       show: false,
     },
+    stroke: {
+      width: 0,
+    },
   };
 
   return (
@@ -94,11 +97,18 @@ export default function BudgetChart() {
             isOverlay={chartToShow === "overlay"}
           />
         )}
-        {chartToShow !== "assigned" && (
+        {chartToShow === "overlay" && (
           <BudgetChartSpend
             budgetList={budgetListFiltered}
             options={options}
-            isOverlay={chartToShow === "overlay"}
+            isOverlay={true}
+          />
+        )}
+        {chartToShow === "spend" && (
+          <BudgetChartSpend
+            budgetList={budgetListFiltered}
+            options={options}
+            isOverlay={false}
           />
         )}
       </div>

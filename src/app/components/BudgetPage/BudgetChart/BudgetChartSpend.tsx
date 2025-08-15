@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { IBudgetChartProps } from "@/app/layout/Budget/BudgetChart";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { getPercentage } from "@/app/utils/getPercentage";
+import { ApexOptions } from "apexcharts";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -14,6 +15,26 @@ function BudgetChartSpend({
   const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
 
   const series = budgetList.map((bdgt) => Math.abs(getExpenses(bdgt.id)));
+
+  const customOptions: ApexOptions = {
+    ...options,
+    yaxis: {
+      show: false,
+      max: isOverlay
+        ? Math.max(...budgetList.map((bdgt) => bdgt.limit))
+        : undefined,
+    },
+    plotOptions: {
+      polarArea: {
+        spokes: {
+          strokeWidth: 0,
+        },
+        rings: {
+          strokeWidth: 0,
+        },
+      },
+    },
+  };
 
   return (
     <>
@@ -45,12 +66,18 @@ function BudgetChartSpend({
           })}
         </div>
       )}
-      <Chart
-        options={options}
-        series={series}
-        type="polarArea"
-        width={"150%"}
-      />
+      <div
+        className={`${
+          isOverlay && "flex items-center justify-center absolute inset-0"
+        }`}
+      >
+        <Chart
+          options={isOverlay ? customOptions : options}
+          series={series}
+          type="polarArea"
+          width={"150%"}
+        />
+      </div>
     </>
   );
 }

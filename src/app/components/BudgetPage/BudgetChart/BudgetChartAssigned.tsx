@@ -41,12 +41,19 @@ function BudgetChartAssigned({
           })}
         </div>
       )}
-      <Chart
-        options={options}
-        series={series}
-        type="polarArea"
-        width={"150%"}
-      />
+      <div
+        className={`${
+          isOverlay &&
+          "flex items-center justify-center absolute inset-0 grayscale-100"
+        }`}
+      >
+        <Chart
+          options={options}
+          series={series}
+          type="polarArea"
+          width={"150%"}
+        />
+      </div>
     </>
   );
 }
