@@ -15,7 +15,7 @@ interface IVaultChartGraphProps {
 export default function VaultChartGraph({
   typeOfChart,
 }: IVaultChartGraphProps) {
-  const vaultList = useVaultStore((s) => s.vaultList);
+  const vaultList = useVaultStore((s) => s.vaultData.list);
   const getTotalMoneySavedFromVault = useVaultStore(
     (s) => s.getTotalMoneySavedFromVault
   );

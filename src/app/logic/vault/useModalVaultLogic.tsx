@@ -5,13 +5,13 @@ import { FormEvent, useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
 export const useModalVaultLogic = (type: "create" | "update") => {
-  const { createVault, updateVault } = useVaultStore(
+  const { create, update } = useVaultStore(
     useShallow((s) => ({
-      createVault: s.createVault,
-      updateVault: s.updateVault,
+      create: s.vaultMethods.create,
+      update: s.vaultMethods.update,
     }))
   );
-  const selectedVault = useVaultStore((s) => s.selectedVault);
+  const selectedVault = useVaultStore((s) => s.vaultSelection.selected);
   const toggleModal = useModalStore((s) => s.toggleModal);
 
   const [vaultName, setVaultName] = useState<string>("");
@@ -42,15 +42,13 @@ export const useModalVaultLogic = (type: "create" | "update") => {
     if (!validator()) return;
 
     if (type === "create") {
-      createVault({
-        id: Math.random() * 100000,
+      create({
         name: vaultName,
         targetPrice: Number(vaultLimit),
         icon: vaultIcon ?? "piggy",
       });
     } else {
-      updateVault(selectedVault!.id, {
-        id: selectedVault!.id,
+      update(selectedVault!.id, {
         name: vaultName,
         targetPrice: Number(vaultLimit),
         icon: vaultIcon ?? "piggy",

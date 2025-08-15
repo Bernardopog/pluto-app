@@ -7,7 +7,7 @@ import { useShallow } from "zustand/shallow";
 export default function DashboardVaultHistory() {
   const { vaultItemList, selectedDashboardVault } = useVaultStore(
     useShallow((s) => ({
-      vaultItemList: s.vaultItemList,
+      vaultItemList: s.vaultItemData.list,
       selectedDashboardVault: s.selectedDashboardVault,
     }))
   );

@@ -10,9 +10,9 @@ import { useShallow } from "zustand/shallow";
 export default function VaultList() {
   const { vaultList, vaultItemList, selectedVault } = useVaultStore(
     useShallow((s) => ({
-      vaultList: s.vaultList,
-      vaultItemList: s.vaultItemList,
-      selectedVault: s.selectedVault,
+      vaultList: s.vaultData.list,
+      vaultItemList: s.vaultItemData.list,
+      selectedVault: s.vaultSelection.selected,
     }))
   );
 

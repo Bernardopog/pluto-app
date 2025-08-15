@@ -13,7 +13,7 @@ import Divider from "@/app/ui/Divider";
 import { useShallow } from "zustand/shallow";
 
 export default function VaultAction() {
-  const vaultList = useVaultStore((s) => s.vaultList);
+  const vaultList = useVaultStore((s) => s.vaultData.list);
   const { toggleModal, selectModalType } = useModalStore(
     useShallow((s) => ({
       toggleModal: s.toggleModal,

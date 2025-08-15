@@ -6,7 +6,7 @@ import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { FiTarget } from "react-icons/fi";
 
 export default function VaultListItemHeader({ vault }: { vault: IVault }) {
-  const selectVault = useVaultStore((s) => s.selectVault);
+  const selectVault = useVaultStore((s) => s.vaultSelection.select);
 
   const handleVaultSelection = () => {
     selectVault(vault.id);

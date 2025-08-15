@@ -13,7 +13,7 @@ export default function VaultActionToItem({
   handleModal,
   vaultListLength,
 }: IVaultActionToItemProps) {
-  const selectedVaultItem = useVaultStore((s) => s.selectedVaultItem);
+  const selectedVaultItem = useVaultStore((s) => s.vaultItemSelection.selected);
 
   return (
     <div className="flex flex-col gap-2">

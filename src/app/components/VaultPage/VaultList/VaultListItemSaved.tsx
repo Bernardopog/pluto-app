@@ -7,11 +7,11 @@ import { useShallow } from "zustand/shallow";
 export default function VaultListItemSaved({ item }: { item: IVaultItem }) {
   const { selectVaultItem, unselectVaultItem } = useVaultStore(
     useShallow((s) => ({
-      selectVaultItem: s.selectVaultItem,
-      unselectVaultItem: s.unselectVaultItem,
+      selectVaultItem: s.vaultItemSelection.select,
+      unselectVaultItem: s.vaultItemSelection.unselect,
     }))
   );
-  const selectedVaultItem = useVaultStore((s) => s.selectedVaultItem);
+  const selectedVaultItem = useVaultStore((s) => s.vaultItemSelection.selected);
 
   const handleItemSelect = () => {
     if (selectedVaultItem?.id === item.id) unselectVaultItem();

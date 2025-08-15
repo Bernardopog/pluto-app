@@ -2,15 +2,16 @@
 
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { BsPiggyBank } from "react-icons/bs";
 import Inert from "../../Inert";
 import { useShallow } from "zustand/shallow";
 
 export default function DashboardVaultSaved() {
-  const { vaultList, selectedDashboardVault } = useVaultStore(
+  const { vaultList, vaultItemList, selectedDashboardVault } = useVaultStore(
     useShallow((s) => ({
-      vaultList: s.vaultList,
+      vaultList: s.vaultData.list,
+      vaultItemList: s.vaultItemData.list,
       selectedDashboardVault: s.selectedDashboardVault,
     }))
   );
@@ -30,6 +31,12 @@ export default function DashboardVaultSaved() {
     selectDashboardVault(id);
     handleVaultMenu();
   };
+
+  const savedMoney = useMemo(() => {
+    if (selectedDashboardVault === null) return 0;
+    return getTotalMoneySavedFromVault(selectedDashboardVault);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vaultItemList, selectedDashboardVault, getTotalMoneySavedFromVault]);
 
   return (
     <div className="flex items-center justify-center relative w-full min-h-24 p-2 rounded-lg bg-chetwode-blue-200 overflow-clip lg:w-1/4 lg:min-h-auto">
@@ -77,9 +84,7 @@ export default function DashboardVaultSaved() {
         <p className="font-medium text-lg text-chetwode-blue-700">
           R${" "}
           <span className="text-2xl text-chetwode-blue-950">
-            {moneyFormatter(
-              getTotalMoneySavedFromVault(selectedDashboardVault)
-            ).replace("R$", "")}
+            {moneyFormatter(savedMoney).replace("R$", "")}
           </span>
         </p>
       ) : (

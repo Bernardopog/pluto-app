@@ -13,7 +13,7 @@ import { useVaultStore } from "@/app/stores/useVaultStore";
 export default function ModalGoals() {
   const createGoal = useGoalsStore((s) => s.createGoal);
   const toggleModal = useModalStore((s) => s.toggleModal);
-  const vaultList = useVaultStore((s) => s.vaultList);
+  const vaultList = useVaultStore((s) => s.vaultData.list);
 
   const [goalName, setGoalName] = useState<string>("");
   const [goalPrice, setGoalPrice] = useState<string>("");

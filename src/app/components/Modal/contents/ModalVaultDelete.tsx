@@ -8,11 +8,11 @@ import { useShallow } from "zustand/shallow";
 export default function ModalVaultDelete() {
   const { deleteVault, getTotalMoneySavedFromVault } = useVaultStore(
     useShallow((s) => ({
-      deleteVault: s.deleteVault,
+      deleteVault: s.vaultMethods.delete,
       getTotalMoneySavedFromVault: s.getTotalMoneySavedFromVault,
     }))
   );
-  const selectedVault = useVaultStore((s) => s.selectedVault);
+  const selectedVault = useVaultStore((s) => s.vaultSelection.selected);
   const toggleModal = useModalStore((s) => s.toggleModal);
 
   const handleDelete = (id: number) => {

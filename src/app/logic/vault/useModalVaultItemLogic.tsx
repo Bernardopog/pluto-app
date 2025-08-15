@@ -7,15 +7,15 @@ import { useShallow } from "zustand/shallow";
 export const useModalVaultItemLogic = (type: "create" | "update") => {
   const { addVaultItem, editVaultItem } = useVaultStore(
     useShallow((s) => ({
-      addVaultItem: s.addVaultItem,
-      editVaultItem: s.editVaultItem,
+      addVaultItem: s.vaultItemMethods.create,
+      editVaultItem: s.vaultItemMethods.update,
     }))
   );
   const { vaultList, selectedVault, selectedVaultItem } = useVaultStore(
     useShallow((s) => ({
-      vaultList: s.vaultList,
-      selectedVault: s.selectedVault,
-      selectedVaultItem: s.selectedVaultItem,
+      vaultList: s.vaultData.list,
+      selectedVault: s.vaultSelection.selected,
+      selectedVaultItem: s.vaultItemSelection.selected,
     }))
   );
   const toggleModal = useModalStore((s) => s.toggleModal);
