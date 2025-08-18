@@ -40,7 +40,7 @@ function BudgetChartSpend({
     <>
       {/* Custom DataLabel because colors and dataLabels don't work together */}
       {!isOverlay && (
-        <div className="absolute z-20 size-88 rounded-full">
+        <div className="absolute z-20 size-0 rounded-full">
           {budgetList.map((bdgt, idx) => {
             const percentage = getPercentage(
               getExpenses(bdgt.id),
