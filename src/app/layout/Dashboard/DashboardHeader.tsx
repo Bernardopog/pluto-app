@@ -4,7 +4,7 @@ import OverviewCard from "@/app/components/OverviewCard";
 import { useFinanceStore } from "@/app/stores/useFinanceStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   MdAttachMoney,
   MdOutlineRotateRight,
@@ -21,12 +21,19 @@ export default function DashboardHeader() {
   );
   const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
+  const transactionList = useTransactionBudgetStore(
+    (s) => s.transactionData.list
+  );
 
   const [typeOfExpense, setTypeOfExpense] = useState<"current" | "estimate">(
     "current"
   );
 
-  const currentExpenses = Math.abs(getTotalExpenses());
+  const currentExpenses = useMemo(
+    () => Math.abs(getTotalExpenses()),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [getTotalExpenses, transactionList]
+  );
   const estimateExpenses = budgetList.reduce(
     (acc, item) => acc + item.limit,
     0

@@ -18,7 +18,7 @@ export default function DashboardStatsItem({
   const removeStatFromList = useStatsStore((s) => s.removeStatFromList);
 
   return (
-    <li>
+    <li className="flex-1">
       {!isNull && keyName ? (
         <article className="min-h-32 relative flex-1 p-1 border-2 rounded-lg bg-chetwode-blue-100 border-chetwode-blue-600/25">
           {statsComponentMap[keyName].component()}
@@ -34,7 +34,7 @@ export default function DashboardStatsItem({
           </button>
         </article>
       ) : (
-        <div className="flex items-center justify-center flex-1 min-h-32 p-1 border-2 border-dashed rounded-lg bg-chetwode-blue-100 border-chetwode-blue-600/25">
+        <div className="flex items-center justify-center min-h-32 h-full p-1 border-2 border-dashed rounded-lg bg-chetwode-blue-100 border-chetwode-blue-600/25">
           <p className="italic text-3xl text-chetwode-blue-950/25">Vazio</p>
         </div>
       )}
