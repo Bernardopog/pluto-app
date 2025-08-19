@@ -6,6 +6,7 @@ import { useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import DashboardGoalsProgressBar from "./DashboardGoalsProgressBar";
 import DashboardGoalsPercentageDisplay from "./DashboardGoalsPercentageDisplay";
+import { useMemo } from "react";
 
 export default function DashboardGoalsSelectedGoal() {
   const goal = useGoalsStore((s) => s.goal);
@@ -13,11 +14,18 @@ export default function DashboardGoalsSelectedGoal() {
     (s) => s.getTotalMoneySavedFromVault
   );
   const balance = useFinanceStore((s) => s.balance);
+  const vaultItemList = useVaultStore((s) => s.vaultItemData.list);
 
-  const money =
-    goal?.progress === "vault"
-      ? getTotalMoneySavedFromVault(goal.assignedVault!)
-      : balance;
+  const money = useMemo(() => {
+    if (goal?.progress === "vault") {
+      const vault = vaultItemList.find(
+        (vault) => vault.id === goal.assignedVault
+      );
+      if (!vault) return 0;
+      return getTotalMoneySavedFromVault(vault.id);
+    }
+    return balance;
+  }, [goal, balance, getTotalMoneySavedFromVault, vaultItemList]);
 
   return (
     <>
