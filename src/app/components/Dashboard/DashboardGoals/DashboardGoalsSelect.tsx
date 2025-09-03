@@ -1,6 +1,11 @@
 "use client";
 
+import { useFinanceStore } from "@/app/stores/useFinanceStore";
+import { useGoalsStore } from "@/app/stores/useGoalsStore";
 import { useModalStore } from "@/app/stores/useModalStore";
+import { useVaultStore } from "@/app/stores/useVaultStore";
+import { getPercentage } from "@/app/utils/getPercentage";
+import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
 export default function DashboardGoalsSelect() {
@@ -11,17 +16,92 @@ export default function DashboardGoalsSelect() {
     }))
   );
 
+  const { goal, cancelGoal, completeGoal } = useGoalsStore(
+    useShallow((s) => ({
+      goal: s.goal,
+      cancelGoal: s.cancelGoal,
+      completeGoal: s.completeGoal,
+    }))
+  );
+
+  const money = useFinanceStore((s) => s.balance);
+  const vaultList = useVaultStore((s) => s.vaultData.list);
+  const vaultItemList = useVaultStore((s) => s.vaultItemData.list);
+  const getTotalMoneySavedFromVault = useVaultStore(
+    (s) => s.getTotalMoneySavedFromVault
+  );
+
+  const [currentProgressPercentage, setCurrentProgressPercentage] =
+    useState<number>(0);
+
+  useEffect(() => {
+    if (goal?.progress === "vault") {
+      const vault = vaultList.find((vault) => vault.id === goal.assignedVault);
+      if (!vault) return;
+      const totalMoneySaved = getTotalMoneySavedFromVault(vault.id);
+      const percentage = getPercentage(totalMoneySaved, goal.targetAmount);
+      setCurrentProgressPercentage(Number(percentage));
+    }
+    if (goal?.progress === "balance") {
+      const percentage = getPercentage(money, goal.targetAmount);
+      setCurrentProgressPercentage(Number(percentage));
+    }
+  }, [goal, money, vaultList, vaultItemList, getTotalMoneySavedFromVault]);
+
   const handleModal = () => {
     toggleModal();
     selectModalType("goals");
   };
 
+  const handleCompleteGoal = () => {
+    if (goal?.progress === "vault") {
+      const vault = vaultList.find((vault) => vault.id === goal.assignedVault);
+      if (!vault) return;
+      const totalMoneySaved = getTotalMoneySavedFromVault(vault.id);
+      const percentage = getPercentage(totalMoneySaved, goal.targetAmount);
+      if (Number(percentage) >= 100) {
+        completeGoal();
+      }
+    }
+    if (goal?.progress === "balance") {
+      if (money >= goal.targetAmount) {
+        completeGoal();
+      }
+    }
+    setCurrentProgressPercentage(0);
+  };
+
+  const handleCancelGoal = () => {
+    cancelGoal();
+    setCurrentProgressPercentage(0);
+  };
+
   return (
-    <button
-      className="text-chetwode-blue-950/50 duration-300 ease-in-out hover:text-chetwode-blue-950/75"
-      onClick={handleModal}
-    >
-      Criar
-    </button>
+    <>
+      {!goal && (
+        <button
+          className="text-chetwode-blue-950/50 duration-300 ease-in-out hover:text-chetwode-blue-950/75"
+          onClick={handleModal}
+        >
+          Criar
+        </button>
+      )}
+      {goal && (
+        <button
+          className="text-red-950/50 duration-300 ease-in-out hover:text-red-950/75"
+          onClick={handleCancelGoal}
+        >
+          Cancelar
+        </button>
+      )}
+      {currentProgressPercentage >= 100 && (
+        <button
+          className="text-chetwode-blue-950/50 duration-300 ease-in-out hover:text-chetwode-blue-950/75"
+          onClick={handleCompleteGoal}
+        >
+          Completar
+        </button>
+      )}
+    </>
   );
 }
