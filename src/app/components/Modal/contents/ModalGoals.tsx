@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { IGoal, useGoalsStore } from "@/app/stores/useGoalsStore";
+import { useGoalsStore } from "@/app/stores/useGoalsStore";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { MdAttachMoney, MdOutlineRocketLaunch } from "react-icons/md";
 import Checkbox from "@/app/ui/Checkbox";
@@ -9,6 +9,7 @@ import Input from "@/app/ui/Input";
 import Radio from "@/app/ui/Radio";
 import Divider from "@/app/ui/Divider";
 import { useVaultStore } from "@/app/stores/useVaultStore";
+import { IGoal } from "@/interfaces/IGoal";
 
 export default function ModalGoals() {
   const createGoal = useGoalsStore((s) => s.createGoal);
@@ -36,6 +37,7 @@ export default function ModalGoals() {
       deadline: wantDeadline ? deadline : null,
       progress: baseProgress,
       assignedVault: null,
+      completed: false,
     };
 
     if (baseProgress === "vault" && !selectedVaultId) {

@@ -1,12 +1,5 @@
+import { IGoal } from "@/interfaces/IGoal";
 import { create } from "zustand";
-
-export interface IGoal {
-  name: string;
-  targetAmount: number;
-  deadline: string | null;
-  progress: "balance" | "vault";
-  assignedVault: number | null;
-}
 
 interface IGoalsStore {
   goal: IGoal | null;

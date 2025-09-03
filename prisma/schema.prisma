@@ -24,6 +24,7 @@ model User {
   budgets      Budget[]
   vaults       Vault[]
   vaultItems   VaultItem[]
+  goals        Goal[]
 }
 
 model Transaction {
@@ -69,6 +70,24 @@ model VaultItem {
 
   vaultId       Int
   vault         Vault @relation(fields: [vaultId], references: [id], onDelete: Cascade)
+
+  userId        Int
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum GoalProgress {
+  balance
+  vault
+}
+
+model Goal {
+  id            Int @id @default(autoincrement())
+  name          String
+  targetAmount  Int
+  deadline      DateTime?
+  progress      GoalProgress
+  assignedVault Int?
+  completed     Boolean @default(false)
 
   userId        Int
   user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
