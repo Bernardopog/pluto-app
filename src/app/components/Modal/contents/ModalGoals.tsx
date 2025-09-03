@@ -30,7 +30,7 @@ export default function ModalGoals() {
 
     let data: IGoal = {
       name: goalName,
-      price: Number.isNaN(Number(goalPrice))
+      targetAmount: Number.isNaN(Number(goalPrice))
         ? Number(goalPrice.replace(",", "."))
         : Number(goalPrice),
       deadline: wantDeadline ? deadline : null,
@@ -46,7 +46,7 @@ export default function ModalGoals() {
     if (baseProgress === "vault")
       data = { ...data, assignedVault: selectedVaultId };
 
-    if (data.name && data.price) {
+    if (data.name && data.targetAmount) {
       createGoal(data);
       toggleModal();
       setHasError(false);
