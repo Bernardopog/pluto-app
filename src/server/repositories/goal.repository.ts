@@ -7,6 +7,7 @@ interface IGoalRepository {
   create: (data: IGoalCreateDTO, userId: number) => Promise<IGoal | null>;
   complete: (userId: number) => Promise<null>;
   cancel: (userId: number) => Promise<null>;
+  reassign: (newAssignedId: number, userId: number) => Promise<IGoal>;
 }
 
 const checkFound = async (userId: number) => {
@@ -29,14 +30,28 @@ export const goalRepository: IGoalRepository = {
   },
   complete: async (userId) => {
     const found = await checkFound(userId);
-    if (!found) throw new Error("Meta nao encontrada");
+    if (!found) throw new Error("Meta não encontrada");
     await prisma.goal.delete({ where: { userId } });
     return null;
   },
   cancel: async (userId) => {
     const found = await checkFound(userId);
-    if (!found) throw new Error("Meta nao encontrada");
+    if (!found) throw new Error("Meta não encontrada");
     await prisma.goal.delete({ where: { userId } });
     return null;
+  },
+  reassign: async (newVaultId, userId) => {
+    const isValid = await prisma.goal.findUnique({ where: { userId } });
+    if (isValid?.progress !== "vault")
+      throw new Error("Meta não possui um cofre");
+
+    const found = await checkFound(userId);
+    if (!found) throw new Error("Meta não encontrada");
+
+    const res = await prisma.goal.update({
+      where: { userId },
+      data: { assignedVault: newVaultId },
+    });
+    return res;
   },
 };

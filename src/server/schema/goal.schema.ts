@@ -7,3 +7,5 @@ export const goalSchema = z.object({
   progress: z.enum(["balance", "vault"]),
   assignedVault: z.number().nullable(),
 });
+
+export const goalReassignSchema = z.object({ assignedVault: z.number() });

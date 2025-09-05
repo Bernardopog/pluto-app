@@ -1,5 +1,5 @@
 import { IMessage } from "@/interfaces/IMessage";
-import { IGoalCreateDTO } from "@/server/dto/goal.dto";
+import { IGoalCreateDTO, IGoalUpdateDTO } from "@/server/dto/goal.dto";
 import { goalService } from "@/server/services/goal.service";
 import { getUser } from "@/server/utils/getUser";
 
@@ -40,4 +40,13 @@ export async function DELETE(req: Request) {
     { message: res.message, data: res.data },
     { status: res.status }
   );
+}
+
+export async function PATCH(req: Request) {
+  const userId = await getUser();
+  if (!userId) return Response.json("Não autorizado", { status: 401 });
+  const body: IGoalUpdateDTO = await req.json();
+
+  const { message, status, data } = await goalService.reassign(body, userId);
+  return Response.json({ message, data }, { status });
 }

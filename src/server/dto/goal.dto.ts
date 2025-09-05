@@ -5,3 +5,7 @@ export interface IGoalCreateDTO {
   progress: "balance" | "vault";
   assignedVault: number | null;
 }
+
+export interface IGoalUpdateDTO {
+  assignedVault: number;
+}
