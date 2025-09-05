@@ -20,6 +20,7 @@ export const vaultRepository: IVaultRepository = {
     return await prisma.vault.findMany({
       where: { userId },
       include: { items: true },
+      orderBy: { id: "asc" },
     });
   },
   create: async (data, userId) => {

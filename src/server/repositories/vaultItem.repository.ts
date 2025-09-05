@@ -18,7 +18,10 @@ interface IVaultItemRepository {
 
 export const vaultItemRepository: IVaultItemRepository = {
   getAll: async (userId) => {
-    return prisma.vaultItem.findMany({ where: { userId } });
+    return prisma.vaultItem.findMany({
+      where: { userId },
+      orderBy: { id: "asc" },
+    });
   },
   create: async (data, userId) => {
     return prisma.vaultItem.create({ data: { ...data, userId } });

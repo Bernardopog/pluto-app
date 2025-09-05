@@ -22,7 +22,10 @@ interface IBudgetRepository {
 
 export const budgetRepository: IBudgetRepository = {
   getAll: async (userId) => {
-    const res = await prisma.budget.findMany({ where: { userId } });
+    const res = await prisma.budget.findMany({
+      where: { userId },
+      orderBy: { id: "asc" },
+    });
     return res;
   },
   create: async (data, userId) => {
