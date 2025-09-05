@@ -1,5 +1,5 @@
 import PieChartControl from "../../PieChartControl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PieChartType } from "@/app/layout/Dashboard/DashboardBudget";
 import { ITransaction } from "@/interfaces/ITransaction";
 import { IBudget } from "@/interfaces/IBudget";
@@ -19,15 +19,10 @@ export default function DashboardBudgetChart({
   rest,
 }: IDashboardBudgetChartProps) {
   const budgetData = useTransactionBudgetStore((s) => s.budgetData);
-  const fetch = useTransactionBudgetStore((s) => s.budgetMethods.fetch);
 
   const [chartType, setChartType] = useState<"pie" | "bar">("pie");
   const [pieChartType, setPieChartType] = useState<PieChartType>("full");
   const [showRest, setShowRest] = useState<boolean>(false);
-
-  useEffect(() => {
-    fetch();
-  }, [fetch]);
 
   return (
     <>

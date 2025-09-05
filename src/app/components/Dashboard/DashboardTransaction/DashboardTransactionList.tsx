@@ -3,21 +3,15 @@
 import { useDashboardControllersStore } from "@/app/stores/useDashboardControllersStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
-import { useEffect } from "react";
 import { DashboardTransactionLoading } from "./";
 
 export default function DashboardTransactionList() {
-  const fetch = useTransactionBudgetStore((s) => s.transactionMethods.fetch);
   const transactionData = useTransactionBudgetStore((s) => s.transactionData);
   const transactionList = transactionData.list;
 
   const transactionFilter = useDashboardControllersStore(
     (s) => s.transactionFilter
   );
-
-  useEffect(() => {
-    fetch();
-  }, [fetch]);
 
   return (
     <>

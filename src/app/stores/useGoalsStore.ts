@@ -5,6 +5,12 @@ import { showError } from "../helpers/showError";
 
 interface IGoalsStore {
   goalData: { item: IGoal | null; fetched: boolean; loading: boolean };
+  setGoalData: (data: {
+    item: IGoal | null;
+    fetched: boolean;
+    loading: boolean;
+  }) => void;
+
   goalMethods: {
     fetch: () => void;
     create: (goal: IGoal) => void;
@@ -17,6 +23,7 @@ const goalFetcher = fetcher<IGoal | null>(`/api/goals`);
 
 export const useGoalsStore = create<IGoalsStore>((set) => ({
   goalData: { item: null, fetched: false, loading: true },
+  setGoalData: (data) => set({ goalData: data }),
 
   goalMethods: {
     fetch: async () => {

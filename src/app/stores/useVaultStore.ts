@@ -18,9 +18,13 @@ interface IVaultState {
   vaultMethods: IVaultMethodsState;
   vaultSelection: ISelectionState<IVault>;
 
+  setVaultData: (data: IDataState<IVault>) => void;
+
   vaultItemData: IDataState<IVaultItem>;
   vaultItemMethods: IMethodsState<IVaultItemCreateDTO, IVaultItemUpdateDTO>;
   vaultItemSelection: ISelectionState<IVaultItem>;
+
+  setVaultItemsData: (data: IDataState<IVaultItem>) => void;
 
   selectedDashboardVault: number | null;
   selectDashboardVault: (id: number) => void;
@@ -33,7 +37,10 @@ const vaultItemFetcher = fetcher<IVaultItem[] | IVaultItem>("/api/vaultitems");
 
 export const useVaultStore = create<IVaultState>((set, get) => ({
   vaultData: { list: [], fetched: false, loading: true },
+  setVaultData: (data) => set({ vaultData: data }),
+
   vaultItemData: { list: [], fetched: false, loading: true },
+  setVaultItemsData: (data) => set({ vaultItemData: data }),
 
   vaultMethods: {
     fetch: async () => {

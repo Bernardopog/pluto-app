@@ -37,10 +37,14 @@ interface ITransactionBudgetStore {
   transactionDeletion: ITransactionDeletionState;
   transactionSelection: ISelectionState<ITransaction>;
 
+  setTransactionData: (data: IDataState<ITransaction>) => void;
+
   // Budget
   budgetData: IDataState<IBudget>;
   budgetMethods: IBudgetMethodsState;
   budgetSelection: ISelectionState<IBudget>;
+
+  setBudgetData: (data: IDataState<IBudget>) => void;
 
   // Global
   loadTxnAndBudgets: () => void;
@@ -63,6 +67,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
     // Transaction
     // Data
     transactionData: { list: [], loading: true, fetched: false },
+    setTransactionData: (data) => set({ transactionData: data }),
 
     // Methods
     transactionMethods: {
@@ -201,6 +206,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
     // Budget
     // Data
     budgetData: { list: [], loading: true, fetched: false },
+    setBudgetData: (data) => set({ budgetData: data }),
 
     // Methods
     budgetMethods: {
