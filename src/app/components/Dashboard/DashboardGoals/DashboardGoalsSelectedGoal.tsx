@@ -15,21 +15,21 @@ export default function DashboardGoalsSelectedGoal() {
     (s) => s.getTotalMoneySavedFromVault
   );
   const balance = useFinanceStore((s) => s.balance);
-  const vaultItemList = useVaultStore((s) => s.vaultItemData.list);
   const vaultList = useVaultStore((s) => s.vaultData.list);
   const cancelGoal = useGoalsStore((s) => s.cancelGoal);
   const completeGoal = useGoalsStore((s) => s.completeGoal);
 
   const money = useMemo(() => {
     if (goal?.progress === "vault") {
-      const vault = vaultItemList.find(
-        (vault) => vault.id === goal.assignedVault
-      );
+      const vault = vaultList.find((vault) => {
+        return vault.id === goal.assignedVault;
+      });
       if (!vault) return 0;
       return getTotalMoneySavedFromVault(vault.id);
     }
+
     return balance;
-  }, [goal, balance, getTotalMoneySavedFromVault, vaultItemList]);
+  }, [goal, balance, getTotalMoneySavedFromVault, vaultList]);
 
   useEffect(() => {
     if (!goal?.deadline) return;
@@ -75,7 +75,7 @@ export default function DashboardGoalsSelectedGoal() {
           </div>
           {goal.deadline && (
             <p className="text-center text-sm text-chetwode-blue-950/75">
-              Prazo: {goal.deadline}
+              Prazo: {goal.deadline.toString().split("T")[0]}
             </p>
           )}
           <DashboardGoalsPercentageDisplay
