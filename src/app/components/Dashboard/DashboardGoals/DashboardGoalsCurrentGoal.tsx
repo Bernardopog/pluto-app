@@ -9,7 +9,7 @@ import DashboardGoalsPercentageDisplay from "./DashboardGoalsPercentageDisplay";
 import { useEffect, useMemo } from "react";
 import { getPercentage } from "@/app/utils/getPercentage";
 
-export default function DashboardGoalsSelectedGoal() {
+export default function DashboardGoalsCurrentGoal() {
   const goal = useGoalsStore((s) => s.goal);
   const getTotalMoneySavedFromVault = useVaultStore(
     (s) => s.getTotalMoneySavedFromVault

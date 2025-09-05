@@ -8,7 +8,7 @@ import { getPercentage } from "@/app/utils/getPercentage";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
-export default function DashboardGoalsSelect() {
+export default function DashboardGoalsController() {
   const { toggleModal, selectModalType } = useModalStore(
     useShallow((s) => ({
       toggleModal: s.toggleModal,

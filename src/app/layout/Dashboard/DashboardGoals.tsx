@@ -1,6 +1,6 @@
 import {
-  DashboardGoalsSelect,
-  DashboardGoalsSelectedGoal,
+  DashboardGoalsController,
+  DashboardGoalsCurrentGoal,
 } from "@/app/components/Dashboard/DashboardGoals";
 
 export default function DashboardGoals() {
@@ -8,9 +8,9 @@ export default function DashboardGoals() {
     <article id="dashboard-goals" className="base-card flex flex-col">
       <header className="flex justify-between">
         <h2 className="subtitle">Objetivo</h2>
-        <DashboardGoalsSelect />
+        <DashboardGoalsController />
       </header>
-      <DashboardGoalsSelectedGoal />
+      <DashboardGoalsCurrentGoal />
     </article>
   );
 }
