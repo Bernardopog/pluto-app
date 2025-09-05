@@ -16,11 +16,11 @@ export default function DashboardGoalsController() {
     }))
   );
 
-  const { goal, cancelGoal, completeGoal } = useGoalsStore(
+  const { goal, cancel, complete } = useGoalsStore(
     useShallow((s) => ({
-      goal: s.goal,
-      cancelGoal: s.cancelGoal,
-      completeGoal: s.completeGoal,
+      goal: s.goalData.item,
+      cancel: s.goalMethods.cancel,
+      complete: s.goalMethods.complete,
     }))
   );
 
@@ -60,19 +60,19 @@ export default function DashboardGoalsController() {
       const totalMoneySaved = getTotalMoneySavedFromVault(vault.id);
       const percentage = getPercentage(totalMoneySaved, goal.targetAmount);
       if (Number(percentage) >= 100) {
-        completeGoal();
+        complete();
       }
     }
     if (goal?.progress === "balance") {
       if (money >= goal.targetAmount) {
-        completeGoal();
+        complete();
       }
     }
     setCurrentProgressPercentage(0);
   };
 
   const handleCancelGoal = () => {
-    cancelGoal();
+    cancel();
     setCurrentProgressPercentage(0);
   };
 

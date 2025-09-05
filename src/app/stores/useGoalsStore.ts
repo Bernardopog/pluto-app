@@ -1,19 +1,71 @@
 import { IGoal } from "@/interfaces/IGoal";
 import { create } from "zustand";
+import { fetcher } from "@/app/utils/fetcher";
+import { showError } from "../helpers/showError";
 
 interface IGoalsStore {
-  goal: IGoal | null;
-  createGoal: (goal: IGoal) => void;
-  completeGoal: () => void;
-  cancelGoal: () => void;
+  goalData: { item: IGoal | null; fetched: boolean; loading: boolean };
+  goalMethods: {
+    fetch: () => void;
+    create: (goal: IGoal) => void;
+    complete: () => void;
+    cancel: () => void;
+  };
 }
 
+const goalFetcher = fetcher<IGoal | null>(`/api/goals`);
+
 export const useGoalsStore = create<IGoalsStore>((set) => ({
-  goal: null,
-  createGoal: (goal: IGoal) =>
-    set(() => ({
-      goal: goal,
-    })),
-  completeGoal: () => set(() => ({ goal: null })),
-  cancelGoal: () => set(() => ({ goal: null })),
+  goalData: { item: null, fetched: false, loading: true },
+
+  goalMethods: {
+    fetch: async () => {
+      const res = await goalFetcher.get();
+      if (res.status >= 400) showError(res);
+      set((state) => ({
+        goalData: {
+          ...state.goalData,
+          item: res.data as IGoal,
+          fetched: true,
+          loading: false,
+        },
+      }));
+    },
+    create: async (goal: IGoal) => {
+      const res = await goalFetcher.post(goal);
+      if (res.status >= 400) showError(res);
+      set((state) => ({
+        goalData: {
+          ...state.goalData,
+          item: res.data as IGoal | null,
+          fetched: true,
+          loading: false,
+        },
+      }));
+    },
+    complete: async () => {
+      const res = await goalFetcher.finishGoal("complete");
+      if (res.status >= 400) showError(res);
+      set((state) => ({
+        goalData: {
+          ...state.goalData,
+          item: res.data as IGoal | null,
+          fetched: true,
+          loading: false,
+        },
+      }));
+    },
+    cancel: async () => {
+      const res = await goalFetcher.finishGoal("cancel");
+      if (res.status >= 400) showError(res);
+      set((state) => ({
+        goalData: {
+          ...state.goalData,
+          item: res.data as IGoal | null,
+          fetched: true,
+          loading: false,
+        },
+      }));
+    },
+  },
 }));

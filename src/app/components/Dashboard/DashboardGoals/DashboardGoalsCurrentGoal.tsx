@@ -10,14 +10,14 @@ import { useEffect, useMemo } from "react";
 import { getPercentage } from "@/app/utils/getPercentage";
 
 export default function DashboardGoalsCurrentGoal() {
-  const goal = useGoalsStore((s) => s.goal);
+  const goal = useGoalsStore((s) => s.goalData.item);
   const getTotalMoneySavedFromVault = useVaultStore(
     (s) => s.getTotalMoneySavedFromVault
   );
   const balance = useFinanceStore((s) => s.balance);
   const vaultList = useVaultStore((s) => s.vaultData.list);
-  const cancelGoal = useGoalsStore((s) => s.cancelGoal);
-  const completeGoal = useGoalsStore((s) => s.completeGoal);
+  const cancel = useGoalsStore((s) => s.goalMethods.cancel);
+  const complete = useGoalsStore((s) => s.goalMethods.complete);
 
   const money = useMemo(() => {
     if (goal?.progress === "vault") {
@@ -38,29 +38,22 @@ export default function DashboardGoalsCurrentGoal() {
     const now = Date.now();
 
     if (deadline.getTime() < now) {
-      cancelGoal();
+      cancel();
     } else if (deadline.getTime() < now && goal?.progress === "vault") {
       const vault = vaultList.find((vault) => vault.id === goal.assignedVault);
       if (!vault) return;
       const totalMoneySaved = getTotalMoneySavedFromVault(vault.id);
       const percentage = getPercentage(totalMoneySaved, goal.targetAmount);
       if (Number(percentage) >= 100) {
-        completeGoal();
+        complete();
       }
     } else if (deadline.getTime() < now && goal?.progress === "balance") {
       const percentage = getPercentage(balance, goal.targetAmount);
       if (Number(percentage) >= 100) {
-        completeGoal();
+        complete();
       }
     }
-  }, [
-    goal,
-    balance,
-    cancelGoal,
-    completeGoal,
-    getTotalMoneySavedFromVault,
-    vaultList,
-  ]);
+  }, [goal, balance, cancel, complete, getTotalMoneySavedFromVault, vaultList]);
 
   return (
     <>

@@ -12,7 +12,7 @@ import { useVaultStore } from "@/app/stores/useVaultStore";
 import { IGoal } from "@/interfaces/IGoal";
 
 export default function ModalGoals() {
-  const createGoal = useGoalsStore((s) => s.createGoal);
+  const create = useGoalsStore((s) => s.goalMethods.create);
   const toggleModal = useModalStore((s) => s.toggleModal);
   const vaultList = useVaultStore((s) => s.vaultData.list);
 
@@ -29,12 +29,15 @@ export default function ModalGoals() {
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();
 
+    const [year, month, day] = deadline.split("-").map((val) => Number(val));
+    const localDate = new Date(year, month - 1, day);
+
     let data: IGoal = {
       name: goalName,
       targetAmount: Number.isNaN(Number(goalPrice))
         ? Number(goalPrice.replace(",", "."))
         : Number(goalPrice),
-      deadline: wantDeadline ? deadline : null,
+      deadline: wantDeadline ? localDate : null,
       progress: baseProgress,
       assignedVault: null,
       completed: false,
@@ -49,7 +52,7 @@ export default function ModalGoals() {
       data = { ...data, assignedVault: selectedVaultId };
 
     if (data.name && data.targetAmount) {
-      createGoal(data);
+      create(data);
       toggleModal();
       setHasError(false);
     } else {
