@@ -3,16 +3,25 @@
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useMemo, useState } from "react";
-import { BsPiggyBank } from "react-icons/bs";
+import { BsPiggyBank, BsPlus } from "react-icons/bs";
 import Inert from "../../Inert";
 import { useShallow } from "zustand/shallow";
+import { IVaultCreateDTO } from "@/server/dto/vault.dto";
 
 export default function DashboardVaultSaved() {
-  const { vaultList, vaultItemList, selectedDashboardVault } = useVaultStore(
+  const {
+    vaultList,
+    vaultLoading,
+    vaultItemList,
+    selectedDashboardVault,
+    create,
+  } = useVaultStore(
     useShallow((s) => ({
       vaultList: s.vaultData.list,
+      vaultLoading: s.vaultData.loading,
       vaultItemList: s.vaultItemData.list,
       selectedDashboardVault: s.selectedDashboardVault,
+      create: s.vaultMethods.create,
     }))
   );
 
@@ -38,6 +47,21 @@ export default function DashboardVaultSaved() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vaultItemList, selectedDashboardVault, getTotalMoneySavedFromVault]);
 
+  const [creatingVault, setCreatingVault] = useState<boolean>(false);
+
+  const createNewVault = () => {
+    setCreatingVault(true);
+    const data: IVaultCreateDTO = {
+      name: "Cofre",
+      targetPrice: 100,
+      icon: "piggy",
+    };
+    create(data);
+    setCreatingVault(false);
+  };
+
+  console.log(selectedDashboardVault);
+
   return (
     <div className="flex items-center justify-center relative w-full min-h-24 p-2 rounded-lg bg-chetwode-blue-200 overflow-clip lg:w-1/4 lg:min-h-auto">
       <button
@@ -60,23 +84,43 @@ export default function DashboardVaultSaved() {
             isVaultMenuOpen ? "top-0" : "-top-64"
           }`}
         >
-          {vaultList.map((vault) => (
-            <li
-              key={vault.id}
-              className={`flex items-center rounded-lg border-l-8 ${
-                vault.id === selectedDashboardVault
-                  ? "bg-chetwode-blue-800 text-chetwode-blue-50 border-chetwode-blue-950"
-                  : "bg-chetwode-blue-300 text-chetwode-blue-950 border-chetwode-blue-700"
-              }`}
-            >
-              <button
-                className="w-full p-1 font-medium text-sm truncate"
-                onClick={() => handleSelectVault(vault.id)}
+          {(vaultLoading === false &&
+            vaultList.length > 0 &&
+            vaultList.map((vault) => (
+              <li
+                key={vault.id}
+                className={`flex items-center rounded-lg border-l-8 ${
+                  vault.id === selectedDashboardVault
+                    ? "bg-chetwode-blue-800 text-chetwode-blue-50 border-chetwode-blue-950"
+                    : "bg-chetwode-blue-300 text-chetwode-blue-950 border-chetwode-blue-700"
+                }`}
               >
-                {vault.name}
+                <button
+                  className="w-full p-1 font-medium text-sm truncate"
+                  onClick={() => handleSelectVault(vault.id)}
+                >
+                  {vault.name}
+                </button>
+              </li>
+            ))) || (
+            <li className="flex flex-col items-center justify-between h-full text-chetwode-blue-950 border-chetwode-blue-700">
+              <button
+                className="w-full p-1 font-medium text-sm rounded-lg bg-chetwode-blue-300"
+                onClick={handleVaultMenu}
+                disabled={creatingVault}
+              >
+                Nenhum cofre ainda
+              </button>
+              <button
+                className="flex items-center w-full p-1 font-medium rounded-lg bg-chetwode-blue-300 text-sm"
+                onClick={createNewVault}
+                disabled={creatingVault}
+              >
+                <BsPlus className="text-2xl" />
+                Criar cofre básico
               </button>
             </li>
-          ))}
+          )}
         </ul>
       </Inert>
 
