@@ -109,5 +109,19 @@ export function fetcher<U>(url: string) {
         return { message: "Requisição errada", status: 400 };
       }
     },
+    finishGoal: async (query: "complete" | "cancel") => {
+      try {
+        const res = await fetch(`${url}/?action=${query}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        return responseHandler<U>(res);
+      } catch {
+        return { message: "Requisição errada", status: 400 };
+      }
+    },
   };
 }

@@ -24,7 +24,7 @@ model User {
   budgets      Budget[]
   vaults       Vault[]
   vaultItems   VaultItem[]
-  goals        Goal[]
+  goals        Goal?
 }
 
 model Transaction {
@@ -81,14 +81,13 @@ enum GoalProgress {
 }
 
 model Goal {
-  id            Int @id @default(autoincrement())
+  userId        Int @unique
+  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   name          String
   targetAmount  Int
   deadline      DateTime?
   progress      GoalProgress
   assignedVault Int?
   completed     Boolean @default(false)
-
-  userId        Int
-  user          User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
