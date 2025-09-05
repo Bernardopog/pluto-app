@@ -4,3 +4,8 @@ export interface IMethodsState<T, U> {
   update: (id: number, item: U) => void;
   delete: (id: number) => void;
 }
+
+export interface IMethodsStateBasic<T> {
+  fetch: () => void;
+  create: (item: T) => void;
+}

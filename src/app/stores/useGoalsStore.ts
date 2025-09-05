@@ -2,6 +2,14 @@ import { IGoal } from "@/interfaces/IGoal";
 import { create } from "zustand";
 import { fetcher } from "@/app/utils/fetcher";
 import { showError } from "../helpers/showError";
+import { IMethodsStateBasic } from "../interfaces/IMethodsState";
+import { IGoalCreateDTO } from "@/server/dto/goal.dto";
+
+interface IGoalMethodsState extends IMethodsStateBasic<IGoalCreateDTO> {
+  complete: () => void;
+  cancel: () => void;
+  reassign: (newVaultId: number) => void;
+}
 
 interface IGoalsStore {
   goalData: { item: IGoal | null; fetched: boolean; loading: boolean };
@@ -11,12 +19,7 @@ interface IGoalsStore {
     loading: boolean;
   }) => void;
 
-  goalMethods: {
-    fetch: () => void;
-    create: (goal: IGoal) => void;
-    complete: () => void;
-    cancel: () => void;
-  };
+  goalMethods: IGoalMethodsState;
 }
 
 const goalFetcher = fetcher<IGoal | null>(`/api/goals`);
@@ -38,13 +41,13 @@ export const useGoalsStore = create<IGoalsStore>((set) => ({
         },
       }));
     },
-    create: async (goal: IGoal) => {
+    create: async (goal: IGoalCreateDTO) => {
       const res = await goalFetcher.post(goal);
       if (res.status >= 400) showError(res);
       set((state) => ({
         goalData: {
           ...state.goalData,
-          item: res.data as IGoal | null,
+          item: res.data as null,
           fetched: true,
           loading: false,
         },
@@ -56,7 +59,7 @@ export const useGoalsStore = create<IGoalsStore>((set) => ({
       set((state) => ({
         goalData: {
           ...state.goalData,
-          item: res.data as IGoal | null,
+          item: res.data as null,
           fetched: true,
           loading: false,
         },
@@ -69,6 +72,18 @@ export const useGoalsStore = create<IGoalsStore>((set) => ({
         goalData: {
           ...state.goalData,
           item: res.data as IGoal | null,
+          fetched: true,
+          loading: false,
+        },
+      }));
+    },
+    reassign: async (newVaultId) => {
+      const res = await goalFetcher.reassign(newVaultId);
+      if (res.status >= 400) showError(res);
+      set((state) => ({
+        goalData: {
+          ...state.goalData,
+          item: res.data as IGoal,
           fetched: true,
           loading: false,
         },

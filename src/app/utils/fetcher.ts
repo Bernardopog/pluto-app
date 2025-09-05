@@ -123,5 +123,20 @@ export function fetcher<U>(url: string) {
         return { message: "Requisição errada", status: 400 };
       }
     },
+    reassign: async (newVaultId: number) => {
+      try {
+        const res = await fetch(`${url}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ assignedVault: newVaultId }),
+        });
+        return responseHandler<U>(res);
+      } catch {
+        return { message: "Requisição errada", status: 400 };
+      }
+    },
   };
 }

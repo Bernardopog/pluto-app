@@ -50,7 +50,7 @@ export default function DashboardGoalsController() {
 
   const handleModal = () => {
     toggleModal();
-    selectModalType("goals");
+    selectModalType("goalCreate");
   };
 
   const handleCompleteGoal = () => {

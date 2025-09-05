@@ -28,7 +28,9 @@ export type VaultItemModalType =
   | "vaultAddItem"
   | "vaultUpdateItem"
   | "vaultDeleteItem";
-export type DashboardModalType = "goals" | "stats" | "transactionSimpleFilter";
+export type DashboardModalType = "stats" | "transactionSimpleFilter";
+
+export type GoalType = "goalCreate" | "goalReassign";
 
 export type ModalType =
   | null
@@ -37,7 +39,8 @@ export type ModalType =
   | BudgetModalType
   | VaultModalType
   | TransactionFilterType
-  | VaultItemModalType;
+  | VaultItemModalType
+  | GoalType;
 
 interface IModalStore {
   isModalOpen: boolean;

@@ -17,13 +17,14 @@ import ModalVault from "./contents/ModalVault";
 import ModalVaultDeleteItem from "./contents/ModalVaultDeleteItem";
 import ModalVaultItem from "./contents/ModalVaultItem";
 import ModalTransactionSimpleFilter from "./contents/ModalTransactionSimpleFilter";
+import ModalGoalReassign from "./contents/ModalGoalReassign";
 
 export default function ModalContent() {
   const selectedModal = useModalStore((s) => s.selectedModal);
 
   return (
     <>
-      {selectedModal === "goals" && <ModalGoals />}
+      {selectedModal === "goalCreate" && <ModalGoals />}
       {selectedModal === "stats" && <ModalStats />}
       {selectedModal === "transactionSimpleFilter" && (
         <ModalTransactionSimpleFilter />
@@ -57,6 +58,7 @@ export default function ModalContent() {
       {selectedModal === "filterValue" && <ModalValueFilter />}
       {selectedModal === "filterCategory" && <ModalCategoryFilter />}
       {selectedModal === "filterType" && <ModalTypeFilter />}
+      {selectedModal === "goalReassign" && <ModalGoalReassign />}
     </>
   );
 }

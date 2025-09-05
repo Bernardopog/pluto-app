@@ -8,6 +8,8 @@ import DashboardGoalsProgressBar from "./DashboardGoalsProgressBar";
 import DashboardGoalsPercentageDisplay from "./DashboardGoalsPercentageDisplay";
 import { useEffect, useMemo } from "react";
 import { getPercentage } from "@/app/utils/getPercentage";
+import { MdWarning } from "react-icons/md";
+import { useModalStore } from "@/app/stores/useModalStore";
 
 export default function DashboardGoalsCurrentGoal() {
   const goal = useGoalsStore((s) => s.goalData.item);
@@ -19,6 +21,8 @@ export default function DashboardGoalsCurrentGoal() {
   const vaultListItem = useVaultStore((s) => s.vaultItemData.list);
   const cancel = useGoalsStore((s) => s.goalMethods.cancel);
   const complete = useGoalsStore((s) => s.goalMethods.complete);
+  const toggleModal = useModalStore((s) => s.toggleModal);
+  const selectModalType = useModalStore((s) => s.selectModalType);
 
   const money = useMemo(() => {
     if (goal?.progress === "vault") {
@@ -59,6 +63,11 @@ export default function DashboardGoalsCurrentGoal() {
 
   const deadlineFormatted = new Date(goal?.deadline || 0).toLocaleDateString();
 
+  const handleModal = () => {
+    toggleModal();
+    selectModalType("goalReassign");
+  };
+
   return (
     <>
       {goal ? (
@@ -70,6 +79,18 @@ export default function DashboardGoalsCurrentGoal() {
               {moneyFormatter(goal.targetAmount)}
             </p>
           </div>
+          {goal.progress === "vault" &&
+            vaultList.findIndex((vault) => vault.id === goal.assignedVault) ===
+              -1 && (
+              <button
+                className="absolute top-0 right-0 text-center text-sm size-fit rounded-lg p-1 bg-red-500 animate-pulse"
+                aria-label="Atribuir a novo cofre"
+                title="Atribuir a novo cofre"
+                onClick={handleModal}
+              >
+                <MdWarning className="text-2xl text-star-dust-50" />
+              </button>
+            )}
           {goal.deadline && (
             <p className="text-center text-sm text-chetwode-blue-950/75">
               Prazo: {deadlineFormatted}
