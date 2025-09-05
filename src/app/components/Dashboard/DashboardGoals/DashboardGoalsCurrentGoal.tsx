@@ -16,6 +16,7 @@ export default function DashboardGoalsCurrentGoal() {
   );
   const balance = useFinanceStore((s) => s.balance);
   const vaultList = useVaultStore((s) => s.vaultData.list);
+  const vaultListItem = useVaultStore((s) => s.vaultItemData.list);
   const cancel = useGoalsStore((s) => s.goalMethods.cancel);
   const complete = useGoalsStore((s) => s.goalMethods.complete);
 
@@ -29,7 +30,8 @@ export default function DashboardGoalsCurrentGoal() {
     }
 
     return balance;
-  }, [goal, balance, getTotalMoneySavedFromVault, vaultList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [goal, balance, getTotalMoneySavedFromVault, vaultList, vaultListItem]);
 
   useEffect(() => {
     if (!goal?.deadline) return;
