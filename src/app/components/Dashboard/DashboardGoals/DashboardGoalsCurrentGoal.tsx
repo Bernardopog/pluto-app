@@ -57,6 +57,8 @@ export default function DashboardGoalsCurrentGoal() {
     }
   }, [goal, balance, cancel, complete, getTotalMoneySavedFromVault, vaultList]);
 
+  const deadlineFormatted = new Date(goal?.deadline || 0).toLocaleDateString();
+
   return (
     <>
       {goal ? (
@@ -70,7 +72,7 @@ export default function DashboardGoalsCurrentGoal() {
           </div>
           {goal.deadline && (
             <p className="text-center text-sm text-chetwode-blue-950/75">
-              Prazo: {goal.deadline.toString().split("T")[0]}
+              Prazo: {deadlineFormatted}
             </p>
           )}
           <DashboardGoalsPercentageDisplay
