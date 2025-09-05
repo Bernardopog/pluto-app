@@ -78,6 +78,11 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
           ...state.vaultData,
           list: state.vaultData.list.filter((item) => item.id !== id),
         },
+        vaultSelection: {
+          ...state.vaultSelection,
+          selected: null,
+        },
+        selectedDashboardVault: null,
       }));
     },
   },
