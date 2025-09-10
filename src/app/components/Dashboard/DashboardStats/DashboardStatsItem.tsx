@@ -20,7 +20,7 @@ export default function DashboardStatsItem({
   return (
     <li className="flex-1">
       {!isNull && keyName ? (
-        <article className="min-h-32 relative flex-1 p-1 border-2 rounded-lg bg-chetwode-blue-100 border-chetwode-blue-600/25">
+        <article className="size-full min-h-32 relative p-1 border-2 rounded-lg bg-chetwode-blue-100 border-chetwode-blue-600/25">
           {statsComponentMap[keyName].component()}
           <button
             type="button"
