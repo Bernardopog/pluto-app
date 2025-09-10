@@ -50,6 +50,12 @@ export async function registerUser(
         name,
         email,
         password: hashedPassword,
+        finance: {
+          create: {
+            balance: 0,
+            income: 0,
+          },
+        },
       },
     });
 
