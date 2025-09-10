@@ -1,15 +1,14 @@
 "use client";
 
-import OverviewCard from "@/app/components/OverviewCard";
+import {
+  OverviewCard,
+  OverviewCardSwitch,
+} from "@/app/components/OverviewCard";
 import { useFinanceStore } from "@/app/stores/useFinanceStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
-import { useMemo, useState } from "react";
-import {
-  MdAttachMoney,
-  MdOutlineRotateRight,
-  MdPlayArrow,
-} from "react-icons/md";
+import { useMemo } from "react";
+import { MdAttachMoney, MdPlayArrow } from "react-icons/md";
 import { useShallow } from "zustand/shallow";
 
 export default function DashboardHeader() {
@@ -25,10 +24,6 @@ export default function DashboardHeader() {
     (s) => s.transactionData.list
   );
 
-  const [typeOfExpense, setTypeOfExpense] = useState<"current" | "estimate">(
-    "current"
-  );
-
   const currentExpenses = useMemo(
     () => Math.abs(getTotalExpenses()),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,10 +34,6 @@ export default function DashboardHeader() {
     0
   );
   const balancePerMonth = income - currentExpenses;
-
-  const handleExpenseChange = () => {
-    setTypeOfExpense(typeOfExpense === "current" ? "estimate" : "current");
-  };
 
   return (
     <header className="mt-2" id="dashboard-overview">
@@ -72,30 +63,20 @@ export default function DashboardHeader() {
           />
         </li>
         <li className="relative">
-          <button
-            type="button"
-            className="absolute bottom-0 right-0 z-10 p-0.5 rounded-lg bg-chetwode-blue-600 text-2xl text-chetwode-blue-50 duration-300 ease-in-out"
-            onClick={handleExpenseChange}
-            aria-label="Mudar o tipo de despesa"
-            title="Mudar o tipo de despesa"
-          >
-            <MdOutlineRotateRight />
-          </button>
-          {typeOfExpense === "current" ? (
+          <OverviewCardSwitch>
             <OverviewCard
               title="Despesa"
               value={moneyFormatter(currentExpenses).replace("R$", "")}
               valueType="currency"
               icon={<MdPlayArrow className="rotate-90" />}
             />
-          ) : (
             <OverviewCard
               title="Estimativa de Despesa"
               value={moneyFormatter(estimateExpenses).replace("R$", "")}
               valueType="currency"
               icon={<MdPlayArrow className="rotate-90" />}
             />
-          )}
+          </OverviewCardSwitch>
         </li>
       </ul>
     </header>

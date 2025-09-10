@@ -1,6 +1,6 @@
 "use client";
 
-import OverviewCard from "@/app/components/OverviewCard";
+import { OverviewCard } from "@/app/components/OverviewCard";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { getPercentage } from "@/app/utils/getPercentage";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";

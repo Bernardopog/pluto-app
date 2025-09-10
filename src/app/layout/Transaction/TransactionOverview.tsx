@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
-import OverviewCard from "../../components/OverviewCard";
+import { OverviewCard } from "@/app/components/OverviewCard";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { MdAttachMoney, MdList, MdPlayArrow } from "react-icons/md";
 

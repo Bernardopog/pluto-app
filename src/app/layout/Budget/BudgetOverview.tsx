@@ -1,14 +1,12 @@
 "use client";
 
+import { MdAttachMoney, MdPlayArrow } from "react-icons/md";
 import {
-  MdAttachMoney,
-  MdOutlineRotateRight,
-  MdPlayArrow,
-} from "react-icons/md";
-import OverviewCard from "../../components/OverviewCard";
+  OverviewCard,
+  OverviewCardSwitch,
+} from "@/app/components/OverviewCard";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
-import { useState } from "react";
 import { useShallow } from "zustand/shallow";
 
 export default function BudgetOverview() {
@@ -18,20 +16,6 @@ export default function BudgetOverview() {
       transactionList: s.transactionData.list,
     }))
   );
-
-  const [typeBalance, setTypeBalance] = useState<"expense" | "revenue">(
-    "expense"
-  );
-  const [typeAllocated, setTypeAllocated] = useState<"bigger" | "smaller">(
-    "bigger"
-  );
-
-  const handleChangeOfAllocatedCard = () => {
-    setTypeAllocated(typeAllocated === "bigger" ? "smaller" : "bigger");
-  };
-  const handleChangeOfBalanceCard = () => {
-    setTypeBalance(typeBalance === "expense" ? "revenue" : "expense");
-  };
 
   const bdgtLength = budgetList.length;
 
@@ -77,16 +61,7 @@ export default function BudgetOverview() {
           />
         </li>
         <li className="relative">
-          <button
-            type="button"
-            className="absolute bottom-0 right-0 z-10 p-0.5 rounded-lg bg-chetwode-blue-600 text-2xl text-chetwode-blue-50 duration-300 ease-in-out"
-            onClick={handleChangeOfBalanceCard}
-            aria-label="Mudar o tipo de balanço"
-            title="Mudar o tipo de balanço"
-          >
-            <MdOutlineRotateRight />
-          </button>
-          {typeBalance === "expense" ? (
+          <OverviewCardSwitch>
             <OverviewCard
               title="Maior Gasto - Orçamento"
               icon={<MdPlayArrow className="rotate-90" />}
@@ -96,7 +71,6 @@ export default function BudgetOverview() {
               complement={budgetWithMostExpenses.name}
               valueType="currency"
             />
-          ) : (
             <OverviewCard
               title="Menor Gasto - Orçamento"
               icon={<MdPlayArrow className="rotate-90" />}
@@ -106,19 +80,10 @@ export default function BudgetOverview() {
               complement={budgetWithLeastExpenses.name}
               valueType="currency"
             />
-          )}
+          </OverviewCardSwitch>
         </li>
         <li className="relative">
-          <button
-            type="button"
-            className="absolute bottom-0 right-0 z-10 p-0.5 rounded-lg bg-chetwode-blue-600 text-2xl text-chetwode-blue-50 duration-300 ease-in-out"
-            onClick={handleChangeOfAllocatedCard}
-            aria-label="Mudar o tipo de alocamento"
-            title="Mudar o tipo de alocamento"
-          >
-            <MdOutlineRotateRight />
-          </button>
-          {typeAllocated === "bigger" ? (
+          <OverviewCardSwitch>
             <OverviewCard
               title="Maior Alocamento de Orçamento"
               icon={<MdAttachMoney />}
@@ -132,7 +97,6 @@ export default function BudgetOverview() {
               }
               valueType="number"
             />
-          ) : (
             <OverviewCard
               title="Menor Alocamento de Orçamento"
               icon={<MdAttachMoney />}
@@ -146,7 +110,7 @@ export default function BudgetOverview() {
               }
               valueType="number"
             />
-          )}
+          </OverviewCardSwitch>
         </li>
         <li>
           <OverviewCard
