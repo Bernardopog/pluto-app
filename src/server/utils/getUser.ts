@@ -8,5 +8,6 @@ export const getUser = async () => {
   if (!token) return null;
 
   const payload = verifyJWT(token) as IJWTPayload;
+  if (!payload) return null;
   return Number(payload.userId);
 };
