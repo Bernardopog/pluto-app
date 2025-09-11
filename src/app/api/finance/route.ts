@@ -1,3 +1,4 @@
+import { IFinance } from "@/interfaces/IFinance";
 import { IMessage } from "@/interfaces/IMessage";
 import { financeService } from "@/server/services/finance.service";
 import { getUser } from "@/server/utils/getUser";
@@ -20,7 +21,7 @@ export async function PATCH(req: Request) {
 
   const body = await req.json();
 
-  let res: IMessage<number | null> = { message: "", status: 200, data: null };
+  let res: IMessage<IFinance | null> = { message: "", status: 200, data: null };
 
   if (action === "balance")
     res = await financeService.updateBalance(userId, body.value);
