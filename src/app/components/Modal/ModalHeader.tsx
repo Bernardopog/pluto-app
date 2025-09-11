@@ -11,6 +11,7 @@ export default function ModalHeader({ type }: IModalHeaderProps) {
   else if (type?.includes("vault")) defType = "vault";
   else if (type?.includes("filter")) defType = "filter";
   else if (type?.includes("goal")) defType = "goal";
+  else if (type?.includes("config")) defType = "config";
 
   const formatType = (type: string) => {
     switch (type) {
@@ -26,6 +27,8 @@ export default function ModalHeader({ type }: IModalHeaderProps) {
         return "cofre";
       case "filter":
         return "filtro";
+      case "config":
+        return "configuração";
       default:
         return "indefinido";
     }

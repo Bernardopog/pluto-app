@@ -15,7 +15,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export type PieChartType = "full" | "half";
 
 export default function DashboardBudget() {
-  const income = useFinanceStore((s) => s.income);
+  const income = useFinanceStore((s) => s.financeData.item.income);
 
   const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
   const { budgetList, transactionList } = useTransactionBudgetStore(

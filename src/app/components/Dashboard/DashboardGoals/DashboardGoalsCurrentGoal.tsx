@@ -16,7 +16,7 @@ export default function DashboardGoalsCurrentGoal() {
   const getTotalMoneySavedFromVault = useVaultStore(
     (s) => s.getTotalMoneySavedFromVault
   );
-  const balance = useFinanceStore((s) => s.balance);
+  const balance = useFinanceStore((s) => s.financeData.item.balance);
   const vaultList = useVaultStore((s) => s.vaultData.list);
   const vaultListItem = useVaultStore((s) => s.vaultItemData.list);
   const cancel = useGoalsStore((s) => s.goalMethods.cancel);

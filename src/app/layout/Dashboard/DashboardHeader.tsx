@@ -2,22 +2,18 @@
 
 import {
   OverviewCard,
+  OverviewCardAction,
   OverviewCardSwitch,
 } from "@/app/components/OverviewCard";
 import { useFinanceStore } from "@/app/stores/useFinanceStore";
+import { useModalStore } from "@/app/stores/useModalStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { useMemo } from "react";
-import { MdAttachMoney, MdPlayArrow } from "react-icons/md";
-import { useShallow } from "zustand/shallow";
+import { MdAttachMoney, MdPlayArrow, MdSettings } from "react-icons/md";
 
 export default function DashboardHeader() {
-  const { income, balance } = useFinanceStore(
-    useShallow((s) => ({
-      income: s.income,
-      balance: s.balance,
-    }))
-  );
+  const financeData = useFinanceStore((s) => s.financeData);
   const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
   const transactionList = useTransactionBudgetStore(
@@ -33,19 +29,47 @@ export default function DashboardHeader() {
     (acc, item) => acc + item.limit,
     0
   );
-  const balancePerMonth = income - currentExpenses;
+
+  const balancePerMonth = financeData.item.income - currentExpenses;
+
+  const toggleModal = useModalStore((s) => s.toggleModal);
+  const selectModalType = useModalStore((s) => s.selectModalType);
+
+  const openBalanceConfig = () => {
+    toggleModal();
+    selectModalType("configBalance");
+  };
 
   return (
     <header className="mt-2" id="dashboard-overview">
       <ul className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_1fr] lg:grid-cols-3 xl:grid-cols-4 xl:gap-4">
-        <li className="sm:col-span-2 lg:col-span-3 xl:col-span-1">
-          <OverviewCard
-            title="Saldo"
-            value={moneyFormatter(balance).replace("R$", "")}
-            valueType="currency"
-            icon={<MdAttachMoney />}
-          />
-        </li>
+        {financeData.loading ? (
+          <li className="relative sm:col-span-2 lg:col-span-3 xl:col-span-1">
+            <div className="flex items-center justify-center relative h-full py-2 px-4 rounded-lg shadow-md overflow-hidden duration-300 ease-in-out border-b-2 border-transparent bg-star-dust-50 hover:-translate-y-2 hover:shadow-lg hover:border-chetwode-blue-70">
+              <span className="text-2xl font-medium text-chetwode-blue-950/75">
+                Carregando...
+              </span>
+            </div>
+          </li>
+        ) : (
+          <li className="relative sm:col-span-2 lg:col-span-3 xl:col-span-1">
+            <OverviewCardAction
+              action={openBalanceConfig}
+              ariaLabel="Editar saldo"
+              icon={<MdSettings />}
+            >
+              <OverviewCard
+                title="Saldo"
+                value={moneyFormatter(financeData.item.balance).replace(
+                  "R$",
+                  ""
+                )}
+                valueType="currency"
+                icon={<MdAttachMoney />}
+              />
+            </OverviewCardAction>
+          </li>
+        )}
         <li className="sm:col-span-2 lg:col-span-1">
           <OverviewCard
             title="Previsão do mês"
@@ -54,14 +78,24 @@ export default function DashboardHeader() {
             icon={<MdAttachMoney />}
           />
         </li>
-        <li>
-          <OverviewCard
-            title="Renda"
-            value={moneyFormatter(income).replace("R$", "")}
-            valueType="currency"
-            icon={<MdPlayArrow className="rotate-270" />}
-          />
-        </li>
+        {financeData.loading ? (
+          <li className="relative sm:col-span-2 lg:col-span-3 xl:col-span-1">
+            <div className="flex items-center justify-center relative h-full py-2 px-4 rounded-lg shadow-md overflow-hidden duration-300 ease-in-out border-b-2 border-transparent bg-star-dust-50 hover:-translate-y-2 hover:shadow-lg hover:border-chetwode-blue-70">
+              <span className="text-2xl font-medium text-chetwode-blue-950/75">
+                Carregando...
+              </span>
+            </div>
+          </li>
+        ) : (
+          <li>
+            <OverviewCard
+              title="Renda"
+              value={moneyFormatter(financeData.item.income).replace("R$", "")}
+              valueType="currency"
+              icon={<MdPlayArrow className="rotate-270" />}
+            />
+          </li>
+        )}
         <li className="relative">
           <OverviewCardSwitch>
             <OverviewCard

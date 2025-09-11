@@ -6,6 +6,7 @@ import DashboardStats from "@/app/layout/Dashboard/DashboardStats";
 import DashboardTransaction from "@/app/layout/Dashboard/DashboardTransaction";
 import DashboardVault from "@/app/layout/Dashboard/DashboardVault";
 import { getBudgets } from "@/server/functions/budget";
+import { getFinance } from "@/server/functions/finance";
 import { getGoal } from "@/server/functions/goal";
 import { getTransactions } from "@/server/functions/transaction";
 import { getVaults } from "@/server/functions/vault";
@@ -18,14 +19,21 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
-  const [txnData, budgetData, vaultData, vaultItemsData, goalData] =
-    await Promise.all([
-      getTransactions(),
-      getBudgets(),
-      getVaults(),
-      getVaultItems(),
-      getGoal(),
-    ]);
+  const [
+    txnData,
+    budgetData,
+    vaultData,
+    vaultItemsData,
+    goalData,
+    financeData,
+  ] = await Promise.all([
+    getTransactions(),
+    getBudgets(),
+    getVaults(),
+    getVaultItems(),
+    getGoal(),
+    getFinance(),
+  ]);
 
   return (
     <main className="page">
@@ -36,6 +44,7 @@ export default async function DashboardPage() {
         vaultData={vaultData}
         vaultItemsData={vaultItemsData}
         goalData={goalData}
+        financeData={financeData}
       />
       <section className="dashboard-layout grid min-h-[calc(100vh-32px-24px)]">
         <DashboardHeader />

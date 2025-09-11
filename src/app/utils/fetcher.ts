@@ -138,5 +138,20 @@ export function fetcher<U>(url: string) {
         return { message: "Requisição errada", status: 400 };
       }
     },
+    financePatch: async (type: "balance" | "income", value: number) => {
+      try {
+        const res = await fetch(`${url}/?action=${type}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ value: value }),
+        });
+        return responseHandler<U>(res);
+      } catch {
+        return { message: "Requisição errada", status: 400 };
+      }
+    },
   };
 }

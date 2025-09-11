@@ -40,7 +40,8 @@ export type ModalType =
   | VaultModalType
   | TransactionFilterType
   | VaultItemModalType
-  | GoalType;
+  | GoalType
+  | "configBalance";
 
 interface IModalStore {
   isModalOpen: boolean;

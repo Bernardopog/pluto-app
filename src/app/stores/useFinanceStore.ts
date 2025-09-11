@@ -1,14 +1,43 @@
 import { create } from "zustand";
-import { INCOMEPLACEHOLDER } from "../mock/placeholders";
+import { IFinance } from "@/interfaces/IFinance";
+import { fetcher } from "../utils/fetcher";
+import { showError } from "../helpers/showError";
 
-interface IFinanceState {
-  balance: number;
-  income: number;
-  setIncome: (value: number) => void;
+interface IFinanceMethodsState {
+  patch: (type: "balance" | "income", value: number) => Promise<void>;
 }
 
+interface IFinanceState {
+  financeData: { item: IFinance; fetched: boolean; loading: boolean };
+  setFinanceData: (data: {
+    item: IFinance;
+    fetched: boolean;
+    loading: boolean;
+  }) => void;
+
+  financeMethods: IFinanceMethodsState;
+}
+
+const financeFetcher = fetcher<IFinance>(`/api/finance`);
+
 export const useFinanceStore = create<IFinanceState>((set) => ({
-  balance: INCOMEPLACEHOLDER * 10,
-  income: INCOMEPLACEHOLDER,
-  setIncome: (value) => set({ income: value }),
+  financeData: {
+    item: { balance: 0, income: 0 },
+    fetched: false,
+    loading: true,
+  },
+  setFinanceData: (data) => set({ financeData: data }),
+
+  financeMethods: {
+    patch: async (type, value) => {
+      const res = await financeFetcher.financePatch(type, value);
+      if (res.status >= 400) showError(res);
+      set((state) => ({
+        financeData: {
+          ...state.financeData,
+          item: res.data as IFinance,
+        },
+      }));
+    },
+  },
 }));

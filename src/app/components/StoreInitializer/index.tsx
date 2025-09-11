@@ -1,9 +1,11 @@
 "use client";
 
+import { useFinanceStore } from "@/app/stores/useFinanceStore";
 import { useGoalsStore } from "@/app/stores/useGoalsStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { IBudget } from "@/interfaces/IBudget";
+import { IFinance } from "@/interfaces/IFinance";
 import { IGoal } from "@/interfaces/IGoal";
 import { ITransaction } from "@/interfaces/ITransaction";
 import { IVault, IVaultItem } from "@/interfaces/IVault";
@@ -16,12 +18,14 @@ export default function StoreInitializer({
   vaultData,
   vaultItemsData,
   goalData,
+  financeData,
 }: {
   txnData: ITransaction[] | null;
   budgetData: IBudget[] | null;
   vaultData: IVault[] | null;
   vaultItemsData: IVaultItem[] | null;
   goalData: IGoal | null;
+  financeData: IFinance;
 }) {
   const { setTransactionData, setBudgetData } = useTransactionBudgetStore(
     useShallow((s) => ({
@@ -36,6 +40,7 @@ export default function StoreInitializer({
     }))
   );
   const setGoalData = useGoalsStore((s) => s.setGoalData);
+  const setFinanceData = useFinanceStore((s) => s.setFinanceData);
 
   useEffect(() => {
     if (txnData) {
@@ -61,8 +66,16 @@ export default function StoreInitializer({
     if (goalData) {
       setGoalData({ item: goalData, fetched: true, loading: false });
     }
+
+    if (financeData) {
+      setFinanceData({
+        item: financeData,
+        fetched: true,
+        loading: false,
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txnData, budgetData, vaultData, vaultItemsData, goalData]);
+  }, [txnData, budgetData, vaultData, vaultItemsData, goalData, financeData]);
 
   return null;
 }

@@ -24,7 +24,7 @@ export default function DashboardGoalsController() {
     }))
   );
 
-  const money = useFinanceStore((s) => s.balance);
+  const money = useFinanceStore((s) => s.financeData.item.balance);
   const vaultList = useVaultStore((s) => s.vaultData.list);
   const vaultItemList = useVaultStore((s) => s.vaultItemData.list);
   const getTotalMoneySavedFromVault = useVaultStore(
