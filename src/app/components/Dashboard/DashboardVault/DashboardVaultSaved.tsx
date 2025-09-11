@@ -60,8 +60,6 @@ export default function DashboardVaultSaved() {
     setCreatingVault(false);
   };
 
-  console.log(selectedDashboardVault);
-
   return (
     <div className="flex items-center justify-center relative w-full min-h-24 p-2 rounded-lg bg-chetwode-blue-200 overflow-clip lg:w-1/4 lg:min-h-auto">
       <button
