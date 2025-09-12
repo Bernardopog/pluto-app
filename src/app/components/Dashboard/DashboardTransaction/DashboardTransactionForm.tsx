@@ -29,6 +29,11 @@ export default function DashboardTransactionForm() {
     return true;
   };
 
+  const today = new Date();
+  const localDate = `${today.getFullYear()}-${String(
+    today.getMonth() + 1
+  ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();
 
@@ -107,7 +112,8 @@ export default function DashboardTransactionForm() {
             <input
               type="date"
               name="date"
-              max={new Date().toISOString().split("T")[0]}
+              max={localDate}
+              defaultValue={localDate}
               className="min-w-1/8 pl-2 py-1 rounded-tl-lg bg-chetwode-blue-300 outline-chetwode-blue-800 lg:rounded-l-lg"
             />
             <input
