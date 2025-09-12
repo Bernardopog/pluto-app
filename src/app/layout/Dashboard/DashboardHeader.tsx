@@ -40,6 +40,11 @@ export default function DashboardHeader() {
     selectModalType("configBalance");
   };
 
+  const openIncomeConfig = () => {
+    toggleModal();
+    selectModalType("configIncome");
+  };
+
   return (
     <header className="mt-2" id="dashboard-overview">
       <ul className="grid grid-cols-1 gap-2 sm:grid-cols-[1fr_1fr] lg:grid-cols-3 xl:grid-cols-4 xl:gap-4">
@@ -87,13 +92,22 @@ export default function DashboardHeader() {
             </div>
           </li>
         ) : (
-          <li>
-            <OverviewCard
-              title="Renda"
-              value={moneyFormatter(financeData.item.income).replace("R$", "")}
-              valueType="currency"
-              icon={<MdPlayArrow className="rotate-270" />}
-            />
+          <li className="relative">
+            <OverviewCardAction
+              action={openIncomeConfig}
+              ariaLabel="Editar renda"
+              icon={<MdSettings />}
+            >
+              <OverviewCard
+                title="Renda"
+                value={moneyFormatter(financeData.item.income).replace(
+                  "R$",
+                  ""
+                )}
+                valueType="currency"
+                icon={<MdPlayArrow className="rotate-270" />}
+              />
+            </OverviewCardAction>
           </li>
         )}
         <li className="relative">

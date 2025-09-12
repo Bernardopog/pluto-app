@@ -19,6 +19,7 @@ import ModalVaultItem from "./contents/ModalVaultItem";
 import ModalTransactionSimpleFilter from "./contents/ModalTransactionSimpleFilter";
 import ModalGoalReassign from "./contents/ModalGoalReassign";
 import ModalBalanceConfiguration from "./contents/ModalBalanceConfiguration";
+import ModalIncomeConfiguration from "./contents/ModalIncomeConfiguration";
 
 export default function ModalContent() {
   const selectedModal = useModalStore((s) => s.selectedModal);
@@ -61,6 +62,7 @@ export default function ModalContent() {
       {selectedModal === "filterType" && <ModalTypeFilter />}
       {selectedModal === "goalReassign" && <ModalGoalReassign />}
       {selectedModal === "configBalance" && <ModalBalanceConfiguration />}
+      {selectedModal === "configIncome" && <ModalIncomeConfiguration />}
     </>
   );
 }
