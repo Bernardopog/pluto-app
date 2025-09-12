@@ -6,7 +6,7 @@ import Divider from "@/app/ui/Divider";
 import Input from "@/app/ui/Input";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { MdAdd, MdAddCircle, MdRemove, MdRemoveCircle } from "react-icons/md";
+import { MdAddCircle, MdRemoveCircle } from "react-icons/md";
 import { useShallow } from "zustand/shallow";
 
 export default function ModalBalanceConfiguration() {
@@ -103,8 +103,8 @@ export default function ModalBalanceConfiguration() {
               className="group flex justify-center relative w-full"
               onClick={() => handleBalanceChange().add(income)}
             >
-              <div className="flex items-center justify-center w-full p-2 rounded-lg duration-300 ease-in-out text-chetwode-blue-50 bg-chetwode-blue-700 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-900">
-                <MdAddCircle />
+              <div className="flex items-center justify-center w-full p-2 rounded-lg gap-2 duration-300 ease-in-out text-chetwode-blue-50 bg-chetwode-blue-700 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-900">
+                <MdAddCircle className="text-xl" />
                 <p>Adicionar Renda</p>
               </div>
               <div className="flex items-center justify-center absolute w-0 h-full rounded-lg duration-500 ease-in-out text-center opacity-50 blur-xs bg-chetwode-blue-900 text-green-400 overflow-hidden group-hover:w-full group-hover:opacity-100 group-hover:blur-none">
@@ -118,8 +118,8 @@ export default function ModalBalanceConfiguration() {
               className="group flex justify-center relative w-full"
               onClick={() => handleBalanceChange().remove(income)}
             >
-              <div className="flex items-center justify-center w-full p-2 rounded-lg duration-300 ease-in-out text-chetwode-blue-50 bg-chetwode-blue-700 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-900">
-                <MdRemoveCircle />
+              <div className="flex items-center justify-center w-full p-2 rounded-lg gap-2 duration-300 ease-in-out text-chetwode-blue-50 bg-chetwode-blue-700 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-900">
+                <MdRemoveCircle className="text-xl" />
                 <p>Subtrair Renda</p>
               </div>
               <div className="flex items-center justify-center absolute w-0 h-full rounded-lg duration-500 ease-in-out text-center opacity-50 blur-xs bg-chetwode-blue-900 text-red-400 overflow-hidden group-hover:w-full group-hover:opacity-100 group-hover:blur-none">
@@ -135,8 +135,8 @@ export default function ModalBalanceConfiguration() {
                 handleBalanceChange().remove(Math.abs(txnExpensesValue))
               }
             >
-              <div className="flex items-center justify-center w-full p-2 rounded-lg duration-300 ease-in-out text-chetwode-blue-50 bg-chetwode-blue-700 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-900">
-                <MdRemove />
+              <div className="flex items-center justify-center w-full p-2 rounded-lg gap-2 duration-300 ease-in-out text-chetwode-blue-50 bg-chetwode-blue-700 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-900">
+                <MdRemoveCircle className="text-xl" />
                 <p>Subtrair Despesa do Mês</p>
               </div>
               <div className="flex items-center justify-center absolute w-0 h-full rounded-lg duration-500 ease-in-out text-center opacity-50 blur-xs bg-chetwode-blue-900 text-red-400 overflow-hidden group-hover:w-full group-hover:opacity-100 group-hover:blur-none">
@@ -151,8 +151,8 @@ export default function ModalBalanceConfiguration() {
                 className="group flex justify-center relative w-full"
                 onClick={() => handleBalanceChange().add(vaultSavedValue)}
               >
-                <div className="flex items-center justify-center w-full p-2 rounded-lg duration-300 ease-in-out text-chetwode-blue-50 bg-chetwode-blue-700 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-900">
-                  <MdAdd />
+                <div className="flex items-center justify-center w-full p-2 rounded-lg gap-2 duration-300 ease-in-out text-chetwode-blue-50 bg-chetwode-blue-700 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-900">
+                  <MdAddCircle className="text-xl" />
                   <p>Adicionar valor do Cofre</p>
                 </div>
                 <div className="flex items-center justify-center absolute w-0 h-full rounded-lg duration-500 ease-in-out text-center opacity-50 blur-xs bg-chetwode-blue-900 text-green-400 overflow-hidden text-nowrap group-hover:w-full group-hover:opacity-100 group-hover:blur-none">
