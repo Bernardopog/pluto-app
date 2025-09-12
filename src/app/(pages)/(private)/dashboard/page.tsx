@@ -44,7 +44,7 @@ export default async function DashboardPage() {
         vaultData={vaultData}
         vaultItemsData={vaultItemsData}
         goalData={goalData}
-        financeData={financeData}
+        financeData={financeData!}
       />
       <section className="dashboard-layout grid min-h-[calc(100vh-32px-24px)]">
         <DashboardHeader />
