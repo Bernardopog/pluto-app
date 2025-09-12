@@ -9,7 +9,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { MdAdd, MdAddCircle, MdRemove, MdRemoveCircle } from "react-icons/md";
 import { useShallow } from "zustand/shallow";
 
-export default function ModalBalanceConfitguration() {
+export default function ModalBalanceConfiguration() {
   const { toggleModal, selectModalType } = useModalStore(
     useShallow((s) => ({
       toggleModal: s.toggleModal,

@@ -18,7 +18,7 @@ import ModalVaultDeleteItem from "./contents/ModalVaultDeleteItem";
 import ModalVaultItem from "./contents/ModalVaultItem";
 import ModalTransactionSimpleFilter from "./contents/ModalTransactionSimpleFilter";
 import ModalGoalReassign from "./contents/ModalGoalReassign";
-import ModalBalanceConfitguration from "./contents/ModalBalanceConfitguration";
+import ModalBalanceConfiguration from "./contents/ModalBalanceConfiguration";
 
 export default function ModalContent() {
   const selectedModal = useModalStore((s) => s.selectedModal);
@@ -60,7 +60,7 @@ export default function ModalContent() {
       {selectedModal === "filterCategory" && <ModalCategoryFilter />}
       {selectedModal === "filterType" && <ModalTypeFilter />}
       {selectedModal === "goalReassign" && <ModalGoalReassign />}
-      {selectedModal === "configBalance" && <ModalBalanceConfitguration />}
+      {selectedModal === "configBalance" && <ModalBalanceConfiguration />}
     </>
   );
 }
