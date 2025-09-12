@@ -9,7 +9,7 @@ export default function OverviewCardSwitch({
 }) {
   const childrenList = Array.isArray(children) ? children : [children];
 
-  const [cardToShow, setCardToShow] = useState<number>(1);
+  const [cardToShow, setCardToShow] = useState<number>(0);
 
   const handleChange = () => {
     if (cardToShow === 1) {
