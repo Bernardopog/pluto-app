@@ -5,6 +5,7 @@ import { useVaultStore } from "@/app/stores/useVaultStore";
 import { getPercentage } from "@/app/utils/getPercentage";
 import { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
+import { useMemo } from "react";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -12,10 +13,9 @@ interface IVaultChartGraphProps {
   typeOfChart: VaultChartTypes;
 }
 
-export default function VaultChartGraph({
-  typeOfChart,
-}: IVaultChartGraphProps) {
+function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
   const vaultList = useVaultStore((s) => s.vaultData.list);
+  const vaultItemList = useVaultStore((s) => s.vaultItemData.list);
   const getTotalMoneySavedFromVault = useVaultStore(
     (s) => s.getTotalMoneySavedFromVault
   );
@@ -34,15 +34,20 @@ export default function VaultChartGraph({
     }),
   ];
 
-  const vaultProgress = [
-    ...vaultList.map((vault) => {
-      const value = getPercentage(
-        getTotalMoneySavedFromVault(vault.id),
-        vault.targetPrice
-      );
-      return +value > 100 ? 100 : value;
-    }),
-  ];
+  const vaultProgress = useMemo(
+    () => [
+      ...vaultList.map((vault) => {
+        const value = getPercentage(
+          getTotalMoneySavedFromVault(vault.id),
+          vault.targetPrice
+        );
+        return +value > 100 ? 100 : value;
+      }),
+    ],
+
+    // eslint-disable-next-line
+    [vaultList, getTotalMoneySavedFromVault, vaultItemList]
+  );
 
   const rest = vaultList
     .map((vault) => vault.targetPrice - getTotalMoneySavedFromVault(vault.id))
@@ -69,6 +74,14 @@ export default function VaultChartGraph({
           : ["#df4444", "#4477df", "#44df44", "#df7744"],
     },
     plotOptions: {
+      radialBar: {
+        barLabels: {
+          enabled: true,
+          useSeriesColors: false,
+          offsetX: -8,
+          fontSize: "16px",
+        },
+      },
       pie: {
         offsetY: 20,
         startAngle: -90,
@@ -77,7 +90,8 @@ export default function VaultChartGraph({
           labels: {
             show: true,
             value: {
-              formatter: (val: string) => `${val}/X`,
+              formatter: (val: string) =>
+                typeOfChart === "restProgress" ? "" : `${val}% / 100%`,
               color: "#2a1e57",
             },
           },
@@ -98,9 +112,9 @@ export default function VaultChartGraph({
     <>
       {typeof window !== "undefined" && window && (
         <Chart
-          options={options as ApexOptions}
+          options={options}
           series={series}
-          type="donut"
+          type={typeOfChart === "vaultProgress" ? "radialBar" : "donut"}
           height={"90%"}
           width={"98%"}
         />
@@ -108,3 +122,7 @@ export default function VaultChartGraph({
     </>
   );
 }
+
+export default dynamic(() => Promise.resolve(VaultChartGraph), {
+  ssr: false,
+});
