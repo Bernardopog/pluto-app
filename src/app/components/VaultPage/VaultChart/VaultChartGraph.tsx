@@ -1,12 +1,12 @@
 "use client";
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { VaultChartTypes } from "@/app/layout/Vault/VaultChart";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { getPercentage } from "@/app/utils/getPercentage";
-import { Doughnut } from "react-chartjs-2";
+import { ApexOptions } from "apexcharts";
+import dynamic from "next/dynamic";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface IVaultChartGraphProps {
   typeOfChart: VaultChartTypes;
@@ -19,13 +19,6 @@ export default function VaultChartGraph({
   const getTotalMoneySavedFromVault = useVaultStore(
     (s) => s.getTotalMoneySavedFromVault
   );
-
-  const BackgroundColorMap: Record<number, string> = {
-    1: "#df4444",
-    2: "#4477df",
-    3: "#44df44",
-    4: "#df7744",
-  };
 
   const totalInVaults: number = vaultList
     .map((vault) => getTotalMoneySavedFromVault(vault.id))
@@ -60,46 +53,58 @@ export default function VaultChartGraph({
     ...vaultList.map((vault) => getTotalMoneySavedFromVault(vault.id)),
   ];
 
-  const data = {
+  const options: ApexOptions = {
     labels:
       typeOfChart === "restProgress"
-        ? ["Restante", ...vaultList.map((item) => item.name)]
-        : [...vaultList.map((item) => item.name)],
-    datasets: [
-      {
-        label: "%",
-        data:
-          typeOfChart === "totalProgress"
-            ? totalProgress.map((v) => +v)
-            : typeOfChart === "vaultProgress"
-            ? vaultProgress.map((v) => +v)
-            : restProgress.map((v) => +v),
-
-        backgroundColor:
-          typeOfChart === "restProgress"
-            ? [
-                "#a9a9a9",
-                ...vaultList.map((_, idx) => BackgroundColorMap[idx + 1]),
-              ]
-            : vaultList.map((_, idx) => BackgroundColorMap[idx + 1]),
-
-        borderWidth: 0,
-        spacing: 2,
-        hoverOffset: 16,
-        circumference: 180,
-        rotation: -90,
+        ? ["Restante", ...vaultList.map((vault) => vault.name)]
+        : vaultList.map((vault) => vault.name),
+    legend: {
+      position: "bottom",
+    },
+    fill: {
+      opacity: 1,
+      colors:
+        typeOfChart === "restProgress"
+          ? ["#a9a9a9", "#df4444", "#4477df", "#44df44", "#df7744"]
+          : ["#df4444", "#4477df", "#44df44", "#df7744"],
+    },
+    plotOptions: {
+      pie: {
+        offsetY: 20,
+        startAngle: -90,
+        endAngle: 90,
+        donut: {
+          labels: {
+            show: true,
+            value: {
+              formatter: (val: string) => `${val}/X`,
+              color: "#2a1e57",
+            },
+          },
+          size: "60",
+        },
+        expandOnClick: false,
       },
-    ],
+    },
   };
+  const series =
+    typeOfChart === "totalProgress"
+      ? totalProgress.map((val) => +val)
+      : typeOfChart === "vaultProgress"
+      ? vaultProgress.map((val) => +val)
+      : restProgress.map((val) => +val);
 
   return (
-    <div className="flex justify-center w-full">
-      <section className="relative w-full max-w-[20rem] mt-2">
-        <Doughnut
-          data={data}
-          options={{ responsive: true, maintainAspectRatio: true }}
+    <>
+      {typeof window !== "undefined" && window && (
+        <Chart
+          options={options as ApexOptions}
+          series={series}
+          type="donut"
+          height={"90%"}
+          width={"98%"}
         />
-      </section>
-    </div>
+      )}
+    </>
   );
 }
