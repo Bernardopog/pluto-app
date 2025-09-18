@@ -3,6 +3,7 @@
 import { useFinanceStore } from "@/app/stores/useFinanceStore";
 import { useGoalsStore } from "@/app/stores/useGoalsStore";
 import { useModalStore } from "@/app/stores/useModalStore";
+import { useStatsStore } from "@/app/stores/useStatsStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { getPercentage } from "@/app/utils/getPercentage";
 import { useEffect, useState } from "react";
@@ -13,6 +14,12 @@ export default function DashboardGoalsController() {
     useShallow((s) => ({
       toggleModal: s.toggleModal,
       selectModalType: s.selectModalType,
+    }))
+  );
+  const { statCompleteGoal, statCancelGoal } = useStatsStore(
+    useShallow((s) => ({
+      statCompleteGoal: s.completeGoal,
+      statCancelGoal: s.cancelGoal,
     }))
   );
 
@@ -60,11 +67,13 @@ export default function DashboardGoalsController() {
       const totalMoneySaved = getTotalMoneySavedFromVault(vault.id);
       const percentage = getPercentage(totalMoneySaved, goal.targetAmount);
       if (Number(percentage) >= 100) {
+        statCompleteGoal();
         complete();
       }
     }
     if (goal?.progress === "balance") {
       if (money >= goal.targetAmount) {
+        statCompleteGoal();
         complete();
       }
     }
@@ -73,6 +82,7 @@ export default function DashboardGoalsController() {
 
   const handleCancelGoal = () => {
     cancel();
+    statCancelGoal();
     setCurrentProgressPercentage(0);
   };
 

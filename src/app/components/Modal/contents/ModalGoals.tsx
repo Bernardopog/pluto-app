@@ -10,9 +10,11 @@ import Radio from "@/app/ui/Radio";
 import Divider from "@/app/ui/Divider";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { IGoal } from "@/interfaces/IGoal";
+import { useStatsStore } from "@/app/stores/useStatsStore";
 
 export default function ModalGoals() {
   const create = useGoalsStore((s) => s.goalMethods.create);
+  const statCreatedGoal = useStatsStore((s) => s.createGoal);
   const toggleModal = useModalStore((s) => s.toggleModal);
   const vaultList = useVaultStore((s) => s.vaultData.list);
 
@@ -53,6 +55,7 @@ export default function ModalGoals() {
 
     if (data.name && data.targetAmount) {
       create(data);
+      statCreatedGoal();
       toggleModal();
       setHasError(false);
     } else {

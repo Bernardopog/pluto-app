@@ -8,6 +8,7 @@ import DashboardVault from "@/app/layout/Dashboard/DashboardVault";
 import { getBudgets } from "@/server/functions/budget";
 import { getFinance } from "@/server/functions/finance";
 import { getGoal } from "@/server/functions/goal";
+import { getStats } from "@/server/functions/stats";
 import { getTransactions } from "@/server/functions/transaction";
 import { getVaults } from "@/server/functions/vault";
 import { getVaultItems } from "@/server/functions/vaultItem";
@@ -26,6 +27,7 @@ export default async function DashboardPage() {
     vaultItemsData,
     goalData,
     financeData,
+    statsData,
   ] = await Promise.all([
     getTransactions(),
     getBudgets(),
@@ -33,6 +35,7 @@ export default async function DashboardPage() {
     getVaultItems(),
     getGoal(),
     getFinance(),
+    getStats(),
   ]);
 
   return (
@@ -45,6 +48,7 @@ export default async function DashboardPage() {
         vaultItemsData={vaultItemsData}
         goalData={goalData}
         financeData={financeData!}
+        statsData={statsData}
       />
       <section className="dashboard-layout grid min-h-[calc(100vh-32px-24px)]">
         <DashboardHeader />

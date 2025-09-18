@@ -1,5 +1,9 @@
 import { ReactNode } from "react";
-import { moneyFormatter } from "../utils/moneyFormatter";
+import {
+  StatGoals,
+  StatMoneySpent,
+  StatSavedMoney,
+} from "../components/Dashboard/DashboardStats/contents";
 
 export type StatType =
   | "completedGoals"
@@ -15,47 +19,24 @@ type IStatsComponentMap = {
 export const statsComponentMap: IStatsComponentMap = {
   completedGoals: {
     component: () => (
-      <>
-        <h3 className="subsubtitle">Metas Concluídas</h3>
-        <p className="stat-result">5</p>
-      </>
+      <StatGoals title="Metas Concluídas" type="completedGoals" />
     ),
     title: "Metas Concluídas",
   },
   totalGoals: {
-    component: () => (
-      <>
-        <h3 className="subsubtitle">Metas Total</h3>
-        <p className="stat-result">7</p>
-      </>
-    ),
-    title: "Metas Total",
+    component: () => <StatGoals title="Metas Totais" type="totalGoals" />,
+    title: "Metas Totais",
   },
   failedGoals: {
-    component: () => (
-      <>
-        <h3 className="subsubtitle">Metas Falhadas</h3>
-        <p className="stat-result">2</p>
-      </>
-    ),
+    component: () => <StatGoals title="Metas Falhadas" type="failedGoals" />,
     title: "Metas Falhadas",
   },
   mostMoneySaved: {
-    component: () => (
-      <>
-        <h3 className="subsubtitle">Dinheiro Poupado</h3>
-        <p className="stat-result">{moneyFormatter(2400)}</p>
-      </>
-    ),
+    component: () => <StatSavedMoney />,
     title: "Dinheiro Poupado",
   },
   mostMoneySpent: {
-    component: () => (
-      <>
-        <h3 className="subsubtitle">Dinheiro Gasto</h3>
-        <p className="stat-result">{moneyFormatter(500)}</p>
-      </>
-    ),
+    component: () => <StatMoneySpent />,
     title: "Dinheiro Gasto",
   },
 };

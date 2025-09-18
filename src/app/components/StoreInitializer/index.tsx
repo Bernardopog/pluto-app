@@ -2,11 +2,13 @@
 
 import { useFinanceStore } from "@/app/stores/useFinanceStore";
 import { useGoalsStore } from "@/app/stores/useGoalsStore";
+import { useStatsStore } from "@/app/stores/useStatsStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { IBudget } from "@/interfaces/IBudget";
 import { IFinance } from "@/interfaces/IFinance";
 import { IGoal } from "@/interfaces/IGoal";
+import { IStats } from "@/interfaces/IStat";
 import { ITransaction } from "@/interfaces/ITransaction";
 import { IVault, IVaultItem } from "@/interfaces/IVault";
 import { useEffect } from "react";
@@ -19,6 +21,7 @@ export default function StoreInitializer({
   vaultItemsData,
   goalData,
   financeData,
+  statsData,
 }: {
   txnData: ITransaction[] | null;
   budgetData: IBudget[] | null;
@@ -26,6 +29,7 @@ export default function StoreInitializer({
   vaultItemsData: IVaultItem[] | null;
   goalData: IGoal | null;
   financeData: IFinance;
+  statsData: IStats | null;
 }) {
   const { setTransactionData, setBudgetData } = useTransactionBudgetStore(
     useShallow((s) => ({
@@ -41,6 +45,7 @@ export default function StoreInitializer({
   );
   const setGoalData = useGoalsStore((s) => s.setGoalData);
   const setFinanceData = useFinanceStore((s) => s.setFinanceData);
+  const setStatsData = useStatsStore((s) => s.setStatsData);
 
   useEffect(() => {
     if (txnData) {
@@ -74,8 +79,23 @@ export default function StoreInitializer({
         loading: false,
       });
     }
+
+    if (statsData) {
+      setStatsData({ item: statsData, fetched: true, loading: false });
+    }
+
+    console.log("!!! statsData", statsData);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txnData, budgetData, vaultData, vaultItemsData, goalData, financeData]);
+  }, [
+    txnData,
+    budgetData,
+    vaultData,
+    vaultItemsData,
+    goalData,
+    financeData,
+    statsData,
+  ]);
 
   return null;
 }

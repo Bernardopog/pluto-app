@@ -10,6 +10,8 @@ import { useEffect, useMemo } from "react";
 import { getPercentage } from "@/app/utils/getPercentage";
 import { MdWarning } from "react-icons/md";
 import { useModalStore } from "@/app/stores/useModalStore";
+import { useStatsStore } from "@/app/stores/useStatsStore";
+import { useShallow } from "zustand/shallow";
 
 export default function DashboardGoalsCurrentGoal() {
   const goal = useGoalsStore((s) => s.goalData.item);
@@ -23,6 +25,12 @@ export default function DashboardGoalsCurrentGoal() {
   const complete = useGoalsStore((s) => s.goalMethods.complete);
   const toggleModal = useModalStore((s) => s.toggleModal);
   const selectModalType = useModalStore((s) => s.selectModalType);
+  const { statCompleteGoal, statCancelGoal } = useStatsStore(
+    useShallow((s) => ({
+      statCompleteGoal: s.completeGoal,
+      statCancelGoal: s.cancelGoal,
+    }))
+  );
 
   const money = useMemo(() => {
     if (goal?.progress === "vault") {
@@ -45,6 +53,7 @@ export default function DashboardGoalsCurrentGoal() {
 
     if (deadline.getTime() < now) {
       cancel();
+      statCancelGoal();
     } else if (deadline.getTime() < now && goal?.progress === "vault") {
       const vault = vaultList.find((vault) => vault.id === goal.assignedVault);
       if (!vault) return;
@@ -52,14 +61,25 @@ export default function DashboardGoalsCurrentGoal() {
       const percentage = getPercentage(totalMoneySaved, goal.targetAmount);
       if (Number(percentage) >= 100) {
         complete();
+        statCompleteGoal();
       }
     } else if (deadline.getTime() < now && goal?.progress === "balance") {
       const percentage = getPercentage(balance, goal.targetAmount);
       if (Number(percentage) >= 100) {
         complete();
+        statCompleteGoal();
       }
     }
-  }, [goal, balance, cancel, complete, getTotalMoneySavedFromVault, vaultList]);
+  }, [
+    goal,
+    balance,
+    cancel,
+    complete,
+    getTotalMoneySavedFromVault,
+    vaultList,
+    statCancelGoal,
+    statCompleteGoal,
+  ]);
 
   const deadlineFormatted = new Date(goal?.deadline || 0).toLocaleDateString();
 
