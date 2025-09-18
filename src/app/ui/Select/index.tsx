@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 
 interface ISelectProps {
@@ -31,6 +31,10 @@ export default function Select({
     setIsOpen(false);
     setSelectedValue(itemId);
   };
+
+  useEffect(() => {
+    setSelectedValue(state);
+  }, [state]);
 
   return (
     <div

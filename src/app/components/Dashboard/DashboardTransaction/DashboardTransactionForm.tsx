@@ -50,6 +50,15 @@ export default function DashboardTransactionForm() {
     if (money < 0) money *= -1;
     if (transactionType === "outcome") money *= -1;
 
+    if (
+      categoryValue === null ||
+      Number.isNaN(Number(categoryValue)) ||
+      categoryValue === 0
+    ) {
+      setHadAnError(true);
+      return;
+    }
+
     if (isStringValid(name) && isValueValid(value)) {
       const [year, month, day] = date.split("-").map((val) => Number(val));
       const localDate = new Date(year, month - 1, day);
@@ -69,11 +78,13 @@ export default function DashboardTransactionForm() {
     }
   };
 
-  const selectList: {
+  interface ISelectList {
     id: number | string;
     name: string;
     value: number | string;
-  }[] = budgetList.map((budget) => ({
+  }
+
+  const selectList: ISelectList[] = budgetList.map((budget) => ({
     id: budget.id,
     name: budget.name,
     value: budget.id,
@@ -82,6 +93,8 @@ export default function DashboardTransactionForm() {
   const [formController, setFormController] = useState<boolean>(false);
 
   useEffect(() => {
+    const firstCategoryId = budgetList[0]?.id;
+    setCategoryValue(firstCategoryId);
     if (isTransactionFormOpen) {
       const timeout = setTimeout(() => {
         setFormController(true);
@@ -90,7 +103,7 @@ export default function DashboardTransactionForm() {
       return () => clearTimeout(timeout);
     }
     setFormController(false);
-  }, [isTransactionFormOpen]);
+  }, [isTransactionFormOpen, budgetList]);
 
   return (
     <div>
@@ -173,7 +186,8 @@ export default function DashboardTransactionForm() {
 
           <button
             type="submit"
-            className="flex justify-center items-center mt-2 px-2 py-2 rounded-lg bg-chetwode-blue-300 text-chetwode-blue-950 lg:py-0"
+            className="flex justify-center items-center mt-2 px-2 py-2 rounded-lg bg-chetwode-blue-300 text-chetwode-blue-950 lg:py-0 disabled:grayscale-100 disabled:opacity-75 disabled:cursor-not-allowed"
+            disabled={hadAnError || budgetList.length === 0}
           >
             <MdAdd />
             Adicionar
