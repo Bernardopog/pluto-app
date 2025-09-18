@@ -5,6 +5,7 @@ import { vaultRepository } from "../repositories/vault.repository";
 import { vaultSchema } from "../schema/vault.schema";
 import { createMessage } from "../utils/message";
 import { idValidator } from "../utils/idValidator";
+import { decimalToInt, intToDecimal } from "@/server/utils/convertMoney";
 
 interface IVaultService {
   getAll: (userId: number) => Promise<IMessage<IVault[]>>;
@@ -23,6 +24,16 @@ interface IVaultService {
 const vaultValidate = (data: IVaultCreateDTO | IVaultUpdateDTO) =>
   vaultSchema.safeParse(data);
 
+const toPersistence = (data: IVaultCreateDTO | IVaultUpdateDTO) => ({
+  ...data,
+  targetPrice: decimalToInt(data.targetPrice),
+});
+
+const toResponse = (data: IVault) => ({
+  ...data,
+  targetPrice: intToDecimal(data.targetPrice),
+});
+
 enum VaultIconsEnum {
   plane = "plane",
   piggy = "piggy",
@@ -40,7 +51,10 @@ const iconToEnum = (icon: string): VaultIconsEnum | null => {
 export const vaultService: IVaultService = {
   getAll: async (userId) => {
     const res = await vaultRepository.getAll(userId);
-    return createMessage("Cofres obtidos com sucesso", 200, res);
+
+    const formattedRes = res.map((vault) => toResponse(vault));
+
+    return createMessage("Cofres obtidos com sucesso", 200, formattedRes);
   },
   create: async (data, userId) => {
     const { success, data: transformedData } = vaultValidate(data);
@@ -57,9 +71,13 @@ export const vaultService: IVaultService = {
 
     transformedData.icon = iconAsEnum;
 
-    const res = await vaultRepository.create(transformedData, userId);
+    const finalData = toPersistence(transformedData);
 
-    return createMessage("Cofre criado com sucesso", 201, res);
+    const res = await vaultRepository.create(finalData, userId);
+
+    const returnData = toResponse(res);
+
+    return createMessage("Cofre criado com sucesso", 201, returnData);
   },
   update: async (id, data, userId) => {
     if (!idValidator(id)) {
@@ -80,14 +98,22 @@ export const vaultService: IVaultService = {
 
     transformedData.icon = iconAsEnum;
 
-    const res = await vaultRepository.update(id, transformedData, userId);
+    const finalData = toPersistence(transformedData);
+
+    const res = await vaultRepository.update(id, finalData, userId);
     if (!res.success) {
       if (res.status === 404) {
         return createMessage("Cofre nao encontrado", res.status, null);
       } else return createMessage("Erro ao atualizar cofre", res.status, null);
     }
 
-    return createMessage("Cofre atualizado com sucesso", res.status, res.data);
+    const returnData = toResponse(res.data as IVault);
+
+    return createMessage(
+      "Cofre atualizado com sucesso",
+      res.status,
+      returnData
+    );
   },
   delete: async (id, userId) => {
     if (!idValidator(id)) {

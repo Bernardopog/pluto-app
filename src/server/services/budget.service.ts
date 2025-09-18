@@ -5,6 +5,7 @@ import { IMessage } from "@/interfaces/IMessage";
 import { budgetSchema } from "../schema/budget.schema";
 import { IBudget } from "@/interfaces/IBudget";
 import { idValidator } from "../utils/idValidator";
+import { decimalToInt, intToDecimal } from "@/server/utils/convertMoney";
 
 interface IBudgetService {
   getAll: (userId: number) => Promise<IMessage<IBudget[]>>;
@@ -28,12 +29,23 @@ interface IBudgetService {
 const budgetValidate = (data: IBudgetCreateDTO | IBudgetUpdateDTO) =>
   budgetSchema.safeParse(data);
 
+const toPersistence = (data: IBudgetCreateDTO | IBudgetUpdateDTO) => ({
+  ...data,
+  limit: decimalToInt(data.limit),
+});
+
+const toResponse = (data: IBudget) => ({
+  ...data,
+  limit: intToDecimal(data.limit),
+});
+
 export const budgetService: IBudgetService = {
   getAll: async (userId) => {
     const res = await budgetRepository.getAll(userId);
-    const message = createMessage("Orçamentos obtidos com sucesso", 200, res);
 
-    return message;
+    const formattedRes = res.map((budget) => toResponse(budget));
+
+    return createMessage("Orçamentos obtidos com sucesso", 200, formattedRes);
   },
   create: async (data, userId) => {
     const { success } = budgetValidate(data);
@@ -41,9 +53,13 @@ export const budgetService: IBudgetService = {
       return createMessage<null>("Erro ao criar orçamento", 400, null);
     }
 
-    const res = await budgetRepository.create(data, userId);
+    const finalData = toPersistence(data);
 
-    return createMessage("Orçamento criado com sucesso", 201, res);
+    const res = await budgetRepository.create(finalData, userId);
+
+    const returnData = toResponse(res);
+
+    return createMessage("Orçamento criado com sucesso", 201, returnData);
   },
   update: async (
     id,
@@ -60,7 +76,9 @@ export const budgetService: IBudgetService = {
       return createMessage("Erro ao atualizar orçamento", 400, null);
     }
 
-    const res = await budgetRepository.update(id, data, userId);
+    const finalData = toPersistence(data);
+
+    const res = await budgetRepository.update(id, finalData, userId);
     if (!res.success) {
       if (res.status === 404) {
         return createMessage("Orçamento nao encontrado", res.status, null);
@@ -68,10 +86,12 @@ export const budgetService: IBudgetService = {
         return createMessage("Erro ao atualizar orçamento", res.status, null);
     }
 
+    const returnData = toResponse(res.data as IBudget);
+
     return createMessage(
       "Orçamento atualizado com sucesso",
       res.status,
-      res.data
+      returnData
     );
   },
   delete: async (id, userId) => {

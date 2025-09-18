@@ -1,9 +1,12 @@
-import { transactionRepository } from "@/server/repositories/transaction.repository";
 import { getUser } from "../utils/getUser";
+import { transactionService } from "../services/transaction.service";
 
 export async function getTransactions() {
   const userId = await getUser();
   if (!userId) return null;
 
-  return await transactionRepository.getAll(userId);
+  const res = await transactionService.getAll(userId);
+  if (!res.data) return null;
+
+  return res.data;
 }

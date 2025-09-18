@@ -1,9 +1,12 @@
-import { vaultRepository } from "../repositories/vault.repository";
+import { vaultService } from "../services/vault.service";
 import { getUser } from "../utils/getUser";
 
 export async function getVaults() {
   const userId = await getUser();
   if (!userId) return null;
 
-  return await vaultRepository.getAll(userId);
+  const res = await vaultService.getAll(userId);
+  if (!res.data) return null;
+
+  return res.data;
 }

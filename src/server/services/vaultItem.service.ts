@@ -5,6 +5,7 @@ import { createMessage } from "../utils/message";
 import { idValidator } from "../utils/idValidator";
 import { vaultItemRepository } from "../repositories/vaultItem.repository";
 import { IMessage } from "@/interfaces/IMessage";
+import { decimalToInt, intToDecimal } from "@/server/utils/convertMoney";
 interface IVaultItemService {
   getAll(userId: number): Promise<IMessage<IVaultItem[]>>;
   create(
@@ -22,10 +23,23 @@ interface IVaultItemService {
 const vaultItemValidate = (data: IVaultItemCreateDTO | IVaultItemUpdateDTO) =>
   vaultItemSchema.safeParse(data);
 
+const toPersistence = (data: IVaultItemCreateDTO | IVaultItemUpdateDTO) => ({
+  ...data,
+  value: decimalToInt(data.value),
+});
+
+const toResponse = (data: IVaultItem) => ({
+  ...data,
+  value: intToDecimal(data.value),
+});
+
 export const vaultItemService: IVaultItemService = {
   getAll: async (userId) => {
     const res = await vaultItemRepository.getAll(userId);
-    return createMessage("Items encontrados com sucesso", 200, res);
+
+    const formattedRes = res.map((item) => toResponse(item));
+
+    return createMessage("Items encontrados com sucesso", 200, formattedRes);
   },
   create: async (data, userId) => {
     const { success, data: transformedData } = vaultItemValidate(data);
@@ -34,9 +48,13 @@ export const vaultItemService: IVaultItemService = {
       return createMessage("Erro ao criar item", 400, null);
     }
 
-    const res = await vaultItemRepository.create(transformedData, userId);
+    const finalData = toPersistence(transformedData);
 
-    return createMessage("Item criado com sucesso", 201, res);
+    const res = await vaultItemRepository.create(finalData, userId);
+
+    const returnData = toResponse(res);
+
+    return createMessage("Item criado com sucesso", 201, returnData);
   },
   update: async (id, data, userId) => {
     if (!idValidator(id)) {
@@ -49,14 +67,18 @@ export const vaultItemService: IVaultItemService = {
       return createMessage("Erro ao atualizar item", 400, null);
     }
 
-    const res = await vaultItemRepository.update(id, transformedData, userId);
+    const finalData = toPersistence(transformedData);
+
+    const res = await vaultItemRepository.update(id, finalData, userId);
     if (!res.success) {
       if (res.status === 404) {
         return createMessage("Item nao encontrado", res.status, null);
       } else return createMessage("Erro ao atualizar item", res.status, null);
     }
 
-    return createMessage("Item atualizado com sucesso", res.status, res.data);
+    const returnData = toResponse(res.data as IVaultItem);
+
+    return createMessage("Item atualizado com sucesso", res.status, returnData);
   },
   delete: async (id, userId) => {
     if (id <= 0) {

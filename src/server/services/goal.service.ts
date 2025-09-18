@@ -4,6 +4,7 @@ import { createMessage } from "../utils/message";
 import { goalRepository } from "../repositories/goal.repository";
 import { IGoalCreateDTO, IGoalUpdateDTO } from "../dto/goal.dto";
 import { goalReassignSchema, goalSchema } from "../schema/goal.schema";
+import { decimalToInt, intToDecimal } from "@/server/utils/convertMoney";
 
 interface IGoalService {
   get: (userId: number) => Promise<IMessage<IGoal | null>>;
@@ -27,21 +28,38 @@ const goalValidate = (
   else return goalReassignSchema.safeParse(data);
 };
 
+const toPersistence = (data: IGoalCreateDTO) => ({
+  ...data,
+  targetAmount: decimalToInt(data.targetAmount),
+});
+
+const toResponse = (data: IGoal) => ({
+  ...data,
+  targetAmount: intToDecimal(data.targetAmount),
+});
+
 export const goalService: IGoalService = {
   get: async (userId) => {
     const res = await goalRepository.get(userId);
     if (!res) {
       return createMessage("Meta não encontrada", 404, null);
     }
-    return createMessage("Meta obtidas com sucesso", 200, res);
+    const returnData = toResponse(res);
+    return createMessage("Meta obtidas com sucesso", 200, returnData);
   },
   create: async (data, userId) => {
     const { success } = goalValidate(data, "create");
     if (!success) return createMessage("Erro ao criar meta", 400, null);
 
+    const finalData = toPersistence(data);
+
     try {
-      const res = await goalRepository.create(data, userId);
-      return createMessage("Meta criada com sucesso", 201, res);
+      const res = await goalRepository.create(finalData, userId);
+
+      if (!res) return createMessage("Erro ao criar meta", 400, null);
+      const returnData = toResponse(res);
+
+      return createMessage("Meta criada com sucesso", 201, returnData);
     } catch (err) {
       const error = err as Error;
       return createMessage(error.message, 400, null);
@@ -74,7 +92,8 @@ export const goalService: IGoalService = {
         newVaultId.assignedVault,
         userId
       );
-      return createMessage("Meta reatribuida com sucesso", 200, res);
+      const returnData = toResponse(res);
+      return createMessage("Meta reatribuida com sucesso", 200, returnData);
     } catch (err) {
       const error = err as Error;
       let status: number;

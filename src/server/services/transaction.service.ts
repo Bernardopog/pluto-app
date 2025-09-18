@@ -8,6 +8,7 @@ import { IMessage } from "@/interfaces/IMessage";
 import { createMessage } from "../utils/message";
 import { transactionSchema } from "../schema/transaction.schema";
 import { idValidator } from "../utils/idValidator";
+import { decimalToInt, intToDecimal } from "@/server/utils/convertMoney";
 
 interface ITransanctionService {
   getAll: (userId: number) => Promise<IMessage<ITransaction[]>>;
@@ -28,10 +29,25 @@ interface ITransanctionService {
 const txnValidate = (data: ITransactionCreateDTO | ITransactionUpdateDTO) =>
   transactionSchema.safeParse(data);
 
+const toPersistence = (
+  data: ITransactionCreateDTO | ITransactionUpdateDTO
+) => ({
+  ...data,
+  value: decimalToInt(data.value),
+});
+
+const toResponse = (data: ITransaction) => ({
+  ...data,
+  value: intToDecimal(data.value),
+});
+
 export const transactionService: ITransanctionService = {
   getAll: async (userId) => {
     const res = await transactionRepository.getAll(userId);
-    return createMessage("Transações obtidas com sucesso", 200, res);
+
+    const formattedRes = res.map((txn) => toResponse(txn));
+
+    return createMessage("Transações obtidas com sucesso", 200, formattedRes);
   },
   create: async (data, userId) => {
     const { success, data: transformedData } = txnValidate(data);
@@ -40,9 +56,13 @@ export const transactionService: ITransanctionService = {
       return createMessage("Erro ao criar transação", 400, null);
     }
 
-    const res = await transactionRepository.create(transformedData, userId);
+    const finalData = toPersistence(transformedData);
 
-    return createMessage("Transação criada com sucesso", 201, res);
+    const res = await transactionRepository.create(finalData, userId);
+
+    const returnData = toResponse(res);
+
+    return createMessage("Transação criada com sucesso", 201, returnData);
   },
   update: async (id, data, userId) => {
     if (!idValidator(id)) {
@@ -55,7 +75,9 @@ export const transactionService: ITransanctionService = {
       return createMessage("Erro ao atualizar transação", 418, null);
     }
 
-    const res = await transactionRepository.update(id, transformedData, userId);
+    const finalData = toPersistence(transformedData);
+
+    const res = await transactionRepository.update(id, finalData, userId);
     if (!res.success) {
       if (res.status === 404) {
         return createMessage("Transação não encontrada", res.status, null);
@@ -63,10 +85,12 @@ export const transactionService: ITransanctionService = {
         return createMessage("Erro ao atualizar transação", res.status, null);
     }
 
+    const returnData = toResponse(res.data as ITransaction);
+
     return createMessage(
       "Transação atualizada com sucesso",
       res.status,
-      res.data
+      returnData
     );
   },
   delete: async (id, userId) => {

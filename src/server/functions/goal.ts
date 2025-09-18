@@ -1,9 +1,12 @@
-import { goalRepository } from "../repositories/goal.repository";
+import { goalService } from "../services/goal.service";
 import { getUser } from "../utils/getUser";
 
 export async function getGoal() {
   const userId = await getUser();
   if (!userId) return null;
 
-  return await goalRepository.get(userId);
+  const res = await goalService.get(userId);
+  if (!res.data) return null;
+
+  return res.data;
 }

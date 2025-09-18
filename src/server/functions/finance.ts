@@ -1,9 +1,12 @@
-import { financeRepository } from "@/server/repositories/finance.repository";
 import { getUser } from "../utils/getUser";
+import { financeService } from "../services/finance.service";
 
 export async function getFinance() {
   const userId = await getUser();
   if (!userId) return null;
 
-  return await financeRepository.get(userId);
+  const res = await financeService.get(userId);
+  if (!res.data) return null;
+
+  return res.data;
 }
