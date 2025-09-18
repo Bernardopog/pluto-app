@@ -3,7 +3,7 @@ import { IVault, IVaultItem } from "@/interfaces/IVault";
 import { IVaultCreateDTO, IVaultUpdateDTO } from "@/server/dto/vault.dto";
 import { IMethodsState } from "../interfaces/IMethodsState";
 import { ISelectionState } from "../interfaces/ISelectionState";
-import { IDataState } from "../interfaces/IDataState";
+import { IListDataState } from "../interfaces/IDataState";
 import { fetcher } from "../utils/fetcher";
 import { showError } from "../helpers/showError";
 import {
@@ -14,17 +14,17 @@ import {
 type IVaultMethodsState = IMethodsState<IVaultCreateDTO, IVaultUpdateDTO>;
 
 interface IVaultState {
-  vaultData: IDataState<IVault>;
+  vaultData: IListDataState<IVault>;
   vaultMethods: IVaultMethodsState;
   vaultSelection: ISelectionState<IVault>;
 
-  setVaultData: (data: IDataState<IVault>) => void;
+  setVaultData: (data: IListDataState<IVault>) => void;
 
-  vaultItemData: IDataState<IVaultItem>;
+  vaultItemData: IListDataState<IVaultItem>;
   vaultItemMethods: IMethodsState<IVaultItemCreateDTO, IVaultItemUpdateDTO>;
   vaultItemSelection: ISelectionState<IVaultItem>;
 
-  setVaultItemsData: (data: IDataState<IVaultItem>) => void;
+  setVaultItemsData: (data: IListDataState<IVaultItem>) => void;
 
   selectedDashboardVault: number | null;
   selectDashboardVault: (id: number) => void;

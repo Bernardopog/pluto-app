@@ -7,7 +7,7 @@ import {
   ITransactionCreateDTO,
   ITransactionUpdateDTO,
 } from "@/server/dto/transition.dto";
-import { IDataState } from "../interfaces/IDataState";
+import { IListDataState } from "../interfaces/IDataState";
 import { ISelectionState } from "../interfaces/ISelectionState";
 import { IMethodsState } from "../interfaces/IMethodsState";
 import { showError } from "../helpers/showError";
@@ -32,19 +32,19 @@ interface ITransactionDeletionState {
 
 interface ITransactionBudgetStore {
   // Transaction
-  transactionData: IDataState<ITransaction>;
+  transactionData: IListDataState<ITransaction>;
   transactionMethods: ITransactionMethodsState;
   transactionDeletion: ITransactionDeletionState;
   transactionSelection: ISelectionState<ITransaction>;
 
-  setTransactionData: (data: IDataState<ITransaction>) => void;
+  setTransactionData: (data: IListDataState<ITransaction>) => void;
 
   // Budget
-  budgetData: IDataState<IBudget>;
+  budgetData: IListDataState<IBudget>;
   budgetMethods: IBudgetMethodsState;
   budgetSelection: ISelectionState<IBudget>;
 
-  setBudgetData: (data: IDataState<IBudget>) => void;
+  setBudgetData: (data: IListDataState<IBudget>) => void;
 
   // Global
   loadTxnAndBudgets: () => void;

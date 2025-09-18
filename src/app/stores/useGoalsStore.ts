@@ -4,6 +4,7 @@ import { fetcher } from "@/app/utils/fetcher";
 import { showError } from "../helpers/showError";
 import { IMethodsStateBasic } from "../interfaces/IMethodsState";
 import { IGoalCreateDTO } from "@/server/dto/goal.dto";
+import { IItemDataState } from "../interfaces/IDataState";
 
 interface IGoalMethodsState extends IMethodsStateBasic<IGoalCreateDTO> {
   complete: () => void;
@@ -12,7 +13,7 @@ interface IGoalMethodsState extends IMethodsStateBasic<IGoalCreateDTO> {
 }
 
 interface IGoalsStore {
-  goalData: { item: IGoal | null; fetched: boolean; loading: boolean };
+  goalData: IItemDataState<IGoal>;
   setGoalData: (data: {
     item: IGoal | null;
     fetched: boolean;
