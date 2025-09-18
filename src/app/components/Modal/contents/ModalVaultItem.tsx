@@ -38,7 +38,7 @@ export default function ModalVaultItem({
         inputType="decorated"
         state={vaultItemValue}
         setState={setVaultItemValue}
-        type="text"
+        type="number"
         icon={<MdAttachMoney />}
       />
       <p className="mt-4 text-chetwode-blue-950">Cofre:</p>
