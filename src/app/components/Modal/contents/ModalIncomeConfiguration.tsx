@@ -45,7 +45,7 @@ export default function ModalIncomeConfiguration() {
         state={valueToIncome}
         setState={setValueToIncome}
         type="number"
-        step={"0.1"}
+        step={"0.01"}
         minLimit={0}
         maxLimit={1000000}
       />

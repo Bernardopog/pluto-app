@@ -180,7 +180,7 @@ export default function ModalBalanceConfiguration() {
               state={valueToBalance}
               setState={setValueToBalance}
               type="number"
-              step="0.1"
+              step="0.01"
               minLimit={0}
             />
           </div>
