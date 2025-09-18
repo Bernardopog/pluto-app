@@ -9,9 +9,14 @@ import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
 export default function TransactionTable() {
-  const loadTxnAndBudgets = useTransactionBudgetStore(
-    (s) => s.loadTxnAndBudgets
-  );
+  const { loadTxnAndBudgets, budgetFetched, transactionFetched } =
+    useTransactionBudgetStore(
+      useShallow((s) => ({
+        loadTxnAndBudgets: s.loadTxnAndBudgets,
+        budgetFetched: s.budgetData.fetched,
+        transactionFetched: s.transactionData.fetched,
+      }))
+    );
   const { transactionList, transactionDeletion } = useTransactionBudgetStore(
     useShallow((s) => ({
       transactionList: s.transactionData.list,
@@ -44,7 +49,7 @@ export default function TransactionTable() {
   );
 
   useEffect(() => {
-    loadTxnAndBudgets();
+    if (!(budgetFetched && transactionFetched)) loadTxnAndBudgets();
 
     setCurrentPage(1);
   }, [
@@ -58,6 +63,8 @@ export default function TransactionTable() {
     transactionTypeFilter,
     searchFilter,
     loadTxnAndBudgets,
+    budgetFetched,
+    transactionFetched,
   ]);
 
   const [currentPage, setCurrentPage] = useState<number>(1);

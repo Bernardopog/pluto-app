@@ -10,27 +10,33 @@ import { MdCalendarMonth, MdPlayArrow } from "react-icons/md";
 import { useShallow } from "zustand/shallow";
 
 export default function VaultOverview() {
-  const { vaultItemList, vaultData, fetchVault, fetchVaultItems } =
-    useVaultStore(
-      useShallow((s) => ({
-        vaultItemList: s.vaultItemData.list,
-        vaultData: s.vaultData,
-        fetchVault: s.vaultMethods.fetch,
-        fetchVaultItems: s.vaultItemMethods.fetch,
-      }))
-    );
-  const vaultList = vaultData.list;
+  const {
+    vaultItemList,
+    vaultList,
+    vaultsFetched,
+    vaultItemsFetched,
+    fetchVault,
+    fetchVaultItems,
+  } = useVaultStore(
+    useShallow((s) => ({
+      vaultItemList: s.vaultItemData.list,
+      vaultList: s.vaultData.list,
+      vaultsFetched: s.vaultData.fetched,
+      vaultItemsFetched: s.vaultItemData.fetched,
+      fetchVault: s.vaultMethods.fetch,
+      fetchVaultItems: s.vaultItemMethods.fetch,
+    }))
+  );
 
   useEffect(() => {
-    if (!vaultList || !vaultItemList || vaultData.loading) {
-      fetchVault();
-      fetchVaultItems();
-      return;
-    }
+    if (vaultsFetched && vaultItemsFetched) return;
+    fetchVault();
+    fetchVaultItems();
   }, [
     vaultList,
     vaultItemList,
-    vaultData.loading,
+    vaultsFetched,
+    vaultItemsFetched,
     fetchVault,
     fetchVaultItems,
   ]);
