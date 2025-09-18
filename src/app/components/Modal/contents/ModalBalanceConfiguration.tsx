@@ -20,7 +20,7 @@ export default function ModalBalanceConfiguration() {
   const { balance, income, updateBalance } = useFinanceStore(
     useShallow((s) => ({
       balance: s.financeData.item.balance,
-      income: s.financeData.item.balance,
+      income: s.financeData.item.income,
       updateBalance: s.financeMethods.patch,
     }))
   );
