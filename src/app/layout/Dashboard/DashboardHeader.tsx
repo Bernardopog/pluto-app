@@ -14,16 +14,18 @@ import { MdAttachMoney, MdPlayArrow, MdSettings } from "react-icons/md";
 
 export default function DashboardHeader() {
   const financeData = useFinanceStore((s) => s.financeData);
-  const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
+  const getTotalMotnhlyExpenses = useTransactionBudgetStore(
+    (s) => s.getTotalMotnhlyExpenses
+  );
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
   const transactionList = useTransactionBudgetStore(
     (s) => s.transactionData.list
   );
 
   const currentExpenses = useMemo(
-    () => Math.abs(getTotalExpenses()),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [getTotalExpenses, transactionList]
+    () => Math.abs(getTotalMotnhlyExpenses()),
+    // eslint-disable-next-line
+    [getTotalMotnhlyExpenses, transactionList]
   );
   const estimateExpenses = budgetList.reduce(
     (acc, item) => acc + item.limit,
