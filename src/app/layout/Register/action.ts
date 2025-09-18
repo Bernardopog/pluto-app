@@ -56,6 +56,13 @@ export async function registerUser(
             income: 0,
           },
         },
+        stats: {
+          create: {
+            totalGoals: 0,
+            completedGoals: 0,
+            failedGoals: 0,
+          },
+        },
       },
     });
 

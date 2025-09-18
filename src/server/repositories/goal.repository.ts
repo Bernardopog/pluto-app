@@ -25,19 +25,41 @@ export const goalRepository: IGoalRepository = {
   create: async (data, userId) => {
     const found = await checkFound(userId);
     if (found) throw new Error("Meta existente");
+
     const res = await prisma.goal.create({ data: { ...data, userId } });
+
+    if (res)
+      await prisma.stats.update({
+        where: { userId },
+        data: { totalGoals: { increment: 1 } },
+      });
+
     return res;
   },
   complete: async (userId) => {
     const found = await checkFound(userId);
     if (!found) throw new Error("Meta não encontrada");
+
     await prisma.goal.delete({ where: { userId } });
+
+    await prisma.stats.update({
+      where: { userId },
+      data: { completedGoals: { increment: 1 } },
+    });
+
     return null;
   },
   cancel: async (userId) => {
     const found = await checkFound(userId);
     if (!found) throw new Error("Meta não encontrada");
+
     await prisma.goal.delete({ where: { userId } });
+
+    await prisma.stats.update({
+      where: { userId },
+      data: { failedGoals: { increment: 1 } },
+    });
+
     return null;
   },
   reassign: async (newVaultId, userId) => {

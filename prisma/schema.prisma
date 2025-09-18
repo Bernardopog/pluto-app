@@ -26,6 +26,7 @@ model User {
   vaultItems   VaultItem[]
   goals        Goal?
   finance      Finance?
+  stats        Stats?
 }
 
 model Transaction {
@@ -99,4 +100,13 @@ model Finance {
 
   balance       Int @default(0)
   income        Int @default(0)
+}
+
+model Stats {
+  userId          Int @unique
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  completedGoals  Int @default(0)
+  totalGoals      Int @default(0)
+  failedGoals     Int @default(0)
 }
