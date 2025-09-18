@@ -15,6 +15,7 @@ interface IStatStore {
   setStatList: (statList: (StatType | null)[]) => void;
   addStatToList: (statKey: StatType) => void;
   removeStatFromList: (statIndex: number) => void;
+  clearManyInList: (toRemove: StatType) => void;
 }
 
 export const useStatsStore = create<IStatStore>((set, get) => ({
@@ -38,7 +39,6 @@ export const useStatsStore = create<IStatStore>((set, get) => ({
         },
       };
     }),
-
   cancelGoal: () =>
     set((state) => {
       if (!state.statsData.item) return {};
@@ -105,6 +105,18 @@ export const useStatsStore = create<IStatStore>((set, get) => ({
       "statList",
       JSON.stringify(
         get().statList.map((stat, index) => (index === statIndex ? null : stat))
+      )
+    );
+  },
+  clearManyInList: (toRemove) => {
+    set((state) => ({
+      statList: state.statList.map((stat) => (stat === toRemove ? null : stat)),
+    }));
+    const localStorage = window.localStorage;
+    localStorage.setItem(
+      "statList",
+      JSON.stringify(
+        get().statList.map((stat) => (stat === toRemove ? null : stat))
       )
     );
   },
