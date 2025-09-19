@@ -56,7 +56,7 @@ export default function ModalBudgetDelete() {
           className="w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-red-200 text-red-950 border-red-600 duration-300 ease-in-out hover:bg-red-300 active:bg-red-500 active:text-red-100"
           onClick={() => handleDelete(budgetSelection.selected!.id)}
         >
-          Deletar Transação
+          Deletar Orçamento
         </button>
       </div>
     </div>

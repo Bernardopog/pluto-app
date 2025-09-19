@@ -35,7 +35,7 @@ export default function BudgetListItemTxnHistory({ id }: { id: number }) {
       }`}
     >
       <header className="flex items-center justify-between">
-        <h4 className="subsubsubtitle">Transações Resentes</h4>
+        <h4 className="subsubsubtitle">Transações Recentes</h4>
         <button
           type="button"
           className="p-1 rounded-lg bg-chetwode-blue-300"
