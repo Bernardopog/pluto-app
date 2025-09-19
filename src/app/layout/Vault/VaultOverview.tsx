@@ -73,7 +73,7 @@ export default function VaultOverview() {
 
   return (
     <>
-      {vaultList && mostSavedVault && lessSavedVault && nearToCompleteVault && (
+      {vaultList && mostSavedVault && lessSavedVault && nearToCompleteVault ? (
         <header id="vault-overview">
           <ul className="grid grid-cols-1 gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-4">
             <li className="lg:col-span-3 xl:col-span-1">
@@ -118,6 +118,13 @@ export default function VaultOverview() {
             </li>
           </ul>
         </header>
+      ) : (
+        <p
+          id="vault-overview"
+          className="flex items-center justify-center h-full min-h-24 py-2 px-4 rounded-lg text-lg italic font-bold text-chetwode-blue-950/75 bg-star-dust-50"
+        >
+          É necessário criar um cofre para ver as informações...
+        </p>
       )}
     </>
   );

@@ -34,21 +34,27 @@ export default function BudgetList() {
       className="base-card flex flex-col gap-2 min-h-0 h-full"
     >
       <h2 className="subtitle">Orçamentos</h2>
-      <ul className="flex flex-col gap-2 min-h-0 overflow-y-auto scrollbar-style scrollbar-thinner">
-        {budgetList.map((bdgt) => {
-          const limit = getBudgetLimit(bdgt.id);
-          const expense = getExpenses(bdgt.id);
+      {budgetList.length > 0 ? (
+        <ul className="flex flex-col gap-2 min-h-0 overflow-y-auto scrollbar-style scrollbar-thinner">
+          {budgetList.map((bdgt) => {
+            const limit = getBudgetLimit(bdgt.id);
+            const expense = getExpenses(bdgt.id);
 
-          return (
-            <BudgetListItem
-              key={bdgt.id}
-              {...bdgt}
-              budgetLimit={limit}
-              expense={expense}
-            />
-          );
-        })}
-      </ul>
+            return (
+              <BudgetListItem
+                key={bdgt.id}
+                {...bdgt}
+                budgetLimit={limit}
+                expense={expense}
+              />
+            );
+          })}
+        </ul>
+      ) : (
+        <p className="flex items-center justify-center flex-1 h-full text-lg font-bold italic text-chetwode-blue-950/75">
+          Nenhum orçamento criado...
+        </p>
+      )}
     </section>
   );
 }

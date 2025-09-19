@@ -126,7 +126,7 @@ export default function DashboardGoalsCurrentGoal() {
           />
         </div>
       ) : (
-        <p className="italic text-chetwode-blue-950/75">
+        <p className="flex items-center justify-center h-full italic font-bold text-chetwode-blue-950/75">
           Nenhuma meta definida...
         </p>
       )}

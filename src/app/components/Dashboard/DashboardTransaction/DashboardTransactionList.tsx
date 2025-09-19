@@ -19,7 +19,7 @@ export default function DashboardTransactionList() {
         <div className="flex flex-col items-center justify-center w-full h-full">
           <DashboardTransactionLoading />
         </div>
-      ) : (
+      ) : transactionData.list.length > 0 ? (
         <ul className="flex flex-col flex-1 gap-2 overflow-auto scrollbar-style scrollbar-thinner">
           {transactionList
             .filter((transaction) => {
@@ -62,6 +62,12 @@ export default function DashboardTransactionList() {
               );
             })}
         </ul>
+      ) : (
+        <div className="flex flex-col items-center justify-center w-full h-full">
+          <h1 className="text-lg font-bold italic text-chetwode-blue-950/75">
+            Nenhuma transação encontrada...
+          </h1>
+        </div>
       )}
     </>
   );
