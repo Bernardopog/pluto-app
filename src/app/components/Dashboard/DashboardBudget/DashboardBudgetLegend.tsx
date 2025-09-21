@@ -40,7 +40,7 @@ export default function DashboardBudgetLegend({
         </li>
         {budget.map((budgetItem) => (
           <li
-            key={budgetItem.name}
+            key={budgetItem.id}
             className="border-l-4 pl-2"
             style={{ borderColor: `${budgetItem.color}` }}
           >
