@@ -15,7 +15,7 @@ import { MdAttachMoney, MdPlayArrow, MdSettings } from "react-icons/md";
 export default function DashboardHeader() {
   const financeData = useFinanceStore((s) => s.financeData);
   const getTotalMotnhlyExpenses = useTransactionBudgetStore(
-    (s) => s.getTotalMotnhlyExpenses
+    (s) => s.getTotalMonthlyExpenses
   );
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
   const transactionList = useTransactionBudgetStore(
