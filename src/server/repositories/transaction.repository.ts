@@ -27,7 +27,7 @@ export const transactionRepository: ITransactionRepository = {
   getAll: async (userId) => {
     return await prisma.transaction.findMany({
       where: { userId },
-      orderBy: { id: "asc" },
+      orderBy: [{ date: "desc" }, { id: "asc" }],
     });
   },
   create: async (data, userId) => {

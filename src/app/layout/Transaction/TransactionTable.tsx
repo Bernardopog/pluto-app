@@ -70,7 +70,6 @@ export default function TransactionTable() {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const filteredTransactions = transactionList
-    .toReversed()
     .filter((txn) => {
       const date = new Date(txn.date);
 

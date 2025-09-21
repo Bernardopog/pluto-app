@@ -29,7 +29,6 @@ export default function DashboardTransactionList() {
               else if (transactionFilter === "income")
                 return transaction.value > 0;
             })
-            .toReversed()
             .slice(0, 12)
             .map((transaction) => {
               const date = new Date(transaction.date);
