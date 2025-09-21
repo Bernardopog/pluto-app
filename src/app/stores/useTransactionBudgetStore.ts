@@ -250,6 +250,11 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         }));
       },
       create: async (budget) => {
+        if (get().budgetData.list.length >= 10)
+          return {
+            message: "Limite de 10 orcamentos atingido",
+            status: 400,
+          };
         const res = (await budgetFetcher.post(budget)) as IMessage<IBudget>;
         if (res.status >= 400) showError(res);
         set((state) => ({
