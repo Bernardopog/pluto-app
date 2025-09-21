@@ -17,5 +17,5 @@ export async function POST(req: Request) {
 
   const { message, status, data } = await vaultItemService.create(body, userId);
 
-  return Response.json({ message, data }, { status });
+  return Response.json({ message, data, status }, { status });
 }

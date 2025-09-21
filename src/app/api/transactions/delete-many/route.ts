@@ -11,5 +11,5 @@ export async function POST(req: Request) {
     userId
   );
 
-  return Response.json({ message, data }, { status });
+  return Response.json({ message, data, status }, { status });
 }

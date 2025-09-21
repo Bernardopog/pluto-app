@@ -7,7 +7,7 @@ export async function GET() {
   if (!userId) return Response.json("Não autorizado", { status: 401 });
 
   const { message, status, data } = await vaultService.getAll(userId);
-  return Response.json({ message: message, data: data }, { status: status });
+  return Response.json({ message, data }, { status });
 }
 
 export async function POST(req: Request) {
@@ -18,5 +18,5 @@ export async function POST(req: Request) {
 
   const { message, status, data } = await vaultService.create(body, userId);
 
-  return Response.json({ message: message, data: data }, { status: status });
+  return Response.json({ message, data, status }, { status });
 }

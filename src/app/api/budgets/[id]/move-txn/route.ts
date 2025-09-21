@@ -14,5 +14,5 @@ export const POST = async (req: Request, { params }: IContext) => {
     userId
   );
 
-  return Response.json({ message, data }, { status });
+  return Response.json({ message, data, status }, { status });
 };

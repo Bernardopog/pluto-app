@@ -15,7 +15,7 @@ export async function PUT(req: Request, { params }: IContext) {
     userId
   );
 
-  return Response.json({ message, data }, { status });
+  return Response.json({ message, data, status }, { status });
 }
 
 export async function DELETE(_: Request, { params }: IContext) {
@@ -28,5 +28,5 @@ export async function DELETE(_: Request, { params }: IContext) {
     userId
   );
 
-  return Response.json({ message, data }, { status });
+  return Response.json({ message, data, status }, { status });
 }

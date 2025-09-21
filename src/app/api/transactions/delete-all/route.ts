@@ -7,5 +7,5 @@ export async function DELETE() {
 
   const { message, status, data } = await transactionService.deleteAll(userId);
 
-  return Response.json({ message, data }, { status });
+  return Response.json({ message, data, status }, { status });
 }

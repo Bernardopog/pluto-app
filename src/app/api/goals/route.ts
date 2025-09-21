@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   const body: IGoalCreateDTO = await req.json();
 
   const { message, status, data } = await goalService.create(body, userId);
-  return Response.json({ message, data }, { status });
+  return Response.json({ message, data, status }, { status });
 }
 
 export async function DELETE(req: Request) {
@@ -48,5 +48,5 @@ export async function PATCH(req: Request) {
   const body: IGoalUpdateDTO = await req.json();
 
   const { message, status, data } = await goalService.reassign(body, userId);
-  return Response.json({ message, data }, { status });
+  return Response.json({ message, data, status }, { status });
 }
