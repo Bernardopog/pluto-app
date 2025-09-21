@@ -19,12 +19,13 @@ export default function DashboardBudgetLegend({
   budget,
   rest,
 }: IDashboardBudgetLegendProps) {
-  const { getExpenses, getBudgetRest } = useTransactionBudgetStore(
-    useShallow((s) => ({
-      getExpenses: s.getExpenses,
-      getBudgetRest: s.getBudgetRest,
-    }))
-  );
+  const { getBudgetRest, getExpenseFromCurrentMonth } =
+    useTransactionBudgetStore(
+      useShallow((s) => ({
+        getBudgetRest: s.getBudgetRest,
+        getExpenseFromCurrentMonth: s.getExpenseFromCurrentMonth,
+      }))
+    );
   const [typeOfLegend, setTypeOfLegend] =
     useState<LegendType>("expenses-limit");
 
@@ -47,13 +48,14 @@ export default function DashboardBudgetLegend({
             {budgetItem.name}:{" "}
             {typeOfLegend === "expenses-limit" ? (
               <span>
-                {moneyFormatter(Math.abs(getExpenses(budgetItem.id)))}
+                {moneyFormatter(
+                  Math.abs(getExpenseFromCurrentMonth(budgetItem.id))
+                )}
                 <span className="inline-flex gap-2 text-chetwode-blue-950/60">
                   {" "}
                   /{moneyFormatter(budgetItem.limit)}
-                  {Math.abs(getExpenses(budgetItem.id)) > budgetItem.limit && (
-                    <MdWarning className="text-xl" />
-                  )}
+                  {Math.abs(getExpenseFromCurrentMonth(budgetItem.id)) >
+                    budgetItem.limit && <MdWarning className="text-xl" />}
                 </span>
               </span>
             ) : (

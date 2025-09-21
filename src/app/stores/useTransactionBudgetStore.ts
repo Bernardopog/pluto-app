@@ -61,6 +61,7 @@ interface ITransactionBudgetStore {
   getTotalExpenses: () => number;
   getTotalMonthlyExpenses: () => number;
   getTotalBudgetLimit: () => number;
+  getExpenseFromCurrentMonth: (budgetId: number) => number;
 }
 
 const budgetFetcher = fetcher<IBudget[] | IBudget | null>("/api/budgets");
@@ -358,6 +359,16 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         )
         .filter((t) => t.value < 0)
         .reduce((acc, t) => acc + t.value, 0),
+    getExpenseFromCurrentMonth: (budgetId) => {
+      return get()
+        .transactionData.list.filter(
+          (t) =>
+            new Date(t.date).getMonth() === new Date().getMonth() &&
+            new Date(t.date).getFullYear() === new Date().getFullYear()
+        )
+        .filter((t) => t.categoryId === budgetId && t.value < 0)
+        .reduce((acc, t) => acc + t.value, 0);
+    },
     getTotalBudgetLimit: () =>
       get().budgetData.list.reduce((acc, b) => acc + b.limit, 0),
   })
