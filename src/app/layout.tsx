@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./layout/Navbar";
 import Modal from "./layout/Modal";
+import ActionMessage from "./components/ActionMessage";
 
 const dmSans = DM_Sans({
   weight: "variable",
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${dmSans.className} antialiased`}>
+        <ActionMessage />
         <Modal />
         <Navbar />
         {children}
