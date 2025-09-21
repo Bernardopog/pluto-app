@@ -97,7 +97,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         set((state) => ({
           transactionData: {
             ...state.transactionData,
-            list: [...state.transactionData.list, res.data as ITransaction],
+            list: [res.data as ITransaction, ...state.transactionData.list],
           },
         }));
         return res;
