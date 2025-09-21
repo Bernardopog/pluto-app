@@ -26,8 +26,11 @@ export default function ActionMessage() {
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
   const data = useMessageStore((s) => s.data);
+  const setMessage = useMessageStore((s) => s.setMessage);
 
   useEffect(() => {
+    if (data.message === "" || data.description === "") return;
+
     if (data.status >= 500) setStatusName("serverError");
     else if (data.status >= 400) setStatusName("clientError");
     else if (data.status >= 300) setStatusName("redirect");
@@ -37,9 +40,10 @@ export default function ActionMessage() {
     setIsAnimating(true);
     const timer = setTimeout(() => {
       setIsAnimating(false);
+      setMessage({ message: "", description: "", status: 0 });
     }, 3000);
     return () => clearTimeout(timer);
-  }, [data]);
+  }, [data, setMessage]);
 
   const statusMap: Record<string, { style: string; icon: ReactNode }> = {
     none: {
