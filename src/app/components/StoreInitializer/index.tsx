@@ -84,8 +84,6 @@ export default function StoreInitializer({
       setStatsData({ item: statsData, fetched: true, loading: false });
     }
 
-    console.log("!!! statsData", statsData);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     txnData,
