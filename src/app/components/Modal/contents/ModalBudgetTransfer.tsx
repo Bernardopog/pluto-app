@@ -1,5 +1,6 @@
 "use client";
 
+import { useMessageStore } from "@/app/stores/useMessageStore";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStore";
@@ -10,6 +11,8 @@ import { useShallow } from "zustand/shallow";
 export default function ModalBudgetTransfer() {
   const toggleModal = useModalStore((s) => s.toggleModal);
   const budgetMethods = useTransactionBudgetStore((s) => s.budgetMethods);
+  const setMessage = useMessageStore((s) => s.setMessage);
+
   const { budgetList, budgetSelection } = useTransactionBudgetStore(
     useShallow((s) => ({
       budgetList: s.budgetData.list,
@@ -30,7 +33,16 @@ export default function ModalBudgetTransfer() {
       setHasError(true);
       return;
     }
-    budgetMethods.transfer(fromId, toId);
+    budgetMethods.transfer(fromId, toId).then(({ message, status }) =>
+      setMessage({
+        message,
+        status,
+        description:
+          status === 200
+            ? "O orçamento foi movido com sucesso!"
+            : "Ocorreu um erro ao movimentar o orçamento",
+      })
+    );
     toggleModal();
     budgetSelection.unselect();
     setHasError(false);

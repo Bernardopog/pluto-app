@@ -1,5 +1,6 @@
 "use cleint";
 
+import { useMessageStore } from "@/app/stores/useMessageStore";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
@@ -15,8 +16,19 @@ export default function ModalVaultDelete() {
   const selectedVault = useVaultStore((s) => s.vaultSelection.selected);
   const toggleModal = useModalStore((s) => s.toggleModal);
 
+  const setMessage = useMessageStore((s) => s.setMessage);
+
   const handleDelete = (id: number) => {
-    deleteVault(id);
+    deleteVault(id).then(({ message, status }) =>
+      setMessage({
+        message,
+        status,
+        description:
+          status === 200
+            ? "Cofre deletado com sucesso!"
+            : "Ocorreu um erro ao deletar o cofre",
+      })
+    );
     toggleModal();
   };
 

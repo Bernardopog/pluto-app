@@ -11,15 +11,20 @@ import { IListDataState } from "../interfaces/IDataState";
 import { ISelectionState } from "../interfaces/ISelectionState";
 import { IMethodsState } from "../interfaces/IMethodsState";
 import { showError } from "../helpers/showError";
+import { IMessage } from "@/interfaces/IMessage";
 
 interface ITransactionMethodsState
-  extends IMethodsState<ITransactionCreateDTO, ITransactionUpdateDTO> {
-  deleteMany: () => void;
-  deleteAll: () => void;
+  extends IMethodsState<
+    ITransactionCreateDTO,
+    ITransactionUpdateDTO,
+    ITransaction
+  > {
+  deleteMany: () => Promise<IMessage<null>>;
+  deleteAll: () => Promise<IMessage<null>>;
 }
 interface IBudgetMethodsState
-  extends IMethodsState<IBudgetCreateDTO, IBudgetUpdateDTO> {
-  transfer: (fromId: number, toId: number) => void;
+  extends IMethodsState<IBudgetCreateDTO, IBudgetUpdateDTO, IBudget> {
+  transfer: (fromId: number, toId: number) => Promise<IMessage<null>>;
 }
 
 interface ITransactionDeletionState {
@@ -58,8 +63,8 @@ interface ITransactionBudgetStore {
   getTotalBudgetLimit: () => number;
 }
 
-const budgetFetcher = fetcher<IBudget[] | IBudget>("/api/budgets");
-const transactionFetcher = fetcher<ITransaction[] | ITransaction>(
+const budgetFetcher = fetcher<IBudget[] | IBudget | null>("/api/budgets");
+const transactionFetcher = fetcher<ITransaction[] | ITransaction | null>(
   "/api/transactions"
 );
 
@@ -85,7 +90,9 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         }));
       },
       create: async (transaction) => {
-        const res = await transactionFetcher.post(transaction);
+        const res = (await transactionFetcher.post(
+          transaction
+        )) as IMessage<ITransaction>;
         if (res.status >= 400) showError(res);
         set((state) => ({
           transactionData: {
@@ -93,9 +100,13 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
             list: [...state.transactionData.list, res.data as ITransaction],
           },
         }));
+        return res;
       },
       update: async (id, transaction) => {
-        const res = await transactionFetcher.put(id, transaction);
+        const res = (await transactionFetcher.put(
+          id,
+          transaction
+        )) as IMessage<ITransaction>;
         if (res.status >= 400) showError(res);
         set((state) => ({
           transactionData: {
@@ -105,9 +116,10 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
             ),
           },
         }));
+        return res;
       },
       delete: async (id) => {
-        const res = await transactionFetcher.delete(id);
+        const res = (await transactionFetcher.delete(id)) as IMessage<null>;
         if (res.status >= 400) showError(res);
         set((state) => ({
           transactionData: {
@@ -115,11 +127,18 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
             list: state.transactionData.list.filter((txn) => txn.id !== id),
           },
         }));
+        return res;
       },
       deleteMany: async () => {
-        if (get().transactionDeletion.list.length === 0) return;
+        if (get().transactionDeletion.list.length === 0)
+          return {
+            message: "Nenhuma transação selecionada",
+            status: 400,
+          } as IMessage<null>;
         const ids = get().transactionDeletion.list;
-        const res = await transactionFetcher.deleteManyTxn(ids);
+        const res = (await transactionFetcher.deleteManyTxn(
+          ids
+        )) as IMessage<null>;
         if (res.status >= 400) showError(res);
         set((state) => ({
           transactionData: {
@@ -129,9 +148,15 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
             ),
           },
         }));
+        return res;
       },
       deleteAll: async () => {
-        const res = await transactionFetcher.deleteAllTxn();
+        if (get().transactionData.list.length === 0)
+          return {
+            message: "Nenhuma transação encontrada",
+            status: 400,
+          } as IMessage<null>;
+        const res = (await transactionFetcher.deleteAllTxn()) as IMessage<null>;
         if (res.status >= 400) showError(res);
         set((state) => ({
           transactionData: {
@@ -139,6 +164,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
             list: [],
           },
         }));
+        return res;
       },
     },
 
@@ -224,7 +250,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         }));
       },
       create: async (budget) => {
-        const res = await budgetFetcher.post(budget);
+        const res = (await budgetFetcher.post(budget)) as IMessage<IBudget>;
         if (res.status >= 400) showError(res);
         set((state) => ({
           budgetData: {
@@ -232,9 +258,10 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
             list: [...state.budgetData.list, res.data as IBudget],
           },
         }));
+        return res;
       },
       update: async (id, budget) => {
-        const res = await budgetFetcher.put(id, budget);
+        const res = (await budgetFetcher.put(id, budget)) as IMessage<IBudget>;
         if (res.status >= 400) showError(res);
         set((state) => ({
           budgetData: {
@@ -244,9 +271,10 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
             ),
           },
         }));
+        return res;
       },
       delete: async (id) => {
-        const res = await budgetFetcher.delete(id);
+        const res = (await budgetFetcher.delete(id)) as IMessage<null>;
         if (res.status >= 400) showError(res);
         set((state) => ({
           budgetData: {
@@ -254,9 +282,12 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
             list: state.budgetData.list.filter((bdgt) => bdgt.id !== id),
           },
         }));
+        return res;
       },
       transfer: async (fromId, toId) => {
-        const res = await budgetFetcher.moveTxn(fromId, { toId });
+        const res = (await budgetFetcher.moveTxn(fromId, {
+          toId,
+        })) as IMessage<null>;
         if (res.status >= 400) showError(res);
         set((state) => ({
           budgetData: {
@@ -270,6 +301,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
             ),
           },
         }));
+        return res;
       },
     },
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { useMessageStore } from "@/app/stores/useMessageStore";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStore";
@@ -11,13 +12,24 @@ export default function ModalBudgetDelete() {
   const budgetMethods = useTransactionBudgetStore((s) => s.budgetMethods);
   const budgetSelection = useTransactionBudgetStore((s) => s.budgetSelection);
 
+  const setMessage = useMessageStore((s) => s.setMessage);
+
   const setCategoryFilter = useTransactionFilterStore(
     (s) => s.setCategoryFilter
   );
   const categoryFilter = useTransactionFilterStore((s) => s.categoryFilter);
 
   const handleDelete = (id: number) => {
-    budgetMethods.delete(id);
+    budgetMethods.delete(id).then(({ message, status }) =>
+      setMessage({
+        message,
+        status,
+        description:
+          status === 200
+            ? "O orçamento foi deletado com sucesso!"
+            : "Ocorreu um erro ao deletar o orçamento",
+      })
+    );
     toggleModal();
     budgetSelection.unselect();
     setCategoryFilter(categoryFilter === id ? null : categoryFilter);

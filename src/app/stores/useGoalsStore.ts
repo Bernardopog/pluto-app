@@ -5,11 +5,12 @@ import { showError } from "../helpers/showError";
 import { IMethodsStateBasic } from "../interfaces/IMethodsState";
 import { IGoalCreateDTO } from "@/server/dto/goal.dto";
 import { IItemDataState } from "../interfaces/IDataState";
+import { IMessage } from "@/interfaces/IMessage";
 
 interface IGoalMethodsState extends IMethodsStateBasic<IGoalCreateDTO> {
-  complete: () => void;
-  cancel: () => void;
-  reassign: (newVaultId: number) => void;
+  complete: () => Promise<IMessage<null>>;
+  cancel: () => Promise<IMessage<null>>;
+  reassign: (newVaultId: number) => Promise<IMessage<IGoal>>;
 }
 
 interface IGoalsStore {
@@ -43,43 +44,7 @@ export const useGoalsStore = create<IGoalsStore>((set) => ({
       }));
     },
     create: async (goal: IGoalCreateDTO) => {
-      const res = await goalFetcher.post(goal);
-      if (res.status >= 400) showError(res);
-      set((state) => ({
-        goalData: {
-          ...state.goalData,
-          item: res.data as null,
-          fetched: true,
-          loading: false,
-        },
-      }));
-    },
-    complete: async () => {
-      const res = await goalFetcher.finishGoal("complete");
-      if (res.status >= 400) showError(res);
-      set((state) => ({
-        goalData: {
-          ...state.goalData,
-          item: res.data as null,
-          fetched: true,
-          loading: false,
-        },
-      }));
-    },
-    cancel: async () => {
-      const res = await goalFetcher.finishGoal("cancel");
-      if (res.status >= 400) showError(res);
-      set((state) => ({
-        goalData: {
-          ...state.goalData,
-          item: res.data as IGoal | null,
-          fetched: true,
-          loading: false,
-        },
-      }));
-    },
-    reassign: async (newVaultId) => {
-      const res = await goalFetcher.reassign(newVaultId);
+      const res = (await goalFetcher.post(goal)) as IMessage<IGoal>;
       if (res.status >= 400) showError(res);
       set((state) => ({
         goalData: {
@@ -89,6 +54,46 @@ export const useGoalsStore = create<IGoalsStore>((set) => ({
           loading: false,
         },
       }));
+      return res;
+    },
+    complete: async () => {
+      const res = (await goalFetcher.finishGoal("complete")) as IMessage<null>;
+      if (res.status >= 400) showError(res);
+      set((state) => ({
+        goalData: {
+          ...state.goalData,
+          item: res.data as null,
+          fetched: true,
+          loading: false,
+        },
+      }));
+      return res;
+    },
+    cancel: async () => {
+      const res = (await goalFetcher.finishGoal("cancel")) as IMessage<null>;
+      if (res.status >= 400) showError(res);
+      set((state) => ({
+        goalData: {
+          ...state.goalData,
+          item: res.data as IGoal | null,
+          fetched: true,
+          loading: false,
+        },
+      }));
+      return res;
+    },
+    reassign: async (newVaultId) => {
+      const res = (await goalFetcher.reassign(newVaultId)) as IMessage<IGoal>;
+      if (res.status >= 400) showError(res);
+      set((state) => ({
+        goalData: {
+          ...state.goalData,
+          item: res.data as IGoal,
+          fetched: true,
+          loading: false,
+        },
+      }));
+      return res;
     },
   },
 }));

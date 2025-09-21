@@ -3,6 +3,7 @@ import { useModalStore } from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { FormEvent, useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
+import { useMessageStore } from "@/app/stores/useMessageStore";
 
 export const useModalVaultLogic = (type: "create" | "update") => {
   const { create, update } = useVaultStore(
@@ -13,6 +14,8 @@ export const useModalVaultLogic = (type: "create" | "update") => {
   );
   const selectedVault = useVaultStore((s) => s.vaultSelection.selected);
   const toggleModal = useModalStore((s) => s.toggleModal);
+
+  const setMessage = useMessageStore((s) => s.setMessage);
 
   const [vaultName, setVaultName] = useState<string>("");
   const [vaultLimit, setVaultLimit] = useState<string>("");
@@ -41,18 +44,34 @@ export const useModalVaultLogic = (type: "create" | "update") => {
     setHasError(!validator());
     if (!validator()) return;
 
+    const data = {
+      name: vaultName,
+      targetPrice: Number(vaultLimit),
+      icon: vaultIcon ?? "piggy",
+    };
+
     if (type === "create") {
-      create({
-        name: vaultName,
-        targetPrice: Number(vaultLimit),
-        icon: vaultIcon ?? "piggy",
-      });
+      create(data).then(({ message, status, data }) =>
+        setMessage({
+          message,
+          status,
+          description:
+            status === 201
+              ? `Seu cofre (${data?.name}) foi criado com sucesso!`
+              : "Ocorreu um erro ao criar o cofre",
+        })
+      );
     } else {
-      update(selectedVault!.id, {
-        name: vaultName,
-        targetPrice: Number(vaultLimit),
-        icon: vaultIcon ?? "piggy",
-      });
+      update(selectedVault!.id, data).then(({ message, status, data }) =>
+        setMessage({
+          message,
+          status,
+          description:
+            status === 200
+              ? `Seu cofre (${data?.name}) foi atualizado com sucesso!`
+              : "Ocorreu um erro ao atualizar o cofre",
+        })
+      );
     }
 
     handleClose();

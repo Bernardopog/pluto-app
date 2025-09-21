@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { IBudgetCreateDTO, IBudgetUpdateDTO } from "@/server/dto/budget.dto";
+import { useMessageStore } from "@/app/stores/useMessageStore";
 
 export const useModalBudgetLogic = (type: "create" | "update") => {
   const toggleModal = useModalStore((s) => s.toggleModal);
   const budgetMethods = useTransactionBudgetStore((s) => s.budgetMethods);
   const budgetSelection = useTransactionBudgetStore((s) => s.budgetSelection);
+
+  const setMessage = useMessageStore((s) => s.setMessage);
 
   const [budgetName, setBudgetName] = useState<string>("");
   const [budgetLimit, setBudgetLimit] = useState<number>(100);
@@ -139,9 +142,25 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
     };
 
     if (type === "update" && budgetSelection.selected) {
-      budgetMethods.update(budgetSelection.selected.id, data);
+      budgetMethods
+        .update(budgetSelection.selected.id, data)
+        .then(({ message, status, data }) => {
+          setMessage({
+            message,
+            status,
+            description: `Seu orçamento (${data?.name}) foi atualizado com sucesso!`,
+          });
+        });
       budgetSelection.unselect();
-    } else if (type === "create") budgetMethods.create(data);
+    } else if (type === "create") {
+      budgetMethods.create(data).then(({ message, status, data }) =>
+        setMessage({
+          message,
+          status,
+          description: `Seu orçamento (${data?.name}) foi criado com sucesso!`,
+        })
+      );
+    }
     toggleModal();
   };
 

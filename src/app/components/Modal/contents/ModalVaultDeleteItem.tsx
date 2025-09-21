@@ -1,4 +1,5 @@
 "use client";
+import { useMessageStore } from "@/app/stores/useMessageStore";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
@@ -14,8 +15,19 @@ export default function ModalVaultDeleteItem() {
   const removeVaultItem = useVaultStore((s) => s.vaultItemMethods.delete);
   const toggleModal = useModalStore((s) => s.toggleModal);
 
+  const setMessage = useMessageStore((s) => s.setMessage);
+
   const handleDelete = (id: number) => {
-    removeVaultItem(id);
+    removeVaultItem(id).then(({ message, status }) =>
+      setMessage({
+        message,
+        status,
+        description:
+          status === 200
+            ? "Item deletado com sucesso!"
+            : "Ocorreu um erro ao deletar o item",
+      })
+    );
     toggleModal();
   };
 

@@ -1,8 +1,8 @@
-import { IVaultItem } from "@/interfaces/IVault";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { FormEvent, useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
+import { useMessageStore } from "@/app/stores/useMessageStore";
 
 export const useModalVaultItemLogic = (type: "create" | "update") => {
   const { addVaultItem, editVaultItem } = useVaultStore(
@@ -19,6 +19,8 @@ export const useModalVaultItemLogic = (type: "create" | "update") => {
     }))
   );
   const toggleModal = useModalStore((s) => s.toggleModal);
+
+  const setMessage = useMessageStore((s) => s.setMessage);
 
   const [vaultItemName, setVaultItemName] = useState<string>("");
   const [vaultItemValue, setVaultItemValue] = useState<number>(0);
@@ -43,24 +45,41 @@ export const useModalVaultItemLogic = (type: "create" | "update") => {
       setHasError(false);
       if (type === "create") {
         const data = {
-          id: Math.random() * 100000,
           name: vaultItemName,
           value: Number(vaultItemValue),
           vaultId: vaultAssignedId,
         };
 
-        addVaultItem(data);
+        addVaultItem(data).then(({ message, status, data }) =>
+          setMessage({
+            message,
+            status,
+            description:
+              status === 201
+                ? `Seu item (${data?.name}) foi criado com sucesso!`
+                : "Ocorreu um erro ao criar o item",
+          })
+        );
         toggleModal();
         return;
       } else {
-        const data: IVaultItem = {
-          id: selectedVaultItem!.id,
+        const data = {
           name: vaultItemName,
           value: Number(vaultItemValue),
           vaultId: vaultAssignedId,
         };
 
-        editVaultItem(selectedVaultItem!.id, data);
+        editVaultItem(selectedVaultItem!.id, data).then(
+          ({ message, status, data }) =>
+            setMessage({
+              message,
+              status,
+              description:
+                status === 200
+                  ? `Seu item (${data?.name}) foi editado com sucesso!`
+                  : "Ocorreu um erro ao editar o item",
+            })
+        );
         toggleModal();
         return;
       }

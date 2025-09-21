@@ -72,7 +72,7 @@ export default function ActionMessage() {
   return (
     <Inert isVisible={isAnimating}>
       <article
-        className={`absolute top-0 left-1/2 z-[100] -translate-x-1/2 min-w-64 w-9/10 max-w-[480px] h-24 p-2 border-2 rounded-lg shadow-lg duration-300 ease-in-out ${
+        className={`fixed top-0 left-1/2 z-[100] -translate-x-1/2 min-w-64 w-9/10 max-w-[480px] h-24 p-2 border-2 rounded-lg shadow-lg duration-300 ease-in-out ${
           statusMap[statusName].style
         } ${isAnimating ? "translate-y-2" : "-translate-y-[150%]"}`}
       >

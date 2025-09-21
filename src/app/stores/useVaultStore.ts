@@ -10,8 +10,13 @@ import {
   IVaultItemCreateDTO,
   IVaultItemUpdateDTO,
 } from "@/server/dto/vaultItem.dto";
+import { IMessage } from "@/interfaces/IMessage";
 
-type IVaultMethodsState = IMethodsState<IVaultCreateDTO, IVaultUpdateDTO>;
+type IVaultMethodsState = IMethodsState<
+  IVaultCreateDTO,
+  IVaultUpdateDTO,
+  IVault
+>;
 
 interface IVaultState {
   vaultData: IListDataState<IVault>;
@@ -21,7 +26,11 @@ interface IVaultState {
   setVaultData: (data: IListDataState<IVault>) => void;
 
   vaultItemData: IListDataState<IVaultItem>;
-  vaultItemMethods: IMethodsState<IVaultItemCreateDTO, IVaultItemUpdateDTO>;
+  vaultItemMethods: IMethodsState<
+    IVaultItemCreateDTO,
+    IVaultItemUpdateDTO,
+    IVaultItem
+  >;
   vaultItemSelection: ISelectionState<IVaultItem>;
 
   setVaultItemsData: (data: IListDataState<IVaultItem>) => void;
@@ -32,8 +41,10 @@ interface IVaultState {
   getTotalMoneySavedFromVault: (vaultId: number) => number;
 }
 
-const vaultFetcher = fetcher<IVault[] | IVault>("/api/vaults");
-const vaultItemFetcher = fetcher<IVaultItem[] | IVaultItem>("/api/vaultitems");
+const vaultFetcher = fetcher<IVault[] | IVault | null>("/api/vaults");
+const vaultItemFetcher = fetcher<IVaultItem[] | IVaultItem | null>(
+  "/api/vaultitems"
+);
 
 export const useVaultStore = create<IVaultState>((set, get) => ({
   vaultData: { list: [], fetched: false, loading: true },
@@ -56,7 +67,7 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
       }));
     },
     create: async (vault) => {
-      const res = await vaultFetcher.post(vault);
+      const res = (await vaultFetcher.post(vault)) as IMessage<IVault>;
       if (res.status >= 400) showError(res);
       set((state) => ({
         vaultData: {
@@ -64,9 +75,10 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
           list: [...state.vaultData.list, res.data as IVault],
         },
       }));
+      return res;
     },
     update: async (id, vault) => {
-      const res = await vaultFetcher.put(id, vault);
+      const res = (await vaultFetcher.put(id, vault)) as IMessage<IVault>;
       if (res.status >= 400) showError(res);
       set((state) => ({
         vaultData: {
@@ -76,9 +88,10 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
           ),
         },
       }));
+      return res;
     },
     delete: async (id) => {
-      const res = await vaultFetcher.delete(id);
+      const res = (await vaultFetcher.delete(id)) as IMessage<null>;
       if (res.status >= 400) showError(res);
       set((state) => ({
         vaultData: {
@@ -91,6 +104,7 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
         },
         selectedDashboardVault: null,
       }));
+      return res;
     },
   },
 
@@ -128,7 +142,7 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
       }));
     },
     create: async (item) => {
-      const res = await vaultItemFetcher.post(item);
+      const res = (await vaultItemFetcher.post(item)) as IMessage<IVaultItem>;
       if (res.status >= 400) showError(res);
       set((state) => ({
         vaultItemData: {
@@ -136,9 +150,13 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
           list: [...state.vaultItemData.list, res.data as IVaultItem],
         },
       }));
+      return res;
     },
     update: async (id, item) => {
-      const res = await vaultItemFetcher.put(id, item);
+      const res = (await vaultItemFetcher.put(
+        id,
+        item
+      )) as IMessage<IVaultItem>;
       if (res.status >= 400) showError(res);
       set((state) => ({
         vaultItemData: {
@@ -148,9 +166,10 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
           ),
         },
       }));
+      return res;
     },
     delete: async (id) => {
-      const res = await vaultItemFetcher.delete(id);
+      const res = (await vaultItemFetcher.delete(id)) as IMessage<null>;
       if (res.status >= 400) showError(res);
       set((state) => ({
         vaultItemData: {
@@ -158,6 +177,7 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
           list: state.vaultItemData.list.filter((item) => item.id !== id),
         },
       }));
+      return res;
     },
   },
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useGoalsStore } from "@/app/stores/useGoalsStore";
+import { useMessageStore } from "@/app/stores/useMessageStore";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { FormEvent, useState } from "react";
@@ -10,13 +11,23 @@ export default function ModalGoalReassign() {
   const toggleModal = useModalStore((s) => s.toggleModal);
   const reassign = useGoalsStore((s) => s.goalMethods.reassign);
 
+  const setMessage = useMessageStore((s) => s.setMessage);
+
   const [selectedVaultId, setSelectedVaultId] = useState<number | null>(null);
 
   const handleReassign = (ev: FormEvent) => {
     ev.preventDefault();
 
     if (!selectedVaultId) return;
-    reassign(selectedVaultId);
+    reassign(selectedVaultId).then(({ message, status, data }) => {
+      setMessage({
+        message,
+        status,
+        description: `Objetivo reatribuido com sucesso para o cofre (${
+          vaultList.find((v) => v.id === data?.assignedVault)?.name
+        })`,
+      });
+    });
     toggleModal();
   };
 

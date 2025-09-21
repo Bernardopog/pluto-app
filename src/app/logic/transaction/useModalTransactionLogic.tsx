@@ -6,6 +6,7 @@ import {
   ITransactionUpdateDTO,
 } from "@/server/dto/transition.dto";
 import { useShallow } from "zustand/shallow";
+import { useMessageStore } from "@/app/stores/useMessageStore";
 
 export const useModalTransactionLogic = (type: "create" | "update") => {
   const transactionMethods = useTransactionBudgetStore(
@@ -18,6 +19,7 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
     }))
   );
   const toggleModal = useModalStore((s) => s.toggleModal);
+  const setMessage = useMessageStore((s) => s.setMessage);
 
   const [transactionName, setTransactionName] = useState("");
   const [transactionValue, setTransactionValue] = useState("");
@@ -86,10 +88,30 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
     };
 
     if (type === "create") {
-      transactionMethods.create(data);
+      transactionMethods.create(data).then(({ message, status, data }) =>
+        setMessage({
+          message,
+          status,
+          description:
+            status === 201
+              ? `Sua transação (${data?.name}) foi criada com sucesso!`
+              : "Ocorreu um erro ao criar a transação",
+        })
+      );
       handleReset();
     } else {
-      transactionMethods.update(transactionSelection.selected!.id, data);
+      transactionMethods
+        .update(transactionSelection.selected!.id, data)
+        .then(({ message, status, data }) =>
+          setMessage({
+            message,
+            status,
+            description:
+              status === 200
+                ? `Sua transação (${data?.name}) foi atualizada com sucesso!`
+                : "Ocorreu um erro ao atualizar a transação",
+          })
+        );
     }
 
     toggleModal();

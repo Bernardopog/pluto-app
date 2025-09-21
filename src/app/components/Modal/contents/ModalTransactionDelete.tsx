@@ -1,5 +1,6 @@
 "use client";
 
+import { useMessageStore } from "@/app/stores/useMessageStore";
 import { useModalStore } from "@/app/stores/useModalStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
@@ -13,6 +14,8 @@ export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
   const transactionMethods = useTransactionBudgetStore(
     (s) => s.transactionMethods
   );
+
+  const setMessage = useMessageStore((s) => s.setMessage);
 
   const {
     transactionList,
@@ -30,12 +33,41 @@ export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
 
   const handleDelete = () => {
     if (type === "all") {
-      transactionMethods.deleteAll();
+      transactionMethods.deleteAll().then(({ message, status }) =>
+        setMessage({
+          message,
+          status,
+          description:
+            status === 200
+              ? "Todas as transações foram deletadas com sucesso!"
+              : "Ocorreu um erro ao deletar todas as transações",
+        })
+      );
     } else if (type === "group") {
-      transactionMethods.deleteMany();
+      transactionMethods.deleteMany().then(({ message, status }) =>
+        setMessage({
+          message,
+          status,
+          description:
+            status === 200
+              ? "As transações foram deletadas com sucesso!"
+              : "Ocorreu um erro ao deletar as transações",
+        })
+      );
       transactionDeletion.setIsDeleting(false);
     } else if (type === "individual" && transactionSelection.selected) {
-      transactionMethods.delete(transactionSelection.selected.id);
+      transactionMethods
+        .delete(transactionSelection.selected.id)
+        .then(({ message, status }) =>
+          setMessage({
+            message,
+            status,
+            description:
+              status === 200
+                ? "A transação foi deletada com sucesso!"
+                : "Ocorreu um erro ao deletar a transação",
+          })
+        );
     }
 
     toggleModal();

@@ -11,12 +11,15 @@ import Divider from "@/app/ui/Divider";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { IGoal } from "@/interfaces/IGoal";
 import { useStatsStore } from "@/app/stores/useStatsStore";
+import { useMessageStore } from "@/app/stores/useMessageStore";
 
 export default function ModalGoals() {
   const create = useGoalsStore((s) => s.goalMethods.create);
   const statCreatedGoal = useStatsStore((s) => s.createGoal);
   const toggleModal = useModalStore((s) => s.toggleModal);
   const vaultList = useVaultStore((s) => s.vaultData.list);
+
+  const setMessage = useMessageStore((s) => s.setMessage);
 
   const [goalName, setGoalName] = useState<string>("");
   const [goalPrice, setGoalPrice] = useState<string>("");
@@ -54,7 +57,16 @@ export default function ModalGoals() {
       data = { ...data, assignedVault: selectedVaultId };
 
     if (data.name && data.targetAmount) {
-      create(data);
+      create(data).then(({ message, status, data }) =>
+        setMessage({
+          message,
+          status,
+          description:
+            status === 201
+              ? `Objetivo (${data?.name}) criado com sucesso!`
+              : "Ocorreu um erro ao criar o objetivo",
+        })
+      );
       statCreatedGoal();
       toggleModal();
       setHasError(false);
