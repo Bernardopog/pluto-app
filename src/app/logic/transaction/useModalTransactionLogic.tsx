@@ -5,19 +5,19 @@ import {
   ITransactionCreateDTO,
   ITransactionUpdateDTO,
 } from "@/server/dto/transition.dto";
-import { useShallow } from "zustand/shallow";
 import { useMessageStore } from "@/app/stores/useMessageStore";
+import { useVaultStore } from "@/app/stores/useVaultStore";
+import { IVaultItemCreateDTO } from "@/server/dto/vaultItem.dto";
 
 export const useModalTransactionLogic = (type: "create" | "update") => {
   const transactionMethods = useTransactionBudgetStore(
     (s) => s.transactionMethods
   );
-  const { budgetList, transactionSelection } = useTransactionBudgetStore(
-    useShallow((s) => ({
-      budgetList: s.budgetData.list,
-      transactionSelection: s.transactionSelection,
-    }))
+  const vaultItemMethods = useVaultStore((s) => s.vaultItemMethods);
+  const transactionSelection = useTransactionBudgetStore(
+    (s) => s.transactionSelection
   );
+
   const toggleModal = useModalStore((s) => s.toggleModal);
   const setMessage = useMessageStore((s) => s.setMessage);
 
@@ -32,6 +32,8 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
   const [transactionType, setTransactionType] = useState<"income" | "outcome">(
     "outcome"
   );
+  const [transactionVault, setTransactionVault] = useState<number | null>(null);
+  const [integrateWithVault, setIntegrateWithVault] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -50,12 +52,17 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
     setTransactionValue("");
     setTransactionCategory(null);
     setTransactionDate(new Date().toISOString().split("T")[0]);
+    setTransactionVault(null);
+    setTransactionType("outcome");
+    setIntegrateWithVault(false);
+    setHasError(false);
   };
 
   const validator = () => {
     if (transactionName.trim() === "") return false;
     if (transactionValue === "" || Number.isNaN(Number(transactionValue)))
       return false;
+    if (integrateWithVault && !transactionVault) return false;
     return true;
   };
 
@@ -88,7 +95,7 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
     };
 
     if (type === "create") {
-      transactionMethods.create(data).then(({ message, status, data }) =>
+      transactionMethods.create(data).then(({ message, status, data }) => {
         setMessage({
           message,
           status,
@@ -96,8 +103,18 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
             status === 201
               ? `Sua transação (${data?.name}) foi criada com sucesso!`
               : "Ocorreu um erro ao criar a transação",
-        })
-      );
+        });
+        if (status === 201 && integrateWithVault && transactionVault) {
+          const vaultItemData: IVaultItemCreateDTO = {
+            name: transactionName,
+            value: money,
+            vaultId: transactionVault,
+          };
+
+          vaultItemMethods.create(vaultItemData);
+        }
+      });
+
       handleReset();
     } else {
       transactionMethods
@@ -120,6 +137,7 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
 
   const handleCancel = () => {
     toggleModal();
+    handleReset();
     transactionSelection.unselect();
   };
 
@@ -135,9 +153,12 @@ export const useModalTransactionLogic = (type: "create" | "update") => {
     transactionType,
     setTransactionType,
     hasError,
-    budgetList,
     handleSubmit,
     handleReset,
     handleCancel,
+    integrateWithVault,
+    setIntegrateWithVault,
+    transactionVault,
+    setTransactionVault,
   };
 };

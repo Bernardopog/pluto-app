@@ -1,6 +1,7 @@
 "use client";
 
 import { OverviewCard } from "@/app/components/OverviewCard";
+import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { getPercentage } from "@/app/utils/getPercentage";
 import { moneyFormatter } from "@/app/utils/moneyFormatter";
@@ -28,17 +29,24 @@ export default function VaultOverview() {
     }))
   );
 
+  const { budgetFetched, fetchBudget } = useTransactionBudgetStore(
+    useShallow((s) => ({
+      budgetFetched: s.budgetData.fetched,
+      fetchBudget: s.budgetMethods.fetch,
+    }))
+  );
+
   useEffect(() => {
-    if (vaultsFetched && vaultItemsFetched) return;
-    fetchVault();
-    fetchVaultItems();
+    if (!vaultsFetched) fetchVault();
+    if (!vaultItemsFetched) fetchVaultItems();
+    if (!budgetFetched) fetchBudget();
   }, [
-    vaultList,
-    vaultItemList,
     vaultsFetched,
     vaultItemsFetched,
+    budgetFetched,
     fetchVault,
     fetchVaultItems,
+    fetchBudget,
   ]);
 
   const vaultListWithItems = useMemo(() => {

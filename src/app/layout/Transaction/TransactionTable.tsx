@@ -4,6 +4,7 @@ import { TransactionTableRowData } from "@/app/components/TransactionPage/Transa
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 
 import { useTransactionFilterStore } from "@/app/stores/useTransactionFilterStore";
+import { useVaultStore } from "@/app/stores/useVaultStore";
 import Checkbox from "@/app/ui/Checkbox";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
@@ -21,6 +22,12 @@ export default function TransactionTable() {
     useShallow((s) => ({
       transactionList: s.transactionData.list,
       transactionDeletion: s.transactionDeletion,
+    }))
+  );
+  const { vaultFetched, fetchVault } = useVaultStore(
+    useShallow((s) => ({
+      vaultFetched: s.vaultData.fetched,
+      fetchVault: s.vaultMethods.fetch,
     }))
   );
 
@@ -50,6 +57,7 @@ export default function TransactionTable() {
 
   useEffect(() => {
     if (!(budgetFetched && transactionFetched)) loadTxnAndBudgets();
+    if (!vaultFetched) fetchVault();
 
     setCurrentPage(1);
   }, [
@@ -65,6 +73,8 @@ export default function TransactionTable() {
     loadTxnAndBudgets,
     budgetFetched,
     transactionFetched,
+    vaultFetched,
+    fetchVault,
   ]);
 
   const [currentPage, setCurrentPage] = useState<number>(1);

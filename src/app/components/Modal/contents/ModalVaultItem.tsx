@@ -1,7 +1,10 @@
 import { iconsMap } from "@/app/data/iconMap";
 import { useModalVaultItemLogic } from "@/app/logic/vault/useModalVaultItemLogic";
+import Checkbox from "@/app/ui/Checkbox";
+import Divider from "@/app/ui/Divider";
 import Input from "@/app/ui/Input";
 import { MdAttachMoney, MdFilePresent } from "react-icons/md";
+import { ModalVaultCategory } from "./VaultContent";
 
 export default function ModalVaultItem({
   type,
@@ -19,6 +22,10 @@ export default function ModalVaultItem({
     setVaultAssignedId,
     setVaultItemName,
     setVaultItemValue,
+    integrateWithTxn,
+    setIntegrateWithTxn,
+    vaultItemBudgetAssignedId,
+    setVaultItemBudgetAssignedId,
   } = useModalVaultItemLogic(type);
 
   return (
@@ -41,15 +48,16 @@ export default function ModalVaultItem({
         type="number"
         icon={<MdAttachMoney />}
       />
-      <p className="mt-4 text-chetwode-blue-950">Cofre:</p>
+      <Divider direction="horizontal" className="mt-2" />
+      <h3 className="subsubtitle text-chetwode-blue-950">Cofre:</h3>
       <ul className="grid grid-cols-4 gap-4">
         {vaultList.map((vault) => (
           <li
             key={vault.id}
             className={`rounded-lg duration-300 ease-in-out ${
               vault.id === vaultAssignedId
-                ? "bg-chetwode-blue-800 text-chetwode-blue-100 hover:bg-chetwode-blue-700"
-                : "bg-chetwode-blue-200 text-chetwode-blue-950 hover:bg-chetwode-blue-300"
+                ? "bg-chetwode-blue-900 text-chetwode-blue-100 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-700"
+                : "bg-chetwode-blue-200 text-chetwode-blue-950 hover:bg-chetwode-blue-300 active:bg-chetwode-blue-400"
             }`}
           >
             <button
@@ -62,10 +70,26 @@ export default function ModalVaultItem({
           </li>
         ))}
       </ul>
+      <Divider direction="horizontal" className="mt-2" />
+      <h3 className="subsubtitle text-chetwode-blue-950">Transação:</h3>
+      <Checkbox
+        state={integrateWithTxn}
+        setState={() => setIntegrateWithTxn(!integrateWithTxn)}
+        label="Integrar com Transação"
+      />
+      {integrateWithTxn && (
+        <ModalVaultCategory
+          vaultItemBudgetAssignedId={vaultItemBudgetAssignedId}
+          setVaultItemBudgetAssignedId={setVaultItemBudgetAssignedId}
+        />
+      )}
+      <Divider direction="horizontal" className="mt-2" />
       {hasError && (
         <p className="text-red-600">
           Parece que tem algum erro no formulário, certifique-se de escolher um
           nome, um valor alvo e um ícone.
+          {integrateWithTxn &&
+            " Certifique-se de escolher uma categoria para o item."}
         </p>
       )}
       <div className="flex self-end gap-x-2">

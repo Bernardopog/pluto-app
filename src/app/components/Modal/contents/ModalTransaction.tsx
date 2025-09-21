@@ -5,6 +5,11 @@ import Input from "@/app/ui/Input";
 import Radio from "@/app/ui/Radio";
 import { MdAttachMoney, MdFilePresent } from "react-icons/md";
 import { useModalTransactionLogic } from "@/app/logic/transaction/useModalTransactionLogic";
+import {
+  ModalTransactionCategory,
+  ModalTransactionVault,
+} from "./TransactionContent";
+import Checkbox from "@/app/ui/Checkbox";
 
 interface IModalTransactionProps {
   type: "create" | "update";
@@ -22,10 +27,13 @@ export default function ModalTransaction({ type }: IModalTransactionProps) {
     setTransactionCategory,
     transactionType,
     setTransactionType,
-    budgetList,
     hasError,
     handleSubmit,
     handleCancel,
+    integrateWithVault,
+    setIntegrateWithVault,
+    transactionVault,
+    setTransactionVault,
   } = useModalTransactionLogic(type);
 
   return (
@@ -92,33 +100,33 @@ export default function ModalTransaction({ type }: IModalTransactionProps) {
         onChange={(ev) => setTransactionDate(ev.target.value)}
       />
       <Divider direction="horizontal" className="mt-2" />
-      <h3 className="subsubtitle">Categorias</h3>
-      <ul className="flex flex-wrap gap-2">
-        {budgetList.length > 0 &&
-          budgetList.map((category) => (
-            <li
-              key={category.id}
-              className={`flex-1 rounded-lg border-2 text-center duration-300 ease-in-out ${
-                transactionCategory === category.id
-                  ? "bg-chetwode-blue-300 border-chetwode-blue-600"
-                  : "bg-chetwode-blue-200 border-transparent"
-              }`}
-            >
-              <button
-                type="button"
-                className="w-full p-2 rounded-lg"
-                onClick={() => setTransactionCategory(category.id)}
-              >
-                <p className="text-nowrap">{category.name}</p>
-              </button>
-            </li>
-          ))}
-      </ul>
+      <ModalTransactionCategory
+        transactionCategory={transactionCategory}
+        setTransactionCategory={setTransactionCategory}
+      />
       <Divider direction="horizontal" className="mt-2" />
+      {transactionType === "income" && type === "create" && (
+        <>
+          <h3 className="subsubtitle">Cofre</h3>
+          <Checkbox
+            state={integrateWithVault}
+            setState={setIntegrateWithVault}
+            label="Integrar com Cofre"
+          />
+          {integrateWithVault && (
+            <ModalTransactionVault
+              transactionVault={transactionVault}
+              setTransactionVault={setTransactionVault}
+            />
+          )}
+          <Divider direction="horizontal" className="mt-2" />
+        </>
+      )}
       {hasError && (
         <p className="text-red-600">
           Parece que tem algum erro no formulário, certifique-se de escolher uma
           categoria, um nome e um valor.
+          {integrateWithVault && " Certifique-se de escolher um cofre"}
         </p>
       )}
       <div className="flex self-end gap-x-2">
