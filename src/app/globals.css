@@ -13,6 +13,8 @@
 /* Animation */
 @import "./styles/animation.css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 .scrollbar-thinner::-webkit-scrollbar {
   width: 6px;
 }
