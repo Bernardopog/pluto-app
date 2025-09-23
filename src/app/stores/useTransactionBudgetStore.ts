@@ -57,11 +57,15 @@ interface ITransactionBudgetStore {
   getExpenses: (budgetId: number) => number;
   getBudgetLimit: (budgetId: number) => number;
   getBudgetRest: (budgetId: number) => number;
+  getMonthBudgetRest: (budgetId: number) => number;
 
   getTotalExpenses: () => number;
   getTotalMonthlyExpenses: () => number;
   getTotalBudgetLimit: () => number;
   getExpenseFromCurrentMonth: (budgetId: number) => number;
+
+  // Internal
+  isCurrentMonth: (date: string | Date) => boolean;
 }
 
 const budgetFetcher = fetcher<IBudget[] | IBudget | null>("/api/budgets");
@@ -344,32 +348,41 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         .reduce((acc, t) => acc + t.value, 0),
     getBudgetLimit: (budgetId) =>
       get().budgetData.list.find((b) => b.id === budgetId)?.limit || 0,
-    getBudgetRest: (budgetId) =>
-      get().getBudgetLimit(budgetId) + get().getExpenses(budgetId),
+    getBudgetRest: (budgetId) => {
+      const store = get();
+      return store.getBudgetLimit(budgetId) + store.getExpenses(budgetId);
+    },
+    getMonthBudgetRest: (budgetId) => {
+      const store = get();
+      return (
+        store.getBudgetLimit(budgetId) +
+        store.getExpenseFromCurrentMonth(budgetId)
+      );
+    },
     getTotalExpenses: () =>
       get()
         .transactionData.list.filter((t) => t.value < 0)
         .reduce((acc, t) => acc + t.value, 0),
     getTotalMonthlyExpenses: () =>
       get()
-        .transactionData.list.filter(
-          (t) =>
-            new Date(t.date).getMonth() === new Date().getMonth() &&
-            new Date(t.date).getFullYear() === new Date().getFullYear()
-        )
+        .transactionData.list.filter((t) => get().isCurrentMonth(t.date))
         .filter((t) => t.value < 0)
         .reduce((acc, t) => acc + t.value, 0),
     getExpenseFromCurrentMonth: (budgetId) => {
       return get()
-        .transactionData.list.filter(
-          (t) =>
-            new Date(t.date).getMonth() === new Date().getMonth() &&
-            new Date(t.date).getFullYear() === new Date().getFullYear()
-        )
+        .transactionData.list.filter((t) => get().isCurrentMonth(t.date))
         .filter((t) => t.categoryId === budgetId && t.value < 0)
         .reduce((acc, t) => acc + t.value, 0);
     },
     getTotalBudgetLimit: () =>
       get().budgetData.list.reduce((acc, b) => acc + b.limit, 0),
+    isCurrentMonth(date) {
+      const itemDate = new Date(date);
+      const now = new Date();
+      return (
+        itemDate.getMonth() === now.getMonth() &&
+        itemDate.getFullYear() === now.getFullYear()
+      );
+    },
   })
 );
