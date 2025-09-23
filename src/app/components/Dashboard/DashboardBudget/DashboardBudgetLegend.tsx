@@ -19,11 +19,11 @@ export default function DashboardBudgetLegend({
   budget,
   rest,
 }: IDashboardBudgetLegendProps) {
-  const { getBudgetRest, getExpenseFromCurrentMonth } =
+  const { getExpenseFromCurrentMonth, getMonthBudgetRest } =
     useTransactionBudgetStore(
       useShallow((s) => ({
-        getBudgetRest: s.getBudgetRest,
         getExpenseFromCurrentMonth: s.getExpenseFromCurrentMonth,
+        getMonthBudgetRest: s.getMonthBudgetRest,
       }))
     );
   const [typeOfLegend, setTypeOfLegend] =
@@ -60,9 +60,9 @@ export default function DashboardBudgetLegend({
               </span>
             ) : (
               <span className="inline-flex gap-2">
-                {moneyFormatter(getBudgetRest(budgetItem.id))}{" "}
+                {moneyFormatter(getMonthBudgetRest(budgetItem.id))}{" "}
                 <span className="text-chetwode-blue-950/60">
-                  {getBudgetRest(budgetItem.id) < 0 && (
+                  {getMonthBudgetRest(budgetItem.id) < 0 && (
                     <MdWarning className="text-xl" />
                   )}
                 </span>

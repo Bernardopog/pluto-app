@@ -8,7 +8,6 @@ import { useFinanceStore } from "@/app/stores/useFinanceStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import MoreDetail from "@/app/ui/MoreDetail";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { useShallow } from "zustand/shallow";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,12 +17,7 @@ export default function DashboardBudget() {
   const income = useFinanceStore((s) => s.financeData.item.income);
 
   const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
-  const { budgetList, transactionList } = useTransactionBudgetStore(
-    useShallow((s) => ({
-      budgetList: s.budgetData.list,
-      transactionList: s.transactionData.list,
-    }))
-  );
+  const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
 
   const totalExpenses = getTotalExpenses();
   const rest = income + totalExpenses;
@@ -37,11 +31,7 @@ export default function DashboardBudget() {
         <h2 className="subtitle">Orçamento</h2>
         <MoreDetail href="/budget" />
       </header>
-      <DashboardBudgetChart
-        budget={budgetList}
-        transactions={transactionList}
-        rest={rest}
-      />
+      <DashboardBudgetChart budget={budgetList} rest={rest} />
       <DashboardBudgetLegend budget={budgetList} rest={rest} />
     </article>
   );

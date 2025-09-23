@@ -1,24 +1,27 @@
 import PieChartControl from "../../PieChartControl";
 import { useState } from "react";
 import { PieChartType } from "@/app/layout/Dashboard/DashboardBudget";
-import { ITransaction } from "@/interfaces/ITransaction";
 import { IBudget } from "@/interfaces/IBudget";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { DashboardBarChart, DashboardDoughtnutChart } from "./DashboardCharts";
 import { DashboardBudgetLoading } from "./";
+import { useShallow } from "zustand/shallow";
 
 interface IDashboardBudgetChartProps {
-  transactions: ITransaction[];
   budget: IBudget[];
   rest: number;
 }
 
 export default function DashboardBudgetChart({
-  transactions,
   budget,
   rest,
 }: IDashboardBudgetChartProps) {
-  const budgetData = useTransactionBudgetStore((s) => s.budgetData);
+  const { budgetData, transactions } = useTransactionBudgetStore(
+    useShallow((s) => ({
+      budgetData: s.budgetData,
+      transactions: s.transactionData.list,
+    }))
+  );
 
   const [chartType, setChartType] = useState<"pie" | "bar">("pie");
   const [pieChartType, setPieChartType] = useState<PieChartType>("full");

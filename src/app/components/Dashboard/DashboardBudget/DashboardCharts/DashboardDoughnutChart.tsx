@@ -4,6 +4,7 @@ import { ITransaction } from "@/interfaces/ITransaction";
 import { ApexOptions } from "apexcharts";
 
 import dynamic from "next/dynamic";
+import { useMemo } from "react";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface IDoughnutChartProps {
@@ -25,18 +26,33 @@ export default function DoughnutChart({
   showRest,
   angle,
 }: IDoughnutChartProps) {
-  const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
+  const getTotalMonthlyExpenses = useTransactionBudgetStore(
+    (s) => s.getTotalMonthlyExpenses
+  );
+
+  const expensesPerMonth = useMemo(
+    () =>
+      transactions.filter(
+        (txn) =>
+          new Date(txn.date).getMonth() === new Date().getMonth() &&
+          new Date(txn.date).getFullYear() === new Date().getFullYear()
+      ),
+    [transactions]
+  );
+
+  const onlyExpenses = useMemo(
+    () => expensesPerMonth.filter((txn) => txn.value < 0),
+    [expensesPerMonth]
+  );
 
   const series = [
     ...budget.map((budget) => {
-      const expenses = transactions
-        .filter((item) => item.value < 0)
-        .reduce((acc, item) => {
-          if (item.categoryId === budget.id) {
-            return acc + item.value;
-          }
-          return acc;
-        }, 0);
+      const expenses = onlyExpenses.reduce((acc, item) => {
+        if (item.categoryId === budget.id) {
+          return acc + item.value;
+        }
+        return acc;
+      }, 0);
       return Math.abs(expenses);
     }),
     showRest ? rest : 0,
@@ -68,7 +84,7 @@ export default function DoughnutChart({
             show: true,
             value: {
               formatter: (val: string) =>
-                `${val}/${Math.abs(getTotalExpenses())}`,
+                `${val}/${Math.abs(getTotalMonthlyExpenses())}`,
               color: "#2a1e57",
             },
           },
