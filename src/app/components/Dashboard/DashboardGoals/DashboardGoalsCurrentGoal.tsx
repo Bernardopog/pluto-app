@@ -91,7 +91,7 @@ export default function DashboardGoalsCurrentGoal() {
   return (
     <>
       {goal ? (
-        <div className="flex flex-col flex-1 relative p-1 rounded-lg bg-chetwode-blue-100 text-chetwode-blue-900">
+        <div className="flex flex-col flex-1 relative p-1 rounded-lg bg-chetwode-blue-100 text-chetwode-blue-900 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-200">
           <p className="font-bold text-center">{goal.name}</p>
           <div className="flex justify-center gap-x-2">
             <p className="font-bold inline">{moneyFormatter(money)}</p>/
@@ -112,7 +112,7 @@ export default function DashboardGoalsCurrentGoal() {
               </button>
             )}
           {goal.deadline && (
-            <p className="text-center text-sm text-chetwode-blue-950/75">
+            <p className="text-center text-sm text-chetwode-blue-950/75 dark:text-chetwode-blue-200/75">
               Prazo: {deadlineFormatted}
             </p>
           )}
@@ -126,7 +126,7 @@ export default function DashboardGoalsCurrentGoal() {
           />
         </div>
       ) : (
-        <p className="flex items-center justify-center h-full italic font-bold text-chetwode-blue-950/75">
+        <p className="flex items-center justify-center h-full text-lg italic font-bold text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75">
           Nenhuma meta definida...
         </p>
       )}

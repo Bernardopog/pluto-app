@@ -25,7 +25,7 @@ export default function PieChartControl({
   };
 
   return (
-    <div className="flex flex-col p-2 rounded-lg bg-chetwode-blue-200 text-chetwode-blue-900">
+    <div className="flex flex-col p-2 rounded-lg bg-chetwode-blue-200 text-chetwode-blue-900 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-100">
       <p className="font-medium text-center">Tipo de Gráfico:</p>
 
       <div className="flex justify-between px-2 gap-2">
@@ -34,7 +34,7 @@ export default function PieChartControl({
           className={`flex flex-1 items-center justify-center py-1 px-2 border rounded-lg gap-2 text-2xl ${
             chartType === "pie"
               ? "bg-chetwode-blue-950 text-chetwode-blue-50"
-              : "bg-transparent text-chetwode-blue-900"
+              : "bg-chetwode-blue-600 text-chetwode-blue-950"
           }`}
           onClick={() => handleChartChange("pie")}
         >
@@ -45,7 +45,7 @@ export default function PieChartControl({
           className={`flex flex-1 items-center justify-center py-1 px-2 border rounded-lg gap-2 text-2xl ${
             chartType === "bar"
               ? "bg-chetwode-blue-950 text-chetwode-blue-50"
-              : "bg-transparent text-chetwode-blue-900"
+              : "bg-chetwode-blue-600 text-chetwode-blue-950"
           }`}
           onClick={() => handleChartChange("bar")}
         >
@@ -59,13 +59,13 @@ export default function PieChartControl({
             Tipo de Gráfico de Pizza:
           </p>
 
-          <div className="px-2 flex justify-between">
+          <div className="px-2 flex justify-between gap-2">
             <button
               type="button"
               className={`flex flex-1 items-center justify-center py-1 px-2 border rounded-lg gap-2 text-2xl ${
                 pieChartType === "full"
                   ? "bg-chetwode-blue-950 text-chetwode-blue-50"
-                  : "bg-transparent text-chetwode-blue-900"
+                  : "bg-chetwode-blue-600 text-chetwode-blue-950"
               }`}
               onClick={() => setPieChartType("full")}
             >
@@ -76,7 +76,7 @@ export default function PieChartControl({
               className={`flex flex-1 items-center justify-center py-1 px-2 border rounded-lg gap-2 text-2xl ${
                 pieChartType === "half"
                   ? "bg-chetwode-blue-950 text-chetwode-blue-50"
-                  : "bg-transparent text-chetwode-blue-900"
+                  : "bg-chetwode-blue-600 text-chetwode-blue-950"
               }`}
               onClick={() => setPieChartType("half")}
             >

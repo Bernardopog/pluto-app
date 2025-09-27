@@ -21,7 +21,7 @@ export default function DashboardVaultSection() {
           <DashboardVaultForm />
         </>
       ) : (
-        <p className="flex items-center justify-center flex-1 h-full text-lg font-bold italic text-chetwode-blue-950/75">
+        <p className="flex items-center justify-center flex-1 h-full text-lg font-bold italic text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75">
           Nenhum cofre selecionado...
         </p>
       )}

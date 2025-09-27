@@ -20,7 +20,7 @@ export default function DashboardStatsItem({
   return (
     <li className="flex-1">
       {!isNull && keyName ? (
-        <article className="size-full min-h-32 relative p-1 border-2 rounded-lg bg-chetwode-blue-100 border-chetwode-blue-600/25">
+        <article className="size-full min-h-32 relative p-1 border-2 rounded-lg bg-chetwode-blue-100 border-chetwode-blue-600/25 dark:bg-chetwode-blue-800">
           {statsComponentMap[keyName].component()}
           <button
             type="button"
@@ -34,8 +34,10 @@ export default function DashboardStatsItem({
           </button>
         </article>
       ) : (
-        <div className="flex items-center justify-center min-h-32 h-full p-1 border-2 border-dashed rounded-lg bg-chetwode-blue-100 border-chetwode-blue-600/25">
-          <p className="italic text-3xl text-chetwode-blue-950/25">Vazio</p>
+        <div className="flex items-center justify-center min-h-32 h-full p-1 border-2 border-dashed rounded-lg bg-chetwode-blue-100 border-chetwode-blue-600/25 dark:bg-chetwode-blue-600">
+          <p className="italic text-3xl text-chetwode-blue-950/25 dark:text-chetwode-blue-50/50">
+            Vazio
+          </p>
         </div>
       )}
     </li>

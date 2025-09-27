@@ -90,26 +90,26 @@ export default function DashboardGoalsController() {
     <>
       {!goal && (
         <button
-          className="text-chetwode-blue-950/50 duration-300 ease-in-out hover:text-chetwode-blue-950/75"
+          className="text-chetwode-blue-950/50 duration-300 ease-in-out hover:text-chetwode-blue-950/75 dark:text-chetwode-blue-50/50 dark:hover:text-chetwode-blue-50/75"
           onClick={handleModal}
         >
           Criar
         </button>
       )}
-      {goal && (
-        <button
-          className="text-red-950/50 duration-300 ease-in-out hover:text-red-950/75"
-          onClick={handleCancelGoal}
-        >
-          Cancelar
-        </button>
-      )}
       {currentProgressPercentage >= 100 && (
         <button
-          className="text-chetwode-blue-950/50 duration-300 ease-in-out hover:text-chetwode-blue-950/75"
+          className="text-chetwode-blue-950/50 duration-300 ease-in-out hover:text-chetwode-blue-950/75 dark:text-chetwode-blue-50/50 dark:hover:text-chetwode-blue-50/75"
           onClick={handleCompleteGoal}
         >
           Completar
+        </button>
+      )}
+      {goal && (
+        <button
+          className="text-red-950/50 duration-300 ease-in-out hover:text-red-950/75 dark:text-red-300/50 dark:hover:text-red-300/75"
+          onClick={handleCancelGoal}
+        >
+          Cancelar
         </button>
       )}
     </>

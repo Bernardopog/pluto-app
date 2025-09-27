@@ -145,7 +145,10 @@ export default function DashboardTransactionForm() {
           </fieldset>
           <div className="flex flex-col gap-y-2 justify-between lg:flex-row">
             <div className="order-1 lg:order-0">
-              <label htmlFor="category" className="text-chetwode-blue-950">
+              <label
+                htmlFor="category"
+                className="text-chetwode-blue-950 dark:text-chetwode-blue-50"
+              >
                 Categorias:
               </label>
               <Select
@@ -186,8 +189,7 @@ export default function DashboardTransactionForm() {
 
           <button
             type="submit"
-            className="flex justify-center items-center mt-2 px-2 py-2 rounded-lg bg-chetwode-blue-300 text-chetwode-blue-950 lg:py-0 disabled:grayscale-100 disabled:opacity-75 disabled:cursor-not-allowed"
-            disabled={hadAnError || budgetList.length === 0}
+            className="flex justify-center items-center mt-2 px-2 py-2 rounded-lg bg-chetwode-blue-300 text-chetwode-blue-950 ease-in-out duration-300 lg:py-0 hover:bg-chetwode-blue-400 active:bg-chetwode-blue-500 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-50 dark:hover:bg-chetwode-blue-700 dark:active:bg-chetwode-blue-800"
           >
             <MdAdd />
             Adicionar

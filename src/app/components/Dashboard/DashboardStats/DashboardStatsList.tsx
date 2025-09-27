@@ -15,7 +15,7 @@ export default function DashboardStatsList() {
   }, [setStatList]);
 
   return (
-    <ul className="flex flex-col flex-1 mt-1 p-2 gap-2 rounded-lg bg-chetwode-blue-200 lg:flex-row xl:flex-col">
+    <ul className="flex flex-col flex-1 mt-1 p-2 gap-2 rounded-lg bg-chetwode-blue-200 dark:bg-chetwode-blue-950 lg:flex-row xl:flex-col">
       {statList.map((keyName, index) => (
         <DashboardStatsItem
           key={index}

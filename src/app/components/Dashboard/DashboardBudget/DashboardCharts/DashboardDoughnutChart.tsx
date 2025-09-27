@@ -57,7 +57,7 @@ export default function DoughnutChart({
     }),
     showRest ? rest : 0,
   ];
-  const options = {
+  const options: ApexOptions = {
     labels: [...budget.map((bdgt) => bdgt.name), showRest ? "Restante" : ""],
     legend: {
       show: false,
@@ -73,6 +73,9 @@ export default function DoughnutChart({
       y: {
         formatter: (val: number) => `R$ ${val}`,
       },
+    },
+    stroke: {
+      width: 0,
     },
     plotOptions: {
       pie: {
@@ -98,12 +101,7 @@ export default function DoughnutChart({
   return (
     <>
       {typeof window !== "undefined" && window && (
-        <Chart
-          options={options as ApexOptions}
-          series={series}
-          type="donut"
-          height={"125%"}
-        />
+        <Chart options={options} series={series} type="donut" height={"125%"} />
       )}
     </>
   );

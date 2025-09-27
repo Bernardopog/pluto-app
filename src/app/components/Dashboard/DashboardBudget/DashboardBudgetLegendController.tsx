@@ -17,13 +17,13 @@ export default function DashboardBudgetLegendController({
   };
 
   return (
-    <section className="flex justify-between mt-2 text-chetwode-blue-950">
+    <section className="flex justify-between mt-2">
       <button
         type="button"
-        className={`p-1 rounded-lg border border-chetwode-blue-800 ${
+        className={`p-1 rounded-lg border ${
           state === "expenses-limit"
-            ? "bg-chetwode-blue-300"
-            : "bg-chetwode-blue-100"
+            ? "bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950"
+            : "bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950"
         }`}
         onClick={() => handleLegendChange("expenses-limit")}
       >
@@ -32,7 +32,9 @@ export default function DashboardBudgetLegendController({
       <button
         type="button"
         className={`p-1 rounded-lg border border-chetwode-blue-800 ${
-          state === "rest" ? "bg-chetwode-blue-300" : "bg-chetwode-blue-100"
+          state === "rest"
+            ? "bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950"
+            : "bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950"
         }`}
         onClick={() => handleLegendChange("rest")}
       >

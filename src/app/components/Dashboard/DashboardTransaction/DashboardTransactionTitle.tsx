@@ -32,7 +32,7 @@ export default function DashboardTransactionTitle() {
     <div className="flex flex-col justify-center">
       <h2 className="subtitle">
         Transações{" "}
-        <span className="italic text-sm text-chetwode-blue-900/75 grayscale-50">
+        <span className="italic text-sm text-chetwode-blue-900/75 grayscale-50 dark:text-chetwode-blue-50/75">
           (primeiras 12 transações)
         </span>
       </h2>

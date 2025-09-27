@@ -35,7 +35,7 @@ export default function DashboardBudgetLegend({
         state={typeOfLegend}
         setState={setTypeOfLegend}
       />
-      <ul className="grid grid-cols-1 mt-4 gap-2 font-medium text-chetwode-blue-950 md:grid-cols-2 lg:flex lg:flex-col">
+      <ul className="grid grid-cols-1 mt-4 gap-2 font-medium text-chetwode-blue-950 dark:text-chetwode-blue-50 md:grid-cols-2 lg:flex lg:flex-col">
         <li className="border-l-4 pl-2" style={{ borderColor: `#a9a9a9` }}>
           Renda Restante: {moneyFormatter(rest)}
         </li>
@@ -51,7 +51,7 @@ export default function DashboardBudgetLegend({
                 {moneyFormatter(
                   Math.abs(getExpenseFromCurrentMonth(budgetItem.id))
                 )}
-                <span className="inline-flex gap-2 text-chetwode-blue-950/60">
+                <span className="inline-flex gap-2 text-chetwode-blue-950/60 dark:text-chetwode-blue-50/60">
                   {" "}
                   /{moneyFormatter(budgetItem.limit)}
                   {Math.abs(getExpenseFromCurrentMonth(budgetItem.id)) >
@@ -61,7 +61,7 @@ export default function DashboardBudgetLegend({
             ) : (
               <span className="inline-flex gap-2">
                 {moneyFormatter(getMonthBudgetRest(budgetItem.id))}{" "}
-                <span className="text-chetwode-blue-950/60">
+                <span className="text-chetwode-blue-950/60 dark:text-chetwode-blue-50/60">
                   {getMonthBudgetRest(budgetItem.id) < 0 && (
                     <MdWarning className="text-xl" />
                   )}
