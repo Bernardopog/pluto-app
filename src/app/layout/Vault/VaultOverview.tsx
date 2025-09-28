@@ -129,7 +129,7 @@ export default function VaultOverview() {
       ) : (
         <p
           id="vault-overview"
-          className="flex items-center justify-center h-full min-h-24 py-2 px-4 rounded-lg text-lg italic font-bold text-chetwode-blue-950/75 bg-star-dust-50"
+          className="flex items-center justify-center h-full min-h-24 py-2 px-4 rounded-lg text-lg italic font-bold text-chetwode-blue-950/75 bg-star-dust-50 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-100"
         >
           É necessário criar um cofre para ver as informações...
         </p>

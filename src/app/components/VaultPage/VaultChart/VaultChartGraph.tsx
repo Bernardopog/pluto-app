@@ -1,6 +1,7 @@
 "use client";
 
 import { VaultChartTypes } from "@/app/layout/Vault/VaultChart";
+import { useThemeStore } from "@/app/stores/useThemeStore";
 import { useVaultStore } from "@/app/stores/useVaultStore";
 import { getPercentage } from "@/app/utils/getPercentage";
 import { ApexOptions } from "apexcharts";
@@ -19,6 +20,7 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
   const getTotalMoneySavedFromVault = useVaultStore(
     (s) => s.getTotalMoneySavedFromVault
   );
+  const theme = useThemeStore((s) => s.theme);
 
   const totalInVaults: number = vaultList
     .map((vault) => getTotalMoneySavedFromVault(vault.id))
@@ -41,7 +43,7 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
           getTotalMoneySavedFromVault(vault.id),
           vault.targetPrice
         );
-        return +value > 100 ? 100 : value;
+        return +value > 100 ? 100 : +value * 0.75;
       }),
     ],
 
@@ -65,6 +67,13 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
         : vaultList.map((vault) => vault.name),
     legend: {
       position: "bottom",
+      labels: {
+        colors: theme === "light" ? "#2a1e57" : "#f5f5fd",
+      },
+    },
+    stroke: {
+      colors: theme === "light" ? ["#f6f6f6"] : ["#453181"],
+      width: 4,
     },
     fill: {
       opacity: 1,
@@ -77,9 +86,24 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
       radialBar: {
         barLabels: {
           enabled: true,
-          useSeriesColors: false,
+          useSeriesColors: true,
           offsetX: -8,
           fontSize: "16px",
+        },
+        track: {
+          background: theme === "light" ? "#f6f6f6" : "#453181",
+        },
+        dataLabels: {
+          value: {
+            fontSize: "16px",
+            color: theme === "light" ? "#2a1e57" : "#f5f5fd",
+            formatter: (val: number) => {
+              const originalVal = val / 0.75;
+              return `${
+                Number.isNaN(originalVal) ? 0 : originalVal.toFixed(0)
+              }%`;
+            },
+          },
         },
       },
       pie: {
@@ -89,10 +113,15 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
         donut: {
           labels: {
             show: true,
+            name: {
+              show: true,
+              color: theme === "light" ? "#2a1e57" : "#ffffff", // aqui você muda a cor!
+              fontSize: "16px",
+            },
             value: {
               formatter: (val: string) =>
                 typeOfChart === "restProgress" ? "" : `${val}% / 100%`,
-              color: "#2a1e57",
+              color: theme === "light" ? "#2a1e57" : "#f5f5fd",
             },
           },
           size: "60",

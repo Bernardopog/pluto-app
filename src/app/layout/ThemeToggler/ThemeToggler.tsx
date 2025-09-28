@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useThemeStore } from "@/app/stores/useThemeStore";
+import { useEffect, useState } from "react";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 
 export default function ThemeToggler({
@@ -8,13 +9,21 @@ export default function ThemeToggler({
 }: {
   themeIsDark: boolean;
 }) {
+  const setTheme = useThemeStore((s) => s.setTheme);
+
   const [isDarkMode, setIsDarkMode] = useState<boolean>(themeIsDark);
 
   const handleToggle = () => {
     setIsDarkMode(!isDarkMode);
     document.cookie = `theme=${isDarkMode ? "light" : "dark"}; path=/`;
     document.documentElement.classList.toggle("dark");
+
+    setTheme(isDarkMode ? "light" : "dark");
   };
+
+  useEffect(() => {
+    setTheme(themeIsDark ? "dark" : "light");
+  }, [setTheme, themeIsDark]);
 
   return (
     <button

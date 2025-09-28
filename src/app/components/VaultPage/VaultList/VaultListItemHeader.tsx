@@ -13,9 +13,9 @@ export default function VaultListItemHeader({ vault }: { vault: IVault }) {
   };
 
   return (
-    <header className="relative w-full p-2 rounded-t-lg bg-chetwode-blue-200">
+    <header className="relative w-full p-2 rounded-t-lg bg-chetwode-blue-200 dark:bg-chetwode-blue-800">
       <h3 className="subsubtitle pr-8 truncate">{vault.name}</h3>
-      <p className="text-chetwode-blue-950">
+      <p className="text-chetwode-blue-950 dark:text-chetwode-blue-100">
         <span className="font-medium">Meta:</span>{" "}
         {moneyFormatter(vault.targetPrice)}
       </p>

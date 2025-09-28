@@ -48,7 +48,7 @@ export default function VaultActionToItem({
           />
         </div>
       ) : (
-        <p className="mt-2 italic text-chetwode-blue-950/75">
+        <p className="mt-2 italic text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75">
           Selecione um Item clicando nele
         </p>
       )}

@@ -26,13 +26,15 @@ export default function VaultActionToVault({
       />
       {selectedVault ? (
         <div className="flex flex-col my-1 gap-1">
-          <p className="mt-2 text-chetwode-blue-950">Cofre Selecionado: </p>
-          <span className="px-1 rounded-lg font-medium text-chetwode-blue-700 bg-chetwode-blue-200">
+          <p className="mt-2 text-chetwode-blue-950 dark:text-chetwode-blue-50">
+            Cofre Selecionado:{" "}
+          </p>
+          <span className="px-1 rounded-lg font-medium text-chetwode-blue-700 bg-chetwode-blue-200 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-200">
             {selectedVault.name}
           </span>
         </div>
       ) : (
-        <p className="mt-2 italic text-chetwode-blue-950/75">
+        <p className="mt-2 italic text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75">
           Selecione um Cofre clicando no &quot;+&quot; dele
         </p>
       )}

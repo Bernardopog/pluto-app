@@ -22,8 +22,8 @@ export default function VaultListItemSaved({ item }: { item: IVaultItem }) {
     <li
       className={`flex justify-between p-1 rounded-lg shadow-sm ease-in-out duration-300 cursor-pointer ${
         selectedVaultItem?.id === item.id
-          ? "bg-chetwode-blue-800 text-chetwode-blue-100 hover:bg-chetwode-blue-950 hover:text-chetwode-blue-50"
-          : "bg-chetwode-blue-50 text-chetwode-blue-950 hover:bg-chetwode-blue-800 hover:text-chetwode-blue-100"
+          ? "bg-chetwode-blue-800 text-chetwode-blue-100 hover:bg-chetwode-blue-950 hover:text-chetwode-blue-50 dark:bg-chetwode-blue-200 dark:text-chetwode-blue-950 dark:hover:bg-chetwode-blue-100 dark:hover:text-chetwode-blue-950"
+          : "bg-chetwode-blue-50 text-chetwode-blue-950 hover:bg-chetwode-blue-800 hover:text-chetwode-blue-100 dark:bg-chetwode-blue-900 dark:text-chetwode-blue-50 dark:hover:bg-chetwode-blue-950 dark:hover:text-chetwode-blue-50"
       }`}
       onClick={() => handleItemSelect()}
     >

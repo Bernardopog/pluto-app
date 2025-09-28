@@ -23,7 +23,7 @@ export default function VaultChartHeader({
       <h2 className="subtitle">
         Gráfico{" "}
         {vaultListLength > 0 && (
-          <span className="italic text-sm text-chetwode-blue-900/75 grayscale-50">
+          <span className="italic text-sm text-chetwode-blue-900/75 grayscale-50 dark:text-chetwode-blue-100/75">
             ({nameOfType})
           </span>
         )}
