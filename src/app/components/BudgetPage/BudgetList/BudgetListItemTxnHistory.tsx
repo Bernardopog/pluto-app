@@ -30,7 +30,7 @@ export default function BudgetListItemTxnHistory({ id }: { id: number }) {
 
   return (
     <div
-      className={`bg-chetwode-blue-100 p-2 rounded-lg min-h-12 duration-300 ease-in-out overflow-clip ${
+      className={`p-2 rounded-lg min-h-12 duration-300 ease-in-out overflow-clip bg-chetwode-blue-100 dark:bg-chetwode-blue-900 ${
         isShownTransactionHistory ? "h-64" : "h-12"
       }`}
     >

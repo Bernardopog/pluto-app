@@ -99,7 +99,7 @@ export default function BudgetChart() {
           )}
         </div>
       ) : (
-        <p className="flex items-center justify-center flex-1 font-bold text-lg italic text-chetwode-blue-950/75">
+        <p className="flex items-center justify-center flex-1 font-bold text-lg italic text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75">
           Crie um orçamento para ver o gráfico...
         </p>
       )}

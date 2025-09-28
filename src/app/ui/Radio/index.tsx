@@ -32,7 +32,9 @@ export default function Radio({
       <div className="flex items-center justify-center size-4.5 rounded-full bg-chetwode-blue-400 duration-300 ease-in-out peer-checked:bg-chetwode-blue-700">
         <div className="size-3 rounded-full bg-chetwode-blue-50" />
       </div>
-      <span className="text-chetwode-blue-950 font-bold">{label}</span>
+      <span className="text-chetwode-blue-950 font-bold dark:text-chetwode-blue-50">
+        {label}
+      </span>
     </label>
   );
 }

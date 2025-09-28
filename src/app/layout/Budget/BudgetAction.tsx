@@ -41,13 +41,15 @@ export default function BudgetAction() {
         />
         {budgetSelection.selected ? (
           <div className="flex flex-col my-1 gap-1">
-            <p className="text-chetwode-blue-950">Transação Selecionada: </p>
-            <span className="px-1 rounded-lg font-medium text-chetwode-blue-700 bg-chetwode-blue-200">
+            <p className="text-chetwode-blue-950 dark:text-chetwode-blue-50">
+              Orçamento Selecionado:{" "}
+            </p>
+            <span className="px-1 rounded-lg font-medium text-chetwode-blue-700 bg-chetwode-blue-200 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-50">
               {budgetSelection.selected.name}
             </span>
           </div>
         ) : (
-          <p className="italic text-chetwode-blue-950/75">
+          <p className="italic text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75">
             Selecione um Orçamento clicando no botão de selecionar
           </p>
         )}

@@ -19,7 +19,10 @@ export default function BudgetChartShowController({
       <h3 className="subsubtitle">Remover do Gráfico:</h3>
       <ul className="grid grid-cols-1 gap-2 md:grid-cols-3">
         {budgetList.map((bdgt) => (
-          <li key={bdgt.id} className="rounded-lg bg-chetwode-blue-200">
+          <li
+            key={bdgt.id}
+            className="rounded-lg bg-chetwode-blue-200 dark:bg-chetwode-blue-800"
+          >
             <Checkbox
               label={bdgt.name}
               state={excludedId.includes(bdgt.id) ? true : false}

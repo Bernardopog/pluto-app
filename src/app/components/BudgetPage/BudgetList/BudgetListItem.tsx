@@ -61,7 +61,7 @@ export default function BudgetListItem({
         }}
         className="group flex flex-col relative w-full p-2 rounded-lg border-2"
       >
-        <h3 className="subsubtitle inline-flex justify-between items-center pl-2 rounded-lg bg-chetwode-blue-100">
+        <h3 className="subsubtitle inline-flex justify-between items-center pl-2 rounded-lg bg-chetwode-blue-100 dark:bg-chetwode-blue-900">
           Orçamento: {name}
           {Math.abs(expense) >= limit && (
             <span
@@ -72,7 +72,7 @@ export default function BudgetListItem({
             </span>
           )}
         </h3>
-        <div className="flex text-star-dust-950">
+        <div className="flex text-star-dust-950 dark:text-star-dust-50">
           <p className="flex-1 inline-block mt-2 font-semibold">
             <span className="font-bold text-2xl">
               R$ {moneyFormatter(Math.abs(expense)).replace("R$", "")}
