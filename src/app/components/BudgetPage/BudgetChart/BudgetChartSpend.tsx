@@ -11,10 +11,14 @@ function BudgetChartSpend({
   options,
   isOverlay,
 }: IBudgetChartProps) {
-  const getExpenses = useTransactionBudgetStore((s) => s.getExpenses);
+  const getExpenseFromCurrentMonth = useTransactionBudgetStore(
+    (s) => s.getExpenseFromCurrentMonth
+  );
   const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
 
-  const series = budgetList.map((bdgt) => Math.abs(getExpenses(bdgt.id)));
+  const series = budgetList.map((bdgt) =>
+    Math.abs(getExpenseFromCurrentMonth(bdgt.id))
+  );
 
   const customOptions: ApexOptions = {
     ...options,
@@ -43,7 +47,7 @@ function BudgetChartSpend({
         <div className="absolute z-20 size-0 rounded-full">
           {budgetList.map((bdgt, idx) => {
             const percentage = getPercentage(
-              getExpenses(bdgt.id),
+              getExpenseFromCurrentMonth(bdgt.id),
               getTotalExpenses()
             );
             const angle = (360 / budgetList.length) * idx;

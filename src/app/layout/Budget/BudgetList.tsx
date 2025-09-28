@@ -8,14 +8,14 @@ import { useShallow } from "zustand/shallow";
 export default function BudgetList() {
   const {
     getBudgetLimit,
-    getExpenses,
+    getExpenseFromCurrentMonth,
     loadTxnAndBudgets,
     budgetFetched,
     transactionFetched,
   } = useTransactionBudgetStore(
     useShallow((s) => ({
       getBudgetLimit: s.getBudgetLimit,
-      getExpenses: s.getExpenses,
+      getExpenseFromCurrentMonth: s.getExpenseFromCurrentMonth,
       loadTxnAndBudgets: s.loadTxnAndBudgets,
       budgetFetched: s.budgetData.fetched,
       transactionFetched: s.transactionData.fetched,
@@ -38,7 +38,7 @@ export default function BudgetList() {
         <ul className="flex flex-col gap-2 min-h-0 overflow-y-auto scrollbar-style scrollbar-thinner">
           {budgetList.map((bdgt) => {
             const limit = getBudgetLimit(bdgt.id);
-            const expense = getExpenses(bdgt.id);
+            const expense = getExpenseFromCurrentMonth(bdgt.id);
 
             return (
               <BudgetListItem
