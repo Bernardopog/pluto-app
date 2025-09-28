@@ -77,7 +77,7 @@ export default function TransactionFilter() {
       <h2 className="subtitle">Filtros</h2>
       <div className="lg:flex lg:justify-end">
         <button
-          className="flex items-center w-full p-1.5 rounded-lg gap-x-2 duration-300 ease-in-out font-bold hover:brightness-95 active:brightness-75 bg-chetwode-blue-900 text-chetwode-blue-50 lg:w-fit"
+          className="flex items-center w-full p-1.5 rounded-lg gap-x-2 duration-300 ease-in-out font-bold hover:brightness-95 active:brightness-75 bg-chetwode-blue-900 text-chetwode-blue-50 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50 lg:w-fit"
           type="reset"
           onClick={() => resetFullFilter()}
         >

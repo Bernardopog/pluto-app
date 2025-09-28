@@ -95,16 +95,16 @@ export default function TransactionAction() {
           />
           {transactionSelection.selected ? (
             <div className="flex flex-col my-1 gap-1">
-              <p className="mt-2 text-chetwode-blue-950">
+              <p className="mt-2 text-chetwode-blue-950 dark:text-chetwode-blue-50">
                 Transação Selecionada:{" "}
               </p>
-              <span className="px-1 rounded-lg font-medium text-chetwode-blue-700 bg-chetwode-blue-200">
+              <span className="px-1 rounded-lg font-medium text-chetwode-blue-700 bg-chetwode-blue-200 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-50">
                 {transactionSelection.selected.name} -{" "}
                 {moneyFormatter(Math.abs(transactionSelection.selected.value))}
               </span>
             </div>
           ) : (
-            <p className="mt-2 italic text-chetwode-blue-950/75">
+            <p className="mt-2 italic text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75">
               Selecione uma Transação clicando nela
             </p>
           )}

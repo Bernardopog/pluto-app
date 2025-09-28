@@ -18,10 +18,10 @@ export default function TransactionChartController({
   setPassedDays,
 }: ITransactionChartControllerProps) {
   return (
-    <section className="flex flex-col ml-[5%] w-[95%] p-2 rounded-lg bg-chetwode-blue-200 shadow-md">
+    <section className="flex flex-col ml-[5%] w-[95%] p-2 rounded-lg bg-chetwode-blue-200 shadow-md dark:bg-chetwode-blue-900">
       <h2 className="subtitle">Controle</h2>
       <div className="flex gap-4">
-        <div className="flex-1 p-2 rounded-lg shadow-md bg-chetwode-blue-100">
+        <div className="flex-1 p-2 rounded-lg shadow-md bg-chetwode-blue-100 dark:bg-chetwode-blue-800">
           <h3 className="subsubtitle">Geral:</h3>
           <Radio
             state={chartType === "all"}
@@ -45,7 +45,7 @@ export default function TransactionChartController({
             label="Despesas"
           />
         </div>
-        <div className="flex-1 p-2 rounded-lg shadow-md bg-chetwode-blue-100">
+        <div className="flex-1 p-2 rounded-lg shadow-md bg-chetwode-blue-100 dark:bg-chetwode-blue-800">
           <h3 className="subsubtitle">Orçamentos:</h3>
           <Radio
             state={chartType === "budget-income"}
@@ -62,7 +62,7 @@ export default function TransactionChartController({
             label="Gasto + Orçamento"
           />
         </div>
-        <div className="flex-1 p-2 rounded-lg shadow-md bg-chetwode-blue-100">
+        <div className="flex-1 p-2 rounded-lg shadow-md bg-chetwode-blue-100 dark:bg-chetwode-blue-800">
           <label htmlFor="days">
             <h3 className="subsubtitle">Dias:</h3>
           </label>

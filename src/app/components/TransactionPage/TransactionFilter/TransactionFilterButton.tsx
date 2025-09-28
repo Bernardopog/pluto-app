@@ -24,8 +24,8 @@ export default function TransactionFilterButton({
         type="button"
         className={`flex items-center justify-center w-full min-w-32 p-1.5 gap-2 rounded-lg duration-300 ease-in-out hover:brightness-95 active:brightness-75 ${
           isActive
-            ? "font-bold text-chetwode-blue-100 bg-chetwode-blue-800"
-            : "text-chetwode-blue-950 bg-chetwode-blue-200"
+            ? "font-bold text-chetwode-blue-100 bg-chetwode-blue-800 dark:bg-chetwode-blue-200 dark:text-chetwode-blue-950"
+            : "text-chetwode-blue-950 bg-chetwode-blue-200 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50"
         }`}
         onClick={() => action()}
       >

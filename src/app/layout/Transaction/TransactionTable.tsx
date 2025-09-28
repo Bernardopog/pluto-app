@@ -145,11 +145,11 @@ export default function TransactionTable() {
     >
       <header
         role="rowgroup"
-        className="hidden lg:block text-chetwode-blue-950"
+        className="hidden lg:block text-chetwode-blue-950 dark:text-chetwode-blue-50"
       >
         <div
           role="row"
-          className="grid w-full grid-cols-[0.3fr_2fr_0.5fr_0.5fr] font-bold px-1 py-2 bg-chetwode-blue-200"
+          className="grid w-full grid-cols-[0.3fr_2fr_0.5fr_0.5fr] font-bold px-1 py-2 bg-chetwode-blue-200 dark:bg-chetwode-blue-800"
         >
           <span role="columnheader" className="text-center">
             Data
@@ -168,7 +168,7 @@ export default function TransactionTable() {
 
       <section
         role="rowgroup"
-        className="flex flex-col flex-1 min-h-0 gap-3 p-1 bg-star-dust-50 overflow-y-auto scrollbar-thin scrollbar-thumb-chetwode-blue-600 scrollbar-track-chetwode-blue-100"
+        className="flex flex-col flex-1 min-h-0 gap-3 p-1 bg-star-dust-50 overflow-y-auto scrollbar-thin scrollbar-thumb-chetwode-blue-600 scrollbar-track-chetwode-blue-100 dark:bg-chetwode-blue-900"
       >
         {paginatedTransactions.length === 0 ? (
           <p className="text-center text-xl text-chetwode-blue-950/75 italic">
@@ -180,8 +180,8 @@ export default function TransactionTable() {
               key={transaction.id}
               className={`flex justify-between rounded-lg shadow-md ${
                 transactionDeletion.list.includes(transaction.id)
-                  ? "bg-chetwode-blue-700 text-chetwode-blue-100"
-                  : "bg-chetwode-blue-200 even:bg-chetwode-blue-300 text-chetwode-blue-950"
+                  ? "bg-chetwode-blue-700 text-chetwode-blue-100 dark:bg-chetwode-blue-400 dark:text-chetwode-blue-950"
+                  : "bg-chetwode-blue-200 even:bg-chetwode-blue-300 text-chetwode-blue-950 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-50 dark:even:bg-chetwode-blue-700"
               }`}
             >
               <TransactionTableRowData
@@ -203,13 +203,14 @@ export default function TransactionTable() {
           ))
         )}
       </section>
-      <footer className="flex items-center justify-center px-1 py-2 gap-x-2  bg-chetwode-blue-200 text-chetwode-blue-950">
+      <footer className="flex items-center justify-center px-1 py-2 gap-x-2  bg-chetwode-blue-200 text-chetwode-blue-950 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-100">
         {[...Array(totalPages)].map((_, idx) => {
           return (
             <button
               key={idx}
               className={`min-w-10 border py-1 px-2 rounded-lg ${
-                idx + 1 === currentPage && "bg-chetwode-blue-300"
+                idx + 1 === currentPage &&
+                "bg-chetwode-blue-300 dark:bg-chetwode-blue-200 dark:text-chetwode-blue-950"
               }`}
               onClick={() => setCurrentPage(idx + 1)}
             >
