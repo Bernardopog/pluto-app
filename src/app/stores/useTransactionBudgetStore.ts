@@ -63,6 +63,7 @@ interface ITransactionBudgetStore {
   getTotalMonthlyExpenses: () => number;
   getTotalBudgetLimit: () => number;
   getExpenseFromCurrentMonth: (budgetId: number) => number;
+  getTransactionsOfCurrentMonth: () => ITransaction[];
 
   // Internal
   isCurrentMonth: (date: string | Date) => boolean;
@@ -368,6 +369,8 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         .transactionData.list.filter((t) => get().isCurrentMonth(t.date))
         .filter((t) => t.value < 0)
         .reduce((acc, t) => acc + t.value, 0),
+    getTransactionsOfCurrentMonth: () =>
+      get().transactionData.list.filter((t) => get().isCurrentMonth(t.date)),
     getExpenseFromCurrentMonth: (budgetId) => {
       return get()
         .transactionData.list.filter((t) => get().isCurrentMonth(t.date))

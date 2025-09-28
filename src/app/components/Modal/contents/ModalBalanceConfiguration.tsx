@@ -33,9 +33,13 @@ export default function ModalBalanceConfiguration() {
       }))
     );
 
-  const transactionList = useTransactionBudgetStore(
-    (s) => s.transactionData.list
-  );
+  const { transactionList, getTransactionsOfCurrentMonth } =
+    useTransactionBudgetStore(
+      useShallow((s) => ({
+        transactionList: s.transactionData.list,
+        getTransactionsOfCurrentMonth: s.getTransactionsOfCurrentMonth,
+      }))
+    );
 
   const [valueToBalance, setValueToBalance] = useState<number>(balance);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -61,12 +65,7 @@ export default function ModalBalanceConfiguration() {
 
   const txnExpensesValue: number = useMemo(
     () =>
-      transactionList
-        .filter(
-          (txn) =>
-            txn.date.getMonth() === currentMonth &&
-            txn.date.getFullYear() === currentYear
-        )
+      getTransactionsOfCurrentMonth()
         .filter((txn) => txn.value < 0)
         .reduce((acc, item) => acc + item.value, 0),
     [transactionList, currentMonth, currentYear]
