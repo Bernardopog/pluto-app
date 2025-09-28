@@ -22,6 +22,7 @@ export default function DashboardBudgetLegend({
   const { getExpenseFromCurrentMonth, getMonthBudgetRest } =
     useTransactionBudgetStore(
       useShallow((s) => ({
+        transactionList: s.transactionData.list,
         getExpenseFromCurrentMonth: s.getExpenseFromCurrentMonth,
         getMonthBudgetRest: s.getMonthBudgetRest,
       }))
@@ -39,37 +40,38 @@ export default function DashboardBudgetLegend({
         <li className="border-l-4 pl-2" style={{ borderColor: `#a9a9a9` }}>
           Renda Restante: {moneyFormatter(rest)}
         </li>
-        {budget.map((budgetItem) => (
-          <li
-            key={budgetItem.id}
-            className="border-l-4 pl-2"
-            style={{ borderColor: `${budgetItem.color}` }}
-          >
-            {budgetItem.name}:{" "}
-            {typeOfLegend === "expenses-limit" ? (
-              <span>
-                {moneyFormatter(
-                  Math.abs(getExpenseFromCurrentMonth(budgetItem.id))
-                )}
-                <span className="inline-flex gap-2 text-chetwode-blue-950/60 dark:text-chetwode-blue-50/60">
-                  {" "}
-                  /{moneyFormatter(budgetItem.limit)}
-                  {Math.abs(getExpenseFromCurrentMonth(budgetItem.id)) >
-                    budgetItem.limit && <MdWarning className="text-xl" />}
+        {budget.map((budgetItem) => {
+          const expense = getExpenseFromCurrentMonth(budgetItem.id);
+          const rest = getMonthBudgetRest(budgetItem.id);
+          return (
+            <li
+              key={budgetItem.id}
+              className="border-l-4 pl-2"
+              style={{ borderColor: `${budgetItem.color}` }}
+            >
+              {budgetItem.name}:{" "}
+              {typeOfLegend === "expenses-limit" ? (
+                <span>
+                  {moneyFormatter(Math.abs(expense))}
+                  <span className="inline-flex gap-2 text-chetwode-blue-950/60 dark:text-chetwode-blue-50/60">
+                    {" "}
+                    /{moneyFormatter(budgetItem.limit)}
+                    {Math.abs(expense) > budgetItem.limit && (
+                      <MdWarning className="text-xl" />
+                    )}
+                  </span>
                 </span>
-              </span>
-            ) : (
-              <span className="inline-flex gap-2">
-                {moneyFormatter(getMonthBudgetRest(budgetItem.id))}{" "}
-                <span className="text-chetwode-blue-950/60 dark:text-chetwode-blue-50/60">
-                  {getMonthBudgetRest(budgetItem.id) < 0 && (
-                    <MdWarning className="text-xl" />
-                  )}
+              ) : (
+                <span className="inline-flex gap-2">
+                  {moneyFormatter(rest)}{" "}
+                  <span className="text-chetwode-blue-950/60 dark:text-chetwode-blue-50/60">
+                    {rest < 0 && <MdWarning className="text-xl" />}
+                  </span>
                 </span>
-              </span>
-            )}
-          </li>
-        ))}
+              )}
+            </li>
+          );
+        })}
       </ul>
     </>
   );
