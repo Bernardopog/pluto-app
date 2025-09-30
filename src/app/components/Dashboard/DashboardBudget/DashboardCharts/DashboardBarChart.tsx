@@ -19,8 +19,11 @@ export default function BarChart({ budget, transactions }: IBarChartProps) {
     countRef.current = -1;
   }, []);
 
-  const options = {
+  const options: ApexOptions = {
     chart: {
+      toolbar: {
+        show: false,
+      },
       type: "bar",
       height: 350,
       stacked: true,
@@ -97,12 +100,7 @@ export default function BarChart({ budget, transactions }: IBarChartProps) {
   return (
     <>
       {typeof window !== "undefined" && window && (
-        <Chart
-          options={options as ApexOptions}
-          series={series}
-          type="bar"
-          height={"125%"}
-        />
+        <Chart options={options} series={series} type="bar" height={"125%"} />
       )}
     </>
   );
