@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <main className="flex flex-col items-center justify-center h-screen max-h-[calc(100dvh-2px)] p-0 bg-gradient-to-t from-chetwode-blue-100 to-chetwode-blue-300">
+    <main className="flex flex-col items-center justify-center h-screen max-h-[calc(100dvh)] p-0 bg-gradient-to-t from-chetwode-blue-100 to-chetwode-blue-400 dark:from-chetwode-blue-800 dark:to-chetwode-blue-950">
       <section className="flex flex-col gap-2 rounded-lg">
         <h2 className="subtitle text-center">Login</h2>
         <LoginForm />
