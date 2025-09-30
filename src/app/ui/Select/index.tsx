@@ -57,7 +57,9 @@ export default function Select({
       {isOpen && (
         <ul
           role="listbox"
-          className={`flex flex-col absolute top-10 left-0 w-full gap-2 border-2 rounded-lg shadow-lg bg-chetwode-blue-200 border-chetwode-blue-600`}
+          className={`absolute top-10 left-0 w-full gap-2 border-2 rounded-lg shadow-lg bg-chetwode-blue-200 border-chetwode-blue-600 ${
+            list.length < 5 ? "flex flex-col" : "grid grid-cols-2"
+          }`}
         >
           {list.map((item) => (
             <li
@@ -65,8 +67,12 @@ export default function Select({
               onClick={() => handleSetValue(item.value, item.id)}
               role="option"
               aria-selected={state === item.value}
-              className={`p-2 cursor-pointer duration-300 ease-in-out hover:bg-chetwode-blue-300 first:rounded-t-lg last:rounded-b-lg ${
+              className={`p-2 cursor-pointer duration-300 ease-in-out hover:bg-chetwode-blue-300 ${
                 state === item.value ? "bg-chetwode-blue-300" : ""
+              } ${
+                list.length < 5
+                  ? "first:rounded-t-lg last:rounded-b-lg"
+                  : "rounded-lg"
               }`}
             >
               {item.name}
