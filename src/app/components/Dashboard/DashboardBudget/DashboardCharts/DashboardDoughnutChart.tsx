@@ -1,3 +1,4 @@
+import { useThemeStore } from "@/app/stores/useThemeStore";
 import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
 import { IBudget } from "@/interfaces/IBudget";
 import { ITransaction } from "@/interfaces/ITransaction";
@@ -29,6 +30,7 @@ export default function DoughnutChart({
   const getTotalMonthlyExpenses = useTransactionBudgetStore(
     (s) => s.getTotalMonthlyExpenses
   );
+  const theme = useThemeStore((s) => s.theme);
 
   const expensesPerMonth = useMemo(
     () =>
@@ -75,7 +77,8 @@ export default function DoughnutChart({
       },
     },
     stroke: {
-      width: 0,
+      colors: theme === "light" ? ["#f6f6f6"] : ["#453181"],
+      width: 4,
     },
     plotOptions: {
       pie: {
