@@ -13,7 +13,7 @@ export default function ModalVaultCategory({
 
   return (
     <>
-      <p className="mt-2 text-chetwode-blue-950">
+      <p className="mt-2 text-chetwode-blue-950 dark:text-chetwode-blue-50">
         Selecione qual categoria deve receber o item
       </p>
       <ul className="grid grid-cols-4 gap-4">
@@ -23,7 +23,7 @@ export default function ModalVaultCategory({
             style={{ borderLeftColor: bdgt.color }}
             className={`border-l-8 rounded-lg duration-300 ease-in-out ${
               bdgt.id === vaultItemBudgetAssignedId
-                ? "bg-chetwode-blue-900 text-chetwode-blue-100 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-700"
+                ? "bg-chetwode-blue-900 text-chetwode-blue-100 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-700 dark:bg-chetwode-blue-700"
                 : "bg-chetwode-blue-200 text-chetwode-blue-950 hover:bg-chetwode-blue-300 active:bg-chetwode-blue-400"
             }`}
           >

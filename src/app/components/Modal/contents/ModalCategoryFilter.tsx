@@ -39,7 +39,7 @@ export default function ModalCategoryFilter() {
             key={category.id}
             className={`rounded-lg border-l-8 duration-300 ease-in-out hover:brightness-95 active:brightness-75 ${
               category.id === selectedCategory
-                ? "bg-chetwode-blue-900 text-chetwode-blue-100 font-bold"
+                ? "bg-chetwode-blue-900 text-chetwode-blue-100 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50"
                 : "bg-chetwode-blue-200 text-chetwode-blue-950"
             }`}
             style={{ borderColor: `${category.color}` }}

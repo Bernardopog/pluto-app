@@ -41,7 +41,9 @@ export default function ModalVault({ type }: { type: "create" | "update" }) {
           minLimit={0}
         />
       </div>
-      <p className="text-chetwode-blue-950">Selecione um ícone:</p>
+      <p className="text-chetwode-blue-950 dark:text-chetwode-blue-50">
+        Selecione um ícone:
+      </p>
       <ul className="flex items-start min-h-32 p-2 gap-2 rounded-lg bg-chetwode-blue-200">
         {iconsArray.map((icon) => (
           <li
@@ -58,7 +60,7 @@ export default function ModalVault({ type }: { type: "create" | "update" }) {
         ))}
       </ul>
       {hasError && (
-        <p className="text-red-600">
+        <p className="text-red-600 dark:text-red-400">
           Parece que tem algum erro no formulário, certifique-se de escolher um
           nome, um valor alvo e um ícone.
         </p>

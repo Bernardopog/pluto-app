@@ -38,11 +38,11 @@ export default function ModalVaultDelete() {
 
   return (
     <div className="flex flex-col">
-      <p className="text-2xl text-center text-chetwode-blue-950">
+      <p className="text-2xl text-center text-chetwode-blue-950 dark:text-chetwode-blue-100">
         Você tem certeza que quer deletar esse Cofre e suas poupanças?
       </p>
       {selectedVault && (
-        <div className="flex flex-col p-2 rounded-lg text-2xl text-center text-chetwode-blue-950 bg-chetwode-blue-200">
+        <div className="flex flex-col p-2 rounded-lg text-2xl text-center text-chetwode-blue-950 bg-chetwode-blue-200 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50">
           <span>Nome: {selectedVault.name}</span>
           <span>Limite: {moneyFormatter(selectedVault.targetPrice)}</span>
           <span>
@@ -51,7 +51,7 @@ export default function ModalVaultDelete() {
           </span>
         </div>
       )}
-      <p className="text-2xl text-center text-red-900">
+      <p className="text-2xl text-center text-red-900 dark:text-red-400">
         Essa ação nao pode ser desfeita!
       </p>
       <div className="flex self-end gap-x-2">

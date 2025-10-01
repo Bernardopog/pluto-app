@@ -49,14 +49,16 @@ export default function ModalVaultItem({
         icon={<MdAttachMoney />}
       />
       <Divider direction="horizontal" className="mt-2" />
-      <h3 className="subsubtitle text-chetwode-blue-950">Cofre:</h3>
+      <h3 className="subsubtitle text-chetwode-blue-950 dark:text-chetwode-blue-50">
+        Cofre:
+      </h3>
       <ul className="grid grid-cols-4 gap-4">
         {vaultList.map((vault) => (
           <li
             key={vault.id}
             className={`rounded-lg duration-300 ease-in-out ${
               vault.id === vaultAssignedId
-                ? "bg-chetwode-blue-900 text-chetwode-blue-100 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-700"
+                ? "bg-chetwode-blue-900 text-chetwode-blue-100 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-700 dark:bg-chetwode-blue-700 dark:hover:bg-chetwode-blue-600 dark:active:bg-chetwode-blue-500"
                 : "bg-chetwode-blue-200 text-chetwode-blue-950 hover:bg-chetwode-blue-300 active:bg-chetwode-blue-400"
             }`}
           >
@@ -71,7 +73,9 @@ export default function ModalVaultItem({
         ))}
       </ul>
       <Divider direction="horizontal" className="mt-2" />
-      <h3 className="subsubtitle text-chetwode-blue-950">Transação:</h3>
+      <h3 className="subsubtitle text-chetwode-blue-950 dark:text-chetwode-blue-50">
+        Transação:
+      </h3>
       <Checkbox
         state={integrateWithTxn}
         setState={() => setIntegrateWithTxn(!integrateWithTxn)}
@@ -85,7 +89,7 @@ export default function ModalVaultItem({
       )}
       <Divider direction="horizontal" className="mt-2" />
       {hasError && (
-        <p className="text-red-600">
+        <p className="text-red-600 dark:text-red-400">
           Parece que tem algum erro no formulário, certifique-se de escolher um
           nome, um valor alvo e um ícone.
           {integrateWithTxn &&

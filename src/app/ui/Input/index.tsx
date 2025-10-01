@@ -51,8 +51,16 @@ function BasicInput({
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={id} className="text-chetwode-blue-950">
-        {label} {required && <span className="text-chetwode-blue-600">*</span>}
+      <label
+        htmlFor={id}
+        className="text-chetwode-blue-950 dark:text-chetwode-blue-50"
+      >
+        {label}{" "}
+        {required && (
+          <span className="text-chetwode-blue-600 dark:text-chetwode-blue-400">
+            *
+          </span>
+        )}
       </label>
       <input
         type={type}
@@ -60,7 +68,7 @@ function BasicInput({
         name={name ?? id}
         id={id}
         step={step ?? "0.01"}
-        className="p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600"
+        className="p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600 dark:text-chetwode-blue-950"
         value={state}
         onChange={handleInputChange}
         required={required}
@@ -97,8 +105,16 @@ function DecoratedInput({
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={id} className="text-chetwode-blue-950">
-        {label} {required && <span className="text-chetwode-blue-600">*</span>}
+      <label
+        htmlFor={id}
+        className="text-chetwode-blue-950 dark:text-chetwode-blue-50"
+      >
+        {label}{" "}
+        {required && (
+          <span className="text-chetwode-blue-600 dark:text-chetwode-blue-400">
+            *
+          </span>
+        )}
       </label>
       <div className="relative w-full">
         <input
@@ -107,7 +123,7 @@ function DecoratedInput({
           name={name ?? id}
           id={id}
           step={step ?? "0.01"}
-          className="peer w-full p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600"
+          className="peer w-full p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600 dark:text-chetwode-blue-950"
           value={state}
           onChange={handleInputChange}
           required={required}

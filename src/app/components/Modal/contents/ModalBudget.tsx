@@ -113,10 +113,10 @@ export default function ModalBudget({ type }: IModalBudgetProps) {
           icon={<MdPieChart />}
           minLimit={0}
         />
-        <div className="flex flex-col mt-2 gap-2 text-chetwode-blue-950">
+        <div className="flex flex-col mt-2 gap-2 text-chetwode-blue-950 dark:text-chetwode-blue-200">
           <span>
             Orçamento total alocado:{" "}
-            <span className="inline-block px-1 rounded-sm font-bold text-chetwode-blue-600 bg-chetwode-blue-200">
+            <span className="inline-block px-1 rounded-sm font-bold text-chetwode-blue-600 bg-chetwode-blue-200 dark:text-chetwode-blue-800">
               {moneyFormatter(getTotalBudgetLimit())}
             </span>
             {getTotalBudgetLimit() > income && (
@@ -128,14 +128,14 @@ export default function ModalBudget({ type }: IModalBudgetProps) {
           </span>
           <span>
             Renda:{" "}
-            <span className="inline-block px-1 rounded-sm font-bold text-chetwode-blue-600 bg-chetwode-blue-200">
+            <span className="inline-block px-1 rounded-sm font-bold text-chetwode-blue-600 bg-chetwode-blue-200 dark:text-chetwode-blue-800">
               {moneyFormatter(income)}
             </span>
           </span>
         </div>
       </div>
       {hasError && (
-        <p className="text-red-600">
+        <p className="text-red-600 dark:text-red-400">
           Parece que tem algum erro no formulário, certifique-se de escolher um
           nome, um limite e uma cor.
         </p>

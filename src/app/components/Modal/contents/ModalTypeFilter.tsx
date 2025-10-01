@@ -36,7 +36,7 @@ export default function ModalTypeFilter() {
   return (
     <form className="flex flex-col" onSubmit={handleSubmit}>
       <fieldset className="flex flex-col gap-2">
-        <div className="flex items-center justify-between p-2 rounded-lg bg-chetwode-blue-200">
+        <div className="flex items-center justify-between p-2 rounded-lg bg-chetwode-blue-200 dark:bg-chetwode-blue-700">
           <Radio
             id="all"
             name="type"
@@ -44,9 +44,9 @@ export default function ModalTypeFilter() {
             setState={() => setSelectedType("all")}
             label="Todos tipos de Transação"
           />
-          <MdDragHandle className="text-xl text-chetwode-blue-800" />
+          <MdDragHandle className="text-xl text-chetwode-blue-800 dark:text-chetwode-blue-200" />
         </div>
-        <div className="flex items-center justify-between p-2 rounded-lg bg-red-200">
+        <div className="flex items-center justify-between p-2 rounded-lg bg-red-200 dark:bg-red-800">
           <Radio
             id="expenses"
             name="type"
@@ -54,9 +54,9 @@ export default function ModalTypeFilter() {
             setState={() => setSelectedType("expenses")}
             label="Despesas"
           />
-          <MdPlayArrow className="text-xl rotate-90 text-red-800" />
+          <MdPlayArrow className="text-xl rotate-90 text-red-800 dark:text-red-200" />
         </div>
-        <div className="flex items-center justify-between p-2 rounded-lg bg-green-200">
+        <div className="flex items-center justify-between p-2 rounded-lg bg-green-200 dark:bg-green-800">
           <Radio
             id="revenue"
             name="type"
@@ -64,7 +64,7 @@ export default function ModalTypeFilter() {
             setState={() => setSelectedType("revenue")}
             label="Receitas"
           />
-          <MdPlayArrow className="text-xl rotate-270 text-green-800" />
+          <MdPlayArrow className="text-xl rotate-270 text-green-800 dark:text-green-200" />
         </div>
       </fieldset>
       <div className="flex self-end gap-x-2">

@@ -63,8 +63,8 @@ export default function ModalTransaction({ type }: IModalTransactionProps) {
           <div
             className={`w-full p-1 border-2 rounded-lg duration-300 ease-in-out ${
               transactionType === "outcome"
-                ? "bg-red-300 border-red-600"
-                : "bg-chetwode-blue-200 border-transparent"
+                ? "bg-red-300 border-red-600 dark:bg-red-800 dark:border-red-900"
+                : "bg-chetwode-blue-200 border-transparent dark:bg-chetwode-blue-600"
             }`}
           >
             <Radio
@@ -78,8 +78,8 @@ export default function ModalTransaction({ type }: IModalTransactionProps) {
           <div
             className={`w-full p-1 border-2 rounded-lg duration-300 ease-in-out ${
               transactionType === "income"
-                ? "bg-green-300 border-green-600"
-                : "bg-chetwode-blue-200 border-transparent"
+                ? "bg-green-300 border-green-600 dark:bg-green-600 dark:border-green-900"
+                : "bg-chetwode-blue-200 border-transparent dark:bg-chetwode-blue-600"
             }`}
           >
             <Radio
@@ -123,7 +123,7 @@ export default function ModalTransaction({ type }: IModalTransactionProps) {
         </>
       )}
       {hasError && (
-        <p className="text-red-600">
+        <p className="text-red-600 dark:text-red-400">
           Parece que tem algum erro no formulário, certifique-se de escolher uma
           categoria, um nome e um valor.
           {integrateWithVault && " Certifique-se de escolher um cofre"}

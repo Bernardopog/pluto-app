@@ -13,7 +13,7 @@ export default function ModalTransactionVault({
 
   return (
     <>
-      <p className="mt-2 text-chetwode-blue-950">
+      <p className="mt-2 text-chetwode-blue-950 dark:text-chetwode-blue-50">
         Selecione qual cofre deve receber a transação
       </p>
       <ul className="flex flex-wrap gap-2">

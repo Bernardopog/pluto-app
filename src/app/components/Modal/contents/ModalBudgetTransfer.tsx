@@ -55,22 +55,22 @@ export default function ModalBudgetTransfer() {
 
   return (
     <div className="flex flex-col">
-      <p className="text-2xl text-center text-chetwode-blue-950">
+      <p className="text-2xl text-center text-chetwode-blue-950 dark:text-chetwode-blue-100">
         Você tem certeza que quer deletar essa Categoria de Orçamento ?
       </p>
       {budgetSelection.selected && (
-        <div className="flex flex-col p-2 rounded-lg text-2xl text-center text-chetwode-blue-950 bg-chetwode-blue-200">
+        <div className="flex flex-col p-2 rounded-lg text-2xl text-center text-chetwode-blue-950 bg-chetwode-blue-200 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50">
           <span>Nome: {budgetSelection.selected.name}</span>
           <span>
             Limite: {moneyFormatter(Math.abs(budgetSelection.selected.limit))}
           </span>
         </div>
       )}
-      <p className="text-2xl text-center text-red-900">
+      <p className="text-2xl text-center text-red-900 dark:text-red-400">
         Essa ação nao pode ser desfeita!
       </p>
-      <section className="rounded-lg mt-2 p-2 bg-chetwode-blue-100">
-        <h3 className="subsubtitle">
+      <section className="rounded-lg mt-2 p-2 bg-chetwode-blue-100 dark:bg-chetwode-blue-700">
+        <h3 className="subsubtitle text-center">
           Para qual Orçamento as transações de{" "}
           {
             budgetList.find((bdgt) => bdgt.id === budgetSelection.selected?.id)

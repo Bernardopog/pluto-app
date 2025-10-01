@@ -34,7 +34,7 @@ export default function ModalGoalReassign() {
   return (
     <form className="flex flex-col" onSubmit={handleReassign}>
       <h2 className="subtitle">Reatribuição de cofre</h2>
-      <p className="text-chetwode-blue-950">
+      <p className="text-chetwode-blue-950 dark:text-chetwode-blue-300">
         Seu objetivo está ligado a um cofre, mas o cofre em questão não pode ser
         encontrado, então você pode reatribuir o seu objetivo para um outro
         cofre existente.

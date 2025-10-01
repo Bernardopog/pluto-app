@@ -125,8 +125,8 @@ export default function ModalGoals() {
         <div
           className={`p-1 border-2  w-full rounded-lg duration-300 ease-in-out ${
             baseProgress === "balance"
-              ? "bg-chetwode-blue-300 border-chetwode-blue-600"
-              : "bg-chetwode-blue-200 border-transparent"
+              ? "bg-chetwode-blue-300 border-chetwode-blue-600 dark:bg-chetwode-blue-800 dark:border-chetwode-blue-950"
+              : "bg-chetwode-blue-200 border-transparent dark:bg-chetwode-blue-600"
           }`}
         >
           <Radio
@@ -140,8 +140,8 @@ export default function ModalGoals() {
         <div
           className={`p-1 border-2  w-full rounded-lg duration-300 ease-in-out ${
             baseProgress === "vault"
-              ? "bg-chetwode-blue-300 border-chetwode-blue-600"
-              : "bg-chetwode-blue-200 border-transparent"
+              ? "bg-chetwode-blue-300 border-chetwode-blue-600 dark:bg-chetwode-blue-800 dark:border-chetwode-blue-950"
+              : "bg-chetwode-blue-200 border-transparent dark:bg-chetwode-blue-600"
           }`}
         >
           <Radio

@@ -17,14 +17,14 @@ export default function ModalStats() {
             key={index}
             className={`relative rounded-lg duration-300 ease-in-out ${
               statList.includes(keyName as StatType)
-                ? "bg-chetwode-blue-900 text-chetwode-blue-100 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-700"
-                : "bg-chetwode-blue-100 text-chetwode-blue-950 hover:bg-chetwode-blue-200 active:bg-chetwode-blue-300"
+                ? "bg-chetwode-blue-900 text-chetwode-blue-100 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-700 dark:bg-chetwode-blue-200 dark:text-chetwode-blue-950 dark:hover:bg-chetwode-blue-300 dark:active:bg-chetwode-blue-400"
+                : "bg-chetwode-blue-100 text-chetwode-blue-950 hover:bg-chetwode-blue-200 active:bg-chetwode-blue-300 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50 dark:hover:bg-chetwode-blue-600 dark:active:bg-chetwode-blue-500"
             }`}
           >
             {statList.includes(keyName as StatType) && (
               <button
                 className={
-                  "absolute p-0.5 rounded-lg bg-chetwode-blue-100 text-chetwode-blue-950 top-0 right-0"
+                  "absolute p-0.5 rounded-lg bg-chetwode-blue-100 text-chetwode-blue-950 top-0 right-0 dark:bg-chetwode-blue-400"
                 }
                 onClick={() => removeMany(keyName as StatType)}
               >

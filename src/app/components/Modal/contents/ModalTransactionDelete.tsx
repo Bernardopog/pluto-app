@@ -87,7 +87,7 @@ export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
 
   return (
     <div className="flex flex-col">
-      <p className="text-2xl text-center text-chetwode-blue-950">
+      <p className="text-2xl text-center text-chetwode-blue-950 dark:text-chetwode-blue-50">
         Você tem certeza que quer deletar{" "}
         {type === "individual"
           ? "essa Transação"
@@ -97,7 +97,7 @@ export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
         ?
       </p>
       {transactionSelection.selected && type === "individual" && (
-        <div className="flex flex-col p-2 rounded-lg text-2xl text-center text-chetwode-blue-950 bg-chetwode-blue-200">
+        <div className="flex flex-col p-2 rounded-lg text-2xl text-center text-chetwode-blue-950 bg-chetwode-blue-200 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50">
           <span>Nome: {transactionSelection.selected.name}</span>
           <span>
             Valor:{" "}
@@ -116,17 +116,17 @@ export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
         </div>
       )}
       {type === "group" && (
-        <ul className="flex flex-col min-h-0 max-h-64 py-4 px-2 rounded-lg gap-4 bg-chetwode-blue-100">
+        <ul className="flex flex-col min-h-0 max-h-64 py-4 px-2 rounded-lg gap-4 bg-chetwode-blue-100 dark:bg-chetwode-blue-700">
           {transactionDeletion.list.map((txnId) =>
             transactionList.map(
               (transaction) =>
                 transaction.id === txnId && (
                   <li
                     key={transaction.id}
-                    className={`p-1 rounded-lg shadow-md bg-gradient-to-r from-[50%] to-[200%] text-chetwode-blue-950 ${
+                    className={`p-1 rounded-lg shadow-md bg-gradient-to-r from-[50%] to-[200%] text-chetwode-blue-950 dark:text-chetwode-blue-50 ${
                       transaction.value >= 0
-                        ? "from-chetwode-blue-200 to-red-200"
-                        : "from-chetwode-blue-200 to-green-200"
+                        ? "from-chetwode-blue-200 to-green-200 dark:from-chetwode-blue-800 dark:to-green-500"
+                        : "from-chetwode-blue-200 to-red-200 dark:from-chetwode-blue-800 dark:to-red-500"
                     }`}
                   >
                     <p className="flex justify-between">
@@ -139,7 +139,7 @@ export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
           )}
         </ul>
       )}
-      <p className="text-2xl text-center text-red-900">
+      <p className="text-2xl text-center text-red-900 dark:text-red-400">
         Essa ação nao pode ser desfeita!
       </p>
       <div className="flex self-end gap-x-2">
