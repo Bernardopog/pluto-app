@@ -48,14 +48,19 @@ export default function TransactionAction() {
   };
 
   const handleExport = () => {
-    const formattedList = transactionList.map((txn) => ({
-      Nome: txn.name,
-      Valor: txn.value.toFixed(2).replace(".", ","),
-      Data: txn.date.toISOString().split("T")[0],
-      Categoria:
-        budgetList.find((bdgt) => bdgt.id === txn.categoryId)?.name ||
-        "Sem categoria",
-    }));
+    const formattedList = transactionList.map((txn) => {
+      const date = txn.date;
+      const newDate = new Date(date);
+
+      return {
+        Nome: txn.name,
+        Valor: txn.value.toFixed(2).replace(".", ","),
+        Data: newDate.toISOString().split("T")[0],
+        Categoria:
+          budgetList.find((bdgt) => bdgt.id === txn.categoryId)?.name ||
+          "Sem categoria",
+      };
+    });
 
     const header = Object.keys(formattedList[0]).join(";");
 
