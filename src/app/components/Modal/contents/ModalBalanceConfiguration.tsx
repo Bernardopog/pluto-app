@@ -68,6 +68,7 @@ export default function ModalBalanceConfiguration() {
       getTransactionsOfCurrentMonth()
         .filter((txn) => txn.value < 0)
         .reduce((acc, item) => acc + item.value, 0),
+    // eslint-disable-next-line
     [transactionList, currentMonth, currentYear]
   );
 
