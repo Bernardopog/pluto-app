@@ -73,21 +73,25 @@ export default function ModalVaultItem({
         ))}
       </ul>
       <Divider direction="horizontal" className="mt-2" />
-      <h3 className="subsubtitle text-chetwode-blue-950 dark:text-chetwode-blue-50">
-        Transação:
-      </h3>
-      <Checkbox
-        state={integrateWithTxn}
-        setState={() => setIntegrateWithTxn(!integrateWithTxn)}
-        label="Integrar com Transação"
-      />
-      {integrateWithTxn && (
-        <ModalVaultCategory
-          vaultItemBudgetAssignedId={vaultItemBudgetAssignedId}
-          setVaultItemBudgetAssignedId={setVaultItemBudgetAssignedId}
-        />
+      {type === "create" && (
+        <>
+          <h3 className="subsubtitle text-chetwode-blue-950 dark:text-chetwode-blue-50">
+            Transação:
+          </h3>
+          <Checkbox
+            state={integrateWithTxn}
+            setState={() => setIntegrateWithTxn(!integrateWithTxn)}
+            label="Integrar com Transação"
+          />
+          {integrateWithTxn && (
+            <ModalVaultCategory
+              vaultItemBudgetAssignedId={vaultItemBudgetAssignedId}
+              setVaultItemBudgetAssignedId={setVaultItemBudgetAssignedId}
+            />
+          )}
+          <Divider direction="horizontal" className="mt-2" />
+        </>
       )}
-      <Divider direction="horizontal" className="mt-2" />
       {hasError && (
         <p className="text-red-600 dark:text-red-400">
           Parece que tem algum erro no formulário, certifique-se de escolher um
