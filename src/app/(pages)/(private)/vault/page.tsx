@@ -1,7 +1,7 @@
-import VaultAction from "@/app/layout/Vault/VaultAction";
-import VaultChart from "@/app/layout/Vault/VaultChart";
-import VaultList from "@/app/layout/Vault/VaultList";
-import VaultOverview from "@/app/layout/Vault/VaultOverview";
+import VaultAction from "@/layout/Vault/VaultAction";
+import VaultChart from "@/layout/Vault/VaultChart";
+import VaultList from "@/layout/Vault/VaultList";
+import VaultOverview from "@/layout/Vault/VaultOverview";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

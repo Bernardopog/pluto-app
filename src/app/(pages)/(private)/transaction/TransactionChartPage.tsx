@@ -1,11 +1,11 @@
 "use client";
 
-import { useTransactionBudgetStore } from "@/app/stores/useTransactionBudgetStore";
+import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 
 import { ApexOptions } from "apexcharts";
-import TransactionChartController from "@/app/components/TransactionPage/TransactionChartController";
+import TransactionChartController from "@/components/TransactionPage/TransactionChartController";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export type TransactionChartType =

@@ -1,7 +1,7 @@
-import BudgetAction from "@/app/layout/Budget/BudgetAction";
-import BudgetChart from "@/app/layout/Budget/BudgetChart";
-import BudgetList from "@/app/layout/Budget/BudgetList";
-import BudgetOverview from "@/app/layout/Budget/BudgetOverview";
+import BudgetAction from "@/layout/Budget/BudgetAction";
+import BudgetChart from "@/layout/Budget/BudgetChart";
+import BudgetList from "@/layout/Budget/BudgetList";
+import BudgetOverview from "@/layout/Budget/BudgetOverview";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

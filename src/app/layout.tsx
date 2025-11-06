@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "./layout/Navbar";
-import Modal from "./layout/Modal";
-import ActionMessage from "./components/ActionMessage";
-import ThemeToggler from "./layout/ThemeToggler/ThemeToggler";
+import Navbar from "../layout/Navbar";
+import Modal from "../layout/Modal";
+import ActionMessage from "../components/ActionMessage";
+import ThemeToggler from "../layout/ThemeToggler/ThemeToggler";
 import { cookies } from "next/headers";
 
 const dmSans = DM_Sans({

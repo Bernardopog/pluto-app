@@ -3,8 +3,8 @@
 import { useState } from "react";
 import TransactionTablePage from "./TransactionTablePage";
 import TransactionChartPage from "./TransactionChartPage";
-import TransactionSwitchViewButton from "@/app/components/TransactionPage/TransactionSwitchView/TransactionSwitchViewButton";
-import Inert from "@/app/components/Inert";
+import TransactionSwitchViewButton from "@/components/TransactionPage/TransactionSwitchView/TransactionSwitchViewButton";
+import Inert from "@/components/Inert";
 
 export default function TransactionViewSwitcher() {
   const [view, setView] = useState<"table" | "chart">("table");

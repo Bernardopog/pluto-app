@@ -1,5 +1,5 @@
-import LoginForm from "@/app/layout/Login/LoginForm";
-import Divider from "@/app/ui/Divider";
+import LoginForm from "@/layout/Login/LoginForm";
+import Divider from "@/ui/Divider";
 import { Metadata } from "next";
 import Link from "next/link";
 

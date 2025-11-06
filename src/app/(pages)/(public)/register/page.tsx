@@ -1,5 +1,5 @@
-import RegisterForm from "@/app/layout/Register/RegisterForm";
-import Divider from "@/app/ui/Divider";
+import RegisterForm from "@/layout/Register/RegisterForm";
+import Divider from "@/ui/Divider";
 import { Metadata } from "next";
 import Link from "next/link";
 
