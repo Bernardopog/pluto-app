@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "preview": "next build && next start"
+    "preview": "next build && next start",
+    "generate": "prisma generate"
   },
   "dependencies": {
-    "@prisma/client": "^6.13.0",
+    "@prisma/client": "^6.19.0",
     "apexcharts": "^5.3.2",
     "bcrypt": "^6.0.0",
     "chart.js": "^4.4.9",
@@ -35,7 +36,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
-    "prisma": "^6.13.0",
+    "prisma": "^6.19.0",
     "tailwind-scrollbar": "^4.0.2",
     "tailwindcss": "^4",
     "tsx": "^4.20.5",
