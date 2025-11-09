@@ -1,8 +1,10 @@
+"use client"
 import { moneyFormatter } from "@/utils/moneyFormatter";
 import Link from "next/link";
 import { MdWarning } from "react-icons/md";
 import { BudgetListItemTxnHistory, BudgetListItemActions } from ".";
 import { IBudget } from "@/interfaces/IBudget";
+import { useState } from "react";
 
 interface IBudgetListItemProps extends IBudget {
   budgetLimit: number;
@@ -52,8 +54,10 @@ export default function BudgetListItem({
 
   const dataColor = formatColor(color);
 
+  const [showActionBtn, setShowActionBtn] = useState(false);
+
   return (
-    <li key={id} className="group flex flex-col items-center">
+    <li key={id} className="group flex flex-col items-center cursor-pointer" onClick={() => setShowActionBtn(!showActionBtn)}>
       <section
         style={{
           backgroundColor: `${dataColor.colorWithAlpha}`,
@@ -88,7 +92,7 @@ export default function BudgetListItem({
         </div>
         <BudgetListItemTxnHistory id={id} />
       </section>
-      <BudgetListItemActions id={id} />
+      <BudgetListItemActions id={id} open={showActionBtn}/>
     </li>
   );
 }

@@ -1,7 +1,12 @@
 import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
 import { MdAdd } from "react-icons/md";
 
-export default function BudgetListItemButton({ id }: { id: number }) {
+interface IBudgetListItemButtonProps {
+  id: number;
+  open: boolean
+}
+
+export default function BudgetListItemButton({ id }: IBudgetListItemButtonProps) {
   const select = useTransactionBudgetStore((s) => s.budgetSelection.select);
 
   return (
