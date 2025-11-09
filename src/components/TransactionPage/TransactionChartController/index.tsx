@@ -18,7 +18,7 @@ export default function TransactionChartController({
   setPassedDays,
 }: ITransactionChartControllerProps) {
   return (
-    <section className="flex flex-col ml-[5%] w-[95%] p-2 rounded-lg bg-chetwode-blue-200 shadow-md dark:bg-chetwode-blue-900">
+    <section className="flex flex-col mx-auto w-[90%] mt-2 p-2 rounded-lg bg-chetwode-blue-200 shadow-md dark:bg-chetwode-blue-900">
       <h2 className="subtitle">Controle</h2>
       <div className="flex gap-4">
         <div className="flex-1 p-2 rounded-lg shadow-md bg-chetwode-blue-100 dark:bg-chetwode-blue-800">
@@ -64,7 +64,7 @@ export default function TransactionChartController({
         </div>
         <div className="flex-1 p-2 rounded-lg shadow-md bg-chetwode-blue-100 dark:bg-chetwode-blue-800">
           <label htmlFor="days">
-            <h3 className="subsubtitle">Dias:</h3>
+            <h3 className="subsubtitle">Dias: <span className="text-sm text-chetwode-blue-50/50">(Max: 24 | Min: 4)</span></h3>
           </label>
           <Input
             type="number"

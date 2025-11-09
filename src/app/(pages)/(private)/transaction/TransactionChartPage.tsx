@@ -215,7 +215,7 @@ export default function TransactionChartPage() {
       <TransactionChartController
         {...{ chartType, setChartType, passedDays, setPassedDays }}
       />
-      <div className="relative mt-1 mx-auto w-9/10 h-full dark:bg-chetwode-blue-500">
+      <div className="relative mt-4 mx-auto w-9/10 h-full rounded-lg dark:bg-chetwode-blue-500">
         <Chart
           height={"100%"}
           options={options}
