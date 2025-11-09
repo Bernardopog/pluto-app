@@ -153,13 +153,13 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
         });
       budgetSelection.unselect();
     } else if (type === "create") {
-      budgetMethods.create(data).then(({ message, status, data }) =>
+      budgetMethods.create(data).then(({ message, status, data }) => {
         setMessage({
           message,
           status,
-          description: `Seu orçamento (${data?.name}) foi criado com sucesso!`,
+          description: status === 201 ? `Seu orçamento (${data?.name}) foi criado com sucesso!`: "Ocorreu um erro ao criar o orçamento",
         })
-      );
+      });
     }
     toggleModal();
   };
