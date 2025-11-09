@@ -68,7 +68,7 @@ function BasicInput({
         name={name ?? id}
         id={id}
         step={step ?? "0.01"}
-        className="p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600 dark:text-chetwode-blue-950"
+        className="p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50"
         value={state}
         onChange={handleInputChange}
         required={required}
@@ -123,14 +123,14 @@ function DecoratedInput({
           name={name ?? id}
           id={id}
           step={step ?? "0.01"}
-          className="peer w-full p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600 dark:text-chetwode-blue-950"
+          className="peer w-full p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50"
           value={state}
           onChange={handleInputChange}
           required={required}
           min={minLimit}
           max={maxLimit}
         />
-        <span className="flex items-center justify-center absolute right-0 top-1/2 h-full w-10 border-2 border-l-0 rounded-r-lg -translate-y-1/2 text-3xl bg-chetwode-blue-300 text-chetwode-blue-950 border-transparent duration-300 ease-in-out peer-focus:border-chetwode-blue-600">
+        <span className="flex items-center justify-center absolute right-0 top-1/2 h-full w-10 border-2 border-l-0 rounded-r-lg -translate-y-1/2 text-3xl bg-chetwode-blue-300 text-chetwode-blue-950 border-transparent duration-300 ease-in-out peer-focus:border-chetwode-blue-600 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-50">
           {icon}
         </span>
       </div>
