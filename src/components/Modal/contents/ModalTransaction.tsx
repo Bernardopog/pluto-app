@@ -94,7 +94,7 @@ export default function ModalTransaction({ type }: IModalTransactionProps) {
       </fieldset>
       <input
         type="date"
-        className="mt-6 px-4 py-1.5 rounded-lg bg-chetwode-blue-200 text-chetwode-blue-950 duration-300 ease-in-out disabled:grayscale-75 disabled:opacity-40"
+        className="mt-6 px-4 py-1.5 rounded-lg bg-chetwode-blue-200 text-chetwode-blue-950 duration-300 ease-in-out disabled:grayscale-75 disabled:opacity-40 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50"
         max={new Date().toISOString().split("T")[0]}
         value={transactionDate}
         onChange={(ev) => setTransactionDate(ev.target.value)}
