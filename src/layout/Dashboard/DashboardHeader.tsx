@@ -86,7 +86,7 @@ export default function DashboardHeader() {
           />
         </li>
         {financeData.loading ? (
-          <li className="relative sm:col-span-2 lg:col-span-3 xl:col-span-1">
+          <li className="relative">
             <div className="flex items-center justify-center relative h-full py-2 px-4 rounded-lg shadow-md overflow-hidden duration-300 ease-in-out border-b-2 border-transparent bg-star-dust-50 hover:-translate-y-2 hover:shadow-lg hover:border-chetwode-blue-70 dark:bg-chetwode-blue-900">
               <span className="text-2xl font-medium text-chetwode-blue-950/75 dark:text-chetwode-blue-50">
                 Carregando...
