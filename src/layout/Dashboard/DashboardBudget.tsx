@@ -8,6 +8,7 @@ import { useFinanceStore } from "@/stores/useFinanceStore";
 import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
 import MoreDetail from "@/ui/MoreDetail";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { useMemo } from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,9 +19,14 @@ export default function DashboardBudget() {
 
   const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
+  const currentMonthTxn = useTransactionBudgetStore((s) => s.getTransactionsOfCurrentMonth);
 
   const totalExpenses = getTotalExpenses();
   const rest = income + totalExpenses;
+
+  const budgetListHaveExpenses = useMemo(() => {
+    return budgetList.some((bdgt) => currentMonthTxn().some((txn) => txn.categoryId === bdgt.id && txn.value < 0))
+  },[budgetList, currentMonthTxn])
 
   return (
     <article
@@ -31,7 +37,7 @@ export default function DashboardBudget() {
         <h2 className="subtitle">Orçamento</h2>
         <MoreDetail href="/budget" />
       </header>
-      <DashboardBudgetChart budget={budgetList} rest={rest} />
+      {budgetList.length > 0 && budgetListHaveExpenses && <DashboardBudgetChart budget={budgetList} rest={rest} />}
       <DashboardBudgetLegend budget={budgetList} rest={rest} />
     </article>
   );
