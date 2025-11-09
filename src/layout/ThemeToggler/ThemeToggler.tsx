@@ -29,7 +29,7 @@ export default function ThemeToggler({
     <button
       type="button"
       onClick={handleToggle}
-      className={`fixed top-2 right-2 w-16 min-h-7 rounded-full  text-chetwode-blue-950 duration-300 ease-in-out ${
+      className={`fixed top-2 right-2 z-50 w-16 min-h-7 rounded-full  text-chetwode-blue-950 duration-300 ease-in-out ${
         isDarkMode ? "bg-chetwode-blue-800" : "bg-chetwode-blue-600"
       }`}
     >
