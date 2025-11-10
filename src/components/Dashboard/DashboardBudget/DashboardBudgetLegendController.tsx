@@ -17,7 +17,7 @@ export default function DashboardBudgetLegendController({
   };
 
   return (
-    <section className="flex justify-between mt-2">
+    <section className="flex flex-col justify-between mt-2 gap-2 md:flex-row md:gap-0 lg:flex-col lg:gap-2">
       <button
         type="button"
         className={`p-1 rounded-lg border ${
