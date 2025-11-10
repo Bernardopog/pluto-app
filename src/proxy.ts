@@ -1,5 +1,5 @@
 import { jwtVerify } from "jose";
-import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
+import { ProxyConfig, NextRequest, NextResponse } from "next/server";
 
 const publicRoutes = [
   { path: "/login", authenticated: "redirect" },
@@ -10,7 +10,7 @@ const publicRoutes = [
 
 const redirectTarget = "/login";
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const publicRoute = publicRoutes.find((route) => route.path === path);
 
@@ -53,6 +53,6 @@ export async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-export const config: MiddlewareConfig = {
+export const config: ProxyConfig = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico|sw.js).*)"],
 };
