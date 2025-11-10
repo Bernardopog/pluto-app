@@ -12,7 +12,7 @@ export default function page() {
   return (
     <main className="page">
       <h2 className="main-title">Cofre</h2>
-      <section className="vault-page grid min-h-[calc(100vh-32px-24px)]">
+      <section className="vault-page grid mt-2">
         <VaultOverview />
         <VaultAction />
         <VaultList />

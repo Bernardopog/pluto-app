@@ -2,10 +2,10 @@
   grid-template-areas:
     "overview"
     "action  "
-    "chart   "
-    "budgets ";
+    "budgets "
+    "chart   ";
   grid-template-columns: 1fr;
-  grid-template-rows: 0.25fr minmax(240px, 0.5fr) minmax(50vh, 1fr) 100vh;
+  grid-template-rows: 0.25fr minmax(240px, 0.5fr) 100vh minmax(50vh, 1fr);
   gap: 0.5rem;
 }
 
@@ -27,9 +27,9 @@
     grid-template-areas:
       "overview overview"
       "budgets  action  "
-      "chart    chart   ";
+      "budgets  chart   ";
     grid-template-columns: 1fr 0.75fr;
-    grid-template-rows: auto minmax(360px, 1fr) minmax(360px, 1fr);
+    grid-template-rows: auto minmax(360px, 0.5fr) minmax(360px, 0.5fr);
   }
 }
 
@@ -40,7 +40,7 @@
       "budgets  action  "
       "budgets  chart   ";
     grid-template-columns: 1fr 0.75fr;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto 1fr 0.5fr;
     gap: 1rem;
   }
 }

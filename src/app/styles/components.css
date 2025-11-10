@@ -1,6 +1,6 @@
 @layer components {
   .page {
-    @apply min-h-dvh p-2 pt-4 pb-4 lg:pb-2 bg-chetwode-blue-100 dark:bg-chetwode-blue-950;
+    @apply min-h-dvh p-2 pt-4 pb-4 lg:pb-2;
   }
 
   .main-title {

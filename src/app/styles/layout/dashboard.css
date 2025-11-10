@@ -7,7 +7,7 @@
     "moves"
     "stats";
   grid-template-columns: 1fr;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto repeat(5, minmax(0, 0.5fr));
   gap: 0.5rem;
 }
 
@@ -38,7 +38,7 @@
       "moves    stats   "
       "moves    budget  ";
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto 0.25fr 0.75fr 1fr;
+    grid-template-rows: auto 0.25fr 0.5fr 1fr;
   }
 }
 
@@ -50,7 +50,7 @@
       "moves    moves    budget  "
       "stats    stats    stats   ";
     grid-template-columns: repeat(3, 0.35fr);
-    grid-template-rows: auto auto 0.75fr 0.25fr;
+    grid-template-rows: 1fr minmax(200px, 0.25fr) minmax(0, min(75vh, 600px));
   }
 }
 
