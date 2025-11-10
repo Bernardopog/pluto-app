@@ -18,9 +18,9 @@ export default function TransactionChartController({
   setPassedDays,
 }: ITransactionChartControllerProps) {
   return (
-    <section className="flex flex-col mx-auto w-[90%] mt-2 p-2 rounded-lg bg-chetwode-blue-200 shadow-md dark:bg-chetwode-blue-900">
+    <section className="flex flex-col mx-auto w-full mt-2 p-2 rounded-lg bg-chetwode-blue-200 shadow-md dark:bg-chetwode-blue-900 lg:w-9/10">
       <h2 className="subtitle">Controle</h2>
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <div className="flex-1 p-2 rounded-lg shadow-md bg-chetwode-blue-100 dark:bg-chetwode-blue-800">
           <h3 className="subsubtitle">Geral:</h3>
           <Radio
