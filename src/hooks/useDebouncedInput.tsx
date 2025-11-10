@@ -1,9 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef, useState } from 'react';
 
 export const useDebouncedInput = () => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>('');
 
   const handleChangeDebounce = (value: string) => {
     if (timeoutRef.current) {

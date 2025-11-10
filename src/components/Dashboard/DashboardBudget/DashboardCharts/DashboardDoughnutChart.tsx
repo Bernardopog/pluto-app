@@ -1,12 +1,12 @@
-import { IBudget } from "@/interfaces/IBudget";
-import { ITransaction } from "@/interfaces/ITransaction";
-import { useThemeStore } from "@/stores/useThemeStore";
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
-import { ApexOptions } from "apexcharts";
+import type { ApexOptions } from 'apexcharts';
+import dynamic from 'next/dynamic';
+import { useMemo } from 'react';
+import type { IBudget } from '@/interfaces/IBudget';
+import type { ITransaction } from '@/interfaces/ITransaction';
+import { useThemeStore } from '@/stores/useThemeStore';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
 
-import dynamic from "next/dynamic";
-import { useMemo } from "react";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 interface IDoughnutChartProps {
   budget: IBudget[];
@@ -16,7 +16,7 @@ interface IDoughnutChartProps {
   angle: {
     start: number;
     end: number;
-    type: "full" | "half";
+    type: 'full' | 'half';
   };
 }
 
@@ -28,7 +28,7 @@ export default function DoughnutChart({
   angle,
 }: IDoughnutChartProps) {
   const getTotalMonthlyExpenses = useTransactionBudgetStore(
-    (s) => s.getTotalMonthlyExpenses
+    (s) => s.getTotalMonthlyExpenses,
   );
   const theme = useThemeStore((s) => s.theme);
 
@@ -37,14 +37,14 @@ export default function DoughnutChart({
       transactions.filter(
         (txn) =>
           new Date(txn.date).getMonth() === new Date().getMonth() &&
-          new Date(txn.date).getFullYear() === new Date().getFullYear()
+          new Date(txn.date).getFullYear() === new Date().getFullYear(),
       ),
-    [transactions]
+    [transactions],
   );
 
   const onlyExpenses = useMemo(
     () => expensesPerMonth.filter((txn) => txn.value < 0),
-    [expensesPerMonth]
+    [expensesPerMonth],
   );
 
   const series = [
@@ -60,13 +60,13 @@ export default function DoughnutChart({
     showRest ? rest : 0,
   ];
   const options: ApexOptions = {
-    labels: [...budget.map((bdgt) => bdgt.name), showRest ? "Restante" : ""],
+    labels: [...budget.map((bdgt) => bdgt.name), showRest ? 'Restante' : ''],
     legend: {
       show: false,
     },
     fill: {
       opacity: 1,
-      colors: [...budget.map((bdgt) => bdgt.color), showRest ? "#494949" : ""],
+      colors: [...budget.map((bdgt) => bdgt.color), showRest ? '#494949' : ''],
     },
     dataLabels: {
       enabled: true,
@@ -77,12 +77,12 @@ export default function DoughnutChart({
       },
     },
     stroke: {
-      colors: theme === "light" ? ["#f6f6f6"] : ["#453181"],
+      colors: theme === 'light' ? ['#f6f6f6'] : ['#453181'],
       width: 4,
     },
     plotOptions: {
       pie: {
-        offsetY: angle.type === "full" ? 0 : 50,
+        offsetY: angle.type === 'full' ? 0 : 50,
         startAngle: angle.start,
         endAngle: angle.end,
         donut: {
@@ -91,10 +91,10 @@ export default function DoughnutChart({
             value: {
               formatter: (val: string) =>
                 `${val}/${Math.abs(getTotalMonthlyExpenses())}`,
-              color: "#2a1e57",
+              color: '#2a1e57',
             },
           },
-          size: "60",
+          size: '60',
         },
         expandOnClick: false,
       },
@@ -103,8 +103,8 @@ export default function DoughnutChart({
 
   return (
     <>
-      {typeof window !== "undefined" && window && (
-        <Chart options={options} series={series} type="donut" height={"125%"} />
+      {typeof window !== 'undefined' && window && (
+        <Chart options={options} series={series} type='donut' height={'125%'} />
       )}
     </>
   );

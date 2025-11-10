@@ -1,10 +1,10 @@
-import { create } from "zustand";
-import { IFinance } from "@/interfaces/IFinance";
-import { fetcher } from "../utils/fetcher";
-import { showError } from "../helpers/showError";
+import { create } from 'zustand';
+import type { IFinance } from '@/interfaces/IFinance';
+import { showError } from '../helpers/showError';
+import { fetcher } from '../utils/fetcher';
 
 interface IFinanceMethodsState {
-  patch: (type: "balance" | "income", value: number) => Promise<void>;
+  patch: (type: 'balance' | 'income', value: number) => Promise<void>;
 }
 
 interface IFinanceState {

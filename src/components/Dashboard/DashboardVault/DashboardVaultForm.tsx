@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useVaultStore } from "@/stores/useVaultStore";
-import { FormEvent, useState } from "react";
-import { MdAddCircle } from "react-icons/md";
+import { type FormEvent, useState } from 'react';
+import { MdAddCircle } from 'react-icons/md';
+import { useVaultStore } from '@/stores/useVaultStore';
 
 export default function DashboardVaultForm() {
   const selectedDashboardVault = useVaultStore((s) => s.selectedDashboardVault);
@@ -11,7 +11,7 @@ export default function DashboardVaultForm() {
   const [hadAnError, setHadAnError] = useState<boolean>(false);
 
   const isEventValid = (name: string): boolean => {
-    if (name.trim() === "") return false;
+    if (name.trim() === '') return false;
     return true;
   };
 
@@ -48,34 +48,34 @@ export default function DashboardVaultForm() {
 
   return (
     <form
-      className="flex flex-col w-full gap-2 lg:w-1/4"
+      className='flex flex-col w-full gap-2 lg:w-1/4'
       onSubmit={handleSubmit}
     >
       <button
-        type="submit"
-        className="flex flex-1 items-center justify-center w-full p-2 border rounded-lg duration-300 ease-in-out bg-chetwode-blue-200 border-chetwode-blue-950 text-chetwode-blue-950 hover:bg-chetwode-blue-300 active:hover:bg-chetwode-blue-400 dark:bg-chetwode-blue-800 dark:border-chetwode-blue-600 dark:text-chetwode-blue-50 dark:hover:bg-chetwode-blue-700 dark:active:bg-chetwode-blue-600 lg:py-0"
+        type='submit'
+        className='flex flex-1 items-center justify-center w-full p-2 border rounded-lg duration-300 ease-in-out bg-chetwode-blue-200 border-chetwode-blue-950 text-chetwode-blue-950 hover:bg-chetwode-blue-300 active:hover:bg-chetwode-blue-400 dark:bg-chetwode-blue-800 dark:border-chetwode-blue-600 dark:text-chetwode-blue-50 dark:hover:bg-chetwode-blue-700 dark:active:bg-chetwode-blue-600 lg:py-0'
       >
         <span>
-          <MdAddCircle className="mr-1 text-2xl" />
+          <MdAddCircle className='mr-1 text-2xl' />
         </span>
         Adicionar
       </button>
       <input
-        type="text"
-        name="name"
-        id="name"
-        placeholder="O que você fez?"
-        className="flex-1 w-full p-2 border rounded-lg border-chetwode-blue-950 text-chetwode-blue-950 outline-chetwode-blue-800 dark:border-chetwode-blue-600 dark:text-chetwode-blue-50 dark:outline-chetwode-blue-600 lg:py-0"
+        type='text'
+        name='name'
+        id='name'
+        placeholder='O que você fez?'
+        className='flex-1 w-full p-2 border rounded-lg border-chetwode-blue-950 text-chetwode-blue-950 outline-chetwode-blue-800 dark:border-chetwode-blue-600 dark:text-chetwode-blue-50 dark:outline-chetwode-blue-600 lg:py-0'
       />
       <input
-        type="text"
-        name="value"
-        id="value"
-        placeholder="R$"
-        className="flex-1 w-full p-2 border rounded-lg border-chetwode-blue-950 text-chetwode-blue-950 outline-chetwode-blue-800 dark:border-chetwode-blue-600 dark:text-chetwode-blue-50 dark:outline-chetwode-blue-600 lg:py-0"
+        type='text'
+        name='value'
+        id='value'
+        placeholder='R$'
+        className='flex-1 w-full p-2 border rounded-lg border-chetwode-blue-950 text-chetwode-blue-950 outline-chetwode-blue-800 dark:border-chetwode-blue-600 dark:text-chetwode-blue-50 dark:outline-chetwode-blue-600 lg:py-0'
       />
       {hadAnError && (
-        <p className="font-medium text-center text-sm text-red-400">
+        <p className='font-medium text-center text-sm text-red-400'>
           Parece que há algum erro
         </p>
       )}

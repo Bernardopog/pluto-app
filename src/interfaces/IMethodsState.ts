@@ -1,4 +1,4 @@
-import { IMessage } from "@/interfaces/IMessage";
+import type { IMessage } from '@/interfaces/IMessage';
 
 export interface IMethodsState<T, U, R> {
   fetch: () => void;

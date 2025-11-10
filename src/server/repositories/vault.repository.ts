@@ -1,8 +1,8 @@
-import { IResult } from "@/interfaces/IResult";
-import { IVault } from "@/interfaces/IVault";
-import { IVaultCreateDTO, IVaultUpdateDTO } from "../dto/vault.dto";
-import { prisma } from "@/lib/db";
-import { PrismaClientKnownRequestError } from "@/generated/prisma/runtime/library";
+import { PrismaClientKnownRequestError } from '@/generated/prisma/runtime/library';
+import type { IResult } from '@/interfaces/IResult';
+import type { IVault } from '@/interfaces/IVault';
+import { prisma } from '@/lib/db';
+import type { IVaultCreateDTO, IVaultUpdateDTO } from '../dto/vault.dto';
 
 interface IVaultRepository {
   getAll: (userId: number) => Promise<IVault[]>;
@@ -10,7 +10,7 @@ interface IVaultRepository {
   update: (
     id: number,
     data: IVaultUpdateDTO,
-    userId: number
+    userId: number,
   ) => Promise<IResult<IVault>>;
   delete: (id: number, userId: number) => Promise<IResult<null>>;
 }
@@ -20,7 +20,7 @@ export const vaultRepository: IVaultRepository = {
     return await prisma.vault.findMany({
       where: { userId },
       include: { items: true },
-      orderBy: { id: "asc" },
+      orderBy: { id: 'asc' },
     });
   },
   create: async (data, userId) => {
@@ -36,11 +36,11 @@ export const vaultRepository: IVaultRepository = {
     } catch (err) {
       if (
         err instanceof PrismaClientKnownRequestError &&
-        err.code === "P2025"
+        err.code === 'P2025'
       ) {
-        return { success: false, status: 404, error: "Vault not found" };
+        return { success: false, status: 404, error: 'Vault not found' };
       } else {
-        return { success: false, status: 400, error: "Unknown error" };
+        return { success: false, status: 400, error: 'Unknown error' };
       }
     }
   },
@@ -51,11 +51,11 @@ export const vaultRepository: IVaultRepository = {
     } catch (err) {
       if (
         err instanceof PrismaClientKnownRequestError &&
-        err.code === "P2025"
+        err.code === 'P2025'
       ) {
-        return { success: false, status: 404, error: "Vault not found" };
+        return { success: false, status: 404, error: 'Vault not found' };
       } else {
-        return { success: false, status: 400, error: "Unknown error" };
+        return { success: false, status: 400, error: 'Unknown error' };
       }
     }
   },

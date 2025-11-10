@@ -1,32 +1,32 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import TransactionTablePage from "./TransactionTablePage";
-import TransactionChartPage from "./TransactionChartPage";
-import TransactionSwitchViewButton from "@/components/TransactionPage/TransactionSwitchView/TransactionSwitchViewButton";
-import Inert from "@/components/Inert";
+import { useState } from 'react';
+import Inert from '@/components/Inert';
+import TransactionSwitchViewButton from '@/components/TransactionPage/TransactionSwitchView/TransactionSwitchViewButton';
+import TransactionChartPage from './TransactionChartPage';
+import TransactionTablePage from './TransactionTablePage';
 
 export default function TransactionViewSwitcher() {
-  const [view, setView] = useState<"table" | "chart">("table");
+  const [view, setView] = useState<'table' | 'chart'>('table');
 
   return (
     <div
       className={`transaction-view-page-layout grid h-[calc(100vh-32px-24px)] min-h-0 duration-300 ease-in-out ${
-        view === "table"
-          ? "transaction-view-page-layout--txn"
-          : "transaction-view-page-layout--chart"
+        view === 'table'
+          ? 'transaction-view-page-layout--txn'
+          : 'transaction-view-page-layout--chart'
       }`}
     >
       <Inert
-        isVisible={view === "table"}
-        className="min-h-0 h-full max-h-[calc(100vh-32px-24px)] overflow-y-auto"
+        isVisible={view === 'table'}
+        className='min-h-0 h-full max-h-[calc(100vh-32px-24px)] overflow-y-auto'
       >
         <TransactionTablePage />
       </Inert>
 
       <Inert
-        isVisible={view === "chart"}
-        className="min-h-0 h-full max-h-[calc(100vh-32px-24px)] overflow-clip"
+        isVisible={view === 'chart'}
+        className='min-h-0 h-full max-h-[calc(100vh-32px-24px)] overflow-clip'
       >
         <TransactionChartPage />
       </Inert>

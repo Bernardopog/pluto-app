@@ -19,7 +19,7 @@
   width: 6px;
 }
 
-@plugin 'tailwind-scrollbar' {
+@plugin "tailwind-scrollbar" {
   nocompatible: true;
   preferredstrategy: "pseudoelements";
 }

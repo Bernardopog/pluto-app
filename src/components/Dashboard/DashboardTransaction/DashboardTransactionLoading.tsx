@@ -1,8 +1,9 @@
-"use client";
-import { ApexOptions } from "apexcharts";
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+'use client';
+import type { ApexOptions } from 'apexcharts';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 function DashboardTransactionLoading() {
   const options: ApexOptions = {
@@ -14,10 +15,10 @@ function DashboardTransactionLoading() {
         enabled: false,
       },
     },
-    colors: ["#99999944"],
+    colors: ['#99999944'],
     plotOptions: {
       bar: {
-        barHeight: "100%",
+        barHeight: '100%',
         borderRadius: 10,
       },
     },
@@ -51,7 +52,7 @@ function DashboardTransactionLoading() {
 
   const [series, setSeries] = useState<{ name: string; data: number[] }[]>([
     {
-      name: "Serie",
+      name: 'Serie',
       data: Array(10).fill(50),
     },
   ]);
@@ -80,7 +81,7 @@ function DashboardTransactionLoading() {
     const interval = setInterval(() => {
       setSeries([
         {
-          name: "Serie",
+          name: 'Serie',
           data: [...getRandomValues()],
         },
       ]);
@@ -90,18 +91,18 @@ function DashboardTransactionLoading() {
   });
 
   return (
-    <div className="flex-1 relative w-full">
-      {typeof window !== "undefined" && window && (
+    <div className='flex-1 relative w-full'>
+      {typeof window !== 'undefined' && window && (
         <Chart
           options={options as ApexOptions}
           series={series}
-          type="bar"
-          height={"100%"}
-          width={"100%"}
+          type='bar'
+          height={'100%'}
+          width={'100%'}
         />
       )}
-      <div className="flex justify-center absolute inset-0 bg-transparent w-full h-full">
-        <p className="subtitle italic opacity-75">
+      <div className='flex justify-center absolute inset-0 bg-transparent w-full h-full'>
+        <p className='subtitle italic opacity-75'>
           Carregando tabela de Transações
         </p>
       </div>

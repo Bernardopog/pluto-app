@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
-import { moneyFormatter } from "@/utils/moneyFormatter";
-import { useState } from "react";
-import DashboardBudgetLegendController from "./DashboardBudgetLegendController";
-import { IBudget } from "@/interfaces/IBudget";
-import { useShallow } from "zustand/shallow";
-import DashboardBudgetListItem from "./DashboardBudgetListItem";
-import { MdWarning } from "react-icons/md";
+import { useState } from 'react';
+import { MdWarning } from 'react-icons/md';
+import { useShallow } from 'zustand/shallow';
+import type { IBudget } from '@/interfaces/IBudget';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
+import { moneyFormatter } from '@/utils/moneyFormatter';
+import DashboardBudgetLegendController from './DashboardBudgetLegendController';
+import DashboardBudgetListItem from './DashboardBudgetListItem';
 
-export type LegendType = "expenses-limit" | "rest";
+export type LegendType = 'expenses-limit' | 'rest';
 
 interface IDashboardBudgetLegendProps {
   budget: IBudget[];
@@ -26,10 +26,10 @@ export default function DashboardBudgetLegend({
         transactionList: s.transactionData.list,
         getExpenseFromCurrentMonth: s.getExpenseFromCurrentMonth,
         getMonthBudgetRest: s.getMonthBudgetRest,
-      }))
+      })),
     );
   const [typeOfLegend, setTypeOfLegend] =
-    useState<LegendType>("expenses-limit");
+    useState<LegendType>('expenses-limit');
 
   return (
     <>
@@ -37,16 +37,27 @@ export default function DashboardBudgetLegend({
         state={typeOfLegend}
         setState={setTypeOfLegend}
       />
-      <ul className="grid grid-cols-1 mt-4 gap-2 font-medium text-chetwode-blue-950 dark:text-chetwode-blue-50 md:grid-cols-2 lg:flex lg:flex-col">
-        <li className="inline-flex items-center gap-2 border border-l-6 p-2 rounded-r-lg text-lg border-chetwode-blue-950/25 dark:border-chetwode-blue-50/25 md:border-l-4 md:text-base" style={{ borderColor: `#a9a9a9` }}>
+      <ul className='grid grid-cols-1 mt-4 gap-2 font-medium text-chetwode-blue-950 dark:text-chetwode-blue-50 md:grid-cols-2 lg:flex lg:flex-col'>
+        <li
+          className='inline-flex items-center gap-2 border border-l-6 p-2 rounded-r-lg text-lg border-chetwode-blue-950/25 dark:border-chetwode-blue-50/25 md:border-l-4 md:text-base'
+          style={{ borderColor: `#a9a9a9` }}
+        >
           Renda Restante: {moneyFormatter(rest)}
-          {rest < 0 && <MdWarning className="text-xl text-red-600/75 dark:text-red-400/75" />}
+          {rest < 0 && (
+            <MdWarning className='text-xl text-red-600/75 dark:text-red-400/75' />
+          )}
         </li>
         {budget.map((budgetItem) => {
           const expense = getExpenseFromCurrentMonth(budgetItem.id);
           const rest = getMonthBudgetRest(budgetItem.id);
           return (
-            <DashboardBudgetListItem key={budgetItem.id} {...budgetItem} expense={expense} rest={rest} typeOfLegend={typeOfLegend}/>
+            <DashboardBudgetListItem
+              key={budgetItem.id}
+              {...budgetItem}
+              expense={expense}
+              rest={rest}
+              typeOfLegend={typeOfLegend}
+            />
           );
         })}
       </ul>

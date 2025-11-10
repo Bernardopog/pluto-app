@@ -1,11 +1,11 @@
-import { getPercentage } from "@/utils/getPercentage";
-import { IBudget } from "@/interfaces/IBudget";
-import { ITransaction } from "@/interfaces/ITransaction";
-import { ApexOptions } from "apexcharts";
+import type { ApexOptions } from 'apexcharts';
+import dynamic from 'next/dynamic';
+import { useEffect, useRef } from 'react';
+import type { IBudget } from '@/interfaces/IBudget';
+import type { ITransaction } from '@/interfaces/ITransaction';
+import { getPercentage } from '@/utils/getPercentage';
 
-import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 interface IBarChartProps {
   budget: IBudget[];
@@ -24,10 +24,10 @@ export default function BarChart({ budget, transactions }: IBarChartProps) {
       toolbar: {
         show: false,
       },
-      type: "bar",
+      type: 'bar',
       height: 350,
       stacked: true,
-      stackType: "100%",
+      stackType: '100%',
     },
     plotOptions: {
       bar: {
@@ -36,7 +36,7 @@ export default function BarChart({ budget, transactions }: IBarChartProps) {
     },
     stroke: {
       width: 1,
-      colors: ["#fff"],
+      colors: ['#fff'],
     },
     xaxis: {
       categories: budget.map((item) => item.name),
@@ -50,11 +50,11 @@ export default function BarChart({ budget, transactions }: IBarChartProps) {
       opacity: 1,
       colors: [
         ({ seriesIndex }: { seriesIndex: number }) => {
-          let col = "#494949";
+          let col = '#494949';
           if (seriesIndex === 1) {
             return col;
           } else {
-            col = budget[countRef.current]?.color ?? "#3366dd";
+            col = budget[countRef.current]?.color ?? '#3366dd';
             countRef.current++;
           }
           return col;
@@ -80,7 +80,7 @@ export default function BarChart({ budget, transactions }: IBarChartProps) {
 
   const filledValues = budget.map((_, idx): number => {
     const valuePercentage = Number(
-      getPercentage(expenses[idx], budget[idx].limit)
+      getPercentage(expenses[idx], budget[idx].limit),
     );
     return valuePercentage >= 100 ? 100 : valuePercentage;
   });
@@ -88,19 +88,19 @@ export default function BarChart({ budget, transactions }: IBarChartProps) {
 
   const series = [
     {
-      name: "Gasto",
+      name: 'Gasto',
       data: filledValues,
     },
     {
-      name: "Disponível",
+      name: 'Disponível',
       data: remainValues,
     },
   ];
 
   return (
     <>
-      {typeof window !== "undefined" && window && (
-        <Chart options={options} series={series} type="bar" height={"125%"} />
+      {typeof window !== 'undefined' && window && (
+        <Chart options={options} series={series} type='bar' height={'125%'} />
       )}
     </>
   );

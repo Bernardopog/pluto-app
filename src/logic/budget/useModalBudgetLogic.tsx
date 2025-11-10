@@ -1,24 +1,27 @@
-import { useEffect, useState } from "react";
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
-import { useModalStore } from "@/stores/useModalStore";
-import { IBudgetCreateDTO, IBudgetUpdateDTO } from "@/server/dto/budget.dto";
-import { useMessageStore } from "@/stores/useMessageStore";
+import { useEffect, useState } from 'react';
+import type {
+  IBudgetCreateDTO,
+  IBudgetUpdateDTO,
+} from '@/server/dto/budget.dto';
+import { useMessageStore } from '@/stores/useMessageStore';
+import { useModalStore } from '@/stores/useModalStore';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
 
-export const useModalBudgetLogic = (type: "create" | "update") => {
+export const useModalBudgetLogic = (type: 'create' | 'update') => {
   const toggleModal = useModalStore((s) => s.toggleModal);
   const budgetMethods = useTransactionBudgetStore((s) => s.budgetMethods);
   const budgetSelection = useTransactionBudgetStore((s) => s.budgetSelection);
 
   const setMessage = useMessageStore((s) => s.setMessage);
 
-  const [budgetName, setBudgetName] = useState<string>("");
+  const [budgetName, setBudgetName] = useState<string>('');
   const [budgetLimit, setBudgetLimit] = useState<number>(100);
-  const [budgetColorType, setBudgetColorType] = useState<"hex" | "hsl" | "rgb">(
-    "hex"
+  const [budgetColorType, setBudgetColorType] = useState<'hex' | 'hsl' | 'rgb'>(
+    'hex',
   );
   const [hasError, setHasError] = useState<boolean>(false);
 
-  const [hex, setHex] = useState<string>("#000");
+  const [hex, setHex] = useState<string>('#000');
 
   const [hue, setHue] = useState<number>(0);
   const [saturation, setSaturation] = useState<number>(0);
@@ -29,45 +32,45 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
   const [blue, setBlue] = useState<number>(0);
 
   useEffect(() => {
-    if (type === "update" && budgetSelection.selected) {
+    if (type === 'update' && budgetSelection.selected) {
       setBudgetName(budgetSelection.selected.name);
       setBudgetLimit(budgetSelection.selected.limit);
       const checkColorType = () => {
         if (
           budgetSelection.selected &&
-          budgetSelection.selected.color.includes("#")
+          budgetSelection.selected.color.includes('#')
         ) {
           setHex(budgetSelection.selected.color);
-          return "hex";
+          return 'hex';
         } else if (
           budgetSelection.selected &&
-          budgetSelection.selected.color.includes("hsl")
+          budgetSelection.selected.color.includes('hsl')
         ) {
           const formattedHsl = budgetSelection.selected.color
-            .replace("hsl(", "")
-            .replace(")", "")
-            .replaceAll(" ", "")
-            .replaceAll("%", "")
-            .split(",");
+            .replace('hsl(', '')
+            .replace(')', '')
+            .replaceAll(' ', '')
+            .replaceAll('%', '')
+            .split(',');
           setHue(Number(formattedHsl[0]));
           setSaturation(Number(formattedHsl[1]));
           setLightness(Number(formattedHsl[2]));
-          return "hsl";
+          return 'hsl';
         } else if (
           budgetSelection.selected &&
-          budgetSelection.selected.color.includes("rgb")
+          budgetSelection.selected.color.includes('rgb')
         ) {
           const formattedRgb = budgetSelection.selected.color
-            .replace("rgb(", "")
-            .replace(")", "")
-            .replaceAll(" ", "")
-            .split(",");
+            .replace('rgb(', '')
+            .replace(')', '')
+            .replaceAll(' ', '')
+            .split(',');
           setRed(Number(formattedRgb[0]));
           setGreen(Number(formattedRgb[1]));
           setBlue(Number(formattedRgb[2]));
-          return "rgb";
+          return 'rgb';
         }
-        return "hex";
+        return 'hex';
       };
       const colorType = checkColorType();
       setBudgetColorType(colorType);
@@ -75,9 +78,9 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
   }, [type, budgetSelection.selected]);
 
   const handleReset = () => {
-    setBudgetName("");
+    setBudgetName('');
     setBudgetLimit(0);
-    setHex("#000");
+    setHex('#000');
     setHue(0);
     setSaturation(0);
     setLightness(0);
@@ -91,7 +94,7 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
     ev.preventDefault();
 
     const isHexValid = (value: string) => {
-      const formattedValue = value.replaceAll("#", "");
+      const formattedValue = value.replaceAll('#', '');
 
       if (formattedValue.length >= 6)
         return /^([A-Fa-f0-9]{6})$/.test(formattedValue);
@@ -101,25 +104,25 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
     };
 
     const removeAlphaFromHEX = (value: string) => {
-      const formattedValue = value.replaceAll("#", "");
+      const formattedValue = value.replaceAll('#', '');
       if (formattedValue.length >= 6) return `${formattedValue.slice(0, 6)}`;
       if (formattedValue.length >= 3) return `${formattedValue.slice(0, 3)}`;
-      return "000000";
+      return '000000';
     };
 
     const validator = () => {
-      if (budgetName.trim() === "") return false;
+      if (budgetName.trim() === '') return false;
       if (Number.isNaN(Number(budgetLimit))) return false;
       if (budgetLimit < 0) return false;
-      if (budgetColorType === "hex" && !isHexValid(hex)) return false;
-      if (budgetColorType === "hsl" && (hue < 0 || hue > 360)) return false;
-      if (budgetColorType === "hsl" && (saturation < 0 || saturation > 100))
+      if (budgetColorType === 'hex' && !isHexValid(hex)) return false;
+      if (budgetColorType === 'hsl' && (hue < 0 || hue > 360)) return false;
+      if (budgetColorType === 'hsl' && (saturation < 0 || saturation > 100))
         return false;
-      if (budgetColorType === "hsl" && (lightness < 0 || lightness > 100))
+      if (budgetColorType === 'hsl' && (lightness < 0 || lightness > 100))
         return false;
-      if (budgetColorType === "rgb" && (red < 0 || red > 255)) return false;
-      if (budgetColorType === "rgb" && (green < 0 || green > 255)) return false;
-      if (budgetColorType === "rgb" && (blue < 0 || blue > 255)) return false;
+      if (budgetColorType === 'rgb' && (red < 0 || red > 255)) return false;
+      if (budgetColorType === 'rgb' && (green < 0 || green > 255)) return false;
+      if (budgetColorType === 'rgb' && (blue < 0 || blue > 255)) return false;
       return true;
     };
 
@@ -133,15 +136,15 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
     const data: IBudgetCreateDTO | IBudgetUpdateDTO = {
       name: budgetName,
       color:
-        budgetColorType === "hex"
+        budgetColorType === 'hex'
           ? `#${removeAlphaFromHEX(hex)}`
-          : budgetColorType === "hsl"
-          ? `hsl(${hue}, ${saturation}%, ${lightness}%)`
-          : `rgb(${red}, ${green}, ${blue})`,
+          : budgetColorType === 'hsl'
+            ? `hsl(${hue}, ${saturation}%, ${lightness}%)`
+            : `rgb(${red}, ${green}, ${blue})`,
       limit: Number(budgetLimit),
     };
 
-    if (type === "update" && budgetSelection.selected) {
+    if (type === 'update' && budgetSelection.selected) {
       budgetMethods
         .update(budgetSelection.selected.id, data)
         .then(({ message, status, data }) => {
@@ -152,13 +155,16 @@ export const useModalBudgetLogic = (type: "create" | "update") => {
           });
         });
       budgetSelection.unselect();
-    } else if (type === "create") {
+    } else if (type === 'create') {
       budgetMethods.create(data).then(({ message, status, data }) => {
         setMessage({
           message,
           status,
-          description: status === 201 ? `Seu orçamento (${data?.name}) foi criado com sucesso!`: "Ocorreu um erro ao criar o orçamento",
-        })
+          description:
+            status === 201
+              ? `Seu orçamento (${data?.name}) foi criado com sucesso!`
+              : 'Ocorreu um erro ao criar o orçamento',
+        });
       });
     }
     toggleModal();

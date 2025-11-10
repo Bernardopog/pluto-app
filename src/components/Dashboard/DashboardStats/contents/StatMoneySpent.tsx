@@ -1,33 +1,33 @@
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
-import { moneyFormatter } from "@/utils/moneyFormatter";
-import { useMemo } from "react";
-import { MdPlayArrow } from "react-icons/md";
+import { useMemo } from 'react';
+import { MdPlayArrow } from 'react-icons/md';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
+import { moneyFormatter } from '@/utils/moneyFormatter';
 
 export default function StatMoneySpent() {
   const transactionList = useTransactionBudgetStore(
-    (s) => s.transactionData.list
+    (s) => s.transactionData.list,
   );
 
   const negativeTransaction = useMemo(
     () => transactionList.filter((transaction) => transaction.value < 0),
-    [transactionList]
+    [transactionList],
   );
 
   const spentMoney = useMemo(
     () =>
       negativeTransaction.reduce(
         (acc, transaction) => acc + transaction.value,
-        0
+        0,
       ),
-    [negativeTransaction]
+    [negativeTransaction],
   );
 
   return (
     <>
-      <h3 className="subsubtitle">Dinheiro Gasto</h3>
-      <p className="stat-result inline-flex items-center">
+      <h3 className='subsubtitle'>Dinheiro Gasto</h3>
+      <p className='stat-result inline-flex items-center'>
         {moneyFormatter(Math.abs(spentMoney))}
-        <MdPlayArrow className="rotate-90 opacity-50" />
+        <MdPlayArrow className='rotate-90 opacity-50' />
       </p>
     </>
   );

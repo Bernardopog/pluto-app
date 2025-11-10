@@ -1,7 +1,7 @@
-"use client";
-import { Dispatch, SetStateAction } from "react";
-import Inert from "../../Inert";
-import { VaultChartTypes } from "@/layout/Vault/VaultChart";
+'use client';
+import type { Dispatch, SetStateAction } from 'react';
+import type { VaultChartTypes } from '@/layout/Vault/VaultChart';
+import Inert from '../../Inert';
 
 interface IVaultChartDropdownProps {
   isDropdownOpen: boolean;
@@ -25,32 +25,32 @@ export default function VaultChartDropdown({
     <Inert
       isVisible={isDropdownOpen}
       className={`absolute right-2 z-30 overflow-hidden bg-chetwode-blue-200 text-chetwode-blue-950 duration-300 ease-in-out ${
-        isDropdownOpen ? "h-48 mt-1 p-2 px-4 rounded-lg shadow-md" : "h-0"
+        isDropdownOpen ? 'h-48 mt-1 p-2 px-4 rounded-lg shadow-md' : 'h-0'
       }`}
     >
-      <span className="block text-lg">Exibir gráfico como:</span>
-      <div className="flex flex-col gap-2">
+      <span className='block text-lg'>Exibir gráfico como:</span>
+      <div className='flex flex-col gap-2'>
         <button
           className={`p-1 rounded-lg bg-chetwode-blue-300 duration-300 ease-in-out ${
-            typeOfChart === "totalProgress" && "bg-chetwode-blue-400"
+            typeOfChart === 'totalProgress' && 'bg-chetwode-blue-400'
           }`}
-          onClick={() => handleSelectTypeOfChart("totalProgress")}
+          onClick={() => handleSelectTypeOfChart('totalProgress')}
         >
           Progresso Geral
         </button>
         <button
           className={`p-1 rounded-lg bg-chetwode-blue-300 duration-300 ease-in-out ${
-            typeOfChart === "vaultProgress" && "bg-chetwode-blue-400"
+            typeOfChart === 'vaultProgress' && 'bg-chetwode-blue-400'
           }`}
-          onClick={() => handleSelectTypeOfChart("vaultProgress")}
+          onClick={() => handleSelectTypeOfChart('vaultProgress')}
         >
           Progresso por Cofre
         </button>
         <button
           className={`p-1 rounded-lg bg-chetwode-blue-300 duration-300 ease-in-out ${
-            typeOfChart === "restProgress" && "bg-chetwode-blue-400"
+            typeOfChart === 'restProgress' && 'bg-chetwode-blue-400'
           }`}
-          onClick={() => handleSelectTypeOfChart("restProgress")}
+          onClick={() => handleSelectTypeOfChart('restProgress')}
         >
           Faltando para Concluir
         </button>

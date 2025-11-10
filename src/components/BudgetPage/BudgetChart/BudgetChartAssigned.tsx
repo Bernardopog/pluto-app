@@ -1,8 +1,8 @@
-import dynamic from "next/dynamic";
-import { IBudgetChartProps } from "@/layout/Budget/BudgetChart";
-import { getPercentage } from "@/utils/getPercentage";
+import dynamic from 'next/dynamic';
+import type { IBudgetChartProps } from '@/layout/Budget/BudgetChart';
+import { getPercentage } from '@/utils/getPercentage';
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 function BudgetChartAssigned({
   budgetList,
@@ -18,7 +18,7 @@ function BudgetChartAssigned({
     <>
       {/* Custom DataLabel because colors and dataLabels don't work together */}
       {!isOverlay && (
-        <div className="absolute z-20 size-0 rounded-full bg-red-600">
+        <div className='absolute z-20 size-0 rounded-full bg-red-600'>
           {budgetList.map((bdgt, idx) => {
             const percentage = getPercentage(bdgt.limit, totalBudgetLimit);
             const angle = (360 / budgetList.length) * idx;
@@ -30,10 +30,10 @@ function BudgetChartAssigned({
                   transform: `rotate(${angle}deg) translate(275%) rotate(-${
                     angle + 287
                   }deg)`,
-                  transformOrigin: "center",
+                  transformOrigin: 'center',
                   rotate: `287.5deg`,
                 }}
-                className="absolute top-1/2 left-1/2 -translate-1/2 min-w-16 w-fit p-1 border rounded-lg text-center text-xs font-bold text-white border-white duration-300 ease-in-out"
+                className='absolute top-1/2 left-1/2 -translate-1/2 min-w-16 w-fit p-1 border rounded-lg text-center text-xs font-bold text-white border-white duration-300 ease-in-out'
               >
                 {percentage}%
               </div>
@@ -44,14 +44,14 @@ function BudgetChartAssigned({
       <div
         className={`${
           isOverlay &&
-          "flex items-center justify-center absolute inset-0 grayscale-100"
+          'flex items-center justify-center absolute inset-0 grayscale-100'
         }`}
       >
         <Chart
           options={options}
           series={series}
-          type="polarArea"
-          width={"150%"}
+          type='polarArea'
+          width={'150%'}
         />
       </div>
     </>

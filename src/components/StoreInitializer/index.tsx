@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useFinanceStore } from "@/stores/useFinanceStore";
-import { useGoalsStore } from "@/stores/useGoalsStore";
-import { useStatsStore } from "@/stores/useStatsStore";
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
-import { useVaultStore } from "@/stores/useVaultStore";
-import { IBudget } from "@/interfaces/IBudget";
-import { IFinance } from "@/interfaces/IFinance";
-import { IGoal } from "@/interfaces/IGoal";
-import { IStats } from "@/interfaces/IStat";
-import { ITransaction } from "@/interfaces/ITransaction";
-import { IVault, IVaultItem } from "@/interfaces/IVault";
-import { useEffect } from "react";
-import { useShallow } from "zustand/shallow";
+import { useEffect } from 'react';
+import { useShallow } from 'zustand/shallow';
+import type { IBudget } from '@/interfaces/IBudget';
+import type { IFinance } from '@/interfaces/IFinance';
+import type { IGoal } from '@/interfaces/IGoal';
+import type { IStats } from '@/interfaces/IStat';
+import type { ITransaction } from '@/interfaces/ITransaction';
+import type { IVault, IVaultItem } from '@/interfaces/IVault';
+import { useFinanceStore } from '@/stores/useFinanceStore';
+import { useGoalsStore } from '@/stores/useGoalsStore';
+import { useStatsStore } from '@/stores/useStatsStore';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
+import { useVaultStore } from '@/stores/useVaultStore';
 
 export default function StoreInitializer({
   txnData,
@@ -35,13 +35,13 @@ export default function StoreInitializer({
     useShallow((s) => ({
       setTransactionData: s.setTransactionData,
       setBudgetData: s.setBudgetData,
-    }))
+    })),
   );
   const { setVaultData, setVaultItemsData } = useVaultStore(
     useShallow((s) => ({
       setVaultData: s.setVaultData,
       setVaultItemsData: s.setVaultItemsData,
-    }))
+    })),
   );
   const setGoalData = useGoalsStore((s) => s.setGoalData);
   const setFinanceData = useFinanceStore((s) => s.setFinanceData);

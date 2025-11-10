@@ -1,11 +1,11 @@
-import { IContext } from "@/interfaces/IContext";
-import { IVaultItemUpdateDTO } from "@/server/dto/vaultItem.dto";
-import { vaultItemService } from "@/server/services/vaultItem.service";
-import { getUser } from "@/server/utils/getUser";
+import type { IContext } from '@/interfaces/IContext';
+import type { IVaultItemUpdateDTO } from '@/server/dto/vaultItem.dto';
+import { vaultItemService } from '@/server/services/vaultItem.service';
+import { getUser } from '@/server/utils/getUser';
 
 export async function PUT(req: Request, { params }: IContext) {
   const userId = await getUser();
-  if (!userId) return Response.json("Nao autorizado", { status: 401 });
+  if (!userId) return Response.json('Nao autorizado', { status: 401 });
 
   const id = (await params).id;
   const body: IVaultItemUpdateDTO = await req.json();
@@ -13,7 +13,7 @@ export async function PUT(req: Request, { params }: IContext) {
   const { message, status, data } = await vaultItemService.update(
     Number(id),
     body,
-    userId
+    userId,
   );
 
   return Response.json({ message, data, status }, { status });
@@ -21,12 +21,12 @@ export async function PUT(req: Request, { params }: IContext) {
 
 export async function DELETE(_: Request, { params }: IContext) {
   const userId = await getUser();
-  if (!userId) return Response.json("Nao autorizado", { status: 401 });
+  if (!userId) return Response.json('Nao autorizado', { status: 401 });
   const id = (await params).id;
 
   const { message, status, data } = await vaultItemService.delete(
     Number(id),
-    userId
+    userId,
   );
 
   return Response.json({ message, data, status }, { status });

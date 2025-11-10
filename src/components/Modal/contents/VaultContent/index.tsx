@@ -1,1 +1,1 @@
-export { default as ModalVaultCategory } from "./ModalVaultCategory";
+export { default as ModalVaultCategory } from './ModalVaultCategory';

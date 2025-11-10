@@ -1,5 +1,5 @@
-import Input from "@/ui/Input";
-import { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from 'react';
+import Input from '@/ui/Input';
 
 interface IModalBudgetColorPickerHslProps {
   hue: number;
@@ -19,37 +19,37 @@ export default function ModalBudgetColorPickerHsl({
   setLightness,
 }: IModalBudgetColorPickerHslProps) {
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className='grid grid-cols-3 gap-2'>
       <Input
-        id="budgetColor"
-        label="Matiz"
-        inputType="basic"
+        id='budgetColor'
+        label='Matiz'
+        inputType='basic'
         state={hue}
         setState={setHue}
-        type="number"
-        step={"1"}
+        type='number'
+        step={'1'}
         minLimit={0}
         maxLimit={360}
       />
       <Input
-        id="budgetColor"
-        label="Saturação"
-        inputType="basic"
+        id='budgetColor'
+        label='Saturação'
+        inputType='basic'
         state={saturation}
         setState={setSaturation}
-        type="number"
-        step={"1"}
+        type='number'
+        step={'1'}
         minLimit={0}
         maxLimit={100}
       />
       <Input
-        id="budgetColor"
-        label="Brilho"
-        inputType="basic"
+        id='budgetColor'
+        label='Brilho'
+        inputType='basic'
         state={lightness}
         setState={setLightness}
-        type="number"
-        step={"1"}
+        type='number'
+        step={'1'}
         minLimit={0}
         maxLimit={100}
       />

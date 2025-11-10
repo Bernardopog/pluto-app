@@ -1,4 +1,4 @@
-import { iconNameType } from "@/types/IconNameType";
+import type { iconNameType } from '@/types/IconNameType';
 
 export interface IVaultItem {
   id: number;

@@ -1,36 +1,36 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 export type TransactionFilterType =
-  | "filterDate"
-  | "filterValue"
-  | "filterCategory"
-  | "filterType";
+  | 'filterDate'
+  | 'filterValue'
+  | 'filterCategory'
+  | 'filterType';
 
 export type TransactionModalType =
-  | "transactionCreate"
-  | "transactionUpdate"
+  | 'transactionCreate'
+  | 'transactionUpdate'
   | TransactionDeleteType;
 
 type TransactionDeleteType =
-  | "transactionDeleteGroup"
-  | "transactionDeleteAll"
-  | "transactionDelete";
+  | 'transactionDeleteGroup'
+  | 'transactionDeleteAll'
+  | 'transactionDelete';
 
 export type BudgetModalType =
-  | "budgetCreate"
-  | "budgetUpdate"
-  | "budgetDelete"
-  | "budgetTransfer";
+  | 'budgetCreate'
+  | 'budgetUpdate'
+  | 'budgetDelete'
+  | 'budgetTransfer';
 
-export type VaultModalType = "vaultCreate" | "vaultUpdate" | "vaultDelete";
+export type VaultModalType = 'vaultCreate' | 'vaultUpdate' | 'vaultDelete';
 
 export type VaultItemModalType =
-  | "vaultAddItem"
-  | "vaultUpdateItem"
-  | "vaultDeleteItem";
-export type DashboardModalType = "stats" | "transactionSimpleFilter";
+  | 'vaultAddItem'
+  | 'vaultUpdateItem'
+  | 'vaultDeleteItem';
+export type DashboardModalType = 'stats' | 'transactionSimpleFilter';
 
-export type GoalType = "goalCreate" | "goalReassign";
+export type GoalType = 'goalCreate' | 'goalReassign';
 
 export type ModalType =
   | null
@@ -41,8 +41,8 @@ export type ModalType =
   | TransactionFilterType
   | VaultItemModalType
   | GoalType
-  | "configBalance"
-  | "configIncome";
+  | 'configBalance'
+  | 'configIncome';
 
 interface IModalStore {
   isModalOpen: boolean;

@@ -1,5 +1,5 @@
-import { vaultService } from "../services/vault.service";
-import { getUser } from "../utils/getUser";
+import { vaultService } from '../services/vault.service';
+import { getUser } from '../utils/getUser';
 
 export async function getVaults() {
   const userId = await getUser();

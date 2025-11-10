@@ -1,16 +1,16 @@
-import { create } from "zustand";
-import { IVault, IVaultItem } from "@/interfaces/IVault";
-import { IVaultCreateDTO, IVaultUpdateDTO } from "@/server/dto/vault.dto";
-import { IMethodsState } from "../interfaces/IMethodsState";
-import { ISelectionState } from "../interfaces/ISelectionState";
-import { IListDataState } from "../interfaces/IDataState";
-import { fetcher } from "../utils/fetcher";
-import { showError } from "../helpers/showError";
-import {
+import { create } from 'zustand';
+import type { IMessage } from '@/interfaces/IMessage';
+import type { IVault, IVaultItem } from '@/interfaces/IVault';
+import type { IVaultCreateDTO, IVaultUpdateDTO } from '@/server/dto/vault.dto';
+import type {
   IVaultItemCreateDTO,
   IVaultItemUpdateDTO,
-} from "@/server/dto/vaultItem.dto";
-import { IMessage } from "@/interfaces/IMessage";
+} from '@/server/dto/vaultItem.dto';
+import { showError } from '../helpers/showError';
+import type { IListDataState } from '../interfaces/IDataState';
+import type { IMethodsState } from '../interfaces/IMethodsState';
+import type { ISelectionState } from '../interfaces/ISelectionState';
+import { fetcher } from '../utils/fetcher';
 
 type IVaultMethodsState = IMethodsState<
   IVaultCreateDTO,
@@ -41,9 +41,9 @@ interface IVaultState {
   getTotalMoneySavedFromVault: (vaultId: number) => number;
 }
 
-const vaultFetcher = fetcher<IVault[] | IVault | null>("/api/vaults");
+const vaultFetcher = fetcher<IVault[] | IVault | null>('/api/vaults');
 const vaultItemFetcher = fetcher<IVaultItem[] | IVaultItem | null>(
-  "/api/vaultitems"
+  '/api/vaultitems',
 );
 
 export const useVaultStore = create<IVaultState>((set, get) => ({
@@ -84,7 +84,7 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
         vaultData: {
           ...state.vaultData,
           list: state.vaultData.list.map((item) =>
-            item.id === id ? (res.data as IVault) : item
+            item.id === id ? (res.data as IVault) : item,
           ),
         },
       }));
@@ -155,14 +155,14 @@ export const useVaultStore = create<IVaultState>((set, get) => ({
     update: async (id, item) => {
       const res = (await vaultItemFetcher.put(
         id,
-        item
+        item,
       )) as IMessage<IVaultItem>;
       if (res.status >= 400) showError(res);
       set((state) => ({
         vaultItemData: {
           ...state.vaultItemData,
           list: state.vaultItemData.list.map((item) =>
-            item.id === id ? (res.data as IVaultItem) : item
+            item.id === id ? (res.data as IVaultItem) : item,
           ),
         },
       }));

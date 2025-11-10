@@ -1,4 +1,4 @@
-import { IconType } from "react-icons";
+import type { IconType } from 'react-icons';
 
 type IVaultIconProgressProps = {
   icon: IconType;
@@ -14,9 +14,9 @@ export default function VaultIconProgress({
   if (!BackgroundIcon) BackgroundIcon = Icon;
 
   return (
-    <div className="relative size-16">
+    <div className='relative size-16'>
       <div
-        className="absolute w-full overflow-hidden"
+        className='absolute w-full overflow-hidden'
         style={{
           bottom: `${100 - progress}%`,
           height: `${progress}%`,
@@ -35,7 +35,7 @@ export default function VaultIconProgress({
         />
       </div>
 
-      <BackgroundIcon className="absolute top-0 left-0 size-16 text-black/10" />
+      <BackgroundIcon className='absolute top-0 left-0 size-16 text-black/10' />
     </div>
   );
 }

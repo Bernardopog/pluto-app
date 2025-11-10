@@ -1,11 +1,8 @@
-"use client";
+'use client';
 
-import {
-  VaultListBtn,
-  VaultListItem,
-} from "@/components/VaultPage/VaultList";
-import { useVaultStore } from "@/stores/useVaultStore";
-import { useShallow } from "zustand/shallow";
+import { useShallow } from 'zustand/shallow';
+import { VaultListBtn, VaultListItem } from '@/components/VaultPage/VaultList';
+import { useVaultStore } from '@/stores/useVaultStore';
 
 export default function VaultList() {
   const { vaultList, vaultItemList, selectedVault } = useVaultStore(
@@ -13,7 +10,7 @@ export default function VaultList() {
       vaultList: s.vaultData.list,
       vaultItemList: s.vaultItemData.list,
       selectedVault: s.vaultSelection.selected,
-    }))
+    })),
   );
 
   const vaultListWithItems = vaultList.map((vault) => ({
@@ -23,11 +20,11 @@ export default function VaultList() {
 
   return (
     <section
-      id="vault-vaults"
-      className="base-card flex flex-col relative p-4 overflow-y-auto"
+      id='vault-vaults'
+      className='base-card flex flex-col relative p-4 overflow-y-auto'
     >
-      <h2 className="subtitle">Cofres</h2>
-      <ul className="grid grid-cols-1 flex-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      <h2 className='subtitle'>Cofres</h2>
+      <ul className='grid grid-cols-1 flex-1 gap-2 sm:grid-cols-2 lg:grid-cols-4'>
         {vaultListWithItems.map((vault, idx) => (
           <VaultListItem
             vault={vault}

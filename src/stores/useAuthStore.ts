@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface IAuthStore {
   userId: number | null;
@@ -15,7 +15,7 @@ export const useAuthStore = create<IAuthStore>()(
       clearUserId: () => set({ userId: null }),
     }),
     {
-      name: "auth-storage",
-    }
-  )
+      name: 'auth-storage',
+    },
+  ),
 );

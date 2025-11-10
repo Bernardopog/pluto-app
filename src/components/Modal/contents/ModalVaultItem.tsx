@@ -1,15 +1,15 @@
-import { iconsMap } from "@/data/iconMap";
-import { useModalVaultItemLogic } from "@/logic/vault/useModalVaultItemLogic";
-import Checkbox from "@/ui/Checkbox";
-import Divider from "@/ui/Divider";
-import Input from "@/ui/Input";
-import { MdAttachMoney, MdFilePresent } from "react-icons/md";
-import { ModalVaultCategory } from "./VaultContent";
+import { MdAttachMoney, MdFilePresent } from 'react-icons/md';
+import { iconsMap } from '@/data/iconMap';
+import { useModalVaultItemLogic } from '@/logic/vault/useModalVaultItemLogic';
+import Checkbox from '@/ui/Checkbox';
+import Divider from '@/ui/Divider';
+import Input from '@/ui/Input';
+import { ModalVaultCategory } from './VaultContent';
 
 export default function ModalVaultItem({
   type,
 }: {
-  type: "create" | "update";
+  type: 'create' | 'update';
 }) {
   const {
     vaultList,
@@ -29,42 +29,42 @@ export default function ModalVaultItem({
   } = useModalVaultItemLogic(type);
 
   return (
-    <form className="flex flex-col" onSubmit={handleSubmit}>
+    <form className='flex flex-col' onSubmit={handleSubmit}>
       <Input
-        id="vaultItemName"
-        label="Nome do Item"
-        inputType="decorated"
+        id='vaultItemName'
+        label='Nome do Item'
+        inputType='decorated'
         state={vaultItemName}
         setState={setVaultItemName}
-        type="text"
+        type='text'
         icon={<MdFilePresent />}
       />
       <Input
-        id="vaultItemValue"
-        label="Valor do Item"
-        inputType="decorated"
+        id='vaultItemValue'
+        label='Valor do Item'
+        inputType='decorated'
         state={vaultItemValue}
         setState={setVaultItemValue}
-        type="number"
+        type='number'
         icon={<MdAttachMoney />}
       />
-      <Divider direction="horizontal" className="mt-2" />
-      <h3 className="subsubtitle text-chetwode-blue-950 dark:text-chetwode-blue-50">
+      <Divider direction='horizontal' className='mt-2' />
+      <h3 className='subsubtitle text-chetwode-blue-950 dark:text-chetwode-blue-50'>
         Cofre:
       </h3>
-      <ul className="grid grid-cols-4 gap-4">
+      <ul className='grid grid-cols-4 gap-4'>
         {vaultList.map((vault) => (
           <li
             key={vault.id}
             className={`rounded-lg duration-300 ease-in-out ${
               vault.id === vaultAssignedId
-                ? "bg-chetwode-blue-900 text-chetwode-blue-100 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-700 dark:bg-chetwode-blue-700 dark:hover:bg-chetwode-blue-600 dark:active:bg-chetwode-blue-500"
-                : "bg-chetwode-blue-200 text-chetwode-blue-950 hover:bg-chetwode-blue-300 active:bg-chetwode-blue-400"
+                ? 'bg-chetwode-blue-900 text-chetwode-blue-100 hover:bg-chetwode-blue-800 active:bg-chetwode-blue-700 dark:bg-chetwode-blue-700 dark:hover:bg-chetwode-blue-600 dark:active:bg-chetwode-blue-500'
+                : 'bg-chetwode-blue-200 text-chetwode-blue-950 hover:bg-chetwode-blue-300 active:bg-chetwode-blue-400'
             }`}
           >
             <button
-              type="button"
-              className="flex items-center justify-between w-full p-2 rounded-lg"
+              type='button'
+              className='flex items-center justify-between w-full p-2 rounded-lg'
               onClick={() => setVaultAssignedId(vault.id)}
             >
               {vault.name} {iconsMap[vault.icon].icon({})}
@@ -72,16 +72,16 @@ export default function ModalVaultItem({
           </li>
         ))}
       </ul>
-      <Divider direction="horizontal" className="mt-2" />
-      {type === "create" && (
+      <Divider direction='horizontal' className='mt-2' />
+      {type === 'create' && (
         <>
-          <h3 className="subsubtitle text-chetwode-blue-950 dark:text-chetwode-blue-50">
+          <h3 className='subsubtitle text-chetwode-blue-950 dark:text-chetwode-blue-50'>
             Transação:
           </h3>
           <Checkbox
             state={integrateWithTxn}
             setState={() => setIntegrateWithTxn(!integrateWithTxn)}
-            label="Integrar com Transação"
+            label='Integrar com Transação'
           />
           {integrateWithTxn && (
             <ModalVaultCategory
@@ -89,30 +89,30 @@ export default function ModalVaultItem({
               setVaultItemBudgetAssignedId={setVaultItemBudgetAssignedId}
             />
           )}
-          <Divider direction="horizontal" className="mt-2" />
+          <Divider direction='horizontal' className='mt-2' />
         </>
       )}
       {hasError && (
-        <p className="text-red-600 dark:text-red-400">
+        <p className='text-red-600 dark:text-red-400'>
           Parece que tem algum erro no formulário, certifique-se de escolher um
           nome, um valor alvo e um ícone.
           {integrateWithTxn &&
-            " Certifique-se de escolher uma categoria para o item."}
+            ' Certifique-se de escolher uma categoria para o item.'}
         </p>
       )}
-      <div className="flex self-end gap-x-2">
+      <div className='flex self-end gap-x-2'>
         <button
-          type="button"
-          className="w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100"
+          type='button'
+          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100'
           onClick={handleCancel}
         >
           Cancelar
         </button>
         <button
-          type="submit"
-          className="w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100"
+          type='submit'
+          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100'
         >
-          {type === "create" ? "Criar" : "Editar"} Item
+          {type === 'create' ? 'Criar' : 'Editar'} Item
         </button>
       </div>
     </form>

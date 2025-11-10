@@ -1,27 +1,27 @@
-"use client";
+'use client';
 
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
-import { useState } from "react";
-import dynamic from "next/dynamic";
+import type { ApexOptions } from 'apexcharts';
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
+import TransactionChartController from '@/components/TransactionPage/TransactionChartController';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
 
-import { ApexOptions } from "apexcharts";
-import TransactionChartController from "@/components/TransactionPage/TransactionChartController";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export type TransactionChartType =
-  | "all"
-  | "income"
-  | "expense"
-  | "budget-all"
-  | "budget-income"
-  | "budget-expense";
+  | 'all'
+  | 'income'
+  | 'expense'
+  | 'budget-all'
+  | 'budget-income'
+  | 'budget-expense';
 
 export default function TransactionChartPage() {
   const [passedDays, setPassedDays] = useState<number>(7);
-  const [chartType, setChartType] = useState<TransactionChartType>("all");
+  const [chartType, setChartType] = useState<TransactionChartType>('all');
 
   const transactionList = useTransactionBudgetStore(
-    (s) => s.transactionData.list
+    (s) => s.transactionData.list,
   );
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
 
@@ -32,7 +32,7 @@ export default function TransactionChartPage() {
     for (let i = lastDays; i >= 0; i--) {
       const day = new Date();
       day.setDate(today.getDate() - i);
-      days.push(day.toISOString().split("T")[0]);
+      days.push(day.toISOString().split('T')[0]);
     }
 
     return days;
@@ -45,9 +45,9 @@ export default function TransactionChartPage() {
         transactionList
           .filter((txn) => txn.value < 0)
           .filter(
-            (txn) => new Date(txn.date).toISOString().split("T")[0] === date
+            (txn) => new Date(txn.date).toISOString().split('T')[0] === date,
           )
-          .reduce((acc, txn) => acc + txn.value, 0)
+          .reduce((acc, txn) => acc + txn.value, 0),
       )
       .map((value) => Math.abs(value));
 
@@ -56,9 +56,9 @@ export default function TransactionChartPage() {
         transactionList
           .filter((txn) => txn.value > 0)
           .filter(
-            (txn) => new Date(txn.date).toISOString().split("T")[0] === date
+            (txn) => new Date(txn.date).toISOString().split('T')[0] === date,
           )
-          .reduce((acc, txn) => acc + txn.value, 0)
+          .reduce((acc, txn) => acc + txn.value, 0),
       )
       .map((value) => value);
 
@@ -72,9 +72,9 @@ export default function TransactionChartPage() {
           .filter((txn) => txn.categoryId === budgetId)
           .filter((txn) => txn.value < 0)
           .filter(
-            (txn) => new Date(txn.date).toISOString().split("T")[0] === date
+            (txn) => new Date(txn.date).toISOString().split('T')[0] === date,
           )
-          .reduce((acc, txn) => acc + txn.value, 0)
+          .reduce((acc, txn) => acc + txn.value, 0),
       )
       .map((value) => Math.abs(value));
 
@@ -84,9 +84,9 @@ export default function TransactionChartPage() {
           .filter((txn) => txn.categoryId === budgetId)
           .filter((txn) => txn.value > 0)
           .filter(
-            (txn) => new Date(txn.date).toISOString().split("T")[0] === date
+            (txn) => new Date(txn.date).toISOString().split('T')[0] === date,
           )
-          .reduce((acc, txn) => acc + txn.value, 0)
+          .reduce((acc, txn) => acc + txn.value, 0),
       )
       .map((value) => value);
 
@@ -98,24 +98,24 @@ export default function TransactionChartPage() {
   const transfromDaysToWeekDays = (days: number) => {
     switch (days) {
       case 0:
-        return "Dom";
+        return 'Dom';
       case 1:
-        return "Seg";
+        return 'Seg';
       case 2:
-        return "Ter";
+        return 'Ter';
       case 3:
-        return "Qua";
+        return 'Qua';
       case 4:
-        return "Qui";
+        return 'Qui';
       case 5:
-        return "Sex";
+        return 'Sex';
       case 6:
-        return "Sáb";
+        return 'Sáb';
     }
   };
 
   const lastDaysFormatter = lastDays.map((date: string) => {
-    const day = new Date(date + "T00:00:00").getDay();
+    const day = new Date(date + 'T00:00:00').getDay();
     return { weekDay: transfromDaysToWeekDays(day), date };
   });
 
@@ -139,7 +139,7 @@ export default function TransactionChartPage() {
       },
     },
     dataLabels: {
-      enabled: passedDays <= 10 || !chartType.includes("budget"),
+      enabled: passedDays <= 10 || !chartType.includes('budget'),
     },
     xaxis: {
       categories: lastDaysFormatter.map((item) => item.date),
@@ -147,20 +147,20 @@ export default function TransactionChartPage() {
     tooltip: {
       enabled: true,
       y: {
-        formatter: (val: number) => `R$ ${val.toFixed(2)}`.replace(".", ","),
+        formatter: (val: number) => `R$ ${val.toFixed(2)}`.replace('.', ','),
       },
     },
   };
 
-  const seriesBudgetsContructor = (type: "income" | "expense") => {
-    if (type === "income") {
+  const seriesBudgetsContructor = (type: 'income' | 'expense') => {
+    if (type === 'income') {
       const series = budgetList.map((bdgt) => ({
         name: bdgt.name,
         color: bdgt.color,
         data: [...getTransactionOfLastDaysByBudget(bdgt.id).positiveValues],
       }));
       return series;
-    } else if (type === "expense") {
+    } else if (type === 'expense') {
       const series = budgetList.map((bdgt) => ({
         name: bdgt.name,
         color: bdgt.color,
@@ -172,37 +172,37 @@ export default function TransactionChartPage() {
 
   const baseSeries = [
     {
-      name: "Receitas",
+      name: 'Receitas',
       data: positiveValues,
-      color: "#4444df",
+      color: '#4444df',
     },
     {
-      name: "Despesas",
+      name: 'Despesas',
       data: negativeValues,
-      color: "#df4444",
+      color: '#df4444',
     },
   ];
   const incomeSeries = [baseSeries[0]];
   const expenseSeries = [baseSeries[1]];
 
-  const incomeBudgetSeries = seriesBudgetsContructor("income");
-  const expenseBudgetSeries = seriesBudgetsContructor("expense");
+  const incomeBudgetSeries = seriesBudgetsContructor('income');
+  const expenseBudgetSeries = seriesBudgetsContructor('expense');
 
   let typeOfChart = null;
   switch (chartType) {
-    case "all":
+    case 'all':
       typeOfChart = baseSeries;
       break;
-    case "income":
+    case 'income':
       typeOfChart = incomeSeries;
       break;
-    case "expense":
+    case 'expense':
       typeOfChart = expenseSeries;
       break;
-    case "budget-income":
+    case 'budget-income':
       typeOfChart = incomeBudgetSeries;
       break;
-    case "budget-expense":
+    case 'budget-expense':
       typeOfChart = expenseBudgetSeries;
       break;
     default:
@@ -211,16 +211,16 @@ export default function TransactionChartPage() {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-104px)]">
+    <div className='flex flex-col h-[calc(100vh-104px)]'>
       <TransactionChartController
         {...{ chartType, setChartType, passedDays, setPassedDays }}
       />
-      <div className="relative mt-4 mx-auto w-9/10 h-full rounded-lg dark:bg-chetwode-blue-500">
+      <div className='relative mt-4 mx-auto w-9/10 h-full rounded-lg dark:bg-chetwode-blue-500'>
         <Chart
-          height={"100%"}
+          height={'100%'}
           options={options}
           series={typeOfChart}
-          type="bar"
+          type='bar'
         />
       </div>
     </div>

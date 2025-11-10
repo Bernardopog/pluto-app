@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { OverviewCard } from "@/components/OverviewCard";
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
-import { useVaultStore } from "@/stores/useVaultStore";
-import { getPercentage } from "@/utils/getPercentage";
-import { moneyFormatter } from "@/utils/moneyFormatter";
-import { useEffect, useMemo } from "react";
-import { FiTarget } from "react-icons/fi";
-import { MdCalendarMonth, MdPlayArrow } from "react-icons/md";
-import { useShallow } from "zustand/shallow";
+import { useEffect, useMemo } from 'react';
+import { FiTarget } from 'react-icons/fi';
+import { MdCalendarMonth, MdPlayArrow } from 'react-icons/md';
+import { useShallow } from 'zustand/shallow';
+import { OverviewCard } from '@/components/OverviewCard';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
+import { useVaultStore } from '@/stores/useVaultStore';
+import { getPercentage } from '@/utils/getPercentage';
+import { moneyFormatter } from '@/utils/moneyFormatter';
 
 export default function VaultOverview() {
   const {
@@ -26,14 +26,14 @@ export default function VaultOverview() {
       vaultItemsFetched: s.vaultItemData.fetched,
       fetchVault: s.vaultMethods.fetch,
       fetchVaultItems: s.vaultItemMethods.fetch,
-    }))
+    })),
   );
 
   const { budgetFetched, fetchBudget } = useTransactionBudgetStore(
     useShallow((s) => ({
       budgetFetched: s.budgetData.fetched,
       fetchBudget: s.budgetMethods.fetch,
-    }))
+    })),
   );
 
   useEffect(() => {
@@ -82,45 +82,45 @@ export default function VaultOverview() {
   return (
     <>
       {vaultList && mostSavedVault && lessSavedVault && nearToCompleteVault ? (
-        <header id="vault-overview">
-          <ul className="grid grid-cols-1 gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-4">
-            <li className="lg:col-span-3 xl:col-span-1">
+        <header id='vault-overview'>
+          <ul className='grid grid-cols-1 gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-4'>
+            <li className='lg:col-span-3 xl:col-span-1'>
               <OverviewCard
-                title="Total Poupado até Hoje"
+                title='Total Poupado até Hoje'
                 icon={<MdCalendarMonth />}
                 value={moneyFormatter(
-                  vaultItemList.reduce((acc, item) => acc + item.value, 0)
-                ).replace("R$", "")}
-                valueType="currency"
+                  vaultItemList.reduce((acc, item) => acc + item.value, 0),
+                ).replace('R$', '')}
+                valueType='currency'
               />
             </li>
             <li>
               <OverviewCard
-                title="Cofre com mais poupança"
-                icon={<MdPlayArrow className="rotate-270" />}
-                value={moneyFormatter(mostSavedVault.total).replace("R$", "")}
-                valueType="currency"
+                title='Cofre com mais poupança'
+                icon={<MdPlayArrow className='rotate-270' />}
+                value={moneyFormatter(mostSavedVault.total).replace('R$', '')}
+                valueType='currency'
                 complement={mostSavedVault.name}
               />
             </li>
             <li>
               <OverviewCard
-                title="Cofre com menos poupança"
-                icon={<MdPlayArrow className="rotate-90" />}
-                value={moneyFormatter(lessSavedVault.total).replace("R$", "")}
-                valueType="currency"
+                title='Cofre com menos poupança'
+                icon={<MdPlayArrow className='rotate-90' />}
+                value={moneyFormatter(lessSavedVault.total).replace('R$', '')}
+                valueType='currency'
                 complement={lessSavedVault.name}
               />
             </li>
             <li>
               <OverviewCard
-                title="Poupança mais próxima de concluir"
+                title='Poupança mais próxima de concluir'
                 icon={<FiTarget />}
                 value={getPercentage(
                   nearToCompleteVault.total,
-                  nearToCompleteVault.targetPrice
+                  nearToCompleteVault.targetPrice,
                 )}
-                valueType="number"
+                valueType='number'
                 complement={`% - ${nearToCompleteVault.name}`}
               />
             </li>
@@ -128,8 +128,8 @@ export default function VaultOverview() {
         </header>
       ) : (
         <p
-          id="vault-overview"
-          className="flex items-center justify-center h-full min-h-24 py-2 px-4 rounded-lg text-lg italic font-bold text-chetwode-blue-950/75 bg-star-dust-50 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-100"
+          id='vault-overview'
+          className='flex items-center justify-center h-full min-h-24 py-2 px-4 rounded-lg text-lg italic font-bold text-chetwode-blue-950/75 bg-star-dust-50 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-100'
         >
           É necessário criar um cofre para ver as informações...
         </p>

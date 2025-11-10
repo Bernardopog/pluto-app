@@ -1,20 +1,20 @@
-import { jwtVerify } from "jose";
-import { ProxyConfig, NextRequest, NextResponse } from "next/server";
+import { jwtVerify } from 'jose';
+import { type NextRequest, NextResponse, type ProxyConfig } from 'next/server';
 
 const publicRoutes = [
-  { path: "/login", authenticated: "redirect" },
-  { path: "/register", authenticated: "redirect" },
-  { path: "/logout", authenticated: "notRedirect" },
-  { path: "/", authenticated: "redirect" },
+  { path: '/login', authenticated: 'redirect' },
+  { path: '/register', authenticated: 'redirect' },
+  { path: '/logout', authenticated: 'notRedirect' },
+  { path: '/', authenticated: 'redirect' },
 ] as const;
 
-const redirectTarget = "/login";
+const redirectTarget = '/login';
 
 export async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const publicRoute = publicRoutes.find((route) => route.path === path);
 
-  const token = req.cookies.get("token")?.value;
+  const token = req.cookies.get('token')?.value;
 
   if (!token && publicRoute) {
     return NextResponse.next();
@@ -25,9 +25,9 @@ export async function proxy(req: NextRequest) {
 
     return NextResponse.redirect(redirectUrl);
   }
-  if (token && publicRoute && publicRoute.authenticated === "redirect") {
+  if (token && publicRoute && publicRoute.authenticated === 'redirect') {
     const redirectUrl = req.nextUrl.clone();
-    redirectUrl.pathname = "/dashboard";
+    redirectUrl.pathname = '/dashboard';
 
     return NextResponse.redirect(redirectUrl);
   }
@@ -35,17 +35,17 @@ export async function proxy(req: NextRequest) {
     try {
       const { payload } = await jwtVerify(
         token,
-        new TextEncoder().encode(process.env.JWT_SECRET)
+        new TextEncoder().encode(process.env.JWT_SECRET),
       );
 
       if (payload.exp && payload.exp < Date.now() / 1000) {
         const redirectUrl = req.nextUrl.clone();
-        redirectUrl.pathname = "/logout";
+        redirectUrl.pathname = '/logout';
         return NextResponse.redirect(redirectUrl);
       }
     } catch {
       const redirectUrl = req.nextUrl.clone();
-      redirectUrl.pathname = "/logout";
+      redirectUrl.pathname = '/logout';
       return NextResponse.redirect(redirectUrl);
     }
   }
@@ -54,5 +54,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config: ProxyConfig = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|sw.js).*)"],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sw.js).*)'],
 };

@@ -1,8 +1,8 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
-export type DateType = "all" | "between" | "before" | "after" | "exactly";
-export type ValueType = "all" | "between" | "positive" | "negative" | "exactly";
-export type TransactionType = "all" | "revenue" | "expenses";
+export type DateType = 'all' | 'between' | 'before' | 'after' | 'exactly';
+export type ValueType = 'all' | 'between' | 'positive' | 'negative' | 'exactly';
+export type TransactionType = 'all' | 'revenue' | 'expenses';
 
 interface ITransactionFilterStore {
   resetFullFilter: () => void;
@@ -51,14 +51,14 @@ export const useTransactionFilterStore = create<ITransactionFilterStore>(
     ),
 
     resetFullDateFilter: () =>
-      set({ dateFilter: "all", firstDate: new Date(), secondDate: null }),
-    resetFullTypeFilter: () => set({ transactionTypeFilter: "all" }),
+      set({ dateFilter: 'all', firstDate: new Date(), secondDate: null }),
+    resetFullTypeFilter: () => set({ transactionTypeFilter: 'all' }),
     resetFullValueFilter: () =>
-      set({ valueFilter: "all", firstValue: 0, secondValue: 0 }),
+      set({ valueFilter: 'all', firstValue: 0, secondValue: 0 }),
     resetFullCategoryFilter: () => set({ categoryFilter: null }),
-    resetFullSearchFilter: () => set({ searchFilter: "" }),
+    resetFullSearchFilter: () => set({ searchFilter: '' }),
 
-    dateFilter: "all",
+    dateFilter: 'all',
     setDateFilter: (value) => set({ dateFilter: value }),
 
     firstDate: new Date(),
@@ -67,7 +67,7 @@ export const useTransactionFilterStore = create<ITransactionFilterStore>(
     setSecondDate: (secondDate) => set({ secondDate }),
     resetDates: () => set({ firstDate: new Date(), secondDate: null }),
 
-    valueFilter: "all",
+    valueFilter: 'all',
     setValueFilter: (value) => set({ valueFilter: value }),
 
     firstValue: 0,
@@ -79,10 +79,10 @@ export const useTransactionFilterStore = create<ITransactionFilterStore>(
     categoryFilter: null,
     setCategoryFilter: (value) => set({ categoryFilter: value }),
 
-    transactionTypeFilter: "all",
+    transactionTypeFilter: 'all',
     setTransactionTypeFilter: (value) => set({ transactionTypeFilter: value }),
 
-    searchFilter: "",
+    searchFilter: '',
     setSearchFilter: (value) => set({ searchFilter: value }),
-  })
+  }),
 );

@@ -1,15 +1,16 @@
-"use client";
+'use client';
 
-import { ApexOptions } from "apexcharts";
+import type { ApexOptions } from 'apexcharts';
 
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 function DashboardBudgetLoading() {
   const options: ApexOptions = {
     chart: {
-      type: "donut",
+      type: 'donut',
       toolbar: {
         show: false,
       },
@@ -18,12 +19,12 @@ function DashboardBudgetLoading() {
       },
     },
     colors: [
-      "#dd999944",
-      "#99dd9944",
-      "#9999dd44",
-      "#dddd9944",
-      "#dd99dd44",
-      "#99dddd44",
+      '#dd999944',
+      '#99dd9944',
+      '#9999dd44',
+      '#dddd9944',
+      '#dd99dd44',
+      '#99dddd44',
     ],
     plotOptions: {
       pie: {
@@ -31,8 +32,8 @@ function DashboardBudgetLoading() {
           labels: {
             show: false,
           },
-          size: "60%",
-          background: "transparent",
+          size: '60%',
+          background: 'transparent',
         },
       },
     },
@@ -94,18 +95,18 @@ function DashboardBudgetLoading() {
   });
 
   return (
-    <div className="relative w-full h-full">
-      {typeof window !== "undefined" && window && (
+    <div className='relative w-full h-full'>
+      {typeof window !== 'undefined' && window && (
         <Chart
           options={options}
           series={series}
-          type="donut"
-          height={"100%"}
-          width={"100%"}
+          type='donut'
+          height={'100%'}
+          width={'100%'}
         />
       )}
-      <div className="flex items-center justify-center pt-16 absolute inset-0 w-full h-full bg-transparent">
-        <p className="subtitle italic opacity-75 text-center">
+      <div className='flex items-center justify-center pt-16 absolute inset-0 w-full h-full bg-transparent'>
+        <p className='subtitle italic opacity-75 text-center'>
           Carregando resultado dos Orçamentos
         </p>
       </div>

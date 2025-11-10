@@ -1,8 +1,8 @@
-import { prisma } from "@/lib/db";
-import { IBudgetCreateDTO, IBudgetUpdateDTO } from "../dto/budget.dto";
-import { IBudget } from "@/interfaces/IBudget";
-import { IResult } from "@/interfaces/IResult";
-import { PrismaClientKnownRequestError } from "@/generated/prisma/runtime/library";
+import { PrismaClientKnownRequestError } from '@/generated/prisma/runtime/library';
+import type { IBudget } from '@/interfaces/IBudget';
+import type { IResult } from '@/interfaces/IResult';
+import { prisma } from '@/lib/db';
+import type { IBudgetCreateDTO, IBudgetUpdateDTO } from '../dto/budget.dto';
 
 interface IBudgetRepository {
   getAll: (userId: number) => Promise<IBudget[]>;
@@ -10,13 +10,13 @@ interface IBudgetRepository {
   update: (
     id: number,
     data: IBudgetUpdateDTO,
-    userId: number
+    userId: number,
   ) => Promise<IResult<IBudget>>;
   delete: (id: number, userId: number) => Promise<IResult<null>>;
   moveTxn: (
     fromId: number,
     toId: number,
-    userId: number
+    userId: number,
   ) => Promise<IResult<null>>;
 }
 
@@ -24,7 +24,7 @@ export const budgetRepository: IBudgetRepository = {
   getAll: async (userId) => {
     const res = await prisma.budget.findMany({
       where: { userId },
-      orderBy: { id: "asc" },
+      orderBy: { id: 'asc' },
     });
     return res;
   },
@@ -38,11 +38,11 @@ export const budgetRepository: IBudgetRepository = {
     } catch (err) {
       if (
         err instanceof PrismaClientKnownRequestError &&
-        err.code === "P2025"
+        err.code === 'P2025'
       ) {
-        return { success: false, status: 404, error: "Budget not found" };
+        return { success: false, status: 404, error: 'Budget not found' };
       }
-      return { success: false, status: 400, error: "Unknown error" };
+      return { success: false, status: 400, error: 'Unknown error' };
     }
   },
   delete: async (id, userId) => {
@@ -55,7 +55,7 @@ export const budgetRepository: IBudgetRepository = {
     } catch (err) {
       if (
         err instanceof PrismaClientKnownRequestError &&
-        err.code === "P2025"
+        err.code === 'P2025'
       ) {
         return { success: false, status: 404 };
       }
@@ -73,11 +73,11 @@ export const budgetRepository: IBudgetRepository = {
     } catch (err) {
       if (
         err instanceof PrismaClientKnownRequestError &&
-        err.code === "P2025"
+        err.code === 'P2025'
       ) {
-        return { success: false, status: 404, error: "Budget not found" };
+        return { success: false, status: 404, error: 'Budget not found' };
       } else {
-        return { success: false, status: 400, error: "Unknown error" };
+        return { success: false, status: 400, error: 'Unknown error' };
       }
     }
   },

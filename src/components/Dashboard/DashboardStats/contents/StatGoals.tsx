@@ -1,8 +1,8 @@
-import { useStatsStore } from "@/stores/useStatsStore";
+import { useStatsStore } from '@/stores/useStatsStore';
 
 interface IStatGoalsProps {
   title: string;
-  type: "completedGoals" | "totalGoals" | "failedGoals";
+  type: 'completedGoals' | 'totalGoals' | 'failedGoals';
 }
 
 export default function StatGoals({ title, type }: IStatGoalsProps) {
@@ -10,8 +10,8 @@ export default function StatGoals({ title, type }: IStatGoalsProps) {
 
   return (
     <>
-      <h3 className="subsubtitle">{title}</h3>
-      {goalStats && <p className="stat-result">{goalStats[type]}</p>}
+      <h3 className='subsubtitle'>{title}</h3>
+      {goalStats && <p className='stat-result'>{goalStats[type]}</p>}
     </>
   );
 }

@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import { prisma } from "@/lib/db";
-import { cookies } from "next/headers";
-import { signJWT } from "@/lib/jwt";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from 'bcrypt';
+import { cookies } from 'next/headers';
+import { prisma } from '@/lib/db';
+import { signJWT } from '@/lib/jwt';
 
 type RegisterState = {
   success: boolean;
@@ -13,17 +13,17 @@ type RegisterState = {
 
 export async function loginUser(
   prevState: RegisterState,
-  formData: FormData
+  formData: FormData,
 ): Promise<RegisterState> {
   const email = formData
-    .get("email")
+    .get('email')
     ?.toString()
     .trim()
     .toLowerCase() as string;
-  const password = formData.get("password") as string;
+  const password = formData.get('password') as string;
 
-  if (email.trim() === "" || !email.includes("@")) {
-    return { success: false, message: "Email inválido" };
+  if (email.trim() === '' || !email.includes('@')) {
+    return { success: false, message: 'Email inválido' };
   }
 
   try {
@@ -33,31 +33,31 @@ export async function loginUser(
 
     const hashedPassword = user?.password;
     if (!hashedPassword) {
-      return { success: false, message: "Usuário inválido" };
+      return { success: false, message: 'Usuário inválido' };
     }
     const match = await bcrypt.compare(password as string, hashedPassword);
 
     if (match === false) {
-      return { success: false, message: "Erro ao logar" };
+      return { success: false, message: 'Erro ao logar' };
     } else {
       const token = signJWT({
         userId: user.id.toString(),
       });
 
-      (await cookies()).set("token", token, {
+      (await cookies()).set('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: process.env.NODE_ENV === 'production',
         maxAge: 60 * 60 * 24,
-        path: "/",
-        sameSite: "lax",
+        path: '/',
+        sameSite: 'lax',
       });
       return {
         success: true,
-        message: "Usuário logado com sucesso!",
+        message: 'Usuário logado com sucesso!',
         token: user.id,
       };
     }
   } catch {
-    return { success: false, message: "Erro ao logar" };
+    return { success: false, message: 'Erro ao logar' };
   }
 }

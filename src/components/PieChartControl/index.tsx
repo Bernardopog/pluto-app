@@ -1,11 +1,11 @@
-import { PieChartType } from "@/layout/Dashboard/DashboardBudget";
-import Checkbox from "@/ui/Checkbox";
-import { Dispatch, SetStateAction } from "react";
-import { MdBarChart, MdPieChart } from "react-icons/md";
+import type { Dispatch, SetStateAction } from 'react';
+import { MdBarChart, MdPieChart } from 'react-icons/md';
+import type { PieChartType } from '@/layout/Dashboard/DashboardBudget';
+import Checkbox from '@/ui/Checkbox';
 
 interface IPieChartControlProps {
-  chartType: "pie" | "bar";
-  setChartType: Dispatch<SetStateAction<"pie" | "bar">>;
+  chartType: 'pie' | 'bar';
+  setChartType: Dispatch<SetStateAction<'pie' | 'bar'>>;
   pieChartType: PieChartType;
   setPieChartType: Dispatch<SetStateAction<PieChartType>>;
   showRest: boolean;
@@ -20,76 +20,76 @@ export default function PieChartControl({
   showRest,
   setShowRest,
 }: IPieChartControlProps) {
-  const handleChartChange = (type: "pie" | "bar") => {
+  const handleChartChange = (type: 'pie' | 'bar') => {
     setChartType(type);
   };
 
   return (
-    <div className="flex flex-col p-2 rounded-lg bg-chetwode-blue-200 text-chetwode-blue-900 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-100">
-      <p className="font-medium text-center">Tipo de Gráfico:</p>
+    <div className='flex flex-col p-2 rounded-lg bg-chetwode-blue-200 text-chetwode-blue-900 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-100'>
+      <p className='font-medium text-center'>Tipo de Gráfico:</p>
 
-      <div className="flex justify-between px-2 gap-2">
+      <div className='flex justify-between px-2 gap-2'>
         <button
-          type="button"
+          type='button'
           className={`flex flex-1 items-center justify-center p-1 rounded-lg border gap-2 text-xl ${
-            chartType === "pie"
-              ? "bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950"
-              : "bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950"
+            chartType === 'pie'
+              ? 'bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950'
+              : 'bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950'
           }`}
-          onClick={() => handleChartChange("pie")}
+          onClick={() => handleChartChange('pie')}
         >
           <MdPieChart />
-          <span className="text-base">Pizza</span>
+          <span className='text-base'>Pizza</span>
         </button>
         <button
-          type="button"
+          type='button'
           className={`flex flex-1 items-center justify-center p-1 rounded-lg border gap-2 text-xl ${
-            chartType === "bar"
-              ? "bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950"
-              : "bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950"
+            chartType === 'bar'
+              ? 'bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950'
+              : 'bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950'
           }`}
-          onClick={() => handleChartChange("bar")}
+          onClick={() => handleChartChange('bar')}
         >
           <MdBarChart />
-          <span className="text-base">Barra</span>
+          <span className='text-base'>Barra</span>
         </button>
       </div>
 
-      {chartType === "pie" && (
+      {chartType === 'pie' && (
         <>
-          <p className="mt-2 font-medium text-center">
+          <p className='mt-2 font-medium text-center'>
             Tipo de Gráfico de Pizza:
           </p>
 
-          <div className="px-2 flex justify-between gap-2">
+          <div className='px-2 flex justify-between gap-2'>
             <button
-              type="button"
+              type='button'
               className={`flex flex-1 items-center justify-center p-1 rounded-lg border gap-2 text-xl ${
-                pieChartType === "full"
-                  ? "bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950"
-                  : "bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950"
+                pieChartType === 'full'
+                  ? 'bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950'
+                  : 'bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950'
               }`}
-              onClick={() => setPieChartType("full")}
+              onClick={() => setPieChartType('full')}
             >
-              <span className="text-base">Completo</span>
+              <span className='text-base'>Completo</span>
             </button>
             <button
-              type="button"
+              type='button'
               className={`flex flex-1 items-center justify-center p-1 rounded-lg border gap-2 text-xl ${
-                pieChartType === "half"
-                  ? "bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950"
-                  : "bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950"
+                pieChartType === 'half'
+                  ? 'bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950'
+                  : 'bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950'
               }`}
-              onClick={() => setPieChartType("half")}
+              onClick={() => setPieChartType('half')}
             >
-              <span className="text-base">Metade</span>
+              <span className='text-base'>Metade</span>
             </button>
           </div>
-          <div className="mt-2 px-2">
+          <div className='mt-2 px-2'>
             <Checkbox
               state={showRest}
               setState={setShowRest}
-              label="Mostrar Restante"
+              label='Mostrar Restante'
             />
           </div>
         </>

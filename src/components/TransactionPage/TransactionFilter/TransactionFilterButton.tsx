@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { JSX } from "react";
-import { MdClose } from "react-icons/md";
+import type { JSX } from 'react';
+import { MdClose } from 'react-icons/md';
 
 interface ITransactionFilterButtonProps {
   label: string;
@@ -19,23 +19,23 @@ export default function TransactionFilterButton({
   icon,
 }: ITransactionFilterButtonProps) {
   return (
-    <div className="relative">
+    <div className='relative'>
       <button
-        type="button"
+        type='button'
         className={`flex items-center justify-center w-full min-w-32 p-1.5 gap-2 rounded-lg duration-300 ease-in-out hover:brightness-95 active:brightness-75 ${
           isActive
-            ? "font-bold text-chetwode-blue-100 bg-chetwode-blue-800 dark:bg-chetwode-blue-200 dark:text-chetwode-blue-950"
-            : "text-chetwode-blue-950 bg-chetwode-blue-200 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50"
+            ? 'font-bold text-chetwode-blue-100 bg-chetwode-blue-800 dark:bg-chetwode-blue-200 dark:text-chetwode-blue-950'
+            : 'text-chetwode-blue-950 bg-chetwode-blue-200 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50'
         }`}
         onClick={() => action()}
       >
-        <span className="text-xl">{icon}</span>
+        <span className='text-xl'>{icon}</span>
         {label}
       </button>
       {isActive && (
         <button
-          type="button"
-          className="absolute top-0 right-0 rounded-sm text-lg text-chetwode-blue-950 bg-chetwode-blue-100"
+          type='button'
+          className='absolute top-0 right-0 rounded-sm text-lg text-chetwode-blue-950 bg-chetwode-blue-100'
           onClick={() => reset()}
         >
           <MdClose />

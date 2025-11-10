@@ -1,6 +1,6 @@
-"use client";
-import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+'use client';
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 type Props = {
   value: string;
@@ -17,8 +17,8 @@ export default function TransactionSearchParams({
 
   useEffect(() => {
     setSearchFilter(value);
-    if (searchParams.has("category")) {
-      setCategoryFilter(Number(searchParams.get("category")));
+    if (searchParams.has('category')) {
+      setCategoryFilter(Number(searchParams.get('category')));
     }
   }, [value, setSearchFilter, searchParams, setCategoryFilter]);
 

@@ -1,5 +1,5 @@
-import Input from "@/ui/Input";
-import { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from 'react';
+import Input from '@/ui/Input';
 
 interface IModalBudgetColorPickerRgbProps {
   red: string | number;
@@ -19,37 +19,37 @@ export default function ModalBudgetColorPickerRgb({
   setBlue,
 }: IModalBudgetColorPickerRgbProps) {
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className='grid grid-cols-3 gap-2'>
       <Input
-        id="budgetColor"
-        label="Vermelho"
-        inputType="basic"
+        id='budgetColor'
+        label='Vermelho'
+        inputType='basic'
         state={red}
         setState={setRed}
-        type="number"
-        step={"1"}
+        type='number'
+        step={'1'}
         minLimit={0}
         maxLimit={255}
       />
       <Input
-        id="budgetColor"
-        label="Verde"
-        inputType="basic"
+        id='budgetColor'
+        label='Verde'
+        inputType='basic'
         state={green}
         setState={setGreen}
-        type="number"
-        step={"1"}
+        type='number'
+        step={'1'}
         minLimit={0}
         maxLimit={255}
       />
       <Input
-        id="budgetColor"
-        label="Azul"
-        inputType="basic"
+        id='budgetColor'
+        label='Azul'
+        inputType='basic'
         state={blue}
         setState={setBlue}
-        type="number"
-        step={"1"}
+        type='number'
+        step={'1'}
         minLimit={0}
         maxLimit={255}
       />

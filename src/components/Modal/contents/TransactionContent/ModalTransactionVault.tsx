@@ -1,4 +1,4 @@
-import { useVaultStore } from "@/stores/useVaultStore";
+import { useVaultStore } from '@/stores/useVaultStore';
 
 interface IModalTransactionVaultProps {
   transactionVault: number | null;
@@ -13,26 +13,26 @@ export default function ModalTransactionVault({
 
   return (
     <>
-      <p className="mt-2 text-chetwode-blue-950 dark:text-chetwode-blue-50">
+      <p className='mt-2 text-chetwode-blue-950 dark:text-chetwode-blue-50'>
         Selecione qual cofre deve receber a transação
       </p>
-      <ul className="flex flex-wrap gap-2">
+      <ul className='flex flex-wrap gap-2'>
         {vaultList.length > 0 &&
           vaultList.map((vault) => (
             <li
               key={vault.id}
               className={`flex-1 rounded-lg border-2 text-center duration-300 ease-in-out ${
                 transactionVault === vault.id
-                  ? "bg-chetwode-blue-300 border-chetwode-blue-600"
-                  : "bg-chetwode-blue-200 border-transparent"
+                  ? 'bg-chetwode-blue-300 border-chetwode-blue-600'
+                  : 'bg-chetwode-blue-200 border-transparent'
               }`}
             >
               <button
-                type="button"
-                className="w-full p-2 rounded-lg"
+                type='button'
+                className='w-full p-2 rounded-lg'
                 onClick={() => setTransactionVault(vault.id)}
               >
-                <p className="text-nowrap text-chetwode-blue-950">
+                <p className='text-nowrap text-chetwode-blue-950'>
                   {vault.name}
                 </p>
               </button>

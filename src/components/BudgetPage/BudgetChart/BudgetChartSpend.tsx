@@ -1,10 +1,10 @@
-import dynamic from "next/dynamic";
-import { IBudgetChartProps } from "@/layout/Budget/BudgetChart";
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
-import { getPercentage } from "@/utils/getPercentage";
-import { ApexOptions } from "apexcharts";
+import type { ApexOptions } from 'apexcharts';
+import dynamic from 'next/dynamic';
+import type { IBudgetChartProps } from '@/layout/Budget/BudgetChart';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
+import { getPercentage } from '@/utils/getPercentage';
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 function BudgetChartSpend({
   budgetList,
@@ -12,12 +12,12 @@ function BudgetChartSpend({
   isOverlay,
 }: IBudgetChartProps) {
   const getExpenseFromCurrentMonth = useTransactionBudgetStore(
-    (s) => s.getExpenseFromCurrentMonth
+    (s) => s.getExpenseFromCurrentMonth,
   );
   const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
 
   const series = budgetList.map((bdgt) =>
-    Math.abs(getExpenseFromCurrentMonth(bdgt.id))
+    Math.abs(getExpenseFromCurrentMonth(bdgt.id)),
   );
 
   const customOptions: ApexOptions = {
@@ -44,11 +44,11 @@ function BudgetChartSpend({
     <>
       {/* Custom DataLabel because colors and dataLabels don't work together */}
       {!isOverlay && (
-        <div className="absolute z-20 size-0 rounded-full">
+        <div className='absolute z-20 size-0 rounded-full'>
           {budgetList.map((bdgt, idx) => {
             const percentage = getPercentage(
               getExpenseFromCurrentMonth(bdgt.id),
-              getTotalExpenses()
+              getTotalExpenses(),
             );
             const angle = (360 / budgetList.length) * idx;
             return (
@@ -59,10 +59,10 @@ function BudgetChartSpend({
                   transform: `rotate(${angle}deg) translate(275%) rotate(-${
                     angle + 287
                   }deg)`,
-                  transformOrigin: "center",
+                  transformOrigin: 'center',
                   rotate: `287.5deg`,
                 }}
-                className="absolute top-1/2 left-1/2 -translate-1/2 min-w-16 w-fit p-1 border rounded-lg text-center text-xs font-bold text-white border-white duration-300 ease-in-out"
+                className='absolute top-1/2 left-1/2 -translate-1/2 min-w-16 w-fit p-1 border rounded-lg text-center text-xs font-bold text-white border-white duration-300 ease-in-out'
               >
                 {percentage}%
               </div>
@@ -72,14 +72,14 @@ function BudgetChartSpend({
       )}
       <div
         className={`${
-          isOverlay && "flex items-center justify-center absolute inset-0"
+          isOverlay && 'flex items-center justify-center absolute inset-0'
         }`}
       >
         <Chart
           options={isOverlay ? customOptions : options}
           series={series}
-          type="polarArea"
-          width={"150%"}
+          type='polarArea'
+          width={'150%'}
         />
       </div>
     </>

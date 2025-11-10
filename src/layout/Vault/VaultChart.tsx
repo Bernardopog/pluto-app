@@ -1,37 +1,37 @@
-"use client";
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 import {
   VaultChartDropdown,
   VaultChartGraph,
   VaultChartHeader,
-} from "@/components/VaultPage/VaultChart";
+} from '@/components/VaultPage/VaultChart';
 
 export type VaultChartTypes =
-  | "totalProgress"
-  | "vaultProgress"
-  | "restProgress";
+  | 'totalProgress'
+  | 'vaultProgress'
+  | 'restProgress';
 
 export default function VaultChart() {
   const [typeOfChart, setTypeOfChart] =
-    useState<VaultChartTypes>("totalProgress");
+    useState<VaultChartTypes>('totalProgress');
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
-  let nameOfType = "";
+  let nameOfType = '';
 
   switch (typeOfChart) {
-    case "totalProgress":
-      nameOfType = "Progresso Total";
+    case 'totalProgress':
+      nameOfType = 'Progresso Total';
       break;
-    case "vaultProgress":
-      nameOfType = "Progresso por Cofre";
+    case 'vaultProgress':
+      nameOfType = 'Progresso por Cofre';
       break;
-    case "restProgress":
-      nameOfType = "Restante para Concluir";
+    case 'restProgress':
+      nameOfType = 'Restante para Concluir';
       break;
   }
 
   return (
-    <section id="vault-chart" className="base-card relative">
+    <section id='vault-chart' className='base-card relative'>
       <VaultChartHeader
         isDropdownOpen={isDropdownOpen}
         setIsDropdownOpen={setIsDropdownOpen}

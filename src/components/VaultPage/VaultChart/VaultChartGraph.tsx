@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { VaultChartTypes } from "@/layout/Vault/VaultChart";
-import { useThemeStore } from "@/stores/useThemeStore";
-import { useVaultStore } from "@/stores/useVaultStore";
-import { getPercentage } from "@/utils/getPercentage";
-import { ApexOptions } from "apexcharts";
-import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import type { ApexOptions } from 'apexcharts';
+import dynamic from 'next/dynamic';
+import { useMemo } from 'react';
+import type { VaultChartTypes } from '@/layout/Vault/VaultChart';
+import { useThemeStore } from '@/stores/useThemeStore';
+import { useVaultStore } from '@/stores/useVaultStore';
+import { getPercentage } from '@/utils/getPercentage';
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 interface IVaultChartGraphProps {
   typeOfChart: VaultChartTypes;
@@ -18,7 +18,7 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
   const vaultList = useVaultStore((s) => s.vaultData.list);
   const vaultItemList = useVaultStore((s) => s.vaultItemData.list);
   const getTotalMoneySavedFromVault = useVaultStore(
-    (s) => s.getTotalMoneySavedFromVault
+    (s) => s.getTotalMoneySavedFromVault,
   );
   const theme = useThemeStore((s) => s.theme);
 
@@ -30,7 +30,7 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
     ...vaultList.map((vault) => {
       const value = getPercentage(
         getTotalMoneySavedFromVault(vault.id),
-        totalInVaults
+        totalInVaults,
       );
       return +value > 100 ? 100 : value;
     }),
@@ -41,14 +41,14 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
       ...vaultList.map((vault) => {
         const value = getPercentage(
           getTotalMoneySavedFromVault(vault.id),
-          vault.targetPrice
+          vault.targetPrice,
         );
         return +value > 100 ? 100 : +value * 0.75;
       }),
     ],
 
     // eslint-disable-next-line
-    [vaultList, getTotalMoneySavedFromVault, vaultItemList]
+    [vaultList, getTotalMoneySavedFromVault, vaultItemList],
   );
 
   const rest = vaultList
@@ -62,25 +62,25 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
 
   const options: ApexOptions = {
     labels:
-      typeOfChart === "restProgress"
-        ? ["Restante", ...vaultList.map((vault) => vault.name)]
+      typeOfChart === 'restProgress'
+        ? ['Restante', ...vaultList.map((vault) => vault.name)]
         : vaultList.map((vault) => vault.name),
     legend: {
-      position: "bottom",
+      position: 'bottom',
       labels: {
-        colors: theme === "light" ? "#2a1e57" : "#f5f5fd",
+        colors: theme === 'light' ? '#2a1e57' : '#f5f5fd',
       },
     },
     stroke: {
-      colors: theme === "light" ? ["#f6f6f6"] : ["#453181"],
+      colors: theme === 'light' ? ['#f6f6f6'] : ['#453181'],
       width: 4,
     },
     fill: {
       opacity: 1,
       colors:
-        typeOfChart === "restProgress"
-          ? ["#a9a9a9", "#df4444", "#4477df", "#44df44", "#df7744"]
-          : ["#df4444", "#4477df", "#44df44", "#df7744"],
+        typeOfChart === 'restProgress'
+          ? ['#a9a9a9', '#df4444', '#4477df', '#44df44', '#df7744']
+          : ['#df4444', '#4477df', '#44df44', '#df7744'],
     },
     plotOptions: {
       radialBar: {
@@ -88,15 +88,15 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
           enabled: true,
           useSeriesColors: true,
           offsetX: -8,
-          fontSize: "16px",
+          fontSize: '16px',
         },
         track: {
-          background: theme === "light" ? "#f6f6f6" : "#453181",
+          background: theme === 'light' ? '#f6f6f6' : '#453181',
         },
         dataLabels: {
           value: {
-            fontSize: "16px",
-            color: theme === "light" ? "#2a1e57" : "#f5f5fd",
+            fontSize: '16px',
+            color: theme === 'light' ? '#2a1e57' : '#f5f5fd',
             formatter: (val: number) => {
               const originalVal = val / 0.75;
               return `${
@@ -115,37 +115,37 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
             show: true,
             name: {
               show: true,
-              color: theme === "light" ? "#2a1e57" : "#ffffff", // aqui você muda a cor!
-              fontSize: "16px",
+              color: theme === 'light' ? '#2a1e57' : '#ffffff', // aqui você muda a cor!
+              fontSize: '16px',
             },
             value: {
               formatter: (val: string) =>
-                typeOfChart === "restProgress" ? "" : `${val}% / 100%`,
-              color: theme === "light" ? "#2a1e57" : "#f5f5fd",
+                typeOfChart === 'restProgress' ? '' : `${val}% / 100%`,
+              color: theme === 'light' ? '#2a1e57' : '#f5f5fd',
             },
           },
-          size: "60",
+          size: '60',
         },
         expandOnClick: false,
       },
     },
   };
   const series =
-    typeOfChart === "totalProgress"
+    typeOfChart === 'totalProgress'
       ? totalProgress.map((val) => +val)
-      : typeOfChart === "vaultProgress"
-      ? vaultProgress.map((val) => +val)
-      : restProgress.map((val) => +val);
+      : typeOfChart === 'vaultProgress'
+        ? vaultProgress.map((val) => +val)
+        : restProgress.map((val) => +val);
 
   return (
     <>
-      {typeof window !== "undefined" && window && (
+      {typeof window !== 'undefined' && window && (
         <Chart
           options={options}
           series={series}
-          type={typeOfChart === "vaultProgress" ? "radialBar" : "donut"}
-          height={"90%"}
-          width={"98%"}
+          type={typeOfChart === 'vaultProgress' ? 'radialBar' : 'donut'}
+          height={'90%'}
+          width={'98%'}
         />
       )}
     </>

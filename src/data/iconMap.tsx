@@ -1,12 +1,12 @@
-import { iconNameType } from "@/types/IconNameType";
-import { IconType } from "react-icons";
+import type { IconType } from 'react-icons';
 import {
   BsCarFront,
   BsCarFrontFill,
   BsPiggyBank,
   BsPiggyBankFill,
-} from "react-icons/bs";
-import { MdAirplanemodeActive } from "react-icons/md";
+} from 'react-icons/bs';
+import { MdAirplanemodeActive } from 'react-icons/md';
+import type { iconNameType } from '@/types/IconNameType';
 
 interface IIcon {
   name: iconNameType;
@@ -21,17 +21,17 @@ type IIconMap = {
 
 export const iconsMap: IIconMap = {
   plane: {
-    name: "plane",
+    name: 'plane',
     icon: MdAirplanemodeActive,
   },
   piggy: {
-    name: "piggy",
+    name: 'piggy',
     icon: BsPiggyBankFill,
     hasOutline: true,
     outlineIcon: BsPiggyBank,
   },
   car: {
-    name: "car",
+    name: 'car',
     icon: BsCarFrontFill,
     hasOutline: true,
     outlineIcon: BsCarFront,

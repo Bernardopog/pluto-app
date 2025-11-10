@@ -1,17 +1,20 @@
-import { create } from "zustand";
-import { ITransaction } from "@/interfaces/ITransaction";
-import { IBudget } from "@/interfaces/IBudget";
-import { fetcher } from "../utils/fetcher";
-import { IBudgetCreateDTO, IBudgetUpdateDTO } from "@/server/dto/budget.dto";
-import {
+import { create } from 'zustand';
+import type { IBudget } from '@/interfaces/IBudget';
+import type { IMessage } from '@/interfaces/IMessage';
+import type { ITransaction } from '@/interfaces/ITransaction';
+import type {
+  IBudgetCreateDTO,
+  IBudgetUpdateDTO,
+} from '@/server/dto/budget.dto';
+import type {
   ITransactionCreateDTO,
   ITransactionUpdateDTO,
-} from "@/server/dto/transition.dto";
-import { IListDataState } from "../interfaces/IDataState";
-import { ISelectionState } from "../interfaces/ISelectionState";
-import { IMethodsState } from "../interfaces/IMethodsState";
-import { showError } from "../helpers/showError";
-import { IMessage } from "@/interfaces/IMessage";
+} from '@/server/dto/transition.dto';
+import { showError } from '../helpers/showError';
+import type { IListDataState } from '../interfaces/IDataState';
+import type { IMethodsState } from '../interfaces/IMethodsState';
+import type { ISelectionState } from '../interfaces/ISelectionState';
+import { fetcher } from '../utils/fetcher';
 
 interface ITransactionMethodsState
   extends IMethodsState<
@@ -69,9 +72,9 @@ interface ITransactionBudgetStore {
   isCurrentMonth: (date: string | Date) => boolean;
 }
 
-const budgetFetcher = fetcher<IBudget[] | IBudget | null>("/api/budgets");
+const budgetFetcher = fetcher<IBudget[] | IBudget | null>('/api/budgets');
 const transactionFetcher = fetcher<ITransaction[] | ITransaction | null>(
-  "/api/transactions"
+  '/api/transactions',
 );
 
 export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
@@ -97,7 +100,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       },
       create: async (transaction) => {
         const res = (await transactionFetcher.post(
-          transaction
+          transaction,
         )) as IMessage<ITransaction>;
         if (res.status >= 400) showError(res);
         set((state) => ({
@@ -111,14 +114,14 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       update: async (id, transaction) => {
         const res = (await transactionFetcher.put(
           id,
-          transaction
+          transaction,
         )) as IMessage<ITransaction>;
         if (res.status >= 400) showError(res);
         set((state) => ({
           transactionData: {
             ...state.transactionData,
             list: state.transactionData.list.map((item) =>
-              item.id === id ? (res.data as ITransaction) : item
+              item.id === id ? (res.data as ITransaction) : item,
             ),
           },
         }));
@@ -138,19 +141,19 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       deleteMany: async () => {
         if (get().transactionDeletion.list.length === 0)
           return {
-            message: "Nenhuma transação selecionada",
+            message: 'Nenhuma transação selecionada',
             status: 400,
           } as IMessage<null>;
         const ids = get().transactionDeletion.list;
         const res = (await transactionFetcher.deleteManyTxn(
-          ids
+          ids,
         )) as IMessage<null>;
         if (res.status >= 400) showError(res);
         set((state) => ({
           transactionData: {
             ...state.transactionData,
             list: state.transactionData.list.filter(
-              (txn) => !ids.includes(txn.id)
+              (txn) => !ids.includes(txn.id),
             ),
           },
         }));
@@ -159,7 +162,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       deleteAll: async () => {
         if (get().transactionData.list.length === 0)
           return {
-            message: "Nenhuma transação encontrada",
+            message: 'Nenhuma transação encontrada',
             status: 400,
           } as IMessage<null>;
         const res = (await transactionFetcher.deleteAllTxn()) as IMessage<null>;
@@ -258,7 +261,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
       create: async (budget) => {
         if (get().budgetData.list.length >= 10)
           return {
-            message: "Limite de 10 orcamentos atingido",
+            message: 'Limite de 10 orcamentos atingido',
             status: 400,
           };
         const res = (await budgetFetcher.post(budget)) as IMessage<IBudget>;
@@ -278,7 +281,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
           budgetData: {
             ...state.budgetData,
             list: state.budgetData.list.map((item) =>
-              item.id === id ? (res.data as IBudget) : item
+              item.id === id ? (res.data as IBudget) : item,
             ),
           },
         }));
@@ -308,7 +311,7 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
           transactionData: {
             ...state.transactionData,
             list: state.transactionData.list.map((txn) =>
-              txn.categoryId === fromId ? { ...txn, categoryId: toId } : txn
+              txn.categoryId === fromId ? { ...txn, categoryId: toId } : txn,
             ),
           },
         }));
@@ -387,5 +390,5 @@ export const useTransactionBudgetStore = create<ITransactionBudgetStore>(
         itemDate.getFullYear() === now.getFullYear()
       );
     },
-  })
+  }),
 );

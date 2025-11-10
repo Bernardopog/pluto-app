@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/db";
-import { IStats } from "@/interfaces/IStat";
+import type { IStats } from '@/interfaces/IStat';
+import { prisma } from '@/lib/db';
 
 interface IStatsRepository {
   get: (reqUserId: number) => Promise<IStats | null>;

@@ -1,7 +1,7 @@
-"use client";
-import { useAuthStore } from "@/stores/useAuthStore";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+'use client';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 export default function LogoutPage() {
   const router = useRouter();
@@ -9,13 +9,13 @@ export default function LogoutPage() {
 
   useEffect(() => {
     const localStorage = window.localStorage;
-    localStorage.removeItem("auth-storage");
+    localStorage.removeItem('auth-storage');
 
     const logout = async () => {
-      const res = await fetch("/api/auth/logout");
+      const res = await fetch('/api/auth/logout');
       const json = await res.json();
       if (json.data) {
-        router.push("/login");
+        router.push('/login');
       }
     };
     clearUserId();
@@ -23,8 +23,8 @@ export default function LogoutPage() {
   }, [router, clearUserId]);
 
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-2px)] bg-chetwode-blue-100">
-      <span className="text-3xl italic text-chetwode-blue-950/75">
+    <div className='flex items-center justify-center min-h-[calc(100vh-2px)] bg-chetwode-blue-100'>
+      <span className='text-3xl italic text-chetwode-blue-950/75'>
         Saindo...
       </span>
     </div>

@@ -1,5 +1,5 @@
-"use client";
-import { ReactNode, useEffect, useRef } from "react";
+'use client';
+import { type ReactNode, useEffect, useRef } from 'react';
 
 interface IInertProps {
   children: ReactNode;

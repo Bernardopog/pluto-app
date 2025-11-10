@@ -1,4 +1,4 @@
-import { getPercentage } from "@/utils/getPercentage";
+import { getPercentage } from '@/utils/getPercentage';
 
 interface IDashboardGoalsPercentageDisplayProps {
   money: number;
@@ -12,7 +12,7 @@ export default function DashboardGoalsPercentageDisplay({
   const result = Number(getPercentage(money, totalPrice));
 
   return (
-    <div className="flex-1 relative mt-12 text-center text-xl">
+    <div className='flex-1 relative mt-12 text-center text-xl'>
       {result > 100 ? 100 : result.toFixed(2)}%
     </div>
   );

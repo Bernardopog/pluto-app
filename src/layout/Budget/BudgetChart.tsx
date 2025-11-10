@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
+import type { ApexOptions } from 'apexcharts';
+import { useState } from 'react';
 import {
   BudgetChartAssigned,
-  BudgetChartSpend,
   BudgetChartController,
   BudgetChartShowController,
-} from "@/components/BudgetPage/BudgetChart";
-import { ApexOptions } from "apexcharts";
-import { IBudget } from "@/interfaces/IBudget";
+  BudgetChartSpend,
+} from '@/components/BudgetPage/BudgetChart';
+import type { IBudget } from '@/interfaces/IBudget';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
 
 export interface IBudgetChartProps {
   options: ApexOptions;
@@ -21,13 +21,13 @@ export default function BudgetChart() {
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
 
   const [chartToShow, setChartToShow] = useState<
-    "assigned" | "overlay" | "spend"
-  >("assigned");
+    'assigned' | 'overlay' | 'spend'
+  >('assigned');
 
   const [excludedId, setExcludedId] = useState<number[]>([]);
 
   const budgetListFiltered = budgetList.filter(
-    (bdgt) => !excludedId.includes(bdgt.id)
+    (bdgt) => !excludedId.includes(bdgt.id),
   );
 
   const addToExcluded = (id: number) => {
@@ -39,7 +39,7 @@ export default function BudgetChart() {
 
   const options: ApexOptions = {
     chart: {
-      type: "polarArea",
+      type: 'polarArea',
       toolbar: {
         show: false,
       },
@@ -64,10 +64,10 @@ export default function BudgetChart() {
 
   return (
     <section
-      id="budget-chart"
-      className="base-card flex flex-col min-w-0 overflow-x-auto scrollbar-style scrollbar-thinner"
+      id='budget-chart'
+      className='base-card flex flex-col min-w-0 overflow-x-auto scrollbar-style scrollbar-thinner'
     >
-      <h2 className="subtitle">Gráfico</h2>
+      <h2 className='subtitle'>Gráfico</h2>
       {budgetListLength > 0 && (
         <BudgetChartController
           chartToShow={chartToShow}
@@ -75,22 +75,22 @@ export default function BudgetChart() {
         />
       )}
       {budgetListLength > 0 ? (
-        <div className="flex justify-center items-center flex-1 relative min-h-9/10">
-          {chartToShow !== "spend" && (
+        <div className='flex justify-center items-center flex-1 relative min-h-9/10'>
+          {chartToShow !== 'spend' && (
             <BudgetChartAssigned
               budgetList={budgetListFiltered}
               options={options}
-              isOverlay={chartToShow === "overlay"}
+              isOverlay={chartToShow === 'overlay'}
             />
           )}
-          {chartToShow === "overlay" && (
+          {chartToShow === 'overlay' && (
             <BudgetChartSpend
               budgetList={budgetListFiltered}
               options={options}
               isOverlay={true}
             />
           )}
-          {chartToShow === "spend" && (
+          {chartToShow === 'spend' && (
             <BudgetChartSpend
               budgetList={budgetListFiltered}
               options={options}
@@ -99,7 +99,7 @@ export default function BudgetChart() {
           )}
         </div>
       ) : (
-        <p className="flex items-center justify-center flex-1 font-bold text-lg italic text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75">
+        <p className='flex items-center justify-center flex-1 font-bold text-lg italic text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75'>
           Crie um orçamento para ver o gráfico...
         </p>
       )}

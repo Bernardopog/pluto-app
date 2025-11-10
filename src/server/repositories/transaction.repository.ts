@@ -1,22 +1,22 @@
-import { prisma } from "@/lib/db";
-import {
+import { PrismaClientKnownRequestError } from '@/generated/prisma/runtime/library';
+import type { IResult } from '@/interfaces/IResult';
+import type { ITransaction } from '@/interfaces/ITransaction';
+import { prisma } from '@/lib/db';
+import type {
   ITransactionCreateDTO,
   ITransactionUpdateDTO,
-} from "../dto/transition.dto";
-import { ITransaction } from "@/interfaces/ITransaction";
-import { IResult } from "@/interfaces/IResult";
-import { PrismaClientKnownRequestError } from "@/generated/prisma/runtime/library";
+} from '../dto/transition.dto';
 
 interface ITransactionRepository {
   getAll: (userId: number) => Promise<ITransaction[]>;
   create: (
     data: ITransactionCreateDTO,
-    userId: number
+    userId: number,
   ) => Promise<ITransaction>;
   update: (
     id: number,
     data: ITransactionUpdateDTO,
-    userId: number
+    userId: number,
   ) => Promise<IResult<ITransaction>>;
   delete: (id: number, userId: number) => Promise<IResult<null>>;
   deleteMany: (ids: number[], userId: number) => Promise<IResult<null>>;
@@ -27,7 +27,7 @@ export const transactionRepository: ITransactionRepository = {
   getAll: async (userId) => {
     return await prisma.transaction.findMany({
       where: { userId },
-      orderBy: [{ date: "desc" }, { id: "desc" }],
+      orderBy: [{ date: 'desc' }, { id: 'desc' }],
     });
   },
   create: async (data, userId) => {
@@ -43,11 +43,11 @@ export const transactionRepository: ITransactionRepository = {
     } catch (err) {
       if (
         err instanceof PrismaClientKnownRequestError &&
-        err.code === "P2025"
+        err.code === 'P2025'
       ) {
-        return { success: false, status: 404, error: "Transaction not found" };
+        return { success: false, status: 404, error: 'Transaction not found' };
       } else {
-        return { success: false, status: 400, error: "Unknown error" };
+        return { success: false, status: 400, error: 'Unknown error' };
       }
     }
   },
@@ -58,11 +58,11 @@ export const transactionRepository: ITransactionRepository = {
     } catch (err) {
       if (
         err instanceof PrismaClientKnownRequestError &&
-        err.code === "P2025"
+        err.code === 'P2025'
       ) {
-        return { success: false, status: 404, error: "Transaction not found" };
+        return { success: false, status: 404, error: 'Transaction not found' };
       } else {
-        return { success: false, status: 400, error: "Unknown error" };
+        return { success: false, status: 400, error: 'Unknown error' };
       }
     }
   },
@@ -75,11 +75,11 @@ export const transactionRepository: ITransactionRepository = {
     } catch (err) {
       if (
         err instanceof PrismaClientKnownRequestError &&
-        err.code === "P2025"
+        err.code === 'P2025'
       ) {
-        return { success: false, status: 404, error: "Transaction not found" };
+        return { success: false, status: 404, error: 'Transaction not found' };
       } else {
-        return { success: false, status: 400, error: "Unknown error" };
+        return { success: false, status: 400, error: 'Unknown error' };
       }
     }
   },
@@ -88,7 +88,7 @@ export const transactionRepository: ITransactionRepository = {
       await prisma.transaction.deleteMany({ where: { userId } });
       return { success: true, status: 200, data: null };
     } catch {
-      return { success: false, status: 400, error: "Unknown error" };
+      return { success: false, status: 400, error: 'Unknown error' };
     }
   },
 };

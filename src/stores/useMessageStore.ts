@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface IDataMessage {
   message: string;
@@ -13,9 +13,9 @@ interface IUseMessageStore {
 
 export const useMessageStore = create<IUseMessageStore>((set) => ({
   data: {
-    message: "",
+    message: '',
     status: 0,
-    description: "",
+    description: '',
   },
   setMessage: (data) => set(() => ({ data })),
 }));

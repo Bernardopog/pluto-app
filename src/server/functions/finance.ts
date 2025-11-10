@@ -1,5 +1,5 @@
-import { getUser } from "../utils/getUser";
-import { financeService } from "../services/finance.service";
+import { financeService } from '../services/finance.service';
+import { getUser } from '../utils/getUser';
 
 export async function getFinance() {
   const userId = await getUser();

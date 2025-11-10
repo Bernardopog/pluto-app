@@ -1,6 +1,6 @@
-import { IGoal } from "@/interfaces/IGoal";
-import { prisma } from "@/lib/db";
-import { IGoalCreateDTO } from "../dto/goal.dto";
+import type { IGoal } from '@/interfaces/IGoal';
+import { prisma } from '@/lib/db';
+import type { IGoalCreateDTO } from '../dto/goal.dto';
 
 interface IGoalRepository {
   get: (userId: number) => Promise<IGoal | null>;
@@ -24,7 +24,7 @@ export const goalRepository: IGoalRepository = {
   },
   create: async (data, userId) => {
     const found = await checkFound(userId);
-    if (found) throw new Error("Meta existente");
+    if (found) throw new Error('Meta existente');
 
     const res = await prisma.goal.create({ data: { ...data, userId } });
 
@@ -38,7 +38,7 @@ export const goalRepository: IGoalRepository = {
   },
   complete: async (userId) => {
     const found = await checkFound(userId);
-    if (!found) throw new Error("Meta não encontrada");
+    if (!found) throw new Error('Meta não encontrada');
 
     await prisma.goal.delete({ where: { userId } });
 
@@ -51,7 +51,7 @@ export const goalRepository: IGoalRepository = {
   },
   cancel: async (userId) => {
     const found = await checkFound(userId);
-    if (!found) throw new Error("Meta não encontrada");
+    if (!found) throw new Error('Meta não encontrada');
 
     await prisma.goal.delete({ where: { userId } });
 
@@ -64,11 +64,11 @@ export const goalRepository: IGoalRepository = {
   },
   reassign: async (newVaultId, userId) => {
     const isValid = await prisma.goal.findUnique({ where: { userId } });
-    if (isValid?.progress !== "vault")
-      throw new Error("Meta não possui um cofre");
+    if (isValid?.progress !== 'vault')
+      throw new Error('Meta não possui um cofre');
 
     const found = await checkFound(userId);
-    if (!found) throw new Error("Meta não encontrada");
+    if (!found) throw new Error('Meta não encontrada');
 
     const res = await prisma.goal.update({
       where: { userId },

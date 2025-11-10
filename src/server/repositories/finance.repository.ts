@@ -1,5 +1,5 @@
-import { IFinance } from "@/interfaces/IFinance";
-import { prisma } from "@/lib/db";
+import type { IFinance } from '@/interfaces/IFinance';
+import { prisma } from '@/lib/db';
 
 interface IFinanceRepository {
   get: (userId: number) => Promise<IFinance | null>;

@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "biome lint .",
+    "lint": "biome lint . --fix",
+    "format": "biome format . --write",
+    "check": "biome check . --fix",
     "preview": "next build && next start",
     "generate": "prisma generate"
   },

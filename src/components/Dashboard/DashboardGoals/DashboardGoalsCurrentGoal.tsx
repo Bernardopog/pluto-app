@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { useFinanceStore } from "@/stores/useFinanceStore";
-import { useGoalsStore } from "@/stores/useGoalsStore";
-import { useVaultStore } from "@/stores/useVaultStore";
-import { moneyFormatter } from "@/utils/moneyFormatter";
-import DashboardGoalsProgressBar from "./DashboardGoalsProgressBar";
-import DashboardGoalsPercentageDisplay from "./DashboardGoalsPercentageDisplay";
-import { useEffect, useMemo } from "react";
-import { getPercentage } from "@/utils/getPercentage";
-import { MdWarning } from "react-icons/md";
-import { useModalStore } from "@/stores/useModalStore";
-import { useStatsStore } from "@/stores/useStatsStore";
-import { useShallow } from "zustand/shallow";
+import { useEffect, useMemo } from 'react';
+import { MdWarning } from 'react-icons/md';
+import { useShallow } from 'zustand/shallow';
+import { useFinanceStore } from '@/stores/useFinanceStore';
+import { useGoalsStore } from '@/stores/useGoalsStore';
+import { useModalStore } from '@/stores/useModalStore';
+import { useStatsStore } from '@/stores/useStatsStore';
+import { useVaultStore } from '@/stores/useVaultStore';
+import { getPercentage } from '@/utils/getPercentage';
+import { moneyFormatter } from '@/utils/moneyFormatter';
+import DashboardGoalsPercentageDisplay from './DashboardGoalsPercentageDisplay';
+import DashboardGoalsProgressBar from './DashboardGoalsProgressBar';
 
 export default function DashboardGoalsCurrentGoal() {
   const goal = useGoalsStore((s) => s.goalData.item);
   const getTotalMoneySavedFromVault = useVaultStore(
-    (s) => s.getTotalMoneySavedFromVault
+    (s) => s.getTotalMoneySavedFromVault,
   );
   const balance = useFinanceStore((s) => s.financeData.item.balance);
   const vaultList = useVaultStore((s) => s.vaultData.list);
@@ -29,11 +29,11 @@ export default function DashboardGoalsCurrentGoal() {
     useShallow((s) => ({
       statCompleteGoal: s.completeGoal,
       statCancelGoal: s.cancelGoal,
-    }))
+    })),
   );
 
   const money = useMemo(() => {
-    if (goal?.progress === "vault") {
+    if (goal?.progress === 'vault') {
       const vault = vaultList.find((vault) => {
         return vault.id === goal.assignedVault;
       });
@@ -54,7 +54,7 @@ export default function DashboardGoalsCurrentGoal() {
     if (deadline.getTime() < now) {
       cancel();
       statCancelGoal();
-    } else if (deadline.getTime() < now && goal?.progress === "vault") {
+    } else if (deadline.getTime() < now && goal?.progress === 'vault') {
       const vault = vaultList.find((vault) => vault.id === goal.assignedVault);
       if (!vault) return;
       const totalMoneySaved = getTotalMoneySavedFromVault(vault.id);
@@ -63,7 +63,7 @@ export default function DashboardGoalsCurrentGoal() {
         complete();
         statCompleteGoal();
       }
-    } else if (deadline.getTime() < now && goal?.progress === "balance") {
+    } else if (deadline.getTime() < now && goal?.progress === 'balance') {
       const percentage = getPercentage(balance, goal.targetAmount);
       if (Number(percentage) >= 100) {
         complete();
@@ -85,34 +85,34 @@ export default function DashboardGoalsCurrentGoal() {
 
   const handleModal = () => {
     toggleModal();
-    selectModalType("goalReassign");
+    selectModalType('goalReassign');
   };
 
   return (
     <>
       {goal ? (
-        <div className="flex flex-col flex-1 relative p-1 rounded-lg bg-chetwode-blue-100 text-chetwode-blue-900 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-200">
-          <p className="font-bold text-center">{goal.name}</p>
-          <div className="flex justify-center gap-x-2">
-            <p className="font-bold inline">{moneyFormatter(money)}</p>/
-            <p className="font-medium inline">
+        <div className='flex flex-col flex-1 relative p-1 rounded-lg bg-chetwode-blue-100 text-chetwode-blue-900 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-200'>
+          <p className='font-bold text-center'>{goal.name}</p>
+          <div className='flex justify-center gap-x-2'>
+            <p className='font-bold inline'>{moneyFormatter(money)}</p>/
+            <p className='font-medium inline'>
               {moneyFormatter(goal.targetAmount)}
             </p>
           </div>
-          {goal.progress === "vault" &&
+          {goal.progress === 'vault' &&
             vaultList.findIndex((vault) => vault.id === goal.assignedVault) ===
               -1 && (
               <button
-                className="absolute top-0 right-0 text-center text-sm size-fit rounded-lg p-1 bg-red-500 animate-pulse"
-                aria-label="Atribuir a novo cofre"
-                title="Atribuir a novo cofre"
+                className='absolute top-0 right-0 text-center text-sm size-fit rounded-lg p-1 bg-red-500 animate-pulse'
+                aria-label='Atribuir a novo cofre'
+                title='Atribuir a novo cofre'
                 onClick={handleModal}
               >
-                <MdWarning className="text-2xl text-star-dust-50" />
+                <MdWarning className='text-2xl text-star-dust-50' />
               </button>
             )}
           {goal.deadline && (
-            <p className="text-center text-sm text-chetwode-blue-950/75 dark:text-chetwode-blue-200/75">
+            <p className='text-center text-sm text-chetwode-blue-950/75 dark:text-chetwode-blue-200/75'>
               Prazo: {deadlineFormatted}
             </p>
           )}
@@ -126,7 +126,7 @@ export default function DashboardGoalsCurrentGoal() {
           />
         </div>
       ) : (
-        <p className="flex items-center justify-center h-full text-lg italic font-bold text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75">
+        <p className='flex items-center justify-center h-full text-lg italic font-bold text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75'>
           Nenhuma meta definida...
         </p>
       )}

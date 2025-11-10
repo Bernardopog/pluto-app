@@ -1,21 +1,25 @@
-import { IVaultItem } from "@/interfaces/IVault";
-import { IVaultItemCreateDTO, IVaultItemUpdateDTO } from "../dto/vaultItem.dto";
-import { vaultItemSchema } from "../schema/vaultItem.schema";
-import { createMessage } from "../utils/message";
-import { idValidator } from "../utils/idValidator";
-import { vaultItemRepository } from "../repositories/vaultItem.repository";
-import { IMessage } from "@/interfaces/IMessage";
-import { decimalToInt, intToDecimal } from "@/server/utils/convertMoney";
+import type { IMessage } from '@/interfaces/IMessage';
+import type { IVaultItem } from '@/interfaces/IVault';
+import { decimalToInt, intToDecimal } from '@/server/utils/convertMoney';
+import type {
+  IVaultItemCreateDTO,
+  IVaultItemUpdateDTO,
+} from '../dto/vaultItem.dto';
+import { vaultItemRepository } from '../repositories/vaultItem.repository';
+import { vaultItemSchema } from '../schema/vaultItem.schema';
+import { idValidator } from '../utils/idValidator';
+import { createMessage } from '../utils/message';
+
 interface IVaultItemService {
   getAll(userId: number): Promise<IMessage<IVaultItem[]>>;
   create(
     data: IVaultItemCreateDTO,
-    userId: number
+    userId: number,
   ): Promise<IMessage<IVaultItem | null>>;
   update(
     id: number,
     data: IVaultItemUpdateDTO,
-    userId: number
+    userId: number,
   ): Promise<IMessage<IVaultItem | null>>;
   delete(id: number, userId: number): Promise<IMessage<null>>;
 }
@@ -39,13 +43,13 @@ export const vaultItemService: IVaultItemService = {
 
     const formattedRes = res.map((item) => toResponse(item));
 
-    return createMessage("Items encontrados com sucesso", 200, formattedRes);
+    return createMessage('Items encontrados com sucesso', 200, formattedRes);
   },
   create: async (data, userId) => {
     const { success, data: transformedData } = vaultItemValidate(data);
 
     if (!success) {
-      return createMessage("Erro ao criar item", 400, null);
+      return createMessage('Erro ao criar item', 400, null);
     }
 
     const finalData = toPersistence(transformedData);
@@ -54,17 +58,17 @@ export const vaultItemService: IVaultItemService = {
 
     const returnData = toResponse(res);
 
-    return createMessage("Item criado com sucesso", 201, returnData);
+    return createMessage('Item criado com sucesso', 201, returnData);
   },
   update: async (id, data, userId) => {
     if (!idValidator(id)) {
-      return createMessage("Erro ao atualizar item", 400, null);
+      return createMessage('Erro ao atualizar item', 400, null);
     }
 
     const { success, data: transformedData } = vaultItemValidate(data);
 
     if (!success) {
-      return createMessage("Erro ao atualizar item", 400, null);
+      return createMessage('Erro ao atualizar item', 400, null);
     }
 
     const finalData = toPersistence(transformedData);
@@ -72,26 +76,26 @@ export const vaultItemService: IVaultItemService = {
     const res = await vaultItemRepository.update(id, finalData, userId);
     if (!res.success) {
       if (res.status === 404) {
-        return createMessage("Item nao encontrado", res.status, null);
-      } else return createMessage("Erro ao atualizar item", res.status, null);
+        return createMessage('Item nao encontrado', res.status, null);
+      } else return createMessage('Erro ao atualizar item', res.status, null);
     }
 
     const returnData = toResponse(res.data as IVaultItem);
 
-    return createMessage("Item atualizado com sucesso", res.status, returnData);
+    return createMessage('Item atualizado com sucesso', res.status, returnData);
   },
   delete: async (id, userId) => {
     if (id <= 0) {
-      return createMessage("Erro ao excluir item", 400, null);
+      return createMessage('Erro ao excluir item', 400, null);
     }
     const res = await vaultItemRepository.delete(id, userId);
 
     if (!res.success) {
       if (res.status === 404) {
-        return createMessage("Item nao encontrado", res.status, null);
-      } else return createMessage("Erro ao deletar item", res.status, null);
+        return createMessage('Item nao encontrado', res.status, null);
+      } else return createMessage('Erro ao deletar item', res.status, null);
     }
 
-    return createMessage("Item excluido com sucesso", res.status, null);
+    return createMessage('Item excluido com sucesso', res.status, null);
   },
 };

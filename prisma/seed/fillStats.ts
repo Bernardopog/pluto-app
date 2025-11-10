@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../src/generated/prisma/index.js";
+import { PrismaClient } from '../../src/generated/prisma/index.js';
 export const prismaClientScript = new PrismaClient();
 
 async function main() {
@@ -12,7 +12,7 @@ async function main() {
       usersWithoutStats.length > 0
         ? `\x1b[31m${usersWithoutStats.length}\x1b[0m`
         : `\x1b[32m${usersWithoutStats.length}\x1b[0m`
-    })`
+    })`,
   );
 
   for (const user of usersWithoutStats) {
@@ -25,14 +25,14 @@ async function main() {
       },
     });
     console.log(
-      `Stats criado com sucesso para (\x1b[33mUser\x1b[0m) de id: ${user.id}`
+      `Stats criado com sucesso para (\x1b[33mUser\x1b[0m) de id: ${user.id}`,
     );
   }
 }
 
 main()
   .then(() => {
-    console.log("Script (\x1b[33mfillStats\x1b[0m) finalizado com sucesso\n");
+    console.log('Script (\x1b[33mfillStats\x1b[0m) finalizado com sucesso\n');
   })
   .catch((e) => {
     console.error(e);

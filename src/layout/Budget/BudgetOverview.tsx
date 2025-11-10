@@ -1,20 +1,17 @@
-"use client";
+'use client';
 
-import { MdAttachMoney, MdPlayArrow } from "react-icons/md";
-import {
-  OverviewCard,
-  OverviewCardSwitch,
-} from "@/components/OverviewCard";
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
-import { moneyFormatter } from "@/utils/moneyFormatter";
-import { useShallow } from "zustand/shallow";
+import { MdAttachMoney, MdPlayArrow } from 'react-icons/md';
+import { useShallow } from 'zustand/shallow';
+import { OverviewCard, OverviewCardSwitch } from '@/components/OverviewCard';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
+import { moneyFormatter } from '@/utils/moneyFormatter';
 
 export default function BudgetOverview() {
   const { budgetList, transactionList } = useTransactionBudgetStore(
     useShallow((s) => ({
       budgetList: s.budgetData.list,
       transactionList: s.transactionData.list,
-    }))
+    })),
   );
 
   const bdgtLength = budgetList.length;
@@ -30,62 +27,62 @@ export default function BudgetOverview() {
             totalExpenses: Math.abs(total),
           };
         })
-      : [{ id: 0, name: "Vazio", limit: 0, color: "#000", totalExpenses: 0 }];
+      : [{ id: 0, name: 'Vazio', limit: 0, color: '#000', totalExpenses: 0 }];
 
   const budgetWithMostExpenses = budgetsWithExpenses.reduce(
     (prevValue, current) =>
-      current.totalExpenses > prevValue.totalExpenses ? current : prevValue
+      current.totalExpenses > prevValue.totalExpenses ? current : prevValue,
   );
 
   const budgetWithLeastExpenses = budgetsWithExpenses.reduce(
     (prevValue, current) =>
-      current.totalExpenses < prevValue.totalExpenses ? current : prevValue
+      current.totalExpenses < prevValue.totalExpenses ? current : prevValue,
   );
 
   const finalBudgetList =
     bdgtLength > 0
       ? budgetList
-      : [{ id: 0, name: "Vazio", limit: 0, color: "#000", totalExpenses: 0 }];
+      : [{ id: 0, name: 'Vazio', limit: 0, color: '#000', totalExpenses: 0 }];
 
   return (
-    <header id="budget-overview" className="mt-2">
-      <ul className="grid grid-cols-1 gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-4">
-        <li className="lg:col-span-3 xl:col-span-1">
+    <header id='budget-overview' className='mt-2'>
+      <ul className='grid grid-cols-1 gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-4'>
+        <li className='lg:col-span-3 xl:col-span-1'>
           <OverviewCard
-            title="Dinheiro Alocado para Orçamento"
+            title='Dinheiro Alocado para Orçamento'
             icon={<MdAttachMoney />}
             value={moneyFormatter(
-              finalBudgetList.reduce((acc, item) => acc + item.limit, 0)
-            ).replace("R$", "")}
-            valueType="currency"
+              finalBudgetList.reduce((acc, item) => acc + item.limit, 0),
+            ).replace('R$', '')}
+            valueType='currency'
           />
         </li>
-        <li className="relative">
+        <li className='relative'>
           <OverviewCardSwitch>
             <OverviewCard
-              title="Maior Gasto - Orçamento"
-              icon={<MdPlayArrow className="rotate-90" />}
+              title='Maior Gasto - Orçamento'
+              icon={<MdPlayArrow className='rotate-90' />}
               value={moneyFormatter(
-                budgetWithMostExpenses.totalExpenses
-              ).replace("R$", "")}
+                budgetWithMostExpenses.totalExpenses,
+              ).replace('R$', '')}
               complement={budgetWithMostExpenses.name}
-              valueType="currency"
+              valueType='currency'
             />
             <OverviewCard
-              title="Menor Gasto - Orçamento"
-              icon={<MdPlayArrow className="rotate-90" />}
+              title='Menor Gasto - Orçamento'
+              icon={<MdPlayArrow className='rotate-90' />}
               value={moneyFormatter(
-                budgetWithLeastExpenses.totalExpenses
-              ).replace("R$", "")}
+                budgetWithLeastExpenses.totalExpenses,
+              ).replace('R$', '')}
               complement={budgetWithLeastExpenses.name}
-              valueType="currency"
+              valueType='currency'
             />
           </OverviewCardSwitch>
         </li>
-        <li className="relative">
+        <li className='relative'>
           <OverviewCardSwitch>
             <OverviewCard
-              title="Maior Alocamento de Orçamento"
+              title='Maior Alocamento de Orçamento'
               icon={<MdAttachMoney />}
               value={
                 finalBudgetList.filter((bdgt) => {
@@ -95,10 +92,10 @@ export default function BudgetOverview() {
                   );
                 })[0].name
               }
-              valueType="number"
+              valueType='number'
             />
             <OverviewCard
-              title="Menor Alocamento de Orçamento"
+              title='Menor Alocamento de Orçamento'
               icon={<MdAttachMoney />}
               value={
                 finalBudgetList.filter((bdgt) => {
@@ -108,17 +105,17 @@ export default function BudgetOverview() {
                   );
                 })[0].name
               }
-              valueType="number"
+              valueType='number'
             />
           </OverviewCardSwitch>
         </li>
         <li>
           <OverviewCard
-            title="Categorias de Orçamento"
+            title='Categorias de Orçamento'
             value={budgetList.length}
-            valueType="number"
+            valueType='number'
             icon={<MdAttachMoney />}
-            complement="de 10 Categorias"
+            complement='de 10 Categorias'
           />
         </li>
       </ul>

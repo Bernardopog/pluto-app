@@ -1,6 +1,6 @@
-"use client";
-import { ReactNode, useState } from "react";
-import { MdOutlineRotateRight, MdWarning } from "react-icons/md";
+'use client';
+import { type ReactNode, useState } from 'react';
+import { MdOutlineRotateRight, MdWarning } from 'react-icons/md';
 
 export default function OverviewCardSwitch({
   children,
@@ -21,8 +21,8 @@ export default function OverviewCardSwitch({
 
   if (childrenList.length === 1)
     return (
-      <div className="flex items-center">
-        <MdWarning className="text-xl" />
+      <div className='flex items-center'>
+        <MdWarning className='text-xl' />
         <p>Esse componente precisa de mais de um filho</p>
       </div>
     );
@@ -30,11 +30,11 @@ export default function OverviewCardSwitch({
   return (
     <>
       <button
-        type="button"
-        className="absolute bottom-0 right-0 z-10 p-0.5 rounded-lg bg-chetwode-blue-600 text-2xl text-chetwode-blue-50 duration-300 ease-in-out dark:bg-chetwode-blue-950 dark:text-chetwode-blue-50"
+        type='button'
+        className='absolute bottom-0 right-0 z-10 p-0.5 rounded-lg bg-chetwode-blue-600 text-2xl text-chetwode-blue-50 duration-300 ease-in-out dark:bg-chetwode-blue-950 dark:text-chetwode-blue-50'
         onClick={handleChange}
-        aria-label="Mudar o tipo de despesa"
-        title="Mudar o tipo de despesa"
+        aria-label='Mudar o tipo de despesa'
+        title='Mudar o tipo de despesa'
       >
         <MdOutlineRotateRight />
       </button>

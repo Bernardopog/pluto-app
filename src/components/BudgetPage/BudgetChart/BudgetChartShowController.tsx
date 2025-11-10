@@ -1,5 +1,5 @@
-import Checkbox from "@/ui/Checkbox";
-import { IBudget } from "@/interfaces/IBudget";
+import type { IBudget } from '@/interfaces/IBudget';
+import Checkbox from '@/ui/Checkbox';
 
 interface IBudgetChartShowControllerProps {
   budgetList: IBudget[];
@@ -16,12 +16,12 @@ export default function BudgetChartShowController({
 }: IBudgetChartShowControllerProps) {
   return (
     <div>
-      <h3 className="subsubtitle">Remover do Gráfico:</h3>
-      <ul className="grid grid-cols-1 gap-2 md:grid-cols-3">
+      <h3 className='subsubtitle'>Remover do Gráfico:</h3>
+      <ul className='grid grid-cols-1 gap-2 md:grid-cols-3'>
         {budgetList.map((bdgt) => (
           <li
             key={bdgt.id}
-            className="rounded-lg bg-chetwode-blue-200 dark:bg-chetwode-blue-800"
+            className='rounded-lg bg-chetwode-blue-200 dark:bg-chetwode-blue-800'
           >
             <Checkbox
               label={bdgt.name}

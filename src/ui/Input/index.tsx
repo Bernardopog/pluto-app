@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, ReactNode, SetStateAction } from "react";
+import type { ChangeEvent, Dispatch, ReactNode, SetStateAction } from 'react';
 
 interface IInputProps {
   state: string | number;
@@ -8,9 +8,9 @@ interface IInputProps {
   placeholder?: string;
   id: string;
   name?: string;
-  inputType: "basic" | "decorated";
+  inputType: 'basic' | 'decorated';
   icon?: ReactNode;
-  type: "text" | "number";
+  type: 'text' | 'number';
   required?: boolean;
   step?: string;
   maxLimit?: number;
@@ -20,8 +20,8 @@ interface IInputProps {
 export default function Input(prop: IInputProps) {
   return (
     <>
-      {prop.inputType === "basic" && <BasicInput {...prop} />}
-      {prop.inputType === "decorated" && <DecoratedInput {...prop} />}
+      {prop.inputType === 'basic' && <BasicInput {...prop} />}
+      {prop.inputType === 'decorated' && <DecoratedInput {...prop} />}
     </>
   );
 }
@@ -40,7 +40,7 @@ function BasicInput({
   minLimit,
 }: IInputProps) {
   const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
-    if (type === "number") {
+    if (type === 'number') {
       // @ts-expect-error: setState can be number or string
       setState(Number(ev.target.value));
     } else {
@@ -50,14 +50,14 @@ function BasicInput({
   };
 
   return (
-    <div className="flex flex-col">
+    <div className='flex flex-col'>
       <label
         htmlFor={id}
-        className="text-chetwode-blue-950 dark:text-chetwode-blue-50"
+        className='text-chetwode-blue-950 dark:text-chetwode-blue-50'
       >
-        {label}{" "}
+        {label}{' '}
         {required && (
-          <span className="text-chetwode-blue-600 dark:text-chetwode-blue-400">
+          <span className='text-chetwode-blue-600 dark:text-chetwode-blue-400'>
             *
           </span>
         )}
@@ -67,8 +67,8 @@ function BasicInput({
         placeholder={placeholder}
         name={name ?? id}
         id={id}
-        step={step ?? "0.01"}
-        className="p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50"
+        step={step ?? '0.01'}
+        className='p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50'
         value={state}
         onChange={handleInputChange}
         required={required}
@@ -94,7 +94,7 @@ function DecoratedInput({
   minLimit,
 }: IInputProps) {
   const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
-    if (type === "number") {
+    if (type === 'number') {
       // @ts-expect-error: setState can be number or string
       setState(Number(ev.target.value));
     } else {
@@ -104,33 +104,33 @@ function DecoratedInput({
   };
 
   return (
-    <div className="flex flex-col">
+    <div className='flex flex-col'>
       <label
         htmlFor={id}
-        className="text-chetwode-blue-950 dark:text-chetwode-blue-50"
+        className='text-chetwode-blue-950 dark:text-chetwode-blue-50'
       >
-        {label}{" "}
+        {label}{' '}
         {required && (
-          <span className="text-chetwode-blue-600 dark:text-chetwode-blue-400">
+          <span className='text-chetwode-blue-600 dark:text-chetwode-blue-400'>
             *
           </span>
         )}
       </label>
-      <div className="relative w-full">
+      <div className='relative w-full'>
         <input
           type={type}
           placeholder={placeholder}
           name={name ?? id}
           id={id}
-          step={step ?? "0.01"}
-          className="peer w-full p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50"
+          step={step ?? '0.01'}
+          className='peer w-full p-1 rounded-lg border-2 border-transparent outline-none bg-chetwode-blue-200 text-chetwode-blue-900 duration-300 ease-in-out focus:border-chetwode-blue-600 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50'
           value={state}
           onChange={handleInputChange}
           required={required}
           min={minLimit}
           max={maxLimit}
         />
-        <span className="flex items-center justify-center absolute right-0 top-1/2 h-full w-10 border-2 border-l-0 rounded-r-lg -translate-y-1/2 text-3xl bg-chetwode-blue-300 text-chetwode-blue-950 border-transparent duration-300 ease-in-out peer-focus:border-chetwode-blue-600 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-50">
+        <span className='flex items-center justify-center absolute right-0 top-1/2 h-full w-10 border-2 border-l-0 rounded-r-lg -translate-y-1/2 text-3xl bg-chetwode-blue-300 text-chetwode-blue-950 border-transparent duration-300 ease-in-out peer-focus:border-chetwode-blue-600 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-50'>
           {icon}
         </span>
       </div>

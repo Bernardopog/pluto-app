@@ -1,11 +1,11 @@
-import { IGoal } from "@/interfaces/IGoal";
-import { create } from "zustand";
-import { fetcher } from "@/utils/fetcher";
-import { showError } from "../helpers/showError";
-import { IMethodsStateBasic } from "../interfaces/IMethodsState";
-import { IGoalCreateDTO } from "@/server/dto/goal.dto";
-import { IItemDataState } from "../interfaces/IDataState";
-import { IMessage } from "@/interfaces/IMessage";
+import { create } from 'zustand';
+import type { IGoal } from '@/interfaces/IGoal';
+import type { IMessage } from '@/interfaces/IMessage';
+import type { IGoalCreateDTO } from '@/server/dto/goal.dto';
+import { fetcher } from '@/utils/fetcher';
+import { showError } from '../helpers/showError';
+import type { IItemDataState } from '../interfaces/IDataState';
+import type { IMethodsStateBasic } from '../interfaces/IMethodsState';
 
 interface IGoalMethodsState extends IMethodsStateBasic<IGoalCreateDTO> {
   complete: () => Promise<IMessage<null>>;
@@ -57,7 +57,7 @@ export const useGoalsStore = create<IGoalsStore>((set) => ({
       return res;
     },
     complete: async () => {
-      const res = (await goalFetcher.finishGoal("complete")) as IMessage<null>;
+      const res = (await goalFetcher.finishGoal('complete')) as IMessage<null>;
       if (res.status >= 400) showError(res);
       set((state) => ({
         goalData: {
@@ -70,7 +70,7 @@ export const useGoalsStore = create<IGoalsStore>((set) => ({
       return res;
     },
     cancel: async () => {
-      const res = (await goalFetcher.finishGoal("cancel")) as IMessage<null>;
+      const res = (await goalFetcher.finishGoal('cancel')) as IMessage<null>;
       if (res.status >= 400) showError(res);
       set((state) => ({
         goalData: {

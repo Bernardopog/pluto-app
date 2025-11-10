@@ -1,11 +1,11 @@
-import { IMessage } from "@/interfaces/IMessage";
-import { IGoalCreateDTO, IGoalUpdateDTO } from "@/server/dto/goal.dto";
-import { goalService } from "@/server/services/goal.service";
-import { getUser } from "@/server/utils/getUser";
+import type { IMessage } from '@/interfaces/IMessage';
+import type { IGoalCreateDTO, IGoalUpdateDTO } from '@/server/dto/goal.dto';
+import { goalService } from '@/server/services/goal.service';
+import { getUser } from '@/server/utils/getUser';
 
 export async function GET() {
   const userId = await getUser();
-  if (!userId) return Response.json("Não autorizado", { status: 401 });
+  if (!userId) return Response.json('Não autorizado', { status: 401 });
 
   const { message, status, data } = await goalService.get(userId);
   return Response.json({ message, data }, { status });
@@ -13,7 +13,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const userId = await getUser();
-  if (!userId) return Response.json("Não autorizado", { status: 401 });
+  if (!userId) return Response.json('Não autorizado', { status: 401 });
   const body: IGoalCreateDTO = await req.json();
 
   const { message, status, data } = await goalService.create(body, userId);
@@ -22,13 +22,13 @@ export async function POST(req: Request) {
 
 export async function DELETE(req: Request) {
   const userId = await getUser();
-  if (!userId) return Response.json("Não autorizado", { status: 401 });
+  if (!userId) return Response.json('Não autorizado', { status: 401 });
   const { searchParams } = new URL(req.url);
-  const action = searchParams.get("action");
+  const action = searchParams.get('action');
 
-  let res: IMessage<null> = { message: "", status: 200, data: null };
+  let res: IMessage<null> = { message: '', status: 200, data: null };
 
-  if (action === "complete") {
+  if (action === 'complete') {
     const resMessage = await goalService.complete(userId);
     res = resMessage;
   } else {
@@ -38,13 +38,13 @@ export async function DELETE(req: Request) {
 
   return Response.json(
     { message: res.message, data: res.data },
-    { status: res.status }
+    { status: res.status },
   );
 }
 
 export async function PATCH(req: Request) {
   const userId = await getUser();
-  if (!userId) return Response.json("Não autorizado", { status: 401 });
+  if (!userId) return Response.json('Não autorizado', { status: 401 });
   const body: IGoalUpdateDTO = await req.json();
 
   const { message, status, data } = await goalService.reassign(body, userId);

@@ -1,31 +1,31 @@
-import { iconNameType } from "@/types/IconNameType";
-import { useModalStore } from "@/stores/useModalStore";
-import { useVaultStore } from "@/stores/useVaultStore";
-import { FormEvent, useEffect, useState } from "react";
-import { useShallow } from "zustand/shallow";
-import { useMessageStore } from "@/stores/useMessageStore";
+import { type FormEvent, useEffect, useState } from 'react';
+import { useShallow } from 'zustand/shallow';
+import { useMessageStore } from '@/stores/useMessageStore';
+import { useModalStore } from '@/stores/useModalStore';
+import { useVaultStore } from '@/stores/useVaultStore';
+import type { iconNameType } from '@/types/IconNameType';
 
-export const useModalVaultLogic = (type: "create" | "update") => {
+export const useModalVaultLogic = (type: 'create' | 'update') => {
   const { create, update } = useVaultStore(
     useShallow((s) => ({
       create: s.vaultMethods.create,
       update: s.vaultMethods.update,
-    }))
+    })),
   );
   const selectedVault = useVaultStore((s) => s.vaultSelection.selected);
   const toggleModal = useModalStore((s) => s.toggleModal);
 
   const setMessage = useMessageStore((s) => s.setMessage);
 
-  const [vaultName, setVaultName] = useState<string>("");
-  const [vaultLimit, setVaultLimit] = useState<string>("");
+  const [vaultName, setVaultName] = useState<string>('');
+  const [vaultLimit, setVaultLimit] = useState<string>('');
   const [vaultIcon, setVaultIcon] = useState<iconNameType | null>(null);
   const [hasError, setHasError] = useState<boolean>(false);
 
   const handleClose = () => {
     toggleModal();
-    setVaultName("");
-    setVaultLimit("");
+    setVaultName('');
+    setVaultLimit('');
     setVaultIcon(null);
     setHasError(false);
   };
@@ -34,7 +34,7 @@ export const useModalVaultLogic = (type: "create" | "update") => {
     ev.preventDefault();
 
     const validator = (): boolean => {
-      if (vaultName.trim() === "") return false;
+      if (vaultName.trim() === '') return false;
       if (Number.isNaN(Number(vaultLimit))) return false;
       if (Number(vaultLimit) < 0) return false;
       if (vaultIcon === null) return false;
@@ -47,10 +47,10 @@ export const useModalVaultLogic = (type: "create" | "update") => {
     const data = {
       name: vaultName,
       targetPrice: Number(vaultLimit),
-      icon: vaultIcon ?? "piggy",
+      icon: vaultIcon ?? 'piggy',
     };
 
-    if (type === "create") {
+    if (type === 'create') {
       create(data).then(({ message, status, data }) =>
         setMessage({
           message,
@@ -58,8 +58,8 @@ export const useModalVaultLogic = (type: "create" | "update") => {
           description:
             status === 201
               ? `Seu cofre (${data?.name}) foi criado com sucesso!`
-              : "Ocorreu um erro ao criar o cofre",
-        })
+              : 'Ocorreu um erro ao criar o cofre',
+        }),
       );
     } else {
       update(selectedVault!.id, data).then(({ message, status, data }) =>
@@ -69,8 +69,8 @@ export const useModalVaultLogic = (type: "create" | "update") => {
           description:
             status === 200
               ? `Seu cofre (${data?.name}) foi atualizado com sucesso!`
-              : "Ocorreu um erro ao atualizar o cofre",
-        })
+              : 'Ocorreu um erro ao atualizar o cofre',
+        }),
       );
     }
 
@@ -81,7 +81,7 @@ export const useModalVaultLogic = (type: "create" | "update") => {
   };
 
   useEffect(() => {
-    if (type === "update") {
+    if (type === 'update') {
       if (selectedVault) {
         setVaultName(selectedVault.name);
         setVaultLimit(selectedVault.targetPrice.toString());

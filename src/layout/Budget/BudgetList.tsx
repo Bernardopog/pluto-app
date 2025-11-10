@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { BudgetListItem } from "@/components/BudgetPage/BudgetList";
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
-import { useEffect } from "react";
-import { useShallow } from "zustand/shallow";
+import { useEffect } from 'react';
+import { useShallow } from 'zustand/shallow';
+import { BudgetListItem } from '@/components/BudgetPage/BudgetList';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
 
 export default function BudgetList() {
   const {
@@ -19,7 +19,7 @@ export default function BudgetList() {
       loadTxnAndBudgets: s.loadTxnAndBudgets,
       budgetFetched: s.budgetData.fetched,
       transactionFetched: s.transactionData.fetched,
-    }))
+    })),
   );
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
 
@@ -30,12 +30,12 @@ export default function BudgetList() {
 
   return (
     <section
-      id="budget-budgets"
-      className="base-card flex flex-col gap-2 min-h-0 h-full"
+      id='budget-budgets'
+      className='base-card flex flex-col gap-2 min-h-0 h-full'
     >
-      <h2 className="subtitle">Orçamentos</h2>
+      <h2 className='subtitle'>Orçamentos</h2>
       {budgetList.length > 0 ? (
-        <ul className="flex flex-col gap-2 min-h-0 overflow-y-auto scrollbar-style scrollbar-thinner">
+        <ul className='flex flex-col gap-2 min-h-0 overflow-y-auto scrollbar-style scrollbar-thinner'>
           {budgetList.map((bdgt) => {
             const limit = getBudgetLimit(bdgt.id);
             const expense = getExpenseFromCurrentMonth(bdgt.id);
@@ -51,7 +51,7 @@ export default function BudgetList() {
           })}
         </ul>
       ) : (
-        <p className="flex items-center justify-center flex-1 h-full text-lg font-bold italic text-chetwode-blue-950/75">
+        <p className='flex items-center justify-center flex-1 h-full text-lg font-bold italic text-chetwode-blue-950/75'>
           Nenhum orçamento criado...
         </p>
       )}

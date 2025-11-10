@@ -1,26 +1,26 @@
-"use client";
-import { useDashboardControllersStore } from "@/stores/useDashboardControllersStore";
-import { useTransactionBudgetStore } from "@/stores/useTransactionBudgetStore";
-import Radio from "@/ui/Radio";
-import Select from "@/ui/Select";
-import { FormEvent, useEffect, useState } from "react";
-import { MdAdd } from "react-icons/md";
-import Inert from "@/components/Inert";
+'use client';
+import { type FormEvent, useEffect, useState } from 'react';
+import { MdAdd } from 'react-icons/md';
+import Inert from '@/components/Inert';
+import { useDashboardControllersStore } from '@/stores/useDashboardControllersStore';
+import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
+import Radio from '@/ui/Radio';
+import Select from '@/ui/Select';
 
 export default function DashboardTransactionForm() {
   const create = useTransactionBudgetStore((s) => s.transactionMethods.create);
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
   const isTransactionFormOpen = useDashboardControllersStore(
-    (s) => s.isTransactionFormOpen
+    (s) => s.isTransactionFormOpen,
   );
 
   const [hadAnError, setHadAnError] = useState<boolean>(false);
   const [categoryValue, setCategoryValue] = useState<number | string>(0);
-  const [transactionType, setTransactionType] = useState<"income" | "outcome">(
-    "outcome"
+  const [transactionType, setTransactionType] = useState<'income' | 'outcome'>(
+    'outcome',
   );
   const isStringValid = (name: string): boolean => {
-    if (name.trim() === "") return false;
+    if (name.trim() === '') return false;
     return true;
   };
 
@@ -31,8 +31,8 @@ export default function DashboardTransactionForm() {
 
   const today = new Date();
   const localDate = `${today.getFullYear()}-${String(
-    today.getMonth() + 1
-  ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+    today.getMonth() + 1,
+  ).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();
@@ -48,7 +48,7 @@ export default function DashboardTransactionForm() {
 
     let money = value;
     if (money < 0) money *= -1;
-    if (transactionType === "outcome") money *= -1;
+    if (transactionType === 'outcome') money *= -1;
 
     if (
       categoryValue === null ||
@@ -60,13 +60,13 @@ export default function DashboardTransactionForm() {
     }
 
     if (isStringValid(name) && isValueValid(value)) {
-      const [year, month, day] = date.split("-").map((val) => Number(val));
+      const [year, month, day] = date.split('-').map((val) => Number(val));
       const localDate = new Date(year, month - 1, day);
 
       const data = {
         name,
         value: money,
-        date: date === "" ? new Date() : localDate,
+        date: date === '' ? new Date() : localDate,
         categoryId: Number(categoryValue),
       };
 
@@ -112,42 +112,42 @@ export default function DashboardTransactionForm() {
         className={`duration-300 ease-in-out max-h-fit ${
           isTransactionFormOpen
             ? `h-full ${
-                formController ? "overflow-visible" : "overflow-hidden"
+                formController ? 'overflow-visible' : 'overflow-hidden'
               }`
-            : "h-0 overflow-hidden"
+            : 'h-0 overflow-hidden'
         }`}
       >
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-[1fr] grid-rows-[auto_auto] gap-2"
+          className='grid grid-cols-[1fr] grid-rows-[auto_auto] gap-2'
         >
-          <fieldset className="grid grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] text-chetwode-blue-950 lg:grid-cols-[0.7fr_2fr_0.7fr] lg:grid-rows-[1fr]">
+          <fieldset className='grid grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] text-chetwode-blue-950 lg:grid-cols-[0.7fr_2fr_0.7fr] lg:grid-rows-[1fr]'>
             <input
-              type="date"
-              name="date"
+              type='date'
+              name='date'
               max={localDate}
               defaultValue={localDate}
-              className="min-w-1/8 pl-2 py-1 rounded-tl-lg bg-chetwode-blue-300 outline-chetwode-blue-800 lg:rounded-l-lg"
+              className='min-w-1/8 pl-2 py-1 rounded-tl-lg bg-chetwode-blue-300 outline-chetwode-blue-800 lg:rounded-l-lg'
             />
             <input
-              type="text"
-              name="name"
-              placeholder="Descrição"
-              className="order-1 col-span-2 px-1 py-1 rounded-b-lg bg-chetwode-blue-200 outline-chetwode-blue-800 lg:order-0 lg:col-span-1 lg:rounded-none"
+              type='text'
+              name='name'
+              placeholder='Descrição'
+              className='order-1 col-span-2 px-1 py-1 rounded-b-lg bg-chetwode-blue-200 outline-chetwode-blue-800 lg:order-0 lg:col-span-1 lg:rounded-none'
             />
             <input
-              type="number"
-              step={"0.01"}
-              name="value"
-              placeholder="R$ 0,00"
-              className="min-w-1/8 pl-1 py-1 rounded-tr-lg bg-chetwode-blue-300 outline-chetwode-blue-800 lg:rounded-r-lg"
+              type='number'
+              step={'0.01'}
+              name='value'
+              placeholder='R$ 0,00'
+              className='min-w-1/8 pl-1 py-1 rounded-tr-lg bg-chetwode-blue-300 outline-chetwode-blue-800 lg:rounded-r-lg'
             />
           </fieldset>
-          <div className="flex flex-col gap-y-2 justify-between lg:flex-row">
-            <div className="order-1 lg:order-0">
+          <div className='flex flex-col gap-y-2 justify-between lg:flex-row'>
+            <div className='order-1 lg:order-0'>
               <label
-                htmlFor="category"
-                className="text-chetwode-blue-950 dark:text-chetwode-blue-50"
+                htmlFor='category'
+                className='text-chetwode-blue-950 dark:text-chetwode-blue-50'
               >
                 Categorias:
               </label>
@@ -157,39 +157,39 @@ export default function DashboardTransactionForm() {
                 list={selectList}
               />
             </div>
-            <div className="flex items-center gap-x-2">
+            <div className='flex items-center gap-x-2'>
               <div
                 className={`size-fit rounded-full px-1 pr-2 bg-chetwode-blue-200 ${
-                  transactionType === "outcome" && "bg-chetwode-blue-400"
+                  transactionType === 'outcome' && 'bg-chetwode-blue-400'
                 }`}
               >
                 <Radio
-                  id="outcome"
-                  name="type"
-                  state={transactionType === "outcome"}
-                  setState={() => setTransactionType("outcome")}
-                  label="Despesa"
+                  id='outcome'
+                  name='type'
+                  state={transactionType === 'outcome'}
+                  setState={() => setTransactionType('outcome')}
+                  label='Despesa'
                 />
               </div>
               <div
                 className={`size-fit rounded-full px-1 pr-2 bg-chetwode-blue-200 ${
-                  transactionType === "income" && "bg-chetwode-blue-400"
+                  transactionType === 'income' && 'bg-chetwode-blue-400'
                 }`}
               >
                 <Radio
-                  id="income"
-                  name="type"
-                  state={transactionType === "income"}
-                  setState={() => setTransactionType("income")}
-                  label="Receita"
+                  id='income'
+                  name='type'
+                  state={transactionType === 'income'}
+                  setState={() => setTransactionType('income')}
+                  label='Receita'
                 />
               </div>
             </div>
           </div>
 
           <button
-            type="submit"
-            className="flex justify-center items-center mt-2 px-2 py-2 rounded-lg bg-chetwode-blue-300 text-chetwode-blue-950 ease-in-out duration-300 lg:py-0 hover:bg-chetwode-blue-400 active:bg-chetwode-blue-500 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-50 dark:hover:bg-chetwode-blue-700 dark:active:bg-chetwode-blue-800"
+            type='submit'
+            className='flex justify-center items-center mt-2 px-2 py-2 rounded-lg bg-chetwode-blue-300 text-chetwode-blue-950 ease-in-out duration-300 lg:py-0 hover:bg-chetwode-blue-400 active:bg-chetwode-blue-500 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-50 dark:hover:bg-chetwode-blue-700 dark:active:bg-chetwode-blue-800'
           >
             <MdAdd />
             Adicionar
@@ -198,7 +198,7 @@ export default function DashboardTransactionForm() {
       </Inert>
 
       {hadAnError && isTransactionFormOpen && (
-        <p className="font-medium text-center text-sm text-red-400">
+        <p className='font-medium text-center text-sm text-red-400'>
           Preencha os campos corretamente
         </p>
       )}

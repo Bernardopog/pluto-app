@@ -1,22 +1,22 @@
-import { IMessage } from "@/interfaces/IMessage";
-import { IVault } from "@/interfaces/IVault";
-import { IVaultCreateDTO, IVaultUpdateDTO } from "../dto/vault.dto";
-import { vaultRepository } from "../repositories/vault.repository";
-import { vaultSchema } from "../schema/vault.schema";
-import { createMessage } from "../utils/message";
-import { idValidator } from "../utils/idValidator";
-import { decimalToInt, intToDecimal } from "@/server/utils/convertMoney";
+import type { IMessage } from '@/interfaces/IMessage';
+import type { IVault } from '@/interfaces/IVault';
+import { decimalToInt, intToDecimal } from '@/server/utils/convertMoney';
+import type { IVaultCreateDTO, IVaultUpdateDTO } from '../dto/vault.dto';
+import { vaultRepository } from '../repositories/vault.repository';
+import { vaultSchema } from '../schema/vault.schema';
+import { idValidator } from '../utils/idValidator';
+import { createMessage } from '../utils/message';
 
 interface IVaultService {
   getAll: (userId: number) => Promise<IMessage<IVault[]>>;
   create: (
     data: IVaultCreateDTO,
-    userId: number
+    userId: number,
   ) => Promise<IMessage<IVault | null>>;
   update: (
     id: number,
     data: IVaultUpdateDTO,
-    userId: number
+    userId: number,
   ) => Promise<IMessage<IVault | null>>;
   delete: (id: number, userId: number) => Promise<IMessage<null>>;
 }
@@ -35,9 +35,9 @@ const toResponse = (data: IVault) => ({
 });
 
 enum VaultIconsEnum {
-  plane = "plane",
-  piggy = "piggy",
-  car = "car",
+  plane = 'plane',
+  piggy = 'piggy',
+  car = 'car',
 }
 
 const iconToEnum = (icon: string): VaultIconsEnum | null => {
@@ -54,19 +54,19 @@ export const vaultService: IVaultService = {
 
     const formattedRes = res.map((vault) => toResponse(vault));
 
-    return createMessage("Cofres obtidos com sucesso", 200, formattedRes);
+    return createMessage('Cofres obtidos com sucesso', 200, formattedRes);
   },
   create: async (data, userId) => {
     const { success, data: transformedData } = vaultValidate(data);
 
     if (!success) {
-      return createMessage("Erro ao criar vault", 400, null);
+      return createMessage('Erro ao criar vault', 400, null);
     }
 
     const iconAsEnum = iconToEnum(transformedData.icon);
 
     if (!iconAsEnum) {
-      return createMessage("Ícone inválido", 400, null);
+      return createMessage('Ícone inválido', 400, null);
     }
 
     transformedData.icon = iconAsEnum;
@@ -77,23 +77,23 @@ export const vaultService: IVaultService = {
 
     const returnData = toResponse(res);
 
-    return createMessage("Cofre criado com sucesso", 201, returnData);
+    return createMessage('Cofre criado com sucesso', 201, returnData);
   },
   update: async (id, data, userId) => {
     if (!idValidator(id)) {
-      return createMessage("Erro ao atualizar cofre", 400, null);
+      return createMessage('Erro ao atualizar cofre', 400, null);
     }
 
     const { success, data: transformedData } = vaultValidate(data);
 
     if (!success) {
-      return createMessage("Erro ao atualizar cofre", 400, null);
+      return createMessage('Erro ao atualizar cofre', 400, null);
     }
 
     const iconAsEnum = iconToEnum(transformedData.icon);
 
     if (!iconAsEnum) {
-      return createMessage("Ícone inválido", 400, null);
+      return createMessage('Ícone inválido', 400, null);
     }
 
     transformedData.icon = iconAsEnum;
@@ -103,30 +103,30 @@ export const vaultService: IVaultService = {
     const res = await vaultRepository.update(id, finalData, userId);
     if (!res.success) {
       if (res.status === 404) {
-        return createMessage("Cofre nao encontrado", res.status, null);
-      } else return createMessage("Erro ao atualizar cofre", res.status, null);
+        return createMessage('Cofre nao encontrado', res.status, null);
+      } else return createMessage('Erro ao atualizar cofre', res.status, null);
     }
 
     const returnData = toResponse(res.data as IVault);
 
     return createMessage(
-      "Cofre atualizado com sucesso",
+      'Cofre atualizado com sucesso',
       res.status,
-      returnData
+      returnData,
     );
   },
   delete: async (id, userId) => {
     if (!idValidator(id)) {
-      return createMessage("Erro ao excluir cofre", 400, null);
+      return createMessage('Erro ao excluir cofre', 400, null);
     }
     const res = await vaultRepository.delete(id, userId);
 
     if (!res.success) {
       if (res.status === 404) {
-        return createMessage("Cofre nao encontrado", res.status, null);
-      } else return createMessage("Erro ao deletar cofre", res.status, null);
+        return createMessage('Cofre nao encontrado', res.status, null);
+      } else return createMessage('Erro ao deletar cofre', res.status, null);
     }
 
-    return createMessage("Cofre excluido com sucesso", res.status, null);
+    return createMessage('Cofre excluido com sucesso', res.status, null);
   },
 };

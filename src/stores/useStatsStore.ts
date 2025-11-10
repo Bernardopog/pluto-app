@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { StatType } from "../data/statsComponentMap";
-import { IItemDataState } from "../interfaces/IDataState";
-import { IStats } from "@/interfaces/IStat";
+import { create } from 'zustand';
+import type { IStats } from '@/interfaces/IStat';
+import type { StatType } from '../data/statsComponentMap';
+import type { IItemDataState } from '../interfaces/IDataState';
 
 interface IStatStore {
   statsData: IItemDataState<IStats>;
@@ -91,21 +91,23 @@ export const useStatsStore = create<IStatStore>((set, get) => ({
       });
 
       const localStorage = window.localStorage;
-      localStorage.setItem("statList", JSON.stringify(newStatList));
+      localStorage.setItem('statList', JSON.stringify(newStatList));
       return { statList: newStatList };
     }),
   removeStatFromList: (statIndex: number) => {
     set((state) => ({
       statList: state.statList.map((stat, index) =>
-        index === statIndex ? null : stat
+        index === statIndex ? null : stat,
       ),
     }));
     const localStorage = window.localStorage;
     localStorage.setItem(
-      "statList",
+      'statList',
       JSON.stringify(
-        get().statList.map((stat, index) => (index === statIndex ? null : stat))
-      )
+        get().statList.map((stat, index) =>
+          index === statIndex ? null : stat,
+        ),
+      ),
     );
   },
   clearManyInList: (toRemove) => {
@@ -114,10 +116,10 @@ export const useStatsStore = create<IStatStore>((set, get) => ({
     }));
     const localStorage = window.localStorage;
     localStorage.setItem(
-      "statList",
+      'statList',
       JSON.stringify(
-        get().statList.map((stat) => (stat === toRemove ? null : stat))
-      )
+        get().statList.map((stat) => (stat === toRemove ? null : stat)),
+      ),
     );
   },
 }));

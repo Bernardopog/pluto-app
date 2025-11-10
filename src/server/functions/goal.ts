@@ -1,5 +1,5 @@
-import { goalService } from "../services/goal.service";
-import { getUser } from "../utils/getUser";
+import { goalService } from '../services/goal.service';
+import { getUser } from '../utils/getUser';
 
 export async function getGoal() {
   const userId = await getUser();

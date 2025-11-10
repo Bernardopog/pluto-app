@@ -1,6 +1,6 @@
-import Input from "@/ui/Input";
-import { Dispatch, SetStateAction } from "react";
-import { MdFormatPaint } from "react-icons/md";
+import type { Dispatch, SetStateAction } from 'react';
+import { MdFormatPaint } from 'react-icons/md';
+import Input from '@/ui/Input';
 
 interface IModalBudgetColorPickerHexProps {
   hex: string;
@@ -13,12 +13,12 @@ export default function ModalBudgetColorPickerHex({
 }: IModalBudgetColorPickerHexProps) {
   return (
     <Input
-      id="budgetColor"
-      label="Cor da Categoria"
-      inputType="decorated"
+      id='budgetColor'
+      label='Cor da Categoria'
+      inputType='decorated'
       state={hex}
       setState={setHex}
-      type="text"
+      type='text'
       icon={<MdFormatPaint />}
     />
   );

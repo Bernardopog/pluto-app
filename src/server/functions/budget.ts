@@ -1,5 +1,5 @@
-import { budgetService } from "../services/budget.service";
-import { getUser } from "../utils/getUser";
+import { budgetService } from '../services/budget.service';
+import { getUser } from '../utils/getUser';
 
 export async function getBudgets() {
   const userId = await getUser();

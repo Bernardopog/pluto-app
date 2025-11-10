@@ -1,1 +1,1 @@
-export { default as TransactionTableRowData } from "./TransactionTableRowData";
+export { default as TransactionTableRowData } from './TransactionTableRowData';

@@ -1,4 +1,4 @@
-import { ModalType } from "@/stores/useModalStore";
+import type { ModalType } from '@/stores/useModalStore';
 
 interface IModalHeaderProps {
   type: ModalType;
@@ -6,37 +6,37 @@ interface IModalHeaderProps {
 
 export default function ModalHeader({ type }: IModalHeaderProps) {
   let defType = type as string;
-  if (type?.includes("transaction")) defType = "transaction";
-  else if (type?.includes("budget")) defType = "budget";
-  else if (type?.includes("vault")) defType = "vault";
-  else if (type?.includes("filter")) defType = "filter";
-  else if (type?.includes("goal")) defType = "goal";
-  else if (type?.includes("config")) defType = "config";
+  if (type?.includes('transaction')) defType = 'transaction';
+  else if (type?.includes('budget')) defType = 'budget';
+  else if (type?.includes('vault')) defType = 'vault';
+  else if (type?.includes('filter')) defType = 'filter';
+  else if (type?.includes('goal')) defType = 'goal';
+  else if (type?.includes('config')) defType = 'config';
 
   const formatType = (type: string) => {
     switch (type) {
-      case "goal":
-        return "objetivos";
-      case "stats":
-        return "estatísticas";
-      case "transaction":
-        return "transação";
-      case "budget":
-        return "orçamento";
-      case "vault":
-        return "cofre";
-      case "filter":
-        return "filtro";
-      case "config":
-        return "configuração";
+      case 'goal':
+        return 'objetivos';
+      case 'stats':
+        return 'estatísticas';
+      case 'transaction':
+        return 'transação';
+      case 'budget':
+        return 'orçamento';
+      case 'vault':
+        return 'cofre';
+      case 'filter':
+        return 'filtro';
+      case 'config':
+        return 'configuração';
       default:
-        return "indefinido";
+        return 'indefinido';
     }
   };
 
   return (
-    <header className="w-full p-2 rounded-t-lg bg-chetwode-blue-700">
-      <h2 className="subtitle text-chetwode-blue-50">
+    <header className='w-full p-2 rounded-t-lg bg-chetwode-blue-700'>
+      <h2 className='subtitle text-chetwode-blue-50'>
         Modal de {formatType(defType)}
       </h2>
     </header>
