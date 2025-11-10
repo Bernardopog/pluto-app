@@ -31,25 +31,27 @@ export default function PieChartControl({
       <div className="flex justify-between px-2 gap-2">
         <button
           type="button"
-          className={`flex flex-1 items-center justify-center py-1 px-2 border rounded-lg gap-2 text-2xl ${
+          className={`flex flex-1 items-center justify-center p-1 rounded-lg border gap-2 text-xl ${
             chartType === "pie"
-              ? "bg-chetwode-blue-950 text-chetwode-blue-50"
-              : "bg-chetwode-blue-600 text-chetwode-blue-950"
+              ? "bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950"
+              : "bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950"
           }`}
           onClick={() => handleChartChange("pie")}
         >
-          <MdPieChart /> <span className="text-base">Pizza</span>
+          <MdPieChart />
+          <span className="text-base">Pizza</span>
         </button>
         <button
           type="button"
-          className={`flex flex-1 items-center justify-center py-1 px-2 border rounded-lg gap-2 text-2xl ${
+          className={`flex flex-1 items-center justify-center p-1 rounded-lg border gap-2 text-xl ${
             chartType === "bar"
-              ? "bg-chetwode-blue-950 text-chetwode-blue-50"
-              : "bg-chetwode-blue-600 text-chetwode-blue-950"
+              ? "bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950"
+              : "bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950"
           }`}
           onClick={() => handleChartChange("bar")}
         >
-          <MdBarChart /> <span className="text-base">Barra</span>
+          <MdBarChart />
+          <span className="text-base">Barra</span>
         </button>
       </div>
 
@@ -62,10 +64,10 @@ export default function PieChartControl({
           <div className="px-2 flex justify-between gap-2">
             <button
               type="button"
-              className={`flex flex-1 items-center justify-center py-1 px-2 border rounded-lg gap-2 text-2xl ${
+              className={`flex flex-1 items-center justify-center p-1 rounded-lg border gap-2 text-xl ${
                 pieChartType === "full"
-                  ? "bg-chetwode-blue-950 text-chetwode-blue-50"
-                  : "bg-chetwode-blue-600 text-chetwode-blue-950"
+                  ? "bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950"
+                  : "bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950"
               }`}
               onClick={() => setPieChartType("full")}
             >
@@ -73,10 +75,10 @@ export default function PieChartControl({
             </button>
             <button
               type="button"
-              className={`flex flex-1 items-center justify-center py-1 px-2 border rounded-lg gap-2 text-2xl ${
+              className={`flex flex-1 items-center justify-center p-1 rounded-lg border gap-2 text-xl ${
                 pieChartType === "half"
-                  ? "bg-chetwode-blue-950 text-chetwode-blue-50"
-                  : "bg-chetwode-blue-600 text-chetwode-blue-950"
+                  ? "bg-chetwode-blue-950 text-chetwode-blue-50 border-chetwode-blue-950"
+                  : "bg-chetwode-blue-50 text-chetwode-blue-950 border-chetwode-blue-800 dark:bg-chetwode-blue-600 dark:text-chetwode-blue-950 dark:border-chetwode-blue-950"
               }`}
               onClick={() => setPieChartType("half")}
             >
