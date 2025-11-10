@@ -22,7 +22,7 @@ export default function VaultListItem({
 }: IVaultListItemProps) {
   return (
     <li
-      className={`size-full rounded-lg shadow-md opacity-0 animate-move-in dark:bg-chetwode-blue-950 ${
+      className={`size-full rounded-lg shadow-md border-2 border-chetwode-blue-950/40 opacity-0 animate-move-in dark:bg-chetwode-blue-950 ${
         selectedVaultId === vault.id &&
         "outline-2 outline-chetwode-blue-600 dark:outline-chetwode-blue-300"
       }`}
