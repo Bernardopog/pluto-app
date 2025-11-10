@@ -77,14 +77,14 @@ export default function BudgetListItem({
           )}
         </h3>
         <div className="flex text-star-dust-950 dark:text-star-dust-50">
-          <p className="flex-1 inline-block mt-2 font-semibold">
-            <span className="font-bold text-2xl">
+          <p className="flex-1 inline-block mt-2 font-semibold text-sm sm:text-base">
+            <span className="font-bold md:text-2xl">
               R$ {moneyFormatter(Math.abs(expense)).replace("R$", "")}
             </span>{" "}
             / {moneyFormatter(budgetLimit).replace("R$", "")}
           </p>
           <Link
-            className="flex self-end font-semibold"
+            className="flex self-end font-semibold text-xs sm:text-base"
             href={`/transaction?category=${id}`}
           >
             Ver transações de {name}
