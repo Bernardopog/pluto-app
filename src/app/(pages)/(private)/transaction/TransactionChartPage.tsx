@@ -115,7 +115,7 @@ export default function TransactionChartPage() {
   };
 
   const lastDaysFormatter = lastDays.map((date: string) => {
-    const day = new Date(date + 'T00:00:00').getDay();
+    const day = new Date(`${date}T00:00:00`).getDay();
     return { weekDay: transfromDaysToWeekDays(day), date };
   });
 

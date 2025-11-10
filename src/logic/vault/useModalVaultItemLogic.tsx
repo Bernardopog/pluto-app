@@ -98,17 +98,19 @@ export const useModalVaultItemLogic = (type: 'create' | 'update') => {
           vaultId: vaultAssignedId,
         };
 
-        editVaultItem(selectedVaultItem!.id, data).then(
-          ({ message, status, data }) =>
-            setMessage({
-              message,
-              status,
-              description:
-                status === 200
-                  ? `Seu item (${data?.name}) foi editado com sucesso!`
-                  : 'Ocorreu um erro ao editar o item',
-            }),
-        );
+        if (selectedVaultItem) {
+          editVaultItem(selectedVaultItem.id, data).then(
+            ({ message, status, data }) =>
+              setMessage({
+                message,
+                status,
+                description:
+                  status === 200
+                    ? `Seu item (${data?.name}) foi editado com sucesso!`
+                    : 'Ocorreu um erro ao editar o item',
+              }),
+          );
+        }
         toggleModal();
         return;
       }

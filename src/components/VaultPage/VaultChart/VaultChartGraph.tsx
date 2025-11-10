@@ -36,6 +36,7 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
     }),
   ];
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <Necessary for sync>
   const vaultProgress = useMemo(
     () => [
       ...vaultList.map((vault) => {
@@ -47,7 +48,6 @@ function VaultChartGraph({ typeOfChart }: IVaultChartGraphProps) {
       }),
     ],
 
-    // eslint-disable-next-line
     [vaultList, getTotalMoneySavedFromVault, vaultItemList],
   );
 

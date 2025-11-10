@@ -12,7 +12,7 @@ type RegisterState = {
 };
 
 export async function loginUser(
-  prevState: RegisterState,
+  _prevState: RegisterState,
   formData: FormData,
 ): Promise<RegisterState> {
   const email = formData

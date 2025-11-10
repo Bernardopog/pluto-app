@@ -1,7 +1,6 @@
 import { PrismaClient } from '../generated/prisma';
 
 declare global {
-  // eslint-disable-next-line no-var
   var prisma: PrismaClient | undefined;
 }
 
@@ -15,6 +14,8 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClientSingleton;
 };
 
-export const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
+const prismaInstance = globalForPrisma.prisma ?? prismaClientSingleton();
 
-if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma;
+if (process.env.NODE_ENV !== 'production') globalThis.prisma = prismaInstance;
+
+export { prismaInstance as prisma };

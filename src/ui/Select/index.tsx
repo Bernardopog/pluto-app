@@ -41,7 +41,10 @@ export default function Select({
       className={`relative w-64 p-1 rounded-lg text-chetwode-blue-950 duration-300 ease-in-out cursor-pointer ${
         isOpen ? 'bg-chetwode-blue-200' : 'bg-chetwode-blue-300'
       } ${className}`}
+      tabIndex={0}
       onClick={handleOpen}
+      onKeyDown={(e) => e.key === 'Enter' && handleOpen()}
+      onKeyUp={(e) => e.key === 'Escape' && setIsOpen(false)}
       role='combobox'
       aria-expanded={isOpen}
       aria-controls='select'
@@ -55,17 +58,21 @@ export default function Select({
         <MdArrowDropDown className='text-2xl' />
       </span>
       {isOpen && (
-        <ul
+        <div
           role='listbox'
           className={`absolute top-10 left-0 w-full gap-2 border-2 rounded-lg shadow-lg bg-chetwode-blue-200 border-chetwode-blue-600 ${
             list.length < 5 ? 'flex flex-col' : 'grid grid-cols-2'
           }`}
         >
           {list.map((item) => (
-            <li
+            <div
+              role='option'
+              tabIndex={item.id === selectedValue ? 0 : -1}
               key={item.id}
               onClick={() => handleSetValue(item.value, item.id)}
-              role='option'
+              onKeyDown={(e) =>
+                e.key === 'Enter' && handleSetValue(item.value, item.id)
+              }
               aria-selected={state === item.value}
               className={`p-2 cursor-pointer duration-300 ease-in-out hover:bg-chetwode-blue-300 ${
                 state === item.value ? 'bg-chetwode-blue-300' : ''
@@ -76,9 +83,9 @@ export default function Select({
               }`}
             >
               {item.name}
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

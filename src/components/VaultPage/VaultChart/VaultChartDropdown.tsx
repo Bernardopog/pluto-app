@@ -31,6 +31,7 @@ export default function VaultChartDropdown({
       <span className='block text-lg'>Exibir gráfico como:</span>
       <div className='flex flex-col gap-2'>
         <button
+          type='button'
           className={`p-1 rounded-lg bg-chetwode-blue-300 duration-300 ease-in-out ${
             typeOfChart === 'totalProgress' && 'bg-chetwode-blue-400'
           }`}
@@ -39,6 +40,7 @@ export default function VaultChartDropdown({
           Progresso Geral
         </button>
         <button
+          type='button'
           className={`p-1 rounded-lg bg-chetwode-blue-300 duration-300 ease-in-out ${
             typeOfChart === 'vaultProgress' && 'bg-chetwode-blue-400'
           }`}
@@ -47,6 +49,7 @@ export default function VaultChartDropdown({
           Progresso por Cofre
         </button>
         <button
+          type='button'
           className={`p-1 rounded-lg bg-chetwode-blue-300 duration-300 ease-in-out ${
             typeOfChart === 'restProgress' && 'bg-chetwode-blue-400'
           }`}

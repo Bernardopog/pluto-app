@@ -36,6 +36,8 @@ export default function ModalVaultDelete() {
     toggleModal();
   };
 
+  const selected = selectedVault;
+
   return (
     <div className='flex flex-col'>
       <p className='text-2xl text-center text-chetwode-blue-950 dark:text-chetwode-blue-100'>
@@ -62,13 +64,15 @@ export default function ModalVaultDelete() {
         >
           Cancelar
         </button>
-        <button
-          type='submit'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-red-200 text-red-950 border-red-600 duration-300 ease-in-out hover:bg-red-300 active:bg-red-500 active:text-red-100'
-          onClick={() => handleDelete(selectedVault!.id)}
-        >
-          Deletar Cofre
-        </button>
+        {selected && (
+          <button
+            type='submit'
+            className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-red-200 text-red-950 border-red-600 duration-300 ease-in-out hover:bg-red-300 active:bg-red-500 active:text-red-100'
+            onClick={() => handleDelete(selected.id)}
+          >
+            Deletar Cofre
+          </button>
+        )}
       </div>
     </div>
   );

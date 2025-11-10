@@ -18,14 +18,14 @@ export default function DashboardHeader() {
     (s) => s.getTotalMonthlyExpenses,
   );
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
-  const transactionList = useTransactionBudgetStore(
+  const _transactionList = useTransactionBudgetStore(
     (s) => s.transactionData.list,
   );
 
   const currentExpenses = useMemo(
     () => Math.abs(getTotalMotnhlyExpenses()),
-    // eslint-disable-next-line
-    [getTotalMotnhlyExpenses, transactionList],
+
+    [getTotalMotnhlyExpenses],
   );
   const estimateExpenses = budgetList.reduce(
     (acc, item) => acc + item.limit,

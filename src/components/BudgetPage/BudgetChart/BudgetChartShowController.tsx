@@ -25,7 +25,7 @@ export default function BudgetChartShowController({
           >
             <Checkbox
               label={bdgt.name}
-              state={excludedId.includes(bdgt.id) ? true : false}
+              state={excludedId.includes(bdgt.id)}
               setState={() => {
                 if (excludedId.includes(bdgt.id)) {
                   removeFromExcluded(bdgt.id);

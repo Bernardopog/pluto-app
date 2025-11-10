@@ -18,7 +18,7 @@ export default function DashboardVaultHistory() {
         .filter((item) => item.vaultId === selectedDashboardVault)
         .toReversed()
         .map((item, index) => {
-          if (index >= 6) return;
+          if (index >= 6) return null;
           return (
             <li
               key={item.id}

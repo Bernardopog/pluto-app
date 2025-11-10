@@ -53,9 +53,10 @@ export default function ModalVault({ type }: { type: 'create' | 'update' }) {
                 ? 'bg-chetwode-blue-800 text-chetwode-blue-100 hover:bg-chetwode-blue-700'
                 : 'text-chetwode-blue-950 hover:bg-chetwode-blue-300'
             }`}
-            onClick={() => setVaultIcon(icon.name)}
           >
-            {icon.icon({ className: 'size-8' })}
+            <button type="button" onClick={() => setVaultIcon(icon.name)}>
+              {icon.icon({ className: 'size-8' })}
+            </button>
           </li>
         ))}
       </ul>

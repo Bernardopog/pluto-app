@@ -18,6 +18,7 @@ export default function DashboardStatsList() {
     <ul className='flex flex-col flex-1 mt-1 p-2 gap-2 rounded-lg bg-chetwode-blue-200 dark:bg-chetwode-blue-950 lg:flex-row xl:flex-col'>
       {statList.map((keyName, index) => (
         <DashboardStatsItem
+          // biome-ignore lint/suspicious/noArrayIndexKey: <Static list>
           key={index}
           keyName={keyName} // < -- Key to search in Component Map -- >
           index={index}

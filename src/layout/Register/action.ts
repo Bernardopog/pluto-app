@@ -9,7 +9,7 @@ type RegisterState = {
 };
 
 export async function registerUser(
-  prevState: RegisterState,
+  _prevState: RegisterState,
   formData: FormData,
 ): Promise<RegisterState> {
   const name = formData.get('name') as string;

@@ -30,6 +30,7 @@ export default function VaultChartHeader({
       </h2>
       {vaultListLength > 0 && (
         <button
+          type='button'
           className='base-btn absolute top-2 right-2'
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           aria-label='Selecionar tipo de Gráfico'

@@ -32,6 +32,7 @@ export default function DashboardGoalsCurrentGoal() {
     })),
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <Necessary for sync>
   const money = useMemo(() => {
     if (goal?.progress === 'vault') {
       const vault = vaultList.find((vault) => {
@@ -42,7 +43,6 @@ export default function DashboardGoalsCurrentGoal() {
     }
 
     return balance;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [goal, balance, getTotalMoneySavedFromVault, vaultList, vaultListItem]);
 
   useEffect(() => {
@@ -52,23 +52,29 @@ export default function DashboardGoalsCurrentGoal() {
     const now = Date.now();
 
     if (deadline.getTime() < now) {
+      if (goal?.progress === 'vault') {
+        const vault = vaultList.find(
+          (vault) => vault.id === goal.assignedVault,
+        );
+        if (!vault) return;
+        const totalMoneySaved = getTotalMoneySavedFromVault(vault.id);
+        const percentage = getPercentage(totalMoneySaved, goal.targetAmount);
+        if (Number(percentage) >= 100) {
+          complete();
+          statCompleteGoal();
+          return;
+        }
+      } else if (goal?.progress === 'balance') {
+        const percentage = getPercentage(balance, goal.targetAmount);
+        if (Number(percentage) >= 100) {
+          complete();
+          statCompleteGoal();
+          return;
+        }
+      }
+
       cancel();
       statCancelGoal();
-    } else if (deadline.getTime() < now && goal?.progress === 'vault') {
-      const vault = vaultList.find((vault) => vault.id === goal.assignedVault);
-      if (!vault) return;
-      const totalMoneySaved = getTotalMoneySavedFromVault(vault.id);
-      const percentage = getPercentage(totalMoneySaved, goal.targetAmount);
-      if (Number(percentage) >= 100) {
-        complete();
-        statCompleteGoal();
-      }
-    } else if (deadline.getTime() < now && goal?.progress === 'balance') {
-      const percentage = getPercentage(balance, goal.targetAmount);
-      if (Number(percentage) >= 100) {
-        complete();
-        statCompleteGoal();
-      }
     }
   }, [
     goal,
@@ -103,6 +109,7 @@ export default function DashboardGoalsCurrentGoal() {
             vaultList.findIndex((vault) => vault.id === goal.assignedVault) ===
               -1 && (
               <button
+                type='button'
                 className='absolute top-0 right-0 text-center text-sm size-fit rounded-lg p-1 bg-red-500 animate-pulse'
                 aria-label='Atribuir a novo cofre'
                 title='Atribuir a novo cofre'

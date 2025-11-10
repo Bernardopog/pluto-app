@@ -41,10 +41,10 @@ export default function DashboardVaultSaved() {
     handleVaultMenu();
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <It's necessary to keep sync>
   const savedMoney = useMemo(() => {
     if (selectedDashboardVault === null) return 0;
     return getTotalMoneySavedFromVault(selectedDashboardVault);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vaultItemList, selectedDashboardVault, getTotalMoneySavedFromVault]);
 
   const [creatingVault, setCreatingVault] = useState<boolean>(false);
@@ -94,6 +94,7 @@ export default function DashboardVaultSaved() {
                 }`}
               >
                 <button
+                  type='button'
                   className='w-full p-1 font-medium text-sm truncate'
                   onClick={() => handleSelectVault(vault.id)}
                 >
@@ -103,6 +104,7 @@ export default function DashboardVaultSaved() {
             ))) || (
             <li className='flex flex-col items-center justify-between h-full text-chetwode-blue-950 border-chetwode-blue-700 dark:text-chetwode-blue-50'>
               <button
+                type='button'
                 className='w-full p-1 font-medium text-sm rounded-lg bg-chetwode-blue-300 dark:bg-chetwode-blue-700'
                 onClick={handleVaultMenu}
                 disabled={creatingVault}
@@ -110,6 +112,7 @@ export default function DashboardVaultSaved() {
                 Nenhum cofre ainda
               </button>
               <button
+                type='button'
                 className='flex items-center w-full p-1 font-medium rounded-lg bg-chetwode-blue-300 text-sm dark:bg-chetwode-blue-700'
                 onClick={createNewVault}
                 disabled={creatingVault}

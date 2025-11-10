@@ -20,6 +20,7 @@ export default function VaultListItemHeader({ vault }: { vault: IVault }) {
         {moneyFormatter(vault.targetPrice)}
       </p>
       <button
+        type='button'
         className='absolute top-1 right-1 p-1 rounded-lg text-lg bg-chetwode-blue-600 text-chetwode-blue-50 duration-300 ease-in-out hover:brightness-95 active:brightness-75'
         aria-label='Selecionar item'
         title='Selecionar Item'

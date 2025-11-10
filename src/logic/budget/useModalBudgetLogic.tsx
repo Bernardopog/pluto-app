@@ -36,16 +36,10 @@ export const useModalBudgetLogic = (type: 'create' | 'update') => {
       setBudgetName(budgetSelection.selected.name);
       setBudgetLimit(budgetSelection.selected.limit);
       const checkColorType = () => {
-        if (
-          budgetSelection.selected &&
-          budgetSelection.selected.color.includes('#')
-        ) {
+        if (budgetSelection.selected?.color.includes('#')) {
           setHex(budgetSelection.selected.color);
           return 'hex';
-        } else if (
-          budgetSelection.selected &&
-          budgetSelection.selected.color.includes('hsl')
-        ) {
+        } else if (budgetSelection.selected?.color.includes('hsl')) {
           const formattedHsl = budgetSelection.selected.color
             .replace('hsl(', '')
             .replace(')', '')
@@ -56,10 +50,7 @@ export const useModalBudgetLogic = (type: 'create' | 'update') => {
           setSaturation(Number(formattedHsl[1]));
           setLightness(Number(formattedHsl[2]));
           return 'hsl';
-        } else if (
-          budgetSelection.selected &&
-          budgetSelection.selected.color.includes('rgb')
-        ) {
+        } else if (budgetSelection.selected?.color.includes('rgb')) {
           const formattedRgb = budgetSelection.selected.color
             .replace('rgb(', '')
             .replace(')', '')

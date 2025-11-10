@@ -83,8 +83,6 @@ export default function StoreInitializer({
     if (statsData) {
       setStatsData({ item: statsData, fetched: true, loading: false });
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     txnData,
     budgetData,
@@ -93,6 +91,13 @@ export default function StoreInitializer({
     goalData,
     financeData,
     statsData,
+    setBudgetData,
+    setFinanceData,
+    setGoalData,
+    setStatsData,
+    setTransactionData,
+    setVaultData,
+    setVaultItemsData,
   ]);
 
   return null;

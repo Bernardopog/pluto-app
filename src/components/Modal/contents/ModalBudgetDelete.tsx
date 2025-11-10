@@ -19,6 +19,8 @@ export default function ModalBudgetDelete() {
   );
   const categoryFilter = useTransactionFilterStore((s) => s.categoryFilter);
 
+  const selected = budgetSelection.selected;
+
   const handleDelete = (id: number) => {
     budgetMethods.delete(id).then(({ message, status }) =>
       setMessage({
@@ -44,12 +46,10 @@ export default function ModalBudgetDelete() {
       <p className='text-2xl text-center text-chetwode-blue-950 dark:text-chetwode-blue-100'>
         Você tem certeza que quer deletar essa Categoria de Orçamento ?
       </p>
-      {budgetSelection.selected && (
+      {selected && (
         <div className='flex flex-col p-2 rounded-lg text-2xl text-center text-chetwode-blue-950 bg-chetwode-blue-200 dark:bg-chetwode-blue-700 dark:text-chetwode-blue-50'>
-          <span>Nome: {budgetSelection.selected.name}</span>
-          <span>
-            Limite: {moneyFormatter(Math.abs(budgetSelection.selected.limit))}
-          </span>
+          <span>Nome: {selected.name}</span>
+          <span>Limite: {moneyFormatter(Math.abs(selected.limit))}</span>
         </div>
       )}
       <p className='text-2xl text-center text-red-900 dark:text-red-400'>
@@ -63,13 +63,15 @@ export default function ModalBudgetDelete() {
         >
           Cancelar
         </button>
-        <button
-          type='submit'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-red-200 text-red-950 border-red-600 duration-300 ease-in-out hover:bg-red-300 active:bg-red-500 active:text-red-100'
-          onClick={() => handleDelete(budgetSelection.selected!.id)}
-        >
-          Deletar Orçamento
-        </button>
+        {selected && (
+          <button
+            type='submit'
+            className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-red-200 text-red-950 border-red-600 duration-300 ease-in-out hover:bg-red-300 active:bg-red-500 active:text-red-100'
+            onClick={() => handleDelete(selected.id)}
+          >
+            Deletar Orçamento
+          </button>
+        )}
       </div>
     </div>
   );

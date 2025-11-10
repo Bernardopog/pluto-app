@@ -41,6 +41,7 @@ export default function DashboardGoalsController() {
   const [currentProgressPercentage, setCurrentProgressPercentage] =
     useState<number>(0);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <Necessary for sync>
   useEffect(() => {
     if (goal?.progress === 'vault') {
       const vault = vaultList.find((vault) => vault.id === goal.assignedVault);
@@ -90,6 +91,7 @@ export default function DashboardGoalsController() {
     <>
       {!goal && (
         <button
+          type='button'
           className='text-chetwode-blue-950/50 duration-300 ease-in-out hover:text-chetwode-blue-950/75 dark:text-chetwode-blue-50/50 dark:hover:text-chetwode-blue-50/75'
           onClick={handleModal}
         >
@@ -98,6 +100,7 @@ export default function DashboardGoalsController() {
       )}
       {currentProgressPercentage >= 100 && (
         <button
+          type='button'
           className='text-chetwode-blue-950/50 duration-300 ease-in-out hover:text-chetwode-blue-950/75 dark:text-chetwode-blue-50/50 dark:hover:text-chetwode-blue-50/75'
           onClick={handleCompleteGoal}
         >
@@ -106,6 +109,7 @@ export default function DashboardGoalsController() {
       )}
       {goal && (
         <button
+          type='button'
           className='text-red-950/50 duration-300 ease-in-out hover:text-red-950/75 dark:text-red-300/50 dark:hover:text-red-300/75'
           onClick={handleCancelGoal}
         >

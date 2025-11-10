@@ -33,13 +33,9 @@ export default function ModalBalanceConfiguration() {
       })),
     );
 
-  const { transactionList, getTransactionsOfCurrentMonth } =
-    useTransactionBudgetStore(
-      useShallow((s) => ({
-        transactionList: s.transactionData.list,
-        getTransactionsOfCurrentMonth: s.getTransactionsOfCurrentMonth,
-      })),
-    );
+  const getTransactionsOfCurrentMonth = useTransactionBudgetStore(
+    (s) => s.getTransactionsOfCurrentMonth,
+  );
 
   const [valueToBalance, setValueToBalance] = useState<number>(balance);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -60,16 +56,12 @@ export default function ModalBalanceConfiguration() {
     selectModalType(null);
   };
 
-  const currentMonth = new Date().getMonth();
-  const currentYear = new Date().getFullYear();
-
   const txnExpensesValue: number = useMemo(
     () =>
       getTransactionsOfCurrentMonth()
         .filter((txn) => txn.value < 0)
         .reduce((acc, item) => acc + item.value, 0),
-    // eslint-disable-next-line
-    [transactionList, currentMonth, currentYear],
+    [getTransactionsOfCurrentMonth],
   );
 
   const vaultSavedValue = getTotalMoneySavedFromVault(selectedVaultId ?? 0);

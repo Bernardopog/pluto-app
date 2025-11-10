@@ -62,16 +62,24 @@ export const useModalVaultLogic = (type: 'create' | 'update') => {
         }),
       );
     } else {
-      update(selectedVault!.id, data).then(({ message, status, data }) =>
+      if (selectedVault) {
+        update(selectedVault.id, data).then(({ message, status, data }) =>
+          setMessage({
+            message,
+            status,
+            description:
+              status === 200
+                ? `Seu cofre (${data?.name}) foi atualizado com sucesso!`
+                : 'Ocorreu um erro ao atualizar o cofre',
+          }),
+        );
+      } else {
         setMessage({
-          message,
-          status,
-          description:
-            status === 200
-              ? `Seu cofre (${data?.name}) foi atualizado com sucesso!`
-              : 'Ocorreu um erro ao atualizar o cofre',
-        }),
-      );
+          message: 'Nenhum cofre selecionado',
+          status: 400,
+          description: 'Selecione um cofre para atualizar.',
+        });
+      }
     }
 
     handleClose();

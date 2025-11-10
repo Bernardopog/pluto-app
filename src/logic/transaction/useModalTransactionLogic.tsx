@@ -119,18 +119,20 @@ export const useModalTransactionLogic = (type: 'create' | 'update') => {
 
       handleReset();
     } else {
-      transactionMethods
-        .update(transactionSelection.selected!.id, data)
-        .then(({ message, status, data }) =>
-          setMessage({
-            message,
-            status,
-            description:
-              status === 200
-                ? `Sua transação (${data?.name}) foi atualizada com sucesso!`
-                : 'Ocorreu um erro ao atualizar a transação',
-          }),
-        );
+      if (transactionSelection.selected) {
+        transactionMethods
+          .update(transactionSelection.selected.id, data)
+          .then(({ message, status, data }) =>
+            setMessage({
+              message,
+              status,
+              description:
+                status === 200
+                  ? `Sua transação (${data?.name}) foi atualizada com sucesso!`
+                  : 'Ocorreu um erro ao atualizar a transação',
+            }),
+          );
+      }
     }
 
     toggleModal();

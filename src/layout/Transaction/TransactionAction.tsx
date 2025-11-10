@@ -72,7 +72,7 @@ export default function TransactionAction() {
 
     const csvContent = [header, ...body].join('\n');
 
-    const blob = new Blob(['\uFEFF' + csvContent], {
+    const blob = new Blob([`\uFEFF${csvContent}`], {
       type: 'text/csv;charset=utf-8;',
     });
     const url = URL.createObjectURL(blob);
