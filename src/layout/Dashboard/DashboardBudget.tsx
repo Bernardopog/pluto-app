@@ -17,11 +17,11 @@ export type PieChartType = "full" | "half";
 export default function DashboardBudget() {
   const income = useFinanceStore((s) => s.financeData.item.income);
 
-  const getTotalExpenses = useTransactionBudgetStore((s) => s.getTotalExpenses);
+  const getTotalMonthlyExpenses = useTransactionBudgetStore((s) => s.getTotalMonthlyExpenses);
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
   const currentMonthTxn = useTransactionBudgetStore((s) => s.getTransactionsOfCurrentMonth);
 
-  const totalExpenses = getTotalExpenses();
+  const totalExpenses = getTotalMonthlyExpenses();
   const rest = income + totalExpenses;
 
   const budgetListHaveExpenses = useMemo(() => {
