@@ -18,7 +18,7 @@ export default function ThemeToggler({
     setIsDarkMode(!isDarkMode);
 
     if ('cookieStore' in window) {
-      await cookieStore.set({
+      await cookieStore?.set({
         name: 'theme',
         value: newTheme ? 'dark' : 'light',
         path: '/',
