@@ -37,7 +37,7 @@ export default function ModalIncomeConfiguration() {
 
   useEffect(() => {
     setValueToIncome(income);
-    inputRef.current?.focus();
+    setTimeout(() => inputRef.current?.focus(), 250);
   }, [income]);
 
   return (

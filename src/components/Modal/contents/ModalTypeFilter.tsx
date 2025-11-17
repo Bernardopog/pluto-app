@@ -37,7 +37,7 @@ export default function ModalTypeFilter() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    inputRef.current?.focus();
+    setTimeout(() => inputRef.current?.focus(), 250);
   }, []);
 
   return (

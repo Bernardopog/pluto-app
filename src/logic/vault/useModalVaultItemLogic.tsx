@@ -128,7 +128,7 @@ export const useModalVaultItemLogic = (type: 'create' | 'update') => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    inputRef.current?.focus();
+    setTimeout(() => inputRef.current?.focus(), 250);
     if (type === 'create') return;
     if (type === 'update') setVaultItemName(selectedVault?.name ?? '');
 

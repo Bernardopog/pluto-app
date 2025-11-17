@@ -35,7 +35,7 @@ export default function ModalCategoryFilter() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    buttonRef.current?.focus();
+    setTimeout(() => buttonRef.current?.focus(), 250);
   }, []);
 
   return (

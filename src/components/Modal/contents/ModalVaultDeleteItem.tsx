@@ -44,7 +44,7 @@ export default function ModalVaultDeleteItem() {
 
   useEffect(() => {
     setCanDelete(false);
-    buttonRef.current?.focus();
+    setTimeout(() => buttonRef.current?.focus(), 250);
     setTimeout(() => setCanDelete(true), 1000);
   }, []);
 

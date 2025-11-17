@@ -34,7 +34,7 @@ export const useModalBudgetLogic = (type: 'create' | 'update') => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    inputRef.current?.focus();
+    setTimeout(() => inputRef.current?.focus(), 250);
     if (type === 'update' && budgetSelection.selected) {
       setBudgetName(budgetSelection.selected.name);
       setBudgetLimit(budgetSelection.selected.limit);

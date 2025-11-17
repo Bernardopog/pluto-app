@@ -49,7 +49,7 @@ export const useModalTransactionLogic = (type: 'create' | 'update') => {
           .split('T')[0],
       );
     }
-    inputRef.current?.focus();
+    setTimeout(() => inputRef.current?.focus(), 250);
   }, [type, transactionSelection.selected]);
 
   const handleReset = () => {

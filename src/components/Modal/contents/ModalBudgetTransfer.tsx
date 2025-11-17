@@ -60,7 +60,7 @@ export default function ModalBudgetTransfer() {
   const selected = budgetSelection.selected;
 
   useEffect(() => {
-    buttonRef.current?.focus();
+    setTimeout(() => buttonRef.current?.focus(), 250);
   }, []);
 
   return (

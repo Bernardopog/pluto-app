@@ -85,7 +85,7 @@ export default function ModalBalanceConfiguration() {
 
   useEffect(() => {
     setValueToBalance(balance);
-    inputRef.current?.focus();
+    setTimeout(() => inputRef.current?.focus(), 250);
   }, [balance]);
 
   return (

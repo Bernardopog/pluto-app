@@ -91,7 +91,7 @@ export const useModalVaultLogic = (type: 'create' | 'update') => {
   };
 
   useEffect(() => {
-    inputRef.current?.focus();
+    setTimeout(() => inputRef.current?.focus(), 250);
     if (type === 'update') {
       if (selectedVault) {
         setVaultName(selectedVault.name);
