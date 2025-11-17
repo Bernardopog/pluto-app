@@ -47,15 +47,20 @@ export default function RegisterForm() {
         icon={<MdEmail />}
         required
       />
-      <ServerInput
-        id='password'
-        label='Senha'
-        type='password'
-        name='password'
-        placeholder='Digite sua Senha'
-        icon={<MdLock />}
-        required
-      />
+      <div>
+        <ServerInput
+          id='password'
+          label='Senha'
+          type='password'
+          name='password'
+          placeholder='Digite sua Senha'
+          icon={<MdLock />}
+          required
+        />
+        <span className='text-sm text-chetwode-blue-950/75'>
+          Senha deve ter entre 8-48 caracteres
+        </span>
+      </div>
       <ServerInput
         id='confirmPassword'
         label='Confirmar Senha'
