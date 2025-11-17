@@ -21,14 +21,14 @@ export const metadata: Metadata = {
 
 export default async function DashboardPage() {
   const [
-    txnData,
-    budgetData,
-    vaultData,
-    vaultItemsData,
-    goalData,
-    financeData,
-    statsData,
-  ] = await Promise.all([
+    txnRes,
+    budgetRes,
+    vaultRes,
+    vaultItemsRes,
+    goalRes,
+    financeRes,
+    statsRes,
+  ] = await Promise.allSettled([
     getTransactions(),
     getBudgets(),
     getVaults(),
@@ -37,6 +37,16 @@ export default async function DashboardPage() {
     getFinance(),
     getStats(),
   ]);
+
+  const txnData = txnRes.status === 'fulfilled' ? txnRes.value : null;
+  const budgetData = budgetRes.status === 'fulfilled' ? budgetRes.value : null;
+  const vaultData = vaultRes.status === 'fulfilled' ? vaultRes.value : null;
+  const vaultItemsData =
+    vaultItemsRes.status === 'fulfilled' ? vaultItemsRes.value : null;
+  const goalData = goalRes.status === 'fulfilled' ? goalRes.value : null;
+  const financeData =
+    financeRes.status === 'fulfilled' ? financeRes.value : null;
+  const statsData = statsRes.status === 'fulfilled' ? statsRes.value : null;
 
   return (
     <main className='page'>
