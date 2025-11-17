@@ -7,6 +7,7 @@ import {
   useTransactionFilterStore,
 } from '@/stores/useTransactionFilterStore';
 import Radio from '@/ui/Radio';
+import ModalFooter from '../ModalFooter';
 
 export default function ModalDateFilter() {
   const { firstDate, secondDate, dateFilter } = useTransactionFilterStore(
@@ -160,21 +161,14 @@ export default function ModalDateFilter() {
           />
         </div>
       </fieldset>
-      <div className='flex self-end gap-x-2'>
-        <button
-          type='button'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100'
-          onClick={handleCancel}
-        >
-          Cancelar
-        </button>
+      <ModalFooter cancelAction={handleCancel}>
         <button
           type='submit'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100'
+          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold duration-300 ease-in-out modal-btn-color'
         >
           Filtrar por Data
         </button>
-      </div>
+      </ModalFooter>
     </form>
   );
 }

@@ -5,6 +5,7 @@ import { useModalStore } from '@/stores/useModalStore';
 import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
 import { useTransactionFilterStore } from '@/stores/useTransactionFilterStore';
 import { moneyFormatter } from '@/utils/moneyFormatter';
+import ModalFooter from '../ModalFooter';
 
 export default function ModalBudgetDelete() {
   const toggleModal = useModalStore((s) => s.toggleModal);
@@ -56,22 +57,17 @@ export default function ModalBudgetDelete() {
         Essa ação nao pode ser desfeita!
       </p>
       <div className='flex self-end gap-x-2'>
-        <button
-          type='button'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100'
-          onClick={handleCancel}
-        >
-          Cancelar
-        </button>
-        {selected && (
-          <button
-            type='submit'
-            className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-red-200 text-red-950 border-red-600 duration-300 ease-in-out hover:bg-red-300 active:bg-red-500 active:text-red-100'
-            onClick={() => handleDelete(selected.id)}
-          >
-            Deletar Orçamento
-          </button>
-        )}
+        <ModalFooter cancelAction={handleCancel}>
+          {selected && (
+            <button
+              type='submit'
+              className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold ease-in-out modal-btn-delete'
+              onClick={() => handleDelete(selected.id)}
+            >
+              Deletar Orçamento
+            </button>
+          )}
+        </ModalFooter>
       </div>
     </div>
   );

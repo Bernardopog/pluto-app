@@ -8,6 +8,7 @@ import { useVaultStore } from '@/stores/useVaultStore';
 import Divider from '@/ui/Divider';
 import Input from '@/ui/Input';
 import { moneyFormatter } from '@/utils/moneyFormatter';
+import ModalFooter from '../ModalFooter';
 
 export default function ModalBalanceConfiguration() {
   const { toggleModal, selectModalType } = useModalStore(
@@ -190,21 +191,14 @@ export default function ModalBalanceConfiguration() {
           nome, um limite e uma cor.
         </p>
       )}
-      <div className='flex self-end gap-x-2'>
-        <button
-          type='button'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100'
-          onClick={handleCancel}
-        >
-          Cancelar
-        </button>
+      <ModalFooter cancelAction={handleCancel}>
         <button
           type='submit'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100'
+          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold duration-300 ease-in-out modal-btn-update'
         >
           Editar Saldo
         </button>
-      </div>
+      </ModalFooter>
     </form>
   );
 }

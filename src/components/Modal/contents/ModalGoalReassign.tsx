@@ -5,6 +5,7 @@ import { useGoalsStore } from '@/stores/useGoalsStore';
 import { useMessageStore } from '@/stores/useMessageStore';
 import { useModalStore } from '@/stores/useModalStore';
 import { useVaultStore } from '@/stores/useVaultStore';
+import ModalFooter from '../ModalFooter';
 
 export default function ModalGoalReassign() {
   const vaultList = useVaultStore((s) => s.vaultData.list);
@@ -60,21 +61,14 @@ export default function ModalGoalReassign() {
           <li className='flex-1 italic'>Você ainda não possui um cofre</li>
         )}
       </ul>
-      <div className='flex self-end mt-2 gap-x-2'>
-        <button
-          type='button'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100'
-          onClick={() => toggleModal()}
-        >
-          Cancelar
-        </button>
+      <ModalFooter cancelAction={toggleModal}>
         <button
           type='submit'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100'
+          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold duration-300 ease-in-out modal-btn-update'
         >
           Reatribuir Objetivo
         </button>
-      </div>
+      </ModalFooter>
     </form>
   );
 }

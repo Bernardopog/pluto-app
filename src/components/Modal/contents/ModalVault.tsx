@@ -4,6 +4,7 @@ import { MdFilePresent, MdPieChart } from 'react-icons/md';
 import { iconsArray } from '@/data/iconMap';
 import { useModalVaultLogic } from '@/logic/vault/useModalVaultLogic';
 import Input from '@/ui/Input';
+import ModalFooter from '../ModalFooter';
 
 export default function ModalVault({ type }: { type: 'create' | 'update' }) {
   const {
@@ -66,21 +67,14 @@ export default function ModalVault({ type }: { type: 'create' | 'update' }) {
           nome, um valor alvo e um ícone.
         </p>
       )}
-      <div className='flex self-end gap-x-2'>
-        <button
-          type='button'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100'
-          onClick={handleCancel}
-        >
-          Cancelar
-        </button>
+      <ModalFooter cancelAction={handleCancel}>
         <button
           type='submit'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold bg-chetwode-blue-200 text-chetwode-blue-950 border-chetwode-blue-600 duration-300 ease-in-out hover:bg-chetwode-blue-300 active:bg-chetwode-blue-500 active:text-chetwode-blue-100'
+          className={`w-fit mt-2 p-2 border-b-2 rounded-lg font-bold duration-300 ease-in-out ${type === 'create' ? 'modal-btn-create' : 'modal-btn-update'}`}
         >
           {type === 'create' ? 'Criar' : 'Editar'} Cofre
         </button>
-      </div>
+      </ModalFooter>
     </form>
   );
 }
