@@ -21,8 +21,8 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (!state) return;
-    if (state.success === true) {
-      setUserId(state.token!);
+    if (state.success === true && state.token) {
+      setUserId(state.token);
       const timeout = setTimeout(() => router.push('/dashboard'), 1000);
 
       return () => clearTimeout(timeout);

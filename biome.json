@@ -18,7 +18,8 @@
     "enabled": true,
     "rules": {
       "correctness": {
-        "noUnusedImports": "error"
+        "noUnusedImports": "error",
+        "noUnknownProperty": "off"
       },
       "recommended": true,
       "style": {

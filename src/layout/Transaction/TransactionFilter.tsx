@@ -84,10 +84,8 @@ export default function TransactionFilter() {
           Limpar todos filtros
         </button>
       </div>
-      <div
-        role='group'
-        className='flex flex-col flex-1 justify-between mt-2 xl:flex-row'
-      >
+      <fieldset className='flex flex-col flex-1 justify-between mt-2 xl:flex-row'>
+        <legend className='sr-only'>Filtros de transação</legend>
         <ul className='grid grid-cols-1 w-full gap-2 sm:grid-cols-2 lg:grid-cols-4 xl:flex items-center'>
           <li className='w-full lg:w-auto'>
             <TransactionFilterButton
@@ -136,7 +134,7 @@ export default function TransactionFilter() {
             }}
           />
         </div>
-      </div>
+      </fieldset>
     </form>
   );
 }

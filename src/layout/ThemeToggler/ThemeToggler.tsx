@@ -13,11 +13,21 @@ export default function ThemeToggler({
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(themeIsDark);
 
-  const handleToggle = () => {
+  const handleToggle = async () => {
+    const newTheme = !isDarkMode;
     setIsDarkMode(!isDarkMode);
-    document.cookie = `theme=${isDarkMode ? 'light' : 'dark'}; path=/`;
-    document.documentElement.classList.toggle('dark');
 
+    if ('cookieStore' in window) {
+      await cookieStore.set({
+        name: 'theme',
+        value: newTheme ? 'dark' : 'light',
+        path: '/',
+      });
+    } else {
+      // biome-ignore lint/suspicious/noDocumentCookie: <For browsers that not support cookieStore>
+      document.cookie = `theme=${newTheme ? 'dark' : 'light'}; path=/`;
+    }
+    document.documentElement.classList.toggle('dark');
     setTheme(isDarkMode ? 'light' : 'dark');
   };
 

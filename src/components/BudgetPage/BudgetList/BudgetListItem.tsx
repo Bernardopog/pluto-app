@@ -61,6 +61,10 @@ export default function BudgetListItem({
       key={id}
       className='group flex flex-col items-center cursor-pointer'
       onClick={() => setShowActionBtn(!showActionBtn)}
+      onKeyDown={(ev) => {
+        if (ev.key === 'enter') setShowActionBtn(!showActionBtn);
+        else return;
+      }}
     >
       <section
         style={{

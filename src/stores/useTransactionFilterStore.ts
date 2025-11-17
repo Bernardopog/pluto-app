@@ -42,13 +42,13 @@ interface ITransactionFilterStore {
 
 export const useTransactionFilterStore = create<ITransactionFilterStore>(
   (set, get) => ({
-    resetFullFilter: () => (
-      get().resetFullDateFilter(),
-      get().resetFullValueFilter(),
-      get().resetFullTypeFilter(),
-      get().resetFullCategoryFilter(),
-      get().resetFullSearchFilter()
-    ),
+    resetFullFilter: () => {
+      get().resetFullDateFilter();
+      get().resetFullValueFilter();
+      get().resetFullTypeFilter();
+      get().resetFullCategoryFilter();
+      get().resetFullSearchFilter();
+    },
 
     resetFullDateFilter: () =>
       set({ dateFilter: 'all', firstDate: new Date(), secondDate: null }),

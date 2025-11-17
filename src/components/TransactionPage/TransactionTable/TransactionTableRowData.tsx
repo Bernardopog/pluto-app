@@ -13,7 +13,6 @@ interface ITransactionTableRowDataProps {
 
 export default function TransactionTableRowData({
   transaction,
-  index,
   selectedToDeleted,
 }: ITransactionTableRowDataProps) {
   const { budgetList, transactionSelection } = useTransactionBudgetStore(
@@ -26,9 +25,8 @@ export default function TransactionTableRowData({
   const date = new Date(transaction.date);
 
   return (
-    <div
-      role='row'
-      key={index}
+    <button
+      type='button'
       className={`group grid grid-cols-4 flex-1 p-1 gap-1 rounded-lg cursor-pointer hover:brightness-105 sm:grid-cols-3 lg:grid-cols-[0.35fr_2fr_0.5fr_0.5fr] lg:p-0 ${
         transactionSelection.selected?.id === transaction.id &&
         !selectedToDeleted
@@ -36,7 +34,9 @@ export default function TransactionTableRowData({
           : ''
       }`}
       onClick={() => transactionSelection.select(transaction.id)}
+      aria-label={`Selecionar transação: ${transaction.name}`}
     >
+      {/** biome-ignore lint/a11y/useSemanticElements: <For styling purposes> */}
       <div
         role='cell'
         className='order-1 col-span-2 p-2 border-2 rounded-l-lg rounded-r-sm text-center border-chetwode-blue-950/25 ease-in-out duration-300 group-hover:border-chetwode-blue-600 dark:group-hover:border-chetwode-blue-300 sm:col-span-1'
@@ -45,12 +45,14 @@ export default function TransactionTableRowData({
         {(date.getUTCMonth() + 1).toString().padStart(2, '0')}/
         {date.getUTCFullYear()}
       </div>
+      {/** biome-ignore lint/a11y/useSemanticElements: <For styling purposes> */}
       <div
         role='cell'
         className='col-span-4 p-2 border-2 rounded-lg border-chetwode-blue-950/25 truncate ease-in-out duration-300 group-hover:border-chetwode-blue-600 dark:group-hover:border-chetwode-blue-300 sm:col-span-3 lg:col-span-1 lg:order-1 lg:rounded-sm'
       >
         {transaction.name}
       </div>
+      {/** biome-ignore lint/a11y/useSemanticElements: <For styling purposes> */}
       <div
         role='cell'
         className={`inline-flex items-center justify-between order-3 col-span-4 p-2 border-2 rounded-lg border-chetwode-blue-950/25 font-medium ease-in-out duration-300 group-hover:border-chetwode-blue-600 dark:group-hover:border-chetwode-blue-300 sm:col-span-1 sm:order-2 lg:rounded-sm ${
@@ -74,12 +76,13 @@ export default function TransactionTableRowData({
           <MdPlayArrow className='rotate-270' />
         )}
       </div>
+      {/** biome-ignore lint/a11y/useSemanticElements: <For styling purposes> */}
       <div
         role='cell'
         className='order-2 col-span-2 p-2 border-2 rounded-r-lg rounded-l-sm border-chetwode-blue-950/25 ease-in-out duration-300 group-hover:border-chetwode-blue-600 dark:group-hover:border-chetwode-blue-300 sm:col-span-1 sm:order-3'
       >
         {budgetList.find((b) => b.id === transaction.categoryId)?.name}
       </div>
-    </div>
+    </button>
   );
 }

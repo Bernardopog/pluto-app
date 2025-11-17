@@ -58,7 +58,10 @@ export default function BudgetListItemTxnHistory({ id }: { id: number }) {
               if (!txn)
                 return (
                   <li
-                    key={`txn-empty-${idx}`}
+                    key={`txn-empty-${
+                      // biome-ignore lint/suspicious/noArrayIndexKey: <Imutable>
+                      idx
+                    }`}
                     className='flex justify-between p-1 border-b-2 rounded-lg bg-star-dust-200 text-star-dust-950 border-star-dust-600/75'
                   >
                     <p className='text-sm'>Vazio</p>

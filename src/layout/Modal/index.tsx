@@ -1,6 +1,6 @@
 'use client';
 
-import type { MouseEvent } from 'react';
+import type { KeyboardEvent, MouseEvent } from 'react';
 import { useShallow } from 'zustand/shallow';
 import Inert from '@/components/Inert';
 import { ModalContent, ModalHeader } from '@/components/Modal';
@@ -28,17 +28,23 @@ export default function Modal() {
 
   return (
     <Inert isVisible={isModalOpen}>
+      {/** biome-ignore lint/a11y/useSemanticElements: <Avoid hydratation error> */}
       <div
+        role='button'
+        tabIndex={0}
         className={`flex items-center justify-center fixed z-60 w-full bg-black/25 duration-300 ease-in-out overflow-clip backdrop-blur-xs ${
           isModalOpen ? 'h-screen' : 'h-0'
         }
         `}
         onClick={handleModal}
+        onKeyDown={handleModal}
+        aria-label='Fechar modal'
       >
         <section
           role='dialog'
           aria-modal='true'
           onClick={(e: MouseEvent) => e.stopPropagation()}
+          onKeyDown={(e: KeyboardEvent) => e.stopPropagation()}
           className='base-card min-w-72 w-full max-w-216 p-0 max-h-[calc(100vh-4rem)] overflow-auto'
         >
           <ModalHeader type={selectedModal} />

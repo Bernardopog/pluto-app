@@ -26,6 +26,7 @@ export default function VaultListItemSaved({ item }: { item: IVaultItem }) {
           : 'bg-chetwode-blue-50 text-chetwode-blue-950 hover:bg-chetwode-blue-800 hover:text-chetwode-blue-100 dark:bg-chetwode-blue-900 dark:text-chetwode-blue-50 dark:hover:bg-chetwode-blue-950 dark:hover:text-chetwode-blue-50'
       }`}
       onClick={() => handleItemSelect()}
+      onKeyDown={() => handleItemSelect()}
     >
       <span className='flex-1 truncate'>{item.name}</span>
       <span className='flex-[0.5]'>{moneyFormatter(item.value)}</span>

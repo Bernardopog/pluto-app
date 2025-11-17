@@ -74,8 +74,8 @@ export default function TransactionTable() {
       const date = new Date(txn.date);
 
       if (dateFilter === 'all') return true;
-      if (dateFilter === 'between')
-        return date >= firstDate && date <= secondDate!;
+      if (dateFilter === 'between' && secondDate)
+        return date >= firstDate && date <= secondDate;
       if (dateFilter === 'before') return date < firstDate;
       if (dateFilter === 'after') return date > firstDate;
       if (dateFilter === 'exactly')
@@ -83,17 +83,19 @@ export default function TransactionTable() {
           date.toISOString().split('T')[0] ===
           firstDate.toISOString().split('T')[0]
         );
+      return false;
     })
     .filter((txn) => {
       if (valueFilter === 'all') return true;
       const txnValueAbsolute = Math.abs(txn.value);
       if (valueFilter === 'between')
         return (
-          txnValueAbsolute >= firstValue && txnValueAbsolute <= secondValue!
+          txnValueAbsolute >= firstValue && txnValueAbsolute <= secondValue
         );
-      if (valueFilter === 'negative') return txnValueAbsolute < firstValue!;
-      if (valueFilter === 'positive') return txnValueAbsolute > firstValue!;
-      if (valueFilter === 'exactly') return txnValueAbsolute === firstValue!;
+      if (valueFilter === 'negative') return txnValueAbsolute < firstValue;
+      if (valueFilter === 'positive') return txnValueAbsolute > firstValue;
+      if (valueFilter === 'exactly') return txnValueAbsolute === firstValue;
+      return false;
     })
     .filter((txn) => {
       if (categoryFilter === null) return true;
@@ -103,6 +105,7 @@ export default function TransactionTable() {
       if (transactionTypeFilter === 'all') return true;
       if (transactionTypeFilter === 'revenue') return txn.value > 0;
       if (transactionTypeFilter === 'expenses') return txn.value < 0;
+      return false;
     })
     .filter((txn) => {
       if (txn.name.toLowerCase().includes(searchFilter.toLowerCase()))
@@ -127,6 +130,7 @@ export default function TransactionTable() {
   };
 
   return (
+    // biome-ignore lint/a11y/useSemanticElements: <For Styling purposes>
     <section
       role='table'
       aria-label='Tabela de transações'
@@ -134,25 +138,28 @@ export default function TransactionTable() {
       className='base-card flex flex-col h-full p-0 overflow-hidden'
     >
       <header className='hidden lg:block text-chetwode-blue-950 dark:text-chetwode-blue-50'>
-        <div
-          role='row'
-          className='grid w-full grid-cols-[0.3fr_2fr_0.5fr_0.5fr] font-bold px-1 py-2 bg-chetwode-blue-200 dark:bg-chetwode-blue-800'
-        >
-          <span role='columnheader' className='text-center'>
+        {/* // biome-ignore lint/a11y/useSemanticElements: <For Styling purposes> */}
+        <div className='grid w-full grid-cols-[0.3fr_2fr_0.5fr_0.5fr] font-bold px-1 py-2 bg-chetwode-blue-200 dark:bg-chetwode-blue-800'>
+          {/** biome-ignore lint/a11y/useSemanticElements: <For Styling purposes> */}
+          <span role='columnheader' className='text-center' tabIndex={-1}>
             Data
           </span>
-          <span role='columnheader' className='text-center'>
+          {/** biome-ignore lint/a11y/useSemanticElements: <For Styling purposes> */}
+          <span role='columnheader' className='text-center' tabIndex={-1}>
             Descrição
           </span>
-          <span role='columnheader' className='text-center'>
+          {/** biome-ignore lint/a11y/useSemanticElements: <For Styling purposes> */}
+          <span role='columnheader' className='text-center' tabIndex={-1}>
             Valor
           </span>
-          <span role='columnheader' className='text-center'>
+          {/** biome-ignore lint/a11y/useSemanticElements: <For Styling purposes> */}
+          <span role='columnheader' className='text-center' tabIndex={-1}>
             Categoria
           </span>
         </div>
       </header>
 
+      {/** biome-ignore lint/a11y/useSemanticElements: <For Styling purposes> */}
       <section
         role='rowgroup'
         className='flex flex-col flex-1 min-h-0 gap-3 p-1 bg-star-dust-50 overflow-y-auto scrollbar-thin scrollbar-thumb-chetwode-blue-600 scrollbar-track-chetwode-blue-100 dark:bg-chetwode-blue-900'
@@ -194,12 +201,14 @@ export default function TransactionTable() {
         {[...Array(totalPages)].map((_, idx) => {
           return (
             <button
+              // biome-ignore lint/suspicious/noArrayIndexKey: <Order never changes>
               key={idx}
               className={`min-w-10 border py-1 px-2 rounded-lg ${
                 idx + 1 === currentPage &&
                 'bg-chetwode-blue-300 dark:bg-chetwode-blue-200 dark:text-chetwode-blue-950'
               }`}
               onClick={() => setCurrentPage(idx + 1)}
+              type='button'
             >
               {idx + 1}
             </button>

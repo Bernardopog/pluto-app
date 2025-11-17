@@ -7,14 +7,6 @@ async function main() {
     select: { id: true },
   });
 
-  console.log(
-    `\nUsuários sem Stats: (${
-      usersWithoutStats.length > 0
-        ? `\x1b[31m${usersWithoutStats.length}\x1b[0m`
-        : `\x1b[32m${usersWithoutStats.length}\x1b[0m`
-    })`,
-  );
-
   for (const user of usersWithoutStats) {
     await prismaClientScript.stats.create({
       data: {
@@ -24,18 +16,12 @@ async function main() {
         failedGoals: 0,
       },
     });
-    console.log(
-      `Stats criado com sucesso para (\x1b[33mUser\x1b[0m) de id: ${user.id}`,
-    );
   }
 }
 
 main()
-  .then(() => {
-    console.log('Script (\x1b[33mfillStats\x1b[0m) finalizado com sucesso\n');
-  })
-  .catch((e) => {
-    console.error(e);
+  .then(() => {})
+  .catch((_e) => {
     process.exit(1);
   })
   .finally(() => {

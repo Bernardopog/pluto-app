@@ -47,6 +47,7 @@ export default async function DashboardPage() {
         vaultData={vaultData}
         vaultItemsData={vaultItemsData}
         goalData={goalData}
+        // biome-ignore lint/style/noNonNullAssertion: <Finance Data will never be null>
         financeData={financeData!}
         statsData={statsData}
       />

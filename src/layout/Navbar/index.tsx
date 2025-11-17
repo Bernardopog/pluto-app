@@ -22,6 +22,7 @@ export default function Navbar() {
     <>
       {blockedRoutes.includes(url) ? null : (
         <button
+          type='button'
           className={`flex items-center justify-center absolute z-50 size-8 rounded-full text-2xl bg-chetwode-blue-800 text-star-dust-50 cursor-pointer duration-300 ease-in-out ${
             isSiderbarOpen ? 'top-4 left-[calc(16rem-3rem)]' : 'top-2 left-2'
           }`}
@@ -42,10 +43,14 @@ export default function Navbar() {
           isSiderbarOpen ? 'w-full' : 'w-0'
         }`}
       >
-        <div
+        <button
+          type='button'
           className='size-full bg-black/25 backdrop-blur-xs'
           onClick={handleSidebar}
+          aria-label='Fechar barra de navegação'
         >
+          {/* //biome-ignore lint/a11y/noStaticElementInteractions: <Used for stop propagation> */}
+          {/** biome-ignore lint/a11y/useKeyWithClickEvents: <Used for stop propagation> */}
           <nav
             className='w-64 h-full py-4 bg-chetwode-blue-800 text-star-dust-50'
             onClick={(e) => e.stopPropagation()}
@@ -56,7 +61,7 @@ export default function Navbar() {
               handleSidebar={handleSidebar}
             />
           </nav>
-        </div>
+        </button>
       </Inert>
     </>
   );

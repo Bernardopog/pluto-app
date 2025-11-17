@@ -28,6 +28,7 @@ export default function DashboardTransactionList() {
                 return transaction.value < 0;
               else if (transactionFilter === 'income')
                 return transaction.value > 0;
+              return false;
             })
             .slice(0, 12)
             .map((transaction) => {

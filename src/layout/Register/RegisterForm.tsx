@@ -19,7 +19,9 @@ export default function RegisterForm() {
   const [state, formAction] = useActionState(registerUser, initialState);
 
   if (state.success === true) {
-    setTimeout(() => (window.location.href = '/login'), 1000);
+    setTimeout(() => {
+      window.location.href = '/login';
+    }, 1000);
   }
 
   return (
