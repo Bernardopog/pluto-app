@@ -1,5 +1,5 @@
 'use client';
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/shallow';
 import { useModalStore } from '@/stores/useModalStore';
 import {
@@ -67,6 +67,12 @@ export default function ModalDateFilter() {
     toggleModal();
   };
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
     <form className='flex flex-col gap-2' onSubmit={handleSubmit}>
       <Radio
@@ -75,6 +81,7 @@ export default function ModalDateFilter() {
         label='Todas datas'
         state={typeDateFilter === 'all'}
         setState={() => handleSelectDateType('all')}
+        ref={inputRef}
       />
       <fieldset className='flex justify-between gap-2'>
         <Radio

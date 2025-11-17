@@ -27,6 +27,7 @@ export default function ModalVaultItem({
     setIntegrateWithTxn,
     vaultItemBudgetAssignedId,
     setVaultItemBudgetAssignedId,
+    inputRef,
   } = useModalVaultItemLogic(type);
 
   return (
@@ -39,6 +40,7 @@ export default function ModalVaultItem({
         setState={setVaultItemName}
         type='text'
         icon={<MdFilePresent />}
+        ref={inputRef}
       />
       <Input
         id='vaultItemValue'

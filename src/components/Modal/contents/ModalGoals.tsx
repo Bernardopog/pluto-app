@@ -1,6 +1,6 @@
 'use client';
 
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { MdAttachMoney, MdOutlineRocketLaunch } from 'react-icons/md';
 import type { IGoal } from '@/interfaces/IGoal';
 import { useGoalsStore } from '@/stores/useGoalsStore';
@@ -76,6 +76,12 @@ export default function ModalGoals() {
     }
   };
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
     <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
       <Input
@@ -88,6 +94,7 @@ export default function ModalGoals() {
         icon={<MdOutlineRocketLaunch />}
         placeholder='Ex: Comprar um videogame novo'
         required={true}
+        ref={inputRef}
       />
       <Input
         state={goalPrice}

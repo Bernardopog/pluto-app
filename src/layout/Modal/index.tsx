@@ -32,12 +32,12 @@ export default function Modal() {
       <div
         role='button'
         tabIndex={0}
-        className={`flex items-center justify-center fixed z-60 w-full bg-black/25 duration-300 ease-in-out overflow-clip backdrop-blur-xs ${
+        className={`flex items-center justify-center fixed z-60 w-full bg-black/25 duration-300 ease-in-out overflow-clip backdrop-blur-xs cursor-pointer ${
           isModalOpen ? 'h-screen' : 'h-0'
         }
         `}
         onClick={handleModal}
-        onKeyDown={handleModal}
+        onKeyDown={(e) => e.key === 'Enter' && handleModal()}
         aria-label='Fechar modal'
       >
         <section
@@ -45,7 +45,7 @@ export default function Modal() {
           aria-modal='true'
           onClick={(e: MouseEvent) => e.stopPropagation()}
           onKeyDown={(e: KeyboardEvent) => e.stopPropagation()}
-          className='base-card min-w-72 w-full max-w-216 p-0 max-h-[calc(100vh-4rem)] overflow-auto'
+          className='base-card min-w-72 w-full max-w-216 p-0 max-h-[calc(100vh-4rem)] overflow-auto cursor-auto'
         >
           <ModalHeader type={selectedModal} />
           <div className='p-2'>

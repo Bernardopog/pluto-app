@@ -1,6 +1,6 @@
 'use client';
 
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/shallow';
 import { useModalStore } from '@/stores/useModalStore';
 import {
@@ -44,6 +44,12 @@ export default function ModalValueFilter() {
     toggleModal();
   };
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
     <form className='flex flex-col gap-2' onSubmit={handleSubmit}>
       <Radio
@@ -52,6 +58,7 @@ export default function ModalValueFilter() {
         label='Todos os valores'
         state={typeValueFilter === 'all'}
         setState={() => handleSelectValueType('all')}
+        ref={inputRef}
       />
       <fieldset className='flex justify-between gap-2'>
         <Radio

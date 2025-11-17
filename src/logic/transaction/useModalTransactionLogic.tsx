@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import type {
   ITransactionCreateDTO,
   ITransactionUpdateDTO,
@@ -36,6 +36,8 @@ export const useModalTransactionLogic = (type: 'create' | 'update') => {
   const [integrateWithVault, setIntegrateWithVault] = useState(false);
   const [hasError, setHasError] = useState(false);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (type === 'update' && transactionSelection.selected) {
       setTransactionName(transactionSelection.selected.name);
@@ -47,6 +49,7 @@ export const useModalTransactionLogic = (type: 'create' | 'update') => {
           .split('T')[0],
       );
     }
+    inputRef.current?.focus();
   }, [type, transactionSelection.selected]);
 
   const handleReset = () => {
@@ -164,5 +167,6 @@ export const useModalTransactionLogic = (type: 'create' | 'update') => {
     setIntegrateWithVault,
     transactionVault,
     setTransactionVault,
+    inputRef,
   };
 };

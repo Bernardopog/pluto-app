@@ -1,6 +1,6 @@
 'use client';
 
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { MdDragHandle, MdPlayArrow } from 'react-icons/md';
 import { useDashboardControllersStore } from '@/stores/useDashboardControllersStore';
 import { useModalStore } from '@/stores/useModalStore';
@@ -27,20 +27,27 @@ export default function ModalTransactionSimpleFilter() {
     toggleModal();
   };
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
     <form className='flex flex-col' onSubmit={handleSubmit}>
       <fieldset className='flex flex-col gap-2'>
-        <div className='flex items-center justify-between p-2 rounded-lg bg-chetwode-blue-200'>
+        <div className='flex items-center justify-between p-2 rounded-lg bg-chetwode-blue-200 dark:bg-chetwode-blue-700'>
           <Radio
             id='all'
             name='type'
             state={selectedType === 'all'}
             setState={() => setSelectedType('all')}
             label='Todos tipos de Transação'
+            ref={inputRef}
           />
-          <MdDragHandle className='text-xl text-chetwode-blue-800' />
+          <MdDragHandle className='text-xl text-chetwode-blue-800 dark:text-chetwode-blue-200' />
         </div>
-        <div className='flex items-center justify-between p-2 rounded-lg bg-red-200'>
+        <div className='flex items-center justify-between p-2 rounded-lg bg-red-200 dark:bg-red-900'>
           <Radio
             id='expense'
             name='type'
@@ -48,9 +55,9 @@ export default function ModalTransactionSimpleFilter() {
             setState={() => setSelectedType('expense')}
             label='Despesas'
           />
-          <MdPlayArrow className='text-xl rotate-90 text-red-800' />
+          <MdPlayArrow className='text-xl rotate-90 text-red-800 dark:text-chetwode-blue-200' />
         </div>
-        <div className='flex items-center justify-between p-2 rounded-lg bg-green-200'>
+        <div className='flex items-center justify-between p-2 rounded-lg bg-green-200 dark:bg-green-900'>
           <Radio
             id='income'
             name='type'
@@ -58,7 +65,7 @@ export default function ModalTransactionSimpleFilter() {
             setState={() => setSelectedType('income')}
             label='Receitas'
           />
-          <MdPlayArrow className='text-xl rotate-270 text-green-800' />
+          <MdPlayArrow className='text-xl rotate-270 text-green-800 dark:text-chetwode-blue-200' />
         </div>
       </fieldset>
       <ModalFooter cancelAction={handleCancel}>

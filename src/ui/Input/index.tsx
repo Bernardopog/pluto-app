@@ -1,4 +1,10 @@
-import type { ChangeEvent, Dispatch, ReactNode, SetStateAction } from 'react';
+import type {
+  ChangeEvent,
+  Dispatch,
+  ReactNode,
+  Ref,
+  SetStateAction,
+} from 'react';
 
 interface IInputProps {
   state: string | number;
@@ -15,6 +21,7 @@ interface IInputProps {
   step?: string;
   maxLimit?: number;
   minLimit?: number;
+  ref?: Ref<HTMLInputElement>;
 }
 
 export default function Input(prop: IInputProps) {
@@ -38,6 +45,7 @@ function BasicInput({
   step,
   maxLimit,
   minLimit,
+  ref,
 }: IInputProps) {
   const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
     if (type === 'number') {
@@ -74,6 +82,7 @@ function BasicInput({
         required={required}
         min={minLimit}
         max={maxLimit}
+        ref={ref}
       />
     </div>
   );
@@ -92,6 +101,7 @@ function DecoratedInput({
   step,
   maxLimit,
   minLimit,
+  ref,
 }: IInputProps) {
   const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
     if (type === 'number') {
@@ -129,6 +139,7 @@ function DecoratedInput({
           required={required}
           min={minLimit}
           max={maxLimit}
+          ref={ref}
         />
         <span className='flex items-center justify-center absolute right-0 top-1/2 h-full w-10 border-2 border-l-0 rounded-r-lg -translate-y-1/2 text-3xl bg-chetwode-blue-300 text-chetwode-blue-950 border-transparent duration-300 ease-in-out peer-focus:border-chetwode-blue-600 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-50'>
           {icon}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type {
   IBudgetCreateDTO,
   IBudgetUpdateDTO,
@@ -31,7 +31,10 @@ export const useModalBudgetLogic = (type: 'create' | 'update') => {
   const [green, setGreen] = useState<number>(0);
   const [blue, setBlue] = useState<number>(0);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
+    inputRef.current?.focus();
     if (type === 'update' && budgetSelection.selected) {
       setBudgetName(budgetSelection.selected.name);
       setBudgetLimit(budgetSelection.selected.limit);
@@ -191,5 +194,6 @@ export const useModalBudgetLogic = (type: 'create' | 'update') => {
     setBlue,
     handleSubmit,
     handleCancel,
+    inputRef,
   };
 };

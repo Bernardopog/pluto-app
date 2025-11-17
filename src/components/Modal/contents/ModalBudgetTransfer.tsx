@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/shallow';
 import { useMessageStore } from '@/stores/useMessageStore';
 import { useModalStore } from '@/stores/useModalStore';
@@ -52,9 +52,16 @@ export default function ModalBudgetTransfer() {
 
   const handleCancel = () => {
     toggleModal();
+    budgetSelection.unselect();
   };
 
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   const selected = budgetSelection.selected;
+
+  useEffect(() => {
+    buttonRef.current?.focus();
+  }, []);
 
   return (
     <div className='flex flex-col'>
@@ -85,7 +92,7 @@ export default function ModalBudgetTransfer() {
           {budgetList.length > 0 &&
             budgetList
               .filter((bdgt) => bdgt.id !== budgetSelection.selected?.id)
-              .map((bdgt) => (
+              .map((bdgt, idx) => (
                 <li
                   key={bdgt.id}
                   style={{ borderColor: `${bdgt.color}` }}
@@ -99,6 +106,7 @@ export default function ModalBudgetTransfer() {
                     type='button'
                     className='w-full p-2 rounded-lg text-chetwode-blue-950'
                     onClick={() => setToId(bdgt.id)}
+                    ref={idx === 0 ? buttonRef : null}
                   >
                     <span className='text-nowrap'>{bdgt.name}</span>
                   </button>

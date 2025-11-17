@@ -1,6 +1,6 @@
 'use client';
 
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { useModalStore } from '@/stores/useModalStore';
 import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
 import { useTransactionFilterStore } from '@/stores/useTransactionFilterStore';
@@ -32,10 +32,16 @@ export default function ModalCategoryFilter() {
     toggleModal();
   };
 
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    buttonRef.current?.focus();
+  }, []);
+
   return (
     <form className='flex flex-col gap-2' onSubmit={handleSubmit}>
       <ul className='grid grid-cols-4 gap-2'>
-        {budgetList.map((category) => (
+        {budgetList.map((category, idx) => (
           <li
             key={category.id}
             className={`rounded-lg border-l-8 duration-300 ease-in-out hover:brightness-95 active:brightness-75 ${
@@ -49,6 +55,7 @@ export default function ModalCategoryFilter() {
               type='button'
               className='truncate size-full p-2 rounded-r-lg'
               onClick={() => setSelectedCategory(category.id)}
+              ref={idx === 0 ? buttonRef : null}
             >
               {category.name}
             </button>

@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/shallow';
 import type { ITransactionCreateDTO } from '@/server/dto/transition.dto';
 import { useMessageStore } from '@/stores/useMessageStore';
@@ -125,7 +125,10 @@ export const useModalVaultItemLogic = (type: 'create' | 'update') => {
     toggleModal();
   };
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
+    inputRef.current?.focus();
     if (type === 'create') return;
     if (type === 'update') setVaultItemName(selectedVault?.name ?? '');
 
@@ -151,5 +154,6 @@ export const useModalVaultItemLogic = (type: 'create' | 'update') => {
     setIntegrateWithTxn,
     vaultItemBudgetAssignedId,
     setVaultItemBudgetAssignedId,
+    inputRef,
   };
 };

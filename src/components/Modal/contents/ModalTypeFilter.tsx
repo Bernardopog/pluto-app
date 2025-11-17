@@ -1,6 +1,6 @@
 'use client';
 
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { MdDragHandle, MdPlayArrow } from 'react-icons/md';
 import { useModalStore } from '@/stores/useModalStore';
 import {
@@ -34,6 +34,12 @@ export default function ModalTypeFilter() {
     toggleModal();
   };
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
     <form className='flex flex-col' onSubmit={handleSubmit}>
       <fieldset className='flex flex-col gap-2'>
@@ -44,6 +50,7 @@ export default function ModalTypeFilter() {
             state={selectedType === 'all'}
             setState={() => setSelectedType('all')}
             label='Todos tipos de Transação'
+            ref={inputRef}
           />
           <MdDragHandle className='text-xl text-chetwode-blue-800 dark:text-chetwode-blue-200' />
         </div>

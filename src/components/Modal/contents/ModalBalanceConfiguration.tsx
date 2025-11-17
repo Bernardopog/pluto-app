@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useMemo, useState } from 'react';
+import { type FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { MdAddCircle, MdRemoveCircle } from 'react-icons/md';
 import { useShallow } from 'zustand/shallow';
 import { useFinanceStore } from '@/stores/useFinanceStore';
@@ -81,8 +81,11 @@ export default function ModalBalanceConfiguration() {
     };
   };
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     setValueToBalance(balance);
+    inputRef.current?.focus();
   }, [balance]);
 
   return (
@@ -175,6 +178,7 @@ export default function ModalBalanceConfiguration() {
               type='number'
               step='0.01'
               minLimit={0}
+              ref={inputRef}
             />
           </div>
           <div className='flex-1 p-2 border-2 rounded-lg gap-2 border-chetwode-blue-100 text-chetwode-blue-950 shadow-md dark:border-chetwode-blue-700 dark:text-chetwode-blue-50'>

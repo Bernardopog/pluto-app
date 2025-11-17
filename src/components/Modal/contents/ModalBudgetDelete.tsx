@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { useMessageStore } from '@/stores/useMessageStore';
 import { useModalStore } from '@/stores/useModalStore';
 import { useTransactionBudgetStore } from '@/stores/useTransactionBudgetStore';
@@ -42,6 +43,15 @@ export default function ModalBudgetDelete() {
     toggleModal();
   };
 
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [canDelete, setCanDelete] = useState(false);
+
+  useEffect(() => {
+    setCanDelete(false);
+    buttonRef.current?.focus();
+    setTimeout(() => setCanDelete(true), 1000);
+  }, []);
+
   return (
     <div className='flex flex-col'>
       <p className='text-2xl text-center text-chetwode-blue-950 dark:text-chetwode-blue-100'>
@@ -57,12 +67,13 @@ export default function ModalBudgetDelete() {
         Essa ação nao pode ser desfeita!
       </p>
       <div className='flex self-end gap-x-2'>
-        <ModalFooter cancelAction={handleCancel}>
+        <ModalFooter cancelAction={handleCancel} ref={buttonRef}>
           {selected && (
             <button
               type='submit'
-              className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold ease-in-out modal-btn-delete'
+              className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold ease-in-out modal-btn-delete disabled:grayscale-100'
               onClick={() => handleDelete(selected.id)}
+              disabled={!canDelete}
             >
               Deletar Orçamento
             </button>

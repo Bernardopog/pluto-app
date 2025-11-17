@@ -17,6 +17,7 @@ export default function ModalVault({ type }: { type: 'create' | 'update' }) {
     hasError,
     handleSubmit,
     handleCancel,
+    inputRef,
   } = useModalVaultLogic(type);
 
   return (
@@ -29,6 +30,7 @@ export default function ModalVault({ type }: { type: 'create' | 'update' }) {
         setState={setVaultName}
         type='text'
         icon={<MdFilePresent />}
+        ref={inputRef}
       />
       <div>
         <Input

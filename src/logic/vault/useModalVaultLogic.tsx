@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/shallow';
 import { useMessageStore } from '@/stores/useMessageStore';
 import { useModalStore } from '@/stores/useModalStore';
@@ -21,6 +21,8 @@ export const useModalVaultLogic = (type: 'create' | 'update') => {
   const [vaultLimit, setVaultLimit] = useState<string>('');
   const [vaultIcon, setVaultIcon] = useState<iconNameType | null>(null);
   const [hasError, setHasError] = useState<boolean>(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClose = () => {
     toggleModal();
@@ -89,6 +91,7 @@ export const useModalVaultLogic = (type: 'create' | 'update') => {
   };
 
   useEffect(() => {
+    inputRef.current?.focus();
     if (type === 'update') {
       if (selectedVault) {
         setVaultName(selectedVault.name);
@@ -108,5 +111,6 @@ export const useModalVaultLogic = (type: 'create' | 'update') => {
     hasError,
     handleSubmit,
     handleCancel,
+    inputRef,
   };
 };

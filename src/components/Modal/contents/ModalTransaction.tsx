@@ -35,6 +35,7 @@ export default function ModalTransaction({ type }: IModalTransactionProps) {
     setIntegrateWithVault,
     transactionVault,
     setTransactionVault,
+    inputRef,
   } = useModalTransactionLogic(type);
 
   return (
@@ -47,6 +48,7 @@ export default function ModalTransaction({ type }: IModalTransactionProps) {
         state={transactionName}
         setState={setTransactionName}
         type='text'
+        ref={inputRef}
       />
       <fieldset className='flex flex-col gap-y-2'>
         <div className='flex-1'>

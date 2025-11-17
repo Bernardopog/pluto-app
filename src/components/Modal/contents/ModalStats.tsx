@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { MdClose } from 'react-icons/md';
 import { type StatType, statsComponentMap } from '@/data/statsComponentMap';
 import { useStatsStore } from '@/stores/useStatsStore';
@@ -8,6 +9,12 @@ export default function ModalStats() {
   const addStatToList = useStatsStore((s) => s.addStatToList);
   const removeMany = useStatsStore((s) => s.clearManyInList);
   const statList = useStatsStore((s) => s.statList);
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    buttonRef.current?.focus();
+  });
 
   return (
     <ul className='grid grid-cols-4 gap-2'>
@@ -36,6 +43,7 @@ export default function ModalStats() {
             type='button'
             className='size-full p-2'
             onClick={() => addStatToList(keyName as StatType)}
+            ref={index === 0 ? buttonRef : undefined}
           >
             <h3 className='text-lg text-center'>
               {statsComponentMap[keyName as StatType].title}

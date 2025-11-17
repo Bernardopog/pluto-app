@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/shallow';
 import { useMessageStore } from '@/stores/useMessageStore';
 import { useModalStore } from '@/stores/useModalStore';
@@ -86,6 +87,15 @@ export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
       'pt-BR',
     );
 
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [canDelete, setCanDelete] = useState(false);
+
+  useEffect(() => {
+    setCanDelete(false);
+    buttonRef.current?.focus();
+    setTimeout(() => setCanDelete(true), 1000);
+  }, []);
+
   return (
     <div className='flex flex-col'>
       <p className='text-2xl text-center text-chetwode-blue-950 dark:text-chetwode-blue-50'>
@@ -143,11 +153,12 @@ export default function ModalTransactionDelete({ type }: { type: DeleteType }) {
       <p className='text-2xl text-center text-red-900 dark:text-red-400'>
         Essa ação nao pode ser desfeita!
       </p>
-      <ModalFooter cancelAction={handleCancel}>
+      <ModalFooter cancelAction={handleCancel} ref={buttonRef}>
         <button
           type='submit'
-          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold duration-300 ease-in-out modal-btn-delete'
+          className='w-fit mt-2 p-2 border-b-2 rounded-lg font-bold duration-300 ease-in-out modal-btn-delete disabled:grayscale-100'
           onClick={() => handleDelete()}
+          disabled={!canDelete}
         >
           Deletar{' '}
           {type === 'all' || type === 'group' ? 'Transações' : 'Transação'}

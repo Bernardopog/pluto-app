@@ -1,8 +1,9 @@
-import { type FormEvent, useEffect, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/shallow';
 import { useFinanceStore } from '@/stores/useFinanceStore';
 import { useModalStore } from '@/stores/useModalStore';
 import Input from '@/ui/Input';
+import ModalFooter from '../ModalFooter';
 
 export default function ModalIncomeConfiguration() {
   const { toggleModal, selectModalType } = useModalStore(
@@ -32,8 +33,11 @@ export default function ModalIncomeConfiguration() {
     selectModalType(null);
   };
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     setValueToIncome(income);
+    inputRef.current?.focus();
   }, [income]);
 
   return (
@@ -48,6 +52,7 @@ export default function ModalIncomeConfiguration() {
         step={'0.01'}
         minLimit={0}
         maxLimit={1000000}
+        ref={inputRef}
       />
       <ModalFooter cancelAction={handleCancel}>
         <button

@@ -1,6 +1,6 @@
 'use client';
 
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { useGoalsStore } from '@/stores/useGoalsStore';
 import { useMessageStore } from '@/stores/useMessageStore';
 import { useModalStore } from '@/stores/useModalStore';
@@ -32,6 +32,12 @@ export default function ModalGoalReassign() {
     toggleModal();
   };
 
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    buttonRef.current?.focus();
+  }, []);
+
   return (
     <form className='flex flex-col' onSubmit={handleReassign}>
       <h2 className='subtitle'>Reatribuição de cofre</h2>
@@ -42,7 +48,7 @@ export default function ModalGoalReassign() {
       </p>
       <ul className='flex mt-4 p-2 rounded-lg gap-2 text-chetwode-blue-950 bg-chetwode-blue-200'>
         {vaultList.length > 0 ? (
-          vaultList.map((vault) => (
+          vaultList.map((vault, idx) => (
             <li className='flex-1' key={vault.id}>
               <button
                 type='button'
@@ -52,6 +58,7 @@ export default function ModalGoalReassign() {
                     : ''
                 }`}
                 onClick={() => setSelectedVaultId(vault.id)}
+                ref={idx === 0 ? buttonRef : null}
               >
                 {vault.name}
               </button>

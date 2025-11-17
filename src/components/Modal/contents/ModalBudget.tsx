@@ -47,6 +47,7 @@ export default function ModalBudget({ type }: IModalBudgetProps) {
     hasError,
     handleSubmit,
     handleCancel,
+    inputRef,
   } = useModalBudgetLogic(type);
 
   return (
@@ -59,6 +60,7 @@ export default function ModalBudget({ type }: IModalBudgetProps) {
         setState={setBudgetName}
         type='text'
         icon={<MdFilePresent />}
+        ref={inputRef}
       />
       <fieldset>
         <div className='grid grid-cols-[0.75fr_0.25fr] items-end justify-between'>
