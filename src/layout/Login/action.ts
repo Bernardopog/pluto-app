@@ -33,12 +33,12 @@ export async function loginUser(
 
     const hashedPassword = user?.password;
     if (!hashedPassword) {
-      return { success: false, message: 'Usuário inválido' };
+      return { success: false, message: 'Credenciais inválidas' };
     }
     const match = await bcrypt.compare(password as string, hashedPassword);
 
     if (match === false) {
-      return { success: false, message: 'Erro ao logar' };
+      return { success: false, message: 'Credenciais inválidas' };
     } else {
       const token = signJWT({
         userId: user.id.toString(),
@@ -58,6 +58,6 @@ export async function loginUser(
       };
     }
   } catch {
-    return { success: false, message: 'Erro ao logar' };
+    return { success: false, message: 'Credenciais inválidas' };
   }
 }
