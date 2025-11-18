@@ -55,6 +55,10 @@ interface IModalStore {
 export const useModalStore = create<IModalStore>((set, get) => ({
   isModalOpen: false,
   selectedModal: null,
-  toggleModal: () => set({ isModalOpen: !get().isModalOpen }),
+  toggleModal: () => {
+    if (get().isModalOpen) set({ selectedModal: null });
+
+    set({ isModalOpen: !get().isModalOpen });
+  },
   selectModalType: (type) => set({ selectedModal: type }),
 }));
