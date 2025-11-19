@@ -72,8 +72,10 @@ export default function BudgetAction() {
               className='group flex items-center justify-center absolute right-0 h-full w-10 rounded-r-full text-xl bg-chetwode-blue-800 text-chetwode-blue-50'
             >
               <MdQuestionMark />
-              <p className='absolute -top-12 right-12 p-0 w-0 rounded-md text-sm shadow-lg duration-300 ease-out bg-chetwode-blue-800 text-chetwode-blue-50 overflow-clip opacity-0 group-hover:opacity-100 group-hover:w-64 group-hover:p-2'>
-                Deleta o Orçamento e todas transações ligadas a esse Orçamento
+              <p className='absolute -top-12 right-12 p-0 w-0 rounded-md text-sm shadow-lg duration-300 ease-out bg-chetwode-blue-800 text-chetwode-blue-50 overflow-clip opacity-0 group-hover:opacity-100 group-hover:w-64 group-hover:p-2 whitespace-pre'>
+                Deleta o Orçamento e todas
+                <br /> transações ligadas a esse
+                <br /> Orçamento
               </p>
             </div>
           </ActionButton>
@@ -89,8 +91,9 @@ export default function BudgetAction() {
               className='group flex items-center justify-center absolute right-0 h-full w-10 rounded-r-full text-xl bg-chetwode-blue-800 text-chetwode-blue-50'
             >
               <MdQuestionMark />
-              <p className='absolute -top-12 right-12 p-0 w-0 rounded-md text-sm shadow-lg duration-300 ease-out bg-chetwode-blue-800 text-chetwode-blue-50 overflow-clip opacity-0 group-hover:opacity-100 group-hover:w-64 group-hover:p-2'>
-                Deleta o Orçamento e permite mover todas transações ligadas a
+              <p className='absolute -top-12 right-12 p-0 w-0 rounded-md text-sm shadow-lg duration-300 ease-out bg-chetwode-blue-800 text-chetwode-blue-50 overflow-clip opacity-0 group-hover:opacity-100 group-hover:w-64 group-hover:p-2 whitespace-pre'>
+                Deleta o Orçamento e permite
+                <br /> mover todas transações ligadas a<br />
                 esse Orçamento para um novo
               </p>
             </div>
