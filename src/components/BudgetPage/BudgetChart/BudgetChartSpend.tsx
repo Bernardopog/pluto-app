@@ -56,7 +56,7 @@ function BudgetChartSpend({
                 key={bdgt.id}
                 style={{
                   backgroundColor: bdgt.color,
-                  transform: `rotate(${angle}deg) translate(275%) rotate(-${
+                  transform: `rotate(${angle}deg) translate(175%) rotate(-${
                     angle + 287
                   }deg)`,
                   transformOrigin: 'center',
@@ -79,7 +79,7 @@ function BudgetChartSpend({
           options={isOverlay ? customOptions : options}
           series={series}
           type='polarArea'
-          width={'150%'}
+          width={'125%'}
         />
       </div>
     </>

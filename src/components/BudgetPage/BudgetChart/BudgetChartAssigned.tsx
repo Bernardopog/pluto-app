@@ -18,7 +18,7 @@ function BudgetChartAssigned({
     <>
       {/* Custom DataLabel because colors and dataLabels don't work together */}
       {!isOverlay && (
-        <div className='absolute z-20 size-0 rounded-full bg-red-600'>
+        <div className='absolute z-20 size-0 rounded-full'>
           {budgetList.map((bdgt, idx) => {
             const percentage = getPercentage(bdgt.limit, totalBudgetLimit);
             const angle = (360 / budgetList.length) * idx;
@@ -27,7 +27,7 @@ function BudgetChartAssigned({
                 key={bdgt.id}
                 style={{
                   backgroundColor: bdgt.color,
-                  transform: `rotate(${angle}deg) translate(275%) rotate(-${
+                  transform: `rotate(${angle}deg) translate(175%) rotate(-${
                     angle + 287
                   }deg)`,
                   transformOrigin: 'center',
@@ -51,7 +51,7 @@ function BudgetChartAssigned({
           options={options}
           series={series}
           type='polarArea'
-          width={'150%'}
+          width={'125%'}
         />
       </div>
     </>

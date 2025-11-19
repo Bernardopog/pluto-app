@@ -11,7 +11,8 @@ export default function BudgetChartController({
   setChartToShow,
 }: IBudgetChartControllerProps) {
   return (
-    <header className='flex justify-evenly'>
+    <header className='flex flex-col gap-2 text-sm'>
+      <h3 className='subsubtitle'>Tipo de Exibição:</h3>
       <Radio
         state={chartToShow === 'assigned'}
         setState={() => setChartToShow('assigned')}
