@@ -50,7 +50,7 @@
       "filter   action  "
       "moves    moves   ";
     grid-template-columns: 0.6fr minmax(0.4fr, 1fr);
-    grid-template-rows: 0.25fr 0.25fr minmax(520px, 1fr);
+    grid-template-rows: auto minmax(auto, 240px) 1fr;
   }
 }
 

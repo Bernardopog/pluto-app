@@ -5,7 +5,7 @@
     "budgets "
     "chart   ";
   grid-template-columns: 1fr;
-  grid-template-rows: 0.25fr minmax(240px, 0.5fr) 100vh minmax(50vh, 1fr);
+  grid-template-rows: 0.25fr minmax(240px, 0.5fr) minmax(75vh, 1fr) 160px;
   gap: 0.5rem;
 }
 
@@ -22,6 +22,12 @@
   grid-area: chart;
 }
 
+@media (min-width: 45rem) {
+  .budget-page {
+    grid-template-rows: 0.25fr minmax(240px, 0.5fr) minmax(75vh, 1fr) 100vh;
+  }
+}
+
 @media (min-width: 64rem) {
   .budget-page {
     grid-template-areas:
@@ -29,18 +35,13 @@
       "budgets  action  "
       "budgets  chart   ";
     grid-template-columns: 1fr 0.75fr;
-    grid-template-rows: auto minmax(0, 17.5rem) minmax(360px, 0.5fr);
+    grid-template-rows: auto minmax(360px, 1fr) minmax(360px, 1fr);
   }
 }
 
 @media (min-width: 90rem) {
   .budget-page {
-    grid-template-areas:
-      "overview overview"
-      "budgets  action  "
-      "budgets  chart   ";
-    grid-template-columns: 1fr 0.75fr;
-    grid-template-rows: auto 1fr 0.5fr;
+    grid-template-rows: auto auto 1fr;
     gap: 1rem;
   }
 }

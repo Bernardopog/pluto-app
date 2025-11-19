@@ -8,6 +8,7 @@ function BudgetChartAssigned({
   budgetList,
   options,
   isOverlay,
+  windowWidth,
 }: IBudgetChartProps) {
   const series = budgetList.map((bdgt) => bdgt.limit);
   const totalBudgetLimit = budgetList
@@ -51,7 +52,7 @@ function BudgetChartAssigned({
           options={options}
           series={series}
           type='polarArea'
-          width={'125%'}
+          width={windowWidth >= 720 && windowWidth < 1024 ? '250%' : '100%'}
         />
       </div>
     </>

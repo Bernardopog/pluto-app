@@ -15,6 +15,7 @@ export interface IBudgetChartProps {
   options: ApexOptions;
   budgetList: IBudget[];
   isOverlay: boolean;
+  windowWidth: number;
 }
 
 export type ChartToShowType = 'assigned' | 'overlay' | 'spend';
@@ -64,28 +65,24 @@ export default function BudgetChart() {
 
   const [showChart, setShowChart] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
-    if (window.innerWidth >= 720) {
-      setShowChart(true);
-    }
-
-    window.addEventListener('resize', () => {
+    const handleResize = () => {
       const width =
         window.innerWidth ||
         document.documentElement.clientWidth ||
         document.body.clientWidth;
       setShowChart(width >= 720);
-    });
+      setWindowWidth(width);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('resize', () => {
-        const width =
-          window.innerWidth ||
-          document.documentElement.clientWidth ||
-          document.body.clientWidth;
-        setShowChart(width >= 720);
-      });
+      window.removeEventListener('resize', () => handleResize);
     };
   }, []);
 
@@ -116,12 +113,13 @@ export default function BudgetChart() {
       />
       {showChart ? (
         budgetListLength > 0 ? (
-          <div className='flex justify-center items-center flex-1 relative min-h-6/10 mt-4'>
+          <div className='flex justify-center items-center flex-1 relative mt-4'>
             {chartToShow !== 'spend' && (
               <BudgetChartAssigned
                 budgetList={budgetListFiltered}
                 options={options}
                 isOverlay={chartToShow === 'overlay'}
+                windowWidth={windowWidth}
               />
             )}
             {chartToShow === 'overlay' && (
@@ -129,6 +127,7 @@ export default function BudgetChart() {
                 budgetList={budgetListFiltered}
                 options={options}
                 isOverlay={true}
+                windowWidth={windowWidth}
               />
             )}
             {chartToShow === 'spend' && (
@@ -136,10 +135,11 @@ export default function BudgetChart() {
                 budgetList={budgetListFiltered}
                 options={options}
                 isOverlay={false}
+                windowWidth={windowWidth}
               />
             )}
           </div>
-          ) : (
+        ) : (
           <p className='flex items-center justify-center flex-1 font-bold text-lg italic text-chetwode-blue-950/75 dark:text-chetwode-blue-50/75'>
             Crie um orçamento para ver o gráfico...
           </p>

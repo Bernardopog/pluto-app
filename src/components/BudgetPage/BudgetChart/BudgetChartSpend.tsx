@@ -10,6 +10,7 @@ function BudgetChartSpend({
   budgetList,
   options,
   isOverlay,
+  windowWidth,
 }: IBudgetChartProps) {
   const getExpenseFromCurrentMonth = useTransactionBudgetStore(
     (s) => s.getExpenseFromCurrentMonth,
@@ -79,7 +80,7 @@ function BudgetChartSpend({
           options={isOverlay ? customOptions : options}
           series={series}
           type='polarArea'
-          width={'125%'}
+          width={windowWidth >= 720 && windowWidth < 1024 ? '250%' : '100%'}
         />
       </div>
     </>

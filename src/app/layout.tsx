@@ -27,15 +27,13 @@ export default async function RootLayout({
   return (
     <html lang='pt-BR' className={`${theme ?? ''}`}>
       <body
-        className={`flex flex-col h-full max-h-dvh scrollbar-style bg-star-dust-200 dark:bg-chetwode-blue-950 overflow-hidden ${dmSans.className}`}
+        className={`bg-star-dust-200 dark:bg-chetwode-blue-950 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-chetwode-blue-600 ${dmSans.className}`}
       >
         <ThemeToggler themeIsDark={theme === 'dark'} />
         <ActionMessage />
         <Modal />
         <Navbar />
-        <div className='flex-1 scrollbar-thinner overflow-y-auto'>
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   );

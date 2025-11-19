@@ -19,14 +19,14 @@ export default function TransactionViewSwitcher() {
     >
       <Inert
         isVisible={view === 'table'}
-        className='min-h-0 h-full max-h-[calc(100vh-32px-24px)] overflow-y-auto scrollbar-none'
+        className={`min-h-0 h-full ${view === 'chart' && 'overflow-hidden'}`}
       >
         <TransactionTablePage />
       </Inert>
 
       <Inert
         isVisible={view === 'chart'}
-        className='min-h-0 h-full max-h-[calc(100vh-32px-24px)] overflow-clip'
+        className={`min-h-0 h-full max-h-[calc(100vh-32px-24px)] overflow-clip ease-in-out duration-300 opacity-0 ${view === 'chart' && 'opacity-100'}`}
       >
         <TransactionChartPage />
       </Inert>
