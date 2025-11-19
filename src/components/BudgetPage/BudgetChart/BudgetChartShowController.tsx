@@ -15,7 +15,7 @@ export default function BudgetChartShowController({
   addToExcluded,
 }: IBudgetChartShowControllerProps) {
   return (
-    <div>
+    <div className='mt-8'>
       <h3 className='subsubtitle'>Remover do Gráfico:</h3>
       <ul className='grid grid-cols-1 gap-2 md:grid-cols-3'>
         {budgetList.map((bdgt) => (
