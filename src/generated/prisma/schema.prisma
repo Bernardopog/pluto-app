@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String        @unique
+  password     String
+  budgets      Budget[]
+  finance      Finance?
+  goals        Goal?
+  stats        Stats?
+  transactions Transaction[]
+  vaults       Vault[]
+  vaultItems   VaultItem[]
+}
+
+model Transaction {
+  id         Int      @id @default(autoincrement())
+  name       String
+  value      Int
+  date       DateTime
+  userId     Int
+  categoryId Int
+  category   Budget   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Budget {
+  id           Int           @id @default(autoincrement())
+  name         String
+  color        String
+  limit        Int
+  userId       Int
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+}
+
+model Vault {
+  id          Int         @id @default(autoincrement())
+  name        String
+  targetPrice Int
+  icon        VaultIcons
+  userId      Int
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items       VaultItem[]
+}
+
+model VaultItem {
+  id      Int    @id @default(autoincrement())
+  name    String
+  value   Int
+  vaultId Int
+  userId  Int
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vault   Vault  @relation(fields: [vaultId], references: [id], onDelete: Cascade)
+}
+
+model Goal {
+  userId        Int          @unique
+  name          String
+  targetAmount  Int
+  deadline      DateTime?
+  progress      GoalProgress
+  assignedVault Int?
+  completed     Boolean      @default(false)
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Finance {
+  userId  Int  @unique
+  balance Int  @default(0)
+  income  Int  @default(0)
+  user    User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Stats {
+  userId         Int  @unique
+  completedGoals Int  @default(0)
+  totalGoals     Int  @default(0)
+  failedGoals    Int  @default(0)
+  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum VaultIcons {
+  plane
+  piggy
+  car
+}
+
+enum GoalProgress {
+  balance
+  vault
+}
