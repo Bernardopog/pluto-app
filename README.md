@@ -1,4 +1,5 @@
 # Pluto
+> Aplicação para gerenciamento financeiro.
 
 ## 📖 Sobre o Projeto
 
@@ -21,14 +22,17 @@ Pluto é um projeto Web Fullstack com foco em gestão de finanças, através de 
 - [![Next](https://img.shields.io/badge/-NextJS_16-000000?logo=nextdotjs&logoColor=white&style=for-the-badge)](https://nextjs.org/)
 - [![Prisma](https://img.shields.io/badge/-Prisma-002740?logo=prisma&logoColor=white&style=for-the-badge)](https://www.prisma.io/)
 - [![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-4169E1?logo=postgresql&logoColor=white&style=for-the-badge)](https://www.postgresql.org/)
+- [![Supabase](https://img.shields.io/badge/-Supabase-34b27b?logo=supabase&logoColor=white&style=for-the-badge)](https://www.postgresql.org/)
 
 ## 📦 Features (Funcionalidades)
 
-- Sistema de Autenticação e Acesso
-- Middleware (Proxy)
-- RESTful API
-- Integração com gráficos Apexchart
-- Layout Responsivo
+* **Middleware (Proxy)** Proteção de rotas privadas e validação de JWT.
+* **RESTful API** Para validação, transformação e entrega de dados.
+* **Transações:** Registro e visualização de entradas e saídas de valores.
+* **Orçamento:** Definição de limites de gastos mensais por categoria.
+* **Cofre e Metas:** Ferramenta para planejamento e acompanhamento de objetivos financeiros de longo prazo.
+* **Visualização de Dados:** Uso de gráficos interativos (Apexchart) para análise financeira.
+* **Layout:** Interface responsiva adaptável a dispositivos móveis e desktop.
 
 ## 📂 Estrutura de Pastas
 
@@ -75,7 +79,7 @@ npm install
 Após a conclusão da instalação das dependências, será necessário gerar o prisma, para isso utilize o seguinte comando:
 
 ```bash
-# Gere os arquivos do Prisma
+# Gere os arquivos do Prisma | roda: (prisma generate)
 npm run generate
 ```
 
@@ -97,4 +101,5 @@ Isso irá executar o projeto em modo de produção.
 
 ## 💻 Autor
 
-Feito por Bernardo Poggioni - [LinkedIn](https://www.linkedin.com/in/bernardo-poggioni-3746a42a5/) | [Github]()
+Feito por Bernardo Poggioni - [LinkedIn](https://www.linkedin.com/in/bernardo-poggioni-3746a42a5/) | [Github](https://github.com/Bernardopog)
+
