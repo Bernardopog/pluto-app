@@ -85,7 +85,7 @@ export default function TransactionAction() {
   return (
     <article
       id='transaction-action'
-      className='base-card min-h-64 overflow-y-auto scrollbar-style scrollbar-thinner md:min-h-32'
+      className='base-card overflow-y-auto scrollbar-style scrollbar-thinner min-h-96 md:min-h-auto'
     >
       <h2 className='subtitle'>Ações</h2>
       <section className='flex flex-col mt-2 gap-2'>

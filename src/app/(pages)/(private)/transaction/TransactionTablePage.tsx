@@ -5,7 +5,7 @@ import TransactionTable from '@/layout/Transaction/TransactionTable';
 
 export default function TransactionTablePage() {
   return (
-    <section id='transaction-view-page-txn' className='transaction-page grid'>
+    <section className='transaction-page grid h-[calc(100vh-56px)]'>
       <TransactionOverview />
       <TransactionFilter />
       <TransactionAction />

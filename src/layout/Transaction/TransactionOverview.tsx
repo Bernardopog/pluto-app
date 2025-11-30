@@ -25,8 +25,8 @@ export default function TransactionOverview() {
 
   return (
     <header id='transaction-overview' className='mt-2'>
-      <ul className='grid grid-cols-1 gap-2 items-stretch sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 xl:gap-4'>
-        <li className='relative md:col-span-3 xl:col-span-1'>
+      <ul className='grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4 xl:gap-4'>
+        <li className='relative'>
           <OverviewCardSwitch>
             <OverviewCard
               title='Saldo de transações (mês)'

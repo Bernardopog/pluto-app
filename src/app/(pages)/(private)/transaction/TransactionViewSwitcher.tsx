@@ -11,26 +11,21 @@ export default function TransactionViewSwitcher() {
 
   return (
     <div
-      className={`transaction-view-page-layout grid h-[calc(100vh-32px-24px)] min-h-0 duration-300 ease-in-out ${
-        view === 'table'
-          ? 'transaction-view-page-layout--txn'
-          : 'transaction-view-page-layout--chart'
-      }`}
+      className={`grid h-full pb-8 duration-300 ease-in-out ${view === 'table' ? 'grid-rows-[1fr_0fr]' : 'grid-rows-[0fr_1fr]'}`}
     >
       <Inert
         isVisible={view === 'table'}
-        className={`min-h-0 h-full ${view === 'chart' && 'overflow-hidden'}`}
+        className={`${view === 'chart' ? 'overflow-hidden max-h-0' : 'max-h-[100vh]'}`}
       >
         <TransactionTablePage />
       </Inert>
 
       <Inert
         isVisible={view === 'chart'}
-        className={`min-h-0 h-full max-h-[calc(100vh-32px-24px)] overflow-clip ease-in-out duration-300 opacity-0 ${view === 'chart' && 'opacity-100'}`}
+        className={`${view === 'table' ? 'overflow-hidden max-h-0' : 'max-h-[100vh]'}`}
       >
         <TransactionChartPage />
       </Inert>
-
       <TransactionSwitchViewButton view={view} setView={setView} />
     </div>
   );

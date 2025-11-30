@@ -1,17 +1,3 @@
-.transaction-view-page-layout {
-  grid-template-areas:
-    "view-transaction"
-    "view-chart";
-  grid-template-columns: 1fr;
-}
-
-.transaction-view-page-layout--txn {
-  grid-template-rows: 100dvh 0px;
-}
-.transaction-view-page-layout--chart {
-  grid-template-rows: 0px 100dvh;
-}
-
 .transaction-page {
   grid-template-areas:
     "overview"
@@ -50,7 +36,7 @@
       "filter   action  "
       "moves    moves   ";
     grid-template-columns: 0.6fr minmax(0.4fr, 1fr);
-    grid-template-rows: auto minmax(auto, 240px) 1fr;
+    grid-template-rows: min-content 0.25fr 1fr;
   }
 }
 
@@ -60,7 +46,7 @@
       "overview overview overview"
       "filter   filter   action  "
       "moves    moves    action  ";
-    grid-template-columns: repeat(2, 1fr) 0.5fr;
+    grid-template-columns: 1fr 1fr 0.5fr;
     grid-template-rows: auto 0.25fr 1fr;
     gap: 1rem;
   }

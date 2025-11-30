@@ -1,6 +1,6 @@
 @layer components {
   .page {
-    @apply min-h-dvh p-2 pt-4 pb-4 lg:pb-2;
+    @apply h-dvh px-2 py-4 lg:pb-2;
   }
 
   .main-title {

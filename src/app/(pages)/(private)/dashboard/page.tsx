@@ -61,7 +61,7 @@ export default async function DashboardPage() {
         financeData={financeData!}
         statsData={statsData}
       />
-      <section className='dashboard-layout grid min-h-[calc(100vh-32px-24px)]'>
+      <section className='dashboard-layout grid min-h-[calc(100vh-56px)]'>
         <DashboardHeader />
         <DashboardVault />
         <DashboardGoals />

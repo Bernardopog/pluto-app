@@ -48,7 +48,7 @@ export default function TransactionTableRowData({
       {/** biome-ignore lint/a11y/useSemanticElements: <For styling purposes> */}
       <div
         role='cell'
-        className='col-span-4 p-2 border-2 rounded-lg border-chetwode-blue-950/25 truncate ease-in-out duration-300 group-hover:border-chetwode-blue-600 dark:group-hover:border-chetwode-blue-300 sm:col-span-3 lg:col-span-1 lg:order-1 lg:rounded-sm'
+        className='col-span-4 p-2 border-2 rounded-lg border-chetwode-blue-950/25 truncate text-left ease-in-out duration-300 group-hover:border-chetwode-blue-600 dark:group-hover:border-chetwode-blue-300 sm:col-span-3 lg:col-span-1 lg:order-1 lg:rounded-sm'
       >
         {transaction.name}
       </div>

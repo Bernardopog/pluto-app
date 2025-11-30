@@ -28,7 +28,7 @@ export default async function RootLayout({
   return (
     <html lang='pt-BR' className={`${theme ?? ''} scroll-smooth`}>
       <body
-        className={`bg-star-dust-200 dark:bg-chetwode-blue-950 scrollbar-thumb-chetwode-blue-600 ${dmSans.className}`}
+        className={`max-h-dvh bg-chetwode-blue-100 dark:bg-chetwode-blue-950 scrollbar-thumb-chetwode-blue-600 scrollbar-thinner scrollbar-style xl:overflow-clip ${dmSans.className}`}
       >
         <ThemeToggler themeIsDark={theme === 'dark'} />
         <ActionMessage />

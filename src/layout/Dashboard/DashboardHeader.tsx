@@ -18,9 +18,6 @@ export default function DashboardHeader() {
     (s) => s.getTotalMonthlyExpenses,
   );
   const budgetList = useTransactionBudgetStore((s) => s.budgetData.list);
-  const _transactionList = useTransactionBudgetStore(
-    (s) => s.transactionData.list,
-  );
 
   const currentExpenses = useMemo(
     () => Math.abs(getTotalMotnhlyExpenses()),
@@ -48,7 +45,7 @@ export default function DashboardHeader() {
   };
 
   return (
-    <header className='mt-2' id='dashboard-overview'>
+    <header id='dashboard-overview'>
       <ul className='grid grid-cols-1 gap-2 sm:grid-cols-[1fr_1fr] lg:grid-cols-3 xl:grid-cols-4 xl:gap-4'>
         {financeData.loading ? (
           <li className='relative sm:col-span-2 lg:col-span-3 xl:col-span-1'>

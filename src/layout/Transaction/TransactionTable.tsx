@@ -113,7 +113,7 @@ export default function TransactionTable() {
       return false;
     });
 
-  const itemsPerPage = 9;
+  const itemsPerPage = 10;
   const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -135,7 +135,7 @@ export default function TransactionTable() {
       role='table'
       aria-label='Tabela de transações'
       id='transaction-moves'
-      className='base-card flex flex-col h-full p-0 overflow-hidden'
+      className='base-card flex flex-col min-h-fit h-full p-0'
     >
       <header className='hidden lg:block text-chetwode-blue-950 dark:text-chetwode-blue-50'>
         {/* // biome-ignore lint/a11y/useSemanticElements: <For Styling purposes> */}
@@ -197,7 +197,8 @@ export default function TransactionTable() {
           ))
         )}
       </section>
-      <footer className='flex items-center justify-center px-1 py-2 gap-x-2  bg-chetwode-blue-200 text-chetwode-blue-950 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-100'>
+
+      <footer className='flex items-center justify-center min-h-fit px-1 py-2 gap-x-2 bg-chetwode-blue-200 text-chetwode-blue-950 dark:bg-chetwode-blue-800 dark:text-chetwode-blue-100'>
         {[...Array(totalPages)].map((_, idx) => {
           return (
             <button
